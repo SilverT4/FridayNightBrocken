@@ -34,8 +34,10 @@ class NotesSubState extends MusicBeatSubstate
 	private var grpNumbers:FlxTypedGroup<Alphabet>;
 	private var grpNotes:FlxTypedGroup<FlxSprite>;
 	private var shaderArray:Array<ColorSwap> = [];
+	private static var defaultNoteHues:Array<Int> = [321, 180, 117, 358];
 	var curValue:Float = 0;
 	var holdTime:Float = 0;
+	var note:FlxSprite;
 	var nextAccept:Int = 5;
 
 	var blackBG:FlxSprite;
@@ -70,9 +72,13 @@ class NotesSubState extends MusicBeatSubstate
 				grpNumbers.add(optionText);
 			}
 
-			var note:FlxSprite = new FlxSprite(posX, yPos);
+			note = new FlxSprite(posX, yPos);
+			/* if (FlxG.save.data.unlockedBosipNotes)
+			note.frames = Paths.getSparrowAtlas('funnyNotes/bosip');
+			else */
 			note.frames = Paths.getSparrowAtlas('NOTE_assets');
 			var animations:Array<String> = ['purple0', 'blue0', 'green0', 'red0'];
+			trace('default hue for ' + animations[i] + ' is ' + defaultNoteHues[i]);
 			note.animation.addByPrefix('idle', animations[i]);
 			note.animation.play('idle');
 			note.antialiasing = ClientPrefs.globalAntialiasing;
@@ -266,7 +272,11 @@ class NotesSubState extends MusicBeatSubstate
 			curValue = max;
 		}
 		roundedValue = Math.round(curValue);
+		trace('Value: ' + roundedValue + '(' + curValue + ')');
 		ClientPrefs.arrowHSV[curSelected][typeSelected] = roundedValue;
+		trace('default hue for ' + note.animation.frameName + ' is ' + defaultNoteHues[curSelected]);
+		trace('Hue: ' + shaderArray[curSelected].hue);
+		
 
 		switch(typeSelected) {
 			case 0: shaderArray[curSelected].hue = roundedValue / 360;

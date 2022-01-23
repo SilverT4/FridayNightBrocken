@@ -83,6 +83,7 @@ class GraphicsSettingsSubState extends BaseOptionsMenu
 			if(sprite != null && (sprite is FlxSprite) && !(sprite is FlxText)) {
 				sprite.antialiasing = ClientPrefs.globalAntialiasing;
 			}
+			super.reloadBoyfriend();
 		}
 	}
 

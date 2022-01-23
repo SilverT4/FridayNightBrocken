@@ -38,6 +38,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
 	private var boyfriend:Character = null;
+	private var bfRandom:Array<String> = ['bf', 'henry', 'decktop', 'decktop-were', 'miniop-old', 'op', 'winter', 'symon', 'blaze', 'arson', 'sparker', /* 'bfafter', 'picoafter', 'gs', */ 'coldfront', /* 'bosip', 'bob', */ 'decktop-gf'];
+	private var vore:Int;
 	private var descBox:FlxSprite;
 	private var descText:FlxText;
 
@@ -54,6 +56,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		#if desktop
 		DiscordClient.changePresence(rpcTitle, null);
 		#end
+		vore = Random.int(0, (bfRandom.length - 1));
 		
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
@@ -338,8 +341,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 			remove(boyfriend);
 			boyfriend.destroy();
 		}
+		vore = Random.int(0, (bfRandom.length - 1));
 
-		boyfriend = new Character(840, 170, 'bf', true);
+		boyfriend = new Character(840, 170, bfRandom[vore], true);
+		trace('randomly selected ' + bfRandom[vore]);
 		boyfriend.setGraphicSize(Std.int(boyfriend.width * 0.75));
 		boyfriend.updateHitbox();
 		boyfriend.dance();

@@ -58,6 +58,17 @@ class OptionsState extends MusicBeatState
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
+		trace(FlxG.sound.music);
+	/* if(FlxG.sound.music == null) {
+		FlxG.sound.playMusic(Paths.music('desktop'), 0);
+
+		FlxG.sound.music.fadeIn(4, 0, 0.7);
+	} else if (FlxG.sound.music.playing) {
+		FlxG.sound.music.stop();
+		FlxG.sound.playMusic(Paths.music('desktop'), 0);
+
+		FlxG.sound.music.fadeIn(4, 0, 0.7);
+	} */ // bob and bosip content is gitignored
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;
@@ -106,6 +117,10 @@ class OptionsState extends MusicBeatState
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+			/* FlxG.sound.music.stop();
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0); */ //dont need it
+
+		FlxG.sound.music.fadeIn(4, 0, 0.7);
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
