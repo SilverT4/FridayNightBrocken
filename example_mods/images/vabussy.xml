@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="vabussy.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="Are you having fun yet0000" x="0" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0001" x="510" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0002" x="1020" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0003" x="1530" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0004" x="2040" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0005" x="2550" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0006" x="3060" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0007" x="3570" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0008" x="4080" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0009" x="4590" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0010" x="5100" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0011" x="5610" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0012" x="6120" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0013" x="6630" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0014" x="7140" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0015" x="7650" y="0" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0016" x="0" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0017" x="510" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0018" x="1020" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0019" x="1530" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0020" x="2040" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0021" x="2550" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0022" x="3060" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0023" x="3570" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0024" x="4080" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0025" x="4590" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0026" x="5100" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0027" x="5610" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0028" x="6120" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0029" x="6630" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0030" x="7140" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0031" x="7650" y="286" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0032" x="0" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0033" x="510" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0034" x="1020" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0035" x="1530" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0036" x="2040" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0037" x="2550" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0038" x="3060" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0039" x="3570" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0040" x="4080" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0041" x="4590" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0042" x="5100" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0043" x="5610" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0044" x="6120" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0045" x="6630" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0046" x="7140" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0047" x="7650" y="572" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0048" x="0" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0049" x="510" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0050" x="1020" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0051" x="1530" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0052" x="2040" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0053" x="2550" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0054" x="3060" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0055" x="3570" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0056" x="4080" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0057" x="4590" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0058" x="5100" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0059" x="5610" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0060" x="6120" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0061" x="6630" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0062" x="7140" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0063" x="7650" y="858" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0064" x="0" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0065" x="510" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0066" x="1020" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0067" x="1530" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0068" x="2040" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0069" x="2550" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0070" x="3060" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0071" x="3570" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0072" x="4080" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0073" x="4590" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0074" x="5100" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0075" x="5610" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0076" x="6120" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0077" x="6630" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0078" x="7140" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0079" x="7650" y="1144" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0080" x="0" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0081" x="510" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0082" x="1020" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0083" x="1530" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0084" x="2040" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0085" x="2550" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0086" x="3060" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0087" x="3570" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0088" x="4080" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0089" x="4590" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0090" x="5100" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0091" x="5610" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0092" x="6120" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0093" x="6630" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0094" x="7140" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0095" x="7650" y="1430" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0096" x="0" y="1716" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0097" x="510" y="1716" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0098" x="1020" y="1716" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0099" x="1530" y="1716" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0100" x="2040" y="1716" width="510" height="286"/>
+	<SubTexture name="Are you having fun yet0101" x="2550" y="1716" width="510" height="286"/>
+	<SubTexture name="youre done0000" x="3060" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0001" x="3580" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0002" x="4100" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0003" x="4620" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0004" x="5140" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0005" x="5660" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0006" x="6180" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0007" x="6700" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0008" x="7220" y="1716" width="520" height="293"/>
+	<SubTexture name="youre done0009" x="0" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0010" x="520" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0011" x="1040" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0012" x="1560" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0013" x="2080" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0014" x="2600" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0015" x="3120" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0016" x="3640" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0017" x="4160" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0018" x="4680" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0019" x="5200" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0020" x="5720" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0021" x="6240" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0022" x="6760" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0023" x="7280" y="2009" width="520" height="293"/>
+	<SubTexture name="youre done0024" x="0" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0025" x="520" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0026" x="1040" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0027" x="1560" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0028" x="2080" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0029" x="2600" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0030" x="3120" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0031" x="3640" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0032" x="4160" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0033" x="4680" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0034" x="5200" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0035" x="5720" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0036" x="6240" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0037" x="6760" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0038" x="7280" y="2302" width="520" height="293"/>
+	<SubTexture name="youre done0039" x="0" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0040" x="520" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0041" x="1040" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0042" x="1560" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0043" x="2080" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0044" x="2600" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0045" x="3120" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0046" x="3640" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0047" x="4160" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0048" x="4680" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0049" x="5200" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0050" x="5720" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0051" x="6240" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0052" x="6760" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0053" x="7280" y="2595" width="520" height="293"/>
+	<SubTexture name="youre done0054" x="0" y="2888" width="520" height="293"/>
+	<SubTexture name="youre done0055" x="520" y="2888" width="520" height="293"/>
+	<SubTexture name="youre done0056" x="520" y="2888" width="520" height="293"/>
+	<SubTexture name="youre done0057" x="520" y="2888" width="520" height="293"/>
+	<SubTexture name="youre done0058" x="1040" y="2888" width="520" height="293"/>
+	<SubTexture name="youre done0059" x="1560" y="2888" width="520" height="293"/>
+	<SubTexture name="youre done0060" x="1560" y="2888" width="520" height="293"/>
+</TextureAtlas>
