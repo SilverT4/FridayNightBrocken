@@ -583,6 +583,7 @@ class FunkinLua {
 			PlayState.instance.songScore += value;
 			PlayState.instance.RecalculateRating();
 		});
+		var ass:String = ".";
 		Lua_helper.add_callback(lua, "addMisses", function(value:Int = 0) {
 			PlayState.instance.songMisses += value;
 			PlayState.instance.RecalculateRating();
