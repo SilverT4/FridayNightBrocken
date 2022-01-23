@@ -75,6 +75,7 @@ assets/shared/music/PeaceTranquility.mp3
 assets/shared/music/PeaceTranquility.ogg
 source/PeaceTranquilitySubstate.hx
 source/DebugQuickLaunch.hx
+assets - Shortcut.lnk
 APIStuff.hx
 art/build_x32-officialrelease.bat
 art/build_x64-officialrelease.bat
