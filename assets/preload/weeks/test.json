@@ -1,0 +1,40 @@
+{
+	"songs": [
+		[
+			"Test",
+			"pan",
+			[
+				255,
+				150,
+				0
+			]
+		],
+		[
+			"Little-Man",
+			"littleman",
+			[
+				255,
+				255,
+				255
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"difficulties": "",
+	"weekCharacters": [
+		"bf",
+		"bf",
+		"bf"
+	],
+	"storyName": "Test Week",
+	"weekName": "Debug Week",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": true,
+	"weekBefore": "funweek",
+	"startUnlocked": true
+}
