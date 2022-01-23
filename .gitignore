@@ -1,5 +1,80 @@
 export/
 .vscode/
+example_mods/Holiday Mod Part I
+example_mods/Holiday Mod Part II
+example_mods/VSHuggyWuggy
+example_mods/characters/sonic.exe alt.json
+example_mods/characters/sonic.exe.json
+example_mods/characters/neneafter.json
+example_mods/characters/picoafter.json
+example_mods/characters/huggy.json
+example_mods/characters/bfafter.json
+example_mods/characters/littleman.json
+example_mods/weeks/bobbosip.json
+example_mods/weeks/fns.json
+example_mods/images/characters/Bob_gf.png
+example_mods/images/characters/Bob_gf.xml
+example_mods/images/characters/Bosip_gf.png
+example_mods/images/characters/Bosip_gf.xml
+example_mods/images/characters/demoman charging.png
+example_mods/images/characters/demoman charging.xml
+example_mods/images/characters/Demoman.png
+example_mods/images/characters/Demoman.xml
+example_mods/images/characters/funny folder man.png
+example_mods/images/characters/funny folder man.xml
+example_mods/images/characters/huggy.png
+example_mods/images/characters/huggy.xml
+example_mods/images/characters/milady.png
+example_mods/images/characters/milady.xml
+example_mods/images/characters/naenae.png
+example_mods/images/characters/naenae.xml
+example_mods/images/characters/pico-after.png
+example_mods/images/characters/pico-after.xml
+example_mods/images/characters/pixel bf.png
+example_mods/images/characters/pixel bf.xml
+example_mods/images/characters/pixel demo.png
+example_mods/images/characters/pixel demo.xml
+example_mods/images/characters/Pixel_gf.png
+example_mods/images/characters/Pixel_gf.xml
+example_mods/images/characters/Small_Guy.png
+example_mods/images/characters/Small_Guy.xml
+example_mods/images/icons/icon-bob.png
+example_mods/images/icons/icon-bosip.png
+example_mods/images/icons/icon-naenae.png
+example_mods/images/icons/icon-bfa.png
+example_mods/images/icons/icon-ronald.png
+example_mods/images/icons/icon-pizzaman.png
+example_mods/images/icons/icon-picoa.png
+example_mods/images/icons/icon-pan.png
+example_mods/images/icons/icon-huggy.png
+example_mods/images/littleman/
+example_mods/images/stages/
+example_mods/stages/ronald.json
+example_mods/stages/ronald.lua
+example_mods/images/menucharacters/huggymenu.png
+example_mods/images/menucharacters/huggymenu.xml
+example_mods/data/gossip/
+example_mods/data/jump-in/
+example_mods/data/little-man/
+example_mods/data/playtime/
+example_mods/data/split/
+example_mods/data/swing/
+example_mods/data/tutorial-fns/
+example_mods/data/you-cant-run/
+example_mods/stages/exampleStage.json
+example_mods/stages/exampleStage.lua
+assets/locked/noteskins/bob.png
+assets/locked/noteskins/bob.xml
+assets/locked/noteskins/bosip.png
+assets/locked/noteskins/bosip.xml
+assets/locked/noteskins/minishoey.png
+assets/locked/noteskins/minishoey.xml
+assets/preload/music/desktop.ogg
+assets/shared/music/mktFriends.ogg
+assets/shared/music/PeaceTranquility.mp3
+assets/shared/music/PeaceTranquility.ogg
+source/PeaceTranquilitySubstate.hx
+source/DebugQuickLaunch.hx
 APIStuff.hx
 art/build_x32-officialrelease.bat
 art/build_x64-officialrelease.bat
