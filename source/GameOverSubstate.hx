@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxRandom;
 import flixel.FlxG;
 import flixel.FlxObject;
 import flixel.FlxSubState;
@@ -9,6 +10,8 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
+import Random;
+import FunkinLua;
 
 class GameOverSubstate extends MusicBeatSubstate
 {
@@ -23,14 +26,18 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var deathSoundName:String = 'fnf_loss_sfx';
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
+	static var PeaceChance:Int = Random.int(0, 100);
+	static var debugPeaceTrace:Array<String> = ["Oh, we're doing it this way, eh? Aight.", "C'mon, just let the thing happen naturally.", "You're boring.", "I guess you really need that help."];
 
 	public static var instance:GameOverSubstate;
+	
 
 	public static function resetVariables() {
-		characterName = 'bf';
+		characterName = 'henry';
 		deathSoundName = 'fnf_loss_sfx';
 		loopSoundName = 'gameOver';
 		endSoundName = 'gameOverEnd';
+		PeaceChance = Random.int(0,100);
 	}
 
 	override function create()
@@ -40,11 +47,14 @@ class GameOverSubstate extends MusicBeatSubstate
 
 		super.create();
 	}
-
+	
 	public function new(x:Float, y:Float, camX:Float, camY:Float)
 	{
 		super();
-
+		if (characterName == 'decktop-were') trace('bf was decktop hopefully that\' was correct for whoever the fuck you were playing as') else trace('bf was ' + characterName + ' hopefully that\' was correct for whoever the fuck you were playing as');
+		#if debug
+		trace('Peace chance is ' + PeaceChance + '!');
+		#end
 		PlayState.instance.setOnLuas('inGameOver', true);
 
 		Conductor.songPosition = 0;
@@ -87,6 +97,13 @@ class GameOverSubstate extends MusicBeatSubstate
 		{
 			endBullshit();
 		}
+		#if debug
+		if (FlxG.keys.justReleased.P) {
+			if (PeaceChance <= 60) PeaceChance = 69 else PeaceChance = 20;
+			trace(debugPeaceTrace[Random.int(0, debugPeaceTrace.length - 1)]);
+			endBullshit();
+		}
+		#end
 
 		if (controls.BACK)
 		{
@@ -139,7 +156,23 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		FlxG.sound.playMusic(Paths.music(loopSoundName), volume);
 	}
+	/* public function callOnBfLuas(event:String, args:Array<Dynamic>):Dynamic {
+		var returnVal:Dynamic = FunkinLua.Function_Continue;
+		#if LUA_ALLOWED
+		for (i in 0...luaArray.length) {
+			var ret:Dynamic = luaArray[i].call(event, args);
+			if(ret != FunkinLua.Function_Continue) {
+				returnVal = ret;
+			}
+		}
 
+		for (i in 0...closeLuas.length) {
+			luaArray.remove(closeLuas[i]);
+			closeLuas[i].stop();
+		}
+		#end
+		return returnVal;
+	} */
 	function endBullshit():Void
 	{
 		if (!isEnding)
@@ -148,6 +181,15 @@ class GameOverSubstate extends MusicBeatSubstate
 			boyfriend.playAnim('deathConfirm', true);
 			FlxG.sound.music.stop();
 			FlxG.sound.play(Paths.music(endSoundName));
+			/* if (PeaceChance >= 60) {
+				FlxG.camera.fade(FlxColor.RED, 2, false, function()
+					{
+						openSubState(new PeaceTranquilitySubstate(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y, camFollowPos.x, camFollowPos.y));
+						boyfriend.visible = false;
+						closeSubState();
+					});
+				
+			} else { // Peace and Tranquility substate is gitignored, GAME WON'T WORK WITHOUT COMMENT!! */
 			new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
@@ -155,6 +197,7 @@ class GameOverSubstate extends MusicBeatSubstate
 					MusicBeatState.resetState();
 				});
 			});
+		// }
 			PlayState.instance.callOnLuas('onGameOverConfirm', [true]);
 		}
 	}

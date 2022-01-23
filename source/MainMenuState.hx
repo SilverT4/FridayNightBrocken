@@ -55,6 +55,11 @@ class MainMenuState extends MusicBeatState
 		#end
 
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
+		if(FlxG.sound.music == null) {
+			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+
+			FlxG.sound.music.fadeIn(4, 0, 0.7);
+		}
 
 		camGame = new FlxCamera();
 		camAchievement = new FlxCamera();
@@ -188,6 +193,12 @@ class MainMenuState extends MusicBeatState
 				FlxG.sound.play(Paths.sound('scrollMenu'));
 				changeItem(1);
 			}
+
+			if (FlxG.keys.justReleased.SIX)
+				{
+					// FlxG.sound.play('mods/Holiday Mod Part II/sounds/TOM.ogg', 2);
+					MusicBeatState.switchState(new PasswordState());
+				}
 
 			if (controls.BACK)
 			{

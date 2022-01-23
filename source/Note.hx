@@ -99,6 +99,17 @@ class Note extends FlxSprite
 						missHealth = 0.3;
 					}
 					hitCausesMiss = true;
+				case 'Vanny Note':
+					ignoreNote = mustPress;
+					colorSwap.hue = 0;
+					colorSwap.saturation = 0;
+					colorSwap.brightness = 0;
+					if (isSustainNote) {
+						missHealth = 0.05;
+					} else {
+						missHealth = 0.1;
+					}
+					hitCausesMiss = true;
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':

@@ -292,12 +292,12 @@ class FreeplayState extends MusicBeatState
 				var poop:String = Highscore.formatSong(songs[curSelected].songName.toLowerCase(), curDifficulty);
 				PlayState.SONG = Song.loadFromJson(poop, songs[curSelected].songName.toLowerCase());
 				if (PlayState.SONG.needsVoices)
-					vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
+					/* if (curDifficulty == 2) new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song) + 'EX') else */ vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
 				else
 					vocals = new FlxSound();
 
 				FlxG.sound.list.add(vocals);
-				FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
+				/* if (curDifficulty == 2) FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song + 'EX'), 0.7) else */ FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 0.7);
 				vocals.play();
 				vocals.persist = true;
 				vocals.looped = true;
@@ -310,7 +310,10 @@ class FreeplayState extends MusicBeatState
 		else if (accepted)
 		{
 			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
-			var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
+			var poop:String;
+			if (songs[curSelected].songName == 'Test') { poop = Highscore.formatSong(songLowercase, 1); } else { poop = Highscore.formatSong(songLowercase, curDifficulty); }
+			trace(poop);
+			//var poop:String = Highscore.formatSong(songLowercase, curDifficulty);
 			/*#if MODS_ALLOWED
 			if(!sys.FileSystem.exists(Paths.modsJson(songLowercase + '/' + poop)) && !sys.FileSystem.exists(Paths.json(songLowercase + '/' + poop))) {
 			#else
