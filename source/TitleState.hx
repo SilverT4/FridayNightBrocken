@@ -407,6 +407,11 @@ class TitleState extends MusicBeatState
 			FlxG.fullscreen = !FlxG.fullscreen;
 		}
 
+		if (FlxG.keys.justReleased.B) {
+			trace('hamburger');
+			// FlxG.switchState(new DebugQuickLaunch()); // DebugQuickLaunch is gitignored
+		}
+
 		var pressedEnter:Bool = FlxG.keys.justPressed.ENTER || controls.ACCEPT;
 
 		#if mobile
