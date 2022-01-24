@@ -494,15 +494,24 @@ class PasswordState extends MusicBeatState
         }
     }
     
-    function unlockSong(songName:String, ?diffics:Array<String>) {
+    function unlockSong(songName:String, ?diffics:Array<String>, ?needsVoices:Bool) {
         var diffics:Array<String> = ['-easy', '', '-hard'];
         for (i in 0...diffics.length) {
             trace(i + ' of ' + diffics.length + ': copying file ' + songName + diffics[i] + '.json to mods folder');
             File.copy('assets/locked/songs/' + songName + '/data/' + songName + diffics[i] + '.json', 'mods/data/' + songName + '/' + songName + diffics[i] + '.json');
         }
         var copyThese:Array<String> = ['Inst', 'Voices'];
-        for (i in 0...copyThese.length) {
-            File.copy('assets/locked/songs/' + songName + '/audio/' + copyThese[i] + '.ogg', 'mods/songs/' + songName + '/' + copyThese[i] + '.ogg');
+        var copyOnlyInst:String = 'Inst';
+        if (needsVoices != null && !needsVoices) {
+            File.copy('assets/locked/songs/' + songName + '/audio/' + copyOnlyInst + '.ogg', 'mods/songs/' + songName + '/' + copyOnlyInst + 'ogg');
+        } else if (needsVoices == null && FileSystem.exists('assets/locked/songs/' + songName + '/audio/Voices.ogg')) {
+            for (i in 0...copyThese.length) {
+                File.copy('assets/locked/songs/' + songName + '/audio/' + copyThese[i] + '.ogg', 'mods/songs/' + songName + '/' + copyThese[i] + '.ogg');
+            }
+        } else {
+            for (i in 0...copyThese.length) {
+                File.copy('assets/locked/songs/' + songName + '/audio/' + copyThese[i] + '.ogg', 'mods/songs/' + songName + '/' + copyThese[i] + '.ogg');
+            }
         }
     }
     
