@@ -474,10 +474,10 @@ class PasswordState extends MusicBeatState
         #end
     }
     
-    function unlockNoteskin(skinName:String) {
+    function unlockNoteskin(skinName:String, ?folderName:String = 'funnyNotes') {
         var fileTypes:Array<String> = ['.png', '.xml'];
         for (i in 0...1) {
-            File.copy('assets/locked/noteskins/' + skinName + fileTypes[i], 'mods/images/funnyNotes/' + skinName + fileTypes[i]);
+            File.copy('assets/locked/noteskins/' + skinName + fileTypes[i], 'mods/images/' + folderName + '/' + skinName + fileTypes[i]);
         }
         switch (skinName) {
             /* case 'bosip':
