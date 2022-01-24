@@ -614,20 +614,31 @@ class CharacterEditorState extends MusicBeatState
 			trace('selected');
 			charToTest = characterSide.selectedLabel;
 		});
+		charToTest = characterSide.selectedLabel;
 		var dum = [''];
 		var dumAss = FileSystem.readDirectory('assets/data/');
+		var dumAssTwo = FileSystem.readDirectory('mods/data');
 		for (i in 0...dumAss.length) {
 			if (!dumAss[i].endsWith('.txt') && !dumAss[i].endsWith('.TXT') && !dumAss[i].endsWith('.xml') && !dumAss[i].endsWith('.json')) {
 			trace(Std.int(i + 1) + ' of ' + dumAss.length + ': Added song ' + dumAss[i] + ' to songlist');
 			dum.push(dumAss[i]);
 			} else {
-				trace(Std.int(i + 1) + ' of ' + dumAss.length + ': Skipping ' + dumAss[i] + ', file is of extension ' + dumAss[i].substr(this.length - 4));
+				trace(Std.int(i + dumAss.length + 1) + ' of ' + dumAssTwo.length + ': Skipping ' + dumAss[i] + ', file is of extension ' + dumAss[i].substr(this.length - 4));
+			}
+		}
+		for (i in 0...dumAssTwo.length) {
+			if (!dumAssTwo[i].endsWith('.txt') && !dumAssTwo[i].endsWith('.json')) {
+				trace(Std.int(i + 1) + ' of ' + dumAssTwo.length + ': Added song ' + dumAssTwo[i] + 'to songlist');
+				dum.push(dumAssTwo[i]);
+			} else {
+				trace(Std.int(i + dumAss.length + 1) + ' of ' + dumAssTwo.length + ': Skipping ' + dumAss[i] + ', file is of extension ' + dumAss[i].substr(this.length - 4));
 			}
 		}
 		songList = new FlxUIDropDownMenu(15, characterSide.y + 35, FlxUIDropDownMenuCustom.makeStrIdLabelArray(dum, true), function(songForTest:String) {
 			trace('selected ' + songList.selectedLabel);
-			songForTest = songList.selectedLabel;
+			
 		});
+		songForTest = songList.selectedLabel;
 
 		var beginTest:FlxButton = new FlxButton(characterSide.x + 210, characterSide.y - 3, "Test Char.", function()
 		{
@@ -1358,6 +1369,7 @@ class CharacterTestStarter extends MusicBeatSubstate {
 	public function new(songName:String, charType:String, charName:String = 'blaze') {
 		super();
 		camAmogus = new FlxCamera();
+		camAmogus.bgColor.alpha = 0;
 		FlxG.cameras.add(camAmogus);
 		warningBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.ORANGE);
 		warningBg.alpha = 0.5;
