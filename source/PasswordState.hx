@@ -64,9 +64,11 @@ class PasswordState extends MusicBeatState
     [
         'SuspiciousFool',
         'Grass',
-        'YouReallyWantTheBlueBoi',
+        'KermitArson'
+        // 'Amogus'
+        /* 'YouReallyWantTheBlueBoi',
         'BosipBestShipOC',
-        'ThoseShoesAreKindaSmall'
+        'ThoseShoesAreKindaSmall' */
     ];
     var unlocks:Array<Dynamic>;
     var hen:Character;
@@ -74,22 +76,25 @@ class PasswordState extends MusicBeatState
     var pwValidateButton:FlxButton;
     var pwPromptText:FlxText;
     var miniSaber:FlxSprite;
+    var youIdiot:FlxSprite;
     var finishedCheck:Bool;
     var exitingMenu:Bool = false;
     var bfOpponent:FlxSprite;
     var bg:FlxSprite;
-    var sussyFlags:Array<String> = ['unlockedBosipNotes', 'unlockedBobNotes', 'unlockedMiniShoeyNotes', 'unlockedMiniSaber', 'unlockedBfOpponent'];
+    var sussyFlags:Array<String> = [/* 'unlockedBosipNotes', 'unlockedBobNotes', 'unlockedMiniShoeyNotes', */'unlockedMiniSaber', 'unlockedBfOpponent', 'unlockedArsonist'];
     var sussyText:FlxText;
-    var hahaBosip:FlxText;
+    /* var hahaBosip:FlxText;
     var hahaBob:FlxText;
-    var hahaMiniShoey:FlxText;
+    var hahaMiniShoey:FlxText; */
     var hahaSaber:FlxText;
     var hahaBfOp:FlxText;
-    var ohnoBosip:FlxText;
+    var hahaArson:FlxText;
+    /* var ohnoBosip:FlxText;
     var ohnoBob:FlxText;
-    var ohnoMiniShoey:FlxText;
+    var ohnoMiniShoey:FlxText; */
     var ohnoSaber:FlxText; 
     var ohnoBfOp:FlxText;
+    var ohnoArson:FlxText;
     var sussyBg:FlxSprite;
     var contentTypes:Array<String> = ['Character', 'Song', 'Noteskin'];
     private var shaderArray:Array<ColorSwap> = [];
@@ -112,16 +117,18 @@ class PasswordState extends MusicBeatState
             FlxG.save.data.usedPasswords = ['your mom'];
             usedPasswords = FlxG.save.data.usedPasswords;
         }
-        hahaBosip = new FlxText(0, 26, FlxG.width, '');
+        /* hahaBosip = new FlxText(0, 26, FlxG.width, '');
         hahaBob = new FlxText(0, 52, FlxG.width, '');
-        hahaMiniShoey = new FlxText(0, 78, FlxG.width, '');
+        hahaMiniShoey = new FlxText(0, 78, FlxG.width, ''); */
         hahaSaber = new FlxText(0, 104, FlxG.width, '');
         hahaBfOp = new FlxText(0, 130, FlxG.width, '');
-        ohnoBosip = new FlxText(0, 26, FlxG.width, '');
+        hahaArson = new FlxText(0, 156, FlxG.width, '');
+        /* ohnoBosip = new FlxText(0, 26, FlxG.width, '');
         ohnoBob = new FlxText(0, 52, FlxG.width, '');
-        ohnoMiniShoey = new FlxText(0, 78, FlxG.width, '');
+        ohnoMiniShoey = new FlxText(0, 78, FlxG.width, ''); */
         ohnoSaber = new FlxText(0, 104, FlxG.width, '');
         ohnoBfOp = new FlxText(0, 130, FlxG.width, '');
+        ohnoArson = new FlxText(0, 156, FlxG.width, '');
         if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
     }
     override function create()
@@ -155,6 +162,9 @@ class PasswordState extends MusicBeatState
         }
         if (miniSaber != null) {
             miniSaber.update(elapsed);
+        }
+        if (youIdiot != null) {
+            youIdiot.update(elapsed);
         }
         if (bfOpponent != null) {
             bfOpponent.update(elapsed);
@@ -192,7 +202,7 @@ class PasswordState extends MusicBeatState
             trace(i);
             prepMainCreate(i);
             switch (sussyFlags[i]) {
-                case 'unlockedBosipNotes':
+                /* case 'unlockedBosipNotes':
                 if (FlxG.save.data.unlockedBosipNotes != null) {
                     trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedBosipNotes);
                     hahaBosip.text = 'flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedBosipNotes;
@@ -216,7 +226,7 @@ class PasswordState extends MusicBeatState
                 }
                 case 'unlockedMiniShoeyNotes':
                 if (FlxG.save.data.unlockedMiniShoeyNotes != null) {
-                    trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedBosipNotes);
+                    trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedMiniShoeyNotes);
                     hahaMiniShoey.text = 'flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedMiniShoeyNotes;
                     add(hahaMiniShoey);
                 } else {
@@ -224,10 +234,21 @@ class PasswordState extends MusicBeatState
                     FlxG.save.data.unlockedMiniShoeyNotes = false;
                     ohnoMiniShoey.text = 'flag ' + sussyFlags[i] + ' does not exist, initializing...';
                     add(ohnoMiniShoey);
+                } */
+                case 'unlockedArsonist':
+                if (FlxG.save.data.unlockedArsonist != null) {
+                    trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedArsonist);
+                    hahaArson.text = 'flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedArsonist;
+                    add(hahaArson);
+                } else {
+                    trace('flag ' + sussyFlags[i] + ' does not exist. initializing...');
+                    FlxG.save.data.unlockedArsonist = false;
+                    ohnoArson.text = 'flag ' + sussyFlags[i] + ' does not exist, initializing...';
+                    add(ohnoArson);
                 }
                 case 'unlockedMiniSaber':
                 if (FlxG.save.data.unlockedMiniSaber != null) {
-                    trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedBosipNotes);
+                    trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedMiniSaber);
                     hahaSaber.text = 'flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedMiniSaber;
                     add(hahaSaber);
                 } else {
@@ -238,7 +259,7 @@ class PasswordState extends MusicBeatState
                 }
                 case 'unlockedBfOpponent':
                 if (FlxG.save.data.unlockedBfOpponent != null) {
-                    trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedBosipNotes);
+                    trace('flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedBfOpponent);
                     hahaBfOp.text = 'flag ' + sussyFlags[i] + ' exists, value: ' + FlxG.save.data.unlockedBfOpponent;
                     add(hahaBfOp);
                     prepMainCreate(sussyFlags.length);
@@ -313,6 +334,14 @@ class PasswordState extends MusicBeatState
         bfOpponent.animation.play('fard');
         bfOpponent.shader = lockedShader.shader;
         add(bfOpponent);
+        youIdiot = new FlxSprite(FlxG.width * 0.69, FlxG.height * 0.4);
+        youIdiot.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/Arsonist.png', 'path/to/your/Arsonist.xml');
+        youIdiot.setGraphicSize(256, 256);
+        youIdiot.animation.addByPrefix('actingsus', 'BF idle dance', 24, true);
+        youIdiot.animation.addByPrefix('venting', 'BF HEY', 24, false);
+        youIdiot.animation.play('actingsus');
+        youIdiot.shader = lockedShader.shader;
+        add(youIdiot);
     }
     
     function validateInput(funnyWord:String) {
@@ -358,7 +387,17 @@ class PasswordState extends MusicBeatState
                 #end
                 bfOpponent.shader = null;
                 bfOpponent.animation.play('shid');
-            case 'YouReallyWantTheBlueBoi':
+            case 'KermitArson':
+                trace('unlocking arsonist');
+                setUnlockedContent(0, ['boyfriend', 'mod character', 'Flamestarter', 'skin', 0, 'arson']);
+                #if debug
+                trace('dry run');
+                #else
+                unlockCharacter([''], 'arson');
+                #end
+                youIdiot.shader = null;
+                youIdiot.animation.play('venting');
+            /* case 'YouReallyWantTheBlueBoi':
                 trace('unlocking bob notes');
                 unlockNoteskin('bob');
             case 'ThoseShoesAreKindaSmall':
@@ -366,7 +405,7 @@ class PasswordState extends MusicBeatState
                 unlockNoteskin('minishoey');
             case 'BosipBestShipOC':
                 trace('unlocking bosip notes');
-                unlockNoteskin('minishoey');
+                unlockNoteskin('minishoey'); */
         }
     }
     function unlockCharacter(charVars:Array<String>, charName:String) {
@@ -426,7 +465,7 @@ class PasswordState extends MusicBeatState
     function prepMainCreate(i:Int) {
         new FlxTimer().start(3, function (tmr:FlxTimer) {
             if (i == sussyFlags.length) {
-                if (hahaBosip != null) {
+                /* if (hahaBosip != null) {
                     hahaBosip.destroy();
                 }
                 if (hahaBob != null) {
@@ -434,14 +473,14 @@ class PasswordState extends MusicBeatState
                 }
                 if (hahaMiniShoey != null) {
                     hahaMiniShoey.destroy();
-                }
+                } */
                 if (hahaSaber != null) {
                     hahaSaber.destroy();
                 }
                 if (hahaBfOp != null) {
                     hahaBfOp.destroy();
                 }
-                if (ohnoBosip != null) {
+                /* if (ohnoBosip != null) {
                     ohnoBosip.destroy();
                 }
                 if (ohnoBob != null) {
@@ -449,7 +488,7 @@ class PasswordState extends MusicBeatState
                 }
                 if (ohnoMiniShoey != null) {
                     ohnoMiniShoey.destroy();
-                }
+                } */
                 if (ohnoSaber != null) {
                     ohnoSaber.destroy();
                 }
@@ -479,7 +518,7 @@ class PasswordState extends MusicBeatState
             case 2:
                 useInstructions.push("To set this noteskin, go into the chart editor. In the 'Song' section, type 'funnyNotes/" + unlockedContent[5] + "' in the note skin box and click reload notes.");
             case 3:
-                trace('vore my asshole like its a lollipop');
+                trace('this is a very large oof');
         }
         switch (suspiciousResultCode) {
             case 0:
