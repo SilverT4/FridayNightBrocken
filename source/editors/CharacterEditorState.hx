@@ -604,6 +604,8 @@ class CharacterEditorState extends MusicBeatState
 	var warnLabel:FlxText;
 	var characterSide:FlxUIDropDownMenu;
 	var songList:FlxUIDropDownMenu;
+	var charToTest:String;
+	var songForTest:String;
 	function addTestCharUI() {
 		var tab_group = new FlxUI(null, UI_box);
 		tab_group.name = "Test Character";
@@ -629,7 +631,8 @@ class CharacterEditorState extends MusicBeatState
 
 		var beginTest:FlxButton = new FlxButton(characterSide.x + 210, characterSide.y - 3, "Test Char.", function()
 		{
-			trace('placeholder code eh');
+			var curChar = imageInputText.text;
+			openSubState(new CharacterTestStarter(songForTest, charToTest, curChar));
 		});
 
 		// healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
@@ -1342,5 +1345,41 @@ class CharacterEditorState extends MusicBeatState
 
 		var text:String = prefix + Clipboard.text.replace('\n', '');
 		return text;
+	}
+}
+
+class CharacterTestStarter extends MusicBeatSubstate {
+	var warningBg:FlxSprite;
+	var warningText:FlxText;
+	var confirmButton:FlxButton;
+	var cancelButton:FlxButton;
+
+	public function new(songName:String, charType:String, charName:String = 'blaze') {
+		super();
+		warningBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.ORANGE);
+		warningBg.alpha = 0.5;
+		warningBg.screenCenter();
+		add(warningBg);
+		warningText = new FlxText(0, 0, FlxG.width, '');
+		warningText.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, CENTER, SHADOW, FlxColor.GRAY);
+		warningText.text = 'Have you saved your character? If not, make sure to save it to:\nmods/characters/' + charName + '.json\nMake sure you do this BEFORE clicking Start Test, as you CANNOT recover any unsaved edits you have made here once you click it.';
+		add(warningText);
+		confirmButton = new FlxButton(warningText.x - 50, warningText.y - 100, 'Continue', function() {
+			PlayState.SONG = Song.loadFromJson(songName.toLowerCase(), songName.toLowerCase());
+			switch (charType) {
+				case 'boyfriend':
+					PlayState.SONG.player1 = charName;
+				case 'dad':
+					PlayState.SONG.player2 = charName;
+				case 'girlfriend':
+					PlayState.SONG.player3 = charName;	
+			}
+			MusicBeatState.switchState(new PlayState());
+		});
+		cancelButton = new FlxButton(confirmButton.x + 150, confirmButton.y, 'Cancel', function() {
+			closeSubState();
+		});
+		add(confirmButton);
+		add(cancelButton);
 	}
 }
