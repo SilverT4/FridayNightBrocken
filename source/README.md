@@ -57,7 +57,7 @@ Example for a song (Note: The second argument for unlockSong is optional, you ca
             case 'HahaBalls':
                 trace('unlocking my balls ( ͡° ͜ʖ ͡°)');
                 setUnlockedContent(0, 1, ['classic internet song', 'custom song', 'My Balls', 'by Your Favorite Martian', 'song', 1, 'my-balls']);
-                unlockSong('my-balls', ['easy', 'normal', 'hard', 'sussy']);
+                unlockSong('my-balls', ['-easy', '', '-hard', '-sussy']);
 ```
 8. (Optional, for character unlocks) Add your unlockable character to the screen with the following, replacing youIdiot with whatever you want to name the variable:
     i. At the top of your file: `var youIdiot:FlxSprite;`
