@@ -108,7 +108,7 @@ class PasswordState extends MusicBeatState
     var dbgPasswd:String;
     var needPasswd:Bool = false;
     var dbgNotice:FlxText;
-    var dbgNoticeBg:FlxText;
+    var dbgNoticeBg:FlxSprite;
     
     
     public function new() {
@@ -306,6 +306,15 @@ class PasswordState extends MusicBeatState
         bg.antialiasing = ClientPrefs.globalAntialiasing;
         bg.color = FlxColor.fromRGB(69, 0, 0);
         add(bg);
+        #if debug
+        dbgNoticeBg = new FlxSprite(0).makeGraphic(FlxG.width, 26, 0xFF000000);
+        dbgNoticeBg.alpha = 0.6;
+        add(dbgNoticeBg);
+        dbgNotice = new FlxText(dbgNoticeBg.x, dbgNoticeBg.y + 4, FlxG.width, "You're running the game as a debug build. Feel free to mess with the passwords to your heart's content.");
+        dbgNotice.setFormat(Paths.font("funny.ttf"), 16, FlxColor.WHITE, CENTER);
+        dbgNotice.scrollFactor.set();
+        add(dbgNotice);
+        #end
         
         hen = new Character(FlxG.width * 0.6, FlxG.height * 0.2, 'henry', false);
         hen.setGraphicSize(256, 256);
