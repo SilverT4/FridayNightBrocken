@@ -43,6 +43,7 @@ import lime.utils.Assets;
 import openfl.events.Event;
 import openfl.events.IOErrorEvent;
 import openfl.media.Sound;
+import Random;
 import openfl.net.FileReference;
 import openfl.utils.ByteArray;
 import openfl.utils.Assets as OpenFlAssets;
@@ -103,10 +104,20 @@ class PasswordState extends MusicBeatState
     var contentString:String;
     var unlockedContent:Array<Dynamic>;
     var useInstructions:Array<String>;
+    var dbgPasswd:String;
+    var needPasswd:Bool = false;
     
     
     public function new() {
         super();
+        #if debug
+        if (!FileSystem.exists('assets/data/JOEMAMA.TXT')) {
+            needPasswd = true;
+            openSubState(new DebugPasswordShit());
+        } else {
+            dbgPasswd = sys.io.File.getContent('assets/data/JOEMAMA.TXT');
+        }
+        #end
         if (FlxG.save.data.usedPasswords == null) {
             FlxG.save.data.usedPasswords = [''];
             trace(FlxG.save.data.usedPasswords);
@@ -114,7 +125,7 @@ class PasswordState extends MusicBeatState
             usedPasswords = FlxG.save.data.usedPasswords;
         } else {
             trace(FlxG.save.data.usedPasswords);
-            FlxG.save.data.usedPasswords = ['your mom'];
+            // FlxG.save.data.usedPasswords = ['your mom'];
             usedPasswords = FlxG.save.data.usedPasswords;
         }
         /* hahaBosip = new FlxText(0, 26, FlxG.width, '');
@@ -140,9 +151,13 @@ class PasswordState extends MusicBeatState
         trace('adding bullshit');
         useInstructions = [];
         pwInputBox = new FlxUIInputText(0, 0, 500, '', 16, FlxColor.BLACK, FlxColor.WHITE);
-        if (finishedCheck && !exitingMenu) {
+        if (!needPasswd && finishedCheck && !exitingMenu) {
             finishedCheck = false;
             checkSus();
+        } else if (needPasswd) {
+            trace('lets get a password lmfao');
+            FlxG.sound.music.stop();
+            FlxG.sound.playMusic(Random.fromArray(FileSystem.readDirectory('assets/songs/')) + '/Inst.ogg', 1, true);
         } else {
             trace('sussy');
             checkSus();
@@ -150,7 +165,7 @@ class PasswordState extends MusicBeatState
     }
     override function update(elapsed:Float) {
         if (controls.BACK && !pwInputBox.hasFocus) {
-            FlxG.sound.play(Paths.sound('missnote1'));
+            FlxG.sound.play('mods/sounds/jumpedYaMom.ogg'); // hate the paths system challenge /j
             if (finishedCheck) MusicBeatState.switchState(new MainMenuState()) else Sys.exit(420);
         }
         
@@ -322,7 +337,7 @@ class PasswordState extends MusicBeatState
         miniSaber.animation.addByPrefix('idle', 'MSS idle dance', 24, true);
         miniSaber.animation.addByPrefix('hey', 'MSS PEACE', 24, false);
         miniSaber.animation.play('idle');
-        miniSaber.shader = lockedShader.shader;
+        if (!FlxG.save.data.unlockedMiniSaber) miniSaber.shader = lockedShader.shader;
         lockedShader.brightness = -100;
         add(miniSaber);
 
@@ -332,7 +347,8 @@ class PasswordState extends MusicBeatState
         bfOpponent.animation.addByPrefix('fard', 'BF idle dance', 24, true);
         bfOpponent.animation.addByPrefix('shid', 'BF HEY', 24, false);
         bfOpponent.animation.play('fard');
-        bfOpponent.shader = lockedShader.shader;
+        bfOpponent.flipX = true;
+        if (!FlxG.save.data.unlockedBfOpponent) bfOpponent.shader = lockedShader.shader;
         add(bfOpponent);
         youIdiot = new FlxSprite(FlxG.width * 0.69, FlxG.height * 0.4);
         youIdiot.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/Arsonist.png', 'mods/images/characters/Arsonist.xml');
@@ -340,7 +356,7 @@ class PasswordState extends MusicBeatState
         youIdiot.animation.addByPrefix('actingsus', 'BF idle dance', 24, true);
         youIdiot.animation.addByPrefix('venting', 'BF HEY', 24, false);
         youIdiot.animation.play('actingsus');
-        youIdiot.shader = lockedShader.shader;
+        if (!FlxG.save.data.unlockedArsonist) youIdiot.shader = lockedShader.shader;
         add(youIdiot);
     }
     
@@ -356,6 +372,12 @@ class PasswordState extends MusicBeatState
             } else if (passwordList.contains(funnyWord) && usedPasswords.contains(funnyWord)) {
                 trace('Password good, but already used!');
                 displayResultMsg(2, 3);
+            } else if (funnyWord == dbgPasswd) {
+                for (i in 1...usedPasswords.length) {
+                    trace(Std.int(i + 1) + ' of ' + usedPasswords.length + ': Removing ' + usedPasswords[i] + ' from the used passwords in your save data');
+                    FlxG.save.data.usedPasswords.pop(usedPasswords[i]);
+                }
+                displayResultMsg(3, 3);
             } else {
                 trace('Invalid password. Check spelling maybe?');
                 displayResultMsg(1, 3);
@@ -365,35 +387,42 @@ class PasswordState extends MusicBeatState
     
     function beginUnlockShit(funnyWords:String) {
         trace('Just a sec...');
-        FlxG.save.data.usedPasswords += funnyWords;
+        FlxG.save.data.usedPasswords.push(funnyWords);
         switch (funnyWords) {
             case 'SuspiciousFool': 
                 trace('unlocking mini saber');
-                setUnlockedContent(0, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'mss']);
+                setUnlockedContent(0);
                 #if debug
+                displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'mss']);
                 trace('dry run');
                 #else
                 unlockCharacter(['', '-opponent'], 'minisaber');
+                displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'mss']);
                 #end
                 miniSaber.shader = null;
                 miniSaber.animation.play('hey');
             case 'Grass':
                 trace('unlocking bf opponent');
-                setUnlockedContent(0, ['opponent', 'mod character', 'BF.xml', 'skin', 0, 'bf-opponent']);
+                bg.color = FlxColor.fromRGB(0, 69, 0);
+                setUnlockedContent(0);
                 #if debug
+                displayResultMsg(0, 1, ['opponent', 'mod character', 'BF.xml', 'skin', 0, 'bf-opponent']);
                 trace('dry run');
                 #else
                 unlockCharacter(['-opponent'], 'bf');
+                displayResultMsg(0, 1, ['opponent', 'mod character', 'BF.xml', 'skin', 0, 'bf-opponent']);
                 #end
                 bfOpponent.shader = null;
                 bfOpponent.animation.play('shid');
             case 'KermitArson':
                 trace('unlocking arsonist');
-                setUnlockedContent(0, ['boyfriend', 'mod character', 'Flamestarter', 'skin', 0, 'arson']);
+                setUnlockedContent(0);
                 #if debug
+                displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Flamestarter', 'skin', 0, 'arson']);
                 trace('dry run');
                 #else
                 unlockCharacter([''], 'arson');
+                displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Flamestarter', 'skin', 0, 'arson']);
                 #end
                 youIdiot.shader = null;
                 youIdiot.animation.play('venting');
@@ -425,7 +454,7 @@ class PasswordState extends MusicBeatState
             File.copy('assets/locked/noteskins/' + skinName + fileTypes[i], 'mods/images/funnyNotes/' + skinName + fileTypes[i]);
         }
         switch (skinName) {
-            case 'bosip':
+            /* case 'bosip':
             FlxG.save.data.unlockedBosipNotes = true;
             trace('bosip skin unlocked');
             case 'bob':
@@ -433,7 +462,9 @@ class PasswordState extends MusicBeatState
             trace('bob skin unlocked');
             case 'minishoey':
             FlxG.save.data.unlockedMiniShoeyNotes = true;
-            trace('mini notes unlocked');
+            trace('mini notes unlocked'); */
+            default:
+                trace('ass'); //placeholder
         }
     }
     
@@ -449,7 +480,7 @@ class PasswordState extends MusicBeatState
         }
     }
     
-    function setUnlockedContent(contentType:Int, unlockedContent:Array<Dynamic>) {
+    function setUnlockedContent(contentType:Int) {
         switch (contentType) {
             case 0:
             contentString = 'Character';
@@ -459,8 +490,8 @@ class PasswordState extends MusicBeatState
             contentString = 'Noteskin';
         }
         trace(unlockedContent);
-        return unlockedContent;
-        displayResultMsg(0, contentType);
+        // return unlockedContent;
+        // displayResultMsg(0, contentType);
     }
     function prepMainCreate(i:Int) {
         new FlxTimer().start(3, function (tmr:FlxTimer) {
@@ -503,14 +534,14 @@ class PasswordState extends MusicBeatState
         });
     }
 
-    function displayResultMsg(suspiciousResultCode:Int, fuckYouHaxe:Int) {
+    function displayResultMsg(suspiciousResultCode:Int, fuckYouHaxe:Int, ?unlockedContent:Array<Dynamic>) {
         var errorBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.RED);
         errorBg.alpha = 0.3;
         errorBg.visible = false;
         errorBg.screenCenter();
         add(errorBg);
         trace(unlockedContent);
-        switch (fuckYouHaxe) {
+        /* switch (fuckYouHaxe) {
             case 0:
                 useInstructions.push('To use this new character, go into the chart editor. Your new character will be in the character list as ' + unlockedContent[5]);
             case 1:
@@ -519,13 +550,13 @@ class PasswordState extends MusicBeatState
                 useInstructions.push("To set this noteskin, go into the chart editor. In the 'Song' section, type 'funnyNotes/" + unlockedContent[5] + "' in the note skin box and click reload notes.");
             case 3:
                 trace('this is a very large oof');
-        }
+        } */
         switch (suspiciousResultCode) {
             case 0:
                 trace('done');
                 errorBg.color = FlxColor.GREEN;
                 errorBg.visible = true;
-                var errorTxt:FlxText = new FlxText(0, 0, FlxG.width, 'You have unlocked the ' + unlockedContent[1] + ', which is a ' + unlockedContent[0] + ' ' + unlockedContent[3] + ': ' + unlockedContent[2] + ', enjoy!\n' + useInstructions[0] + '\nThe password you used to unlock this can not be used anymore.', 48);
+                var errorTxt:FlxText = new FlxText(0, 0, FlxG.width, 'You have unlocked the ' + unlockedContent[1] + ', which is a ' + unlockedContent[0] + ' ' + unlockedContent[3] + ': ' + unlockedContent[2] + ', enjoy!\nThe password you used to unlock this can not be used anymore.', 48);
                 errorTxt.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
                 errorTxt.screenCenter(Y);
                 add(errorTxt);
@@ -557,6 +588,75 @@ class PasswordState extends MusicBeatState
                     errorTxt.destroy();
                     errorBg.visible = false;
                 });
+            case 3:
+                trace('debug reset');
+                errorBg.color = FlxColor.fromRGB(71, 117, 0);
+                errorBg.visible = true;
+                var errorTxt:FlxText = new FlxText(0, 0, FlxG.width, 'Debug flags reset.', 48);
+                errorTxt.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+                errorTxt.screenCenter(Y);
+                add(errorTxt);
+                new FlxTimer().start(3, function (tmr:FlxTimer) {
+                    if (miniSaber.shader == null) {
+                        miniSaber.shader = lockedShader.shader;
+                    }
+                    if (bfOpponent.shader == null) {
+                        bfOpponent.shader = lockedShader.shader;
+                    }
+                    if (youIdiot.shader == null) {
+                        youIdiot.shader = lockedShader.shader;
+                    }
+                    errorTxt.destroy();
+                    errorBg.visible = false;
+                });
         }
+    }
+}
+class DebugPasswordShit extends MusicBeatSubstate {
+    var enterPass:FlxUIInputText;
+    var passPrompt:FlxText;
+    var saveBg:FlxSprite;
+    var promptBg:FlxSprite;
+    var savingText:FlxText;
+    var resetText:FlxText;
+    var savePass:FlxButton;
+    
+    public function new() {
+        super();
+        promptBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(128, 128, 0, 255));
+        promptBg.screenCenter();
+        promptBg.updateHitbox();
+        enterPass = new FlxUIInputText(0, 0, 250, '', 24, FlxColor.RED, FlxColor.BLUE);
+        enterPass.screenCenter();
+        passPrompt = new FlxText(0, 0, FlxG.width, "This appears to be your first time opening this menu in debug mode. Please enter a password below to be able to reset your used passwords.");
+        passPrompt.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.LIME);
+        passPrompt.y = enterPass.y - 250;
+        savePass = new FlxButton(0, enterPass.y + 50, 'Save Password', function() {
+            saveBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 128));
+            saveBg.screenCenter();
+            saveBg.updateHitbox();
+            add(saveBg);
+            savingText = new FlxText(0, 0, FlxG.width);
+            savingText.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.BLACK);
+            savingText.text = "Saving password...";
+            savingText.screenCenter();
+            add(savingText);
+            new FlxTimer().start(5, function (tmr:FlxTimer) {
+                sys.io.File.saveContent('assets/data/JOEMAMA.TXT', enterPass.text);
+                savingText.visible = false;
+                resetText = new FlxText(0, 0, FlxG.width);
+                resetText.setFormat(Paths.font('funny.ttf'), 48, FlxColor.LIME, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.MAGENTA);
+                resetText.text = 'Your password has been saved. You will be returned to the main menu shortly.';
+                add(resetText);
+                new FlxTimer().start(3, function(tmr:FlxTimer) {
+                    MusicBeatState.switchState(new MainMenuState());
+                });
+            });
+        });
+        savePass.screenCenter(X);
+        add(promptBg);
+        add(enterPass);
+        add(passPrompt);
+        add(savePass);
     }
 }

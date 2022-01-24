@@ -36,10 +36,12 @@ ohnoMyBalls = new FlxText(0, 26 * (however many flags you already had before thi
 7. Add a case to the switch statement of beginUnlockShit() for your password. Example using the pre-existing Mini Saber unlock for character: ```
             case 'SuspiciousFool': 
                 trace('unlocking mini saber');
-                setUnlockedContent(0, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'minisaber']);
+                setUnlockedContent(0);
                 #if debug
+                displayResultMsg(0, 0, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'minisaber']);
                 trace('dry run');
                 #else
+                displayResultMsg(0, 0, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'minisaber']);
                 unlockCharacter(['', '-opponent'], 'minisaber');
                 #end
                 miniSaber.shader = null;
@@ -48,12 +50,14 @@ ohnoMyBalls = new FlxText(0, 26 * (however many flags you already had before thi
 Example for a noteskin (Note: The argument for unlockNoteskin **must** match the name of your noteskin): ```
             case 'IsThisJustFantaC':
                 trace('unlocking dum notes');
+                setUnlockedContent(0, 2, ['mod import', 'noteskin', 'Bosip\'s notes', 'from another mod', 2, 'bosip']);
                 unlockNoteskin('sussy');
 ```
 Example for a song (Note: The second argument for unlockSong is optional, you can call the function as is with just the song name): ```
             case 'HahaBalls':
                 trace('unlocking my balls ( ͡° ͜ʖ ͡°)');
-                unlockSong('my-balls');
+                setUnlockedContent(0, 1, ['classic internet song', 'custom song', 'My Balls', 'by Your Favorite Martian', 'song', 1, 'my-balls']);
+                unlockSong('my-balls', ['easy', 'normal', 'hard', 'sussy']);
 ```
 8. (Optional, for character unlocks) Add your unlockable character to the screen with the following, replacing youIdiot with whatever you want to name the variable:
     i. At the top of your file: `var youIdiot:FlxSprite;`
@@ -80,3 +84,4 @@ Example for a song (Note: The second argument for unlockSong is optional, you ca
 
 ## Testing your new unlock
 To test your new unlock, compile a new test build of your game. I'll include an example with me unlocking one of my own characters below:
+**Menu demo coming soon**
