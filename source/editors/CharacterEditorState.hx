@@ -56,7 +56,7 @@ class CharacterEditorState extends MusicBeatState
 	var dumbTexts:FlxTypedGroup<FlxText>;
 	//var animList:Array<String> = [];
 	var curAnim:Int = 0;
-	var daAnim:String = 'spooky';
+	public var daAnim:String = 'spooky';
 	var goToPlayState:Bool = true;
 	var camFollow:FlxObject;
 	
@@ -647,7 +647,11 @@ class CharacterEditorState extends MusicBeatState
 			
 			var beginTest:FlxButton = new FlxButton(characterSide.x + 210, characterSide.y - 3, "Test Char.", function()
 				{
-				if (imageInputText.text == parsedCharJson.image) curChar = daAnim else curChar = 'unknown';
+				if (imageInputText.text == parsedCharJson.image) curChar = daAnim else {
+					curChar = 'unknown';
+					daAnim = 'unknown';
+					saveCharacter();
+				}
 				openSubState(new CharacterTestStarter(songForTest, charToTest, curChar));
 			});
 			
@@ -1325,7 +1329,7 @@ class CharacterEditorState extends MusicBeatState
 			FlxG.log.error("Problem saving file");
 		}
 		
-		function saveCharacter() {
+		public function saveCharacter() {
 			var json = {
 				"animations": char.animationsArray,
 				"image": char.imageFile,
@@ -1412,12 +1416,15 @@ class CharacterEditorState extends MusicBeatState
 			});
 		});
 	}
+
+	public static var instance:CharacterEditorState;
 }
 	
 	class CharacterTestStarter extends MusicBeatSubstate {
 		var saveBg:FlxSprite;
 		var saveTexts:Array<FlxText>;
 		var saveNameBox:FlxUIInputText;
+		var saveButton:FlxButton;
 		var warningBg:FlxSprite;
 		var warningText:FlxText;
 		var confirmButton:FlxButton;
@@ -1435,9 +1442,44 @@ class CharacterEditorState extends MusicBeatState
 			FlxG.cameras.add(camSussy);
 			
 			if (charName == 'unknown') {
-				
+				/* saveBg = new FlxSprite(0, 0);
+				if (FileSystem.exists(Paths.image('editor/haha.png'))) saveBg.loadGraphic('assets/images/editor/haha.png') else saveBg.makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 200));
+				if (saveBg.alpha == 1) {
+					saveBg.screenCenter();
+					saveBg.setGraphicSize(FlxG.width, FlxG.height);
+					saveBg.updateHitbox();
+				} else {
+					saveBg.screenCenter();
+				}
+				saveBg.cameras = [camSussy];
+				var saveTextAsk:FlxText = new FlxText(0, FlxG.height - 500, FlxG.width);
+				saveTextAsk.text = 'CAUTION: You currently have unsaved work. Do you want to save it? If so, give your character a name below.';
+				saveTextAsk.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.RED, CENTER, FlxTextBorderStyle.SHADOW, FlxColor.YELLOW);
+				saveTextAsk.screenCenter(X);
+				saveTexts.push(saveTextAsk);
+				saveNameBox = new FlxUIInputText(0, 0, 500, charName, 16);
+				saveNameBox.screenCenter();
+				add(saveNameBox);
+				var saveTextWarn:FlxText = new FlxText(saveTextAsk.x, saveNameBox.y - 25, FlxG.width);
+				saveTextWarn.text = 'A character with this name already exists. If you continue, they will be overwritten.';
+				saveTextWarn.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.RED, CENTER, FlxTextBorderStyle.SHADOW, FlxColor.YELLOW);
+				saveTexts.push(saveTextWarn);
+				saveButton = new FlxButton(0, FlxG.height - 50, 'Save', function () {
+					CharacterEditorState.instance.daAnim = saveNameBox.text;
+					CharacterEditorState.instance.saveCharacter();
+				});
+				add(saveButton);
+				for (i in 0...saveTexts.length) {
+					add(saveTexts[i]);
+				} */
+				openTestUI(songName, charType, charName);
 			} else {
-				warningBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.ORANGE);
+				openTestUI(songName, charType, charName);
+			}
+		}
+
+		function openTestUI(songName:String, charType:String, charName:String) {
+			warningBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.ORANGE);
 				warningBg.alpha = 0.5;
 				warningBg.screenCenter();
 				warningBg.cameras = [camAmogus];
@@ -1448,7 +1490,7 @@ class CharacterEditorState extends MusicBeatState
 				warningText.cameras = [camAmogus];
 				warningText.screenCenter();
 				add(warningText);
-				confirmButton = new FlxButton(warningText.x - 50, warningText.y - 100, 'Continue', function() {
+				confirmButton = new FlxButton(warningText.x, warningText.y - 100, 'Continue', function() {
 					PlayState.SONG = Song.loadFromJson(songName.toLowerCase(), songName.toLowerCase());
 					switch (charType) {
 						case 'boyfriend':
@@ -1467,6 +1509,5 @@ class CharacterEditorState extends MusicBeatState
 				cancelButton.cameras = [camAmogus];
 				add(confirmButton);
 				add(cancelButton);
-			}
 		}
 	}
