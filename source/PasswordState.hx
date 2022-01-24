@@ -65,7 +65,8 @@ class PasswordState extends MusicBeatState
     [
         'SuspiciousFool',
         'Grass',
-        'KermitArson'
+        'KermitArson',
+        'ExampleSongWord'
         // 'Amogus'
         /* 'YouReallyWantTheBlueBoi',
         'BosipBestShipOC',
@@ -106,6 +107,8 @@ class PasswordState extends MusicBeatState
     var useInstructions:Array<String>;
     var dbgPasswd:String;
     var needPasswd:Bool = false;
+    var dbgNotice:FlxText;
+    var dbgNoticeBg:FlxText;
     
     
     public function new() {
@@ -398,6 +401,7 @@ class PasswordState extends MusicBeatState
                 #else
                 unlockCharacter(['', '-opponent'], 'minisaber');
                 displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'mss']);
+                FlxG.save.data.unlockedMiniSaber = true;
                 #end
                 miniSaber.shader = null;
                 miniSaber.animation.play('hey');
@@ -411,6 +415,7 @@ class PasswordState extends MusicBeatState
                 #else
                 unlockCharacter(['-opponent'], 'bf');
                 displayResultMsg(0, 1, ['opponent', 'mod character', 'BF.xml', 'skin', 0, 'bf-opponent']);
+                FlxG.save.data.unlockedBfOpponent = true;
                 #end
                 bfOpponent.shader = null;
                 bfOpponent.animation.play('shid');
@@ -423,9 +428,21 @@ class PasswordState extends MusicBeatState
                 #else
                 unlockCharacter([''], 'arson');
                 displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Flamestarter', 'skin', 0, 'arson']);
+                FlxG.save.data.unlockedArsonist = true;
                 #end
                 youIdiot.shader = null;
                 youIdiot.animation.play('venting');
+            case 'ExampleSongWord':
+                trace('test song');
+                setUnlockedContent(1);
+                #if debug
+                displayResultMsg(0, 1, ['example', 'example song', 'Test', 'song', 1, 'test']);
+                trace('dry run');
+                #else
+                unlockSong(test, ['']);
+                displayResultMsg(0, 1, ['example', 'example song', 'Test', 'song', 1, 'test']);
+                FlxG.save.data.exampleSongUsed = true;
+                #end
             /* case 'YouReallyWantTheBlueBoi':
                 trace('unlocking bob notes');
                 unlockNoteskin('bob');
