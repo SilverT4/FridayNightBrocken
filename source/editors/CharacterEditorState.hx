@@ -1367,7 +1367,7 @@ class CharacterEditorState extends MusicBeatState
 		var isModCharacter:Bool = false;
 		var fuckinPaths:Array<String> = ['assets/characters/', 'mods/characters/'];
 		var parseJsonBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 128));
-		var charFile:File = new File;
+		var charFile:String;
 		parseJsonBg.screenCenter();
 		parseJsonBg.cameras = [camMenu];
 		add(parseJsonBg);
@@ -1384,7 +1384,7 @@ class CharacterEditorState extends MusicBeatState
 				parseJsonText.text = 'Character data for ' + charName + ' found.';
 				#end
 				parseJsonText.updateHitbox();
-				parsedCharJson = Json.parse(charFile);
+				parsedCharJson = Json.parse(File.getContent(charFile));
 				#if debug
 				trace(parsedCharJson);
 				#end
@@ -1397,7 +1397,7 @@ class CharacterEditorState extends MusicBeatState
 				#end
 				parseJsonText.updateHitbox();
 				isModCharacter = true;
-				parsedCharJson = Json.parse(charFile);
+				parsedCharJson = Json.parse(File.getContent(charFile));
 				#if debug
 				trace(parsedCharJson);
 				#end
