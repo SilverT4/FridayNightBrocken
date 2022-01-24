@@ -335,7 +335,7 @@ class PasswordState extends MusicBeatState
         bfOpponent.shader = lockedShader.shader;
         add(bfOpponent);
         youIdiot = new FlxSprite(FlxG.width * 0.69, FlxG.height * 0.4);
-        youIdiot.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/Arsonist.png', 'path/to/your/Arsonist.xml');
+        youIdiot.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/Arsonist.png', 'mods/images/characters/Arsonist.xml');
         youIdiot.setGraphicSize(256, 256);
         youIdiot.animation.addByPrefix('actingsus', 'BF idle dance', 24, true);
         youIdiot.animation.addByPrefix('venting', 'BF HEY', 24, false);
