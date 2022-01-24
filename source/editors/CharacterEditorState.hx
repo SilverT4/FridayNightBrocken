@@ -71,7 +71,7 @@ class CharacterEditorState extends MusicBeatState
 
 	private var camEditor:FlxCamera;
 	private var camHUD:FlxCamera;
-	private var camMenu:FlxCamera;
+	public var camMenu:FlxCamera;
 
 	var changeBGbutton:FlxButton;
 	var leHealthIcon:HealthIcon;
@@ -1353,16 +1353,22 @@ class CharacterTestStarter extends MusicBeatSubstate {
 	var warningText:FlxText;
 	var confirmButton:FlxButton;
 	var cancelButton:FlxButton;
+	var camAmogus:FlxCamera;
 
 	public function new(songName:String, charType:String, charName:String = 'blaze') {
 		super();
+		camAmogus = new FlxCamera();
+		FlxG.cameras.add(camAmogus);
 		warningBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.ORANGE);
 		warningBg.alpha = 0.5;
 		warningBg.screenCenter();
+		warningBg.cameras = [camAmogus];
 		add(warningBg);
 		warningText = new FlxText(0, 0, FlxG.width, '');
 		warningText.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, CENTER, SHADOW, FlxColor.GRAY);
 		warningText.text = 'Have you saved your character? If not, make sure to save it to:\nmods/characters/' + charName + '.json\nMake sure you do this BEFORE clicking Start Test, as you CANNOT recover any unsaved edits you have made here once you click it.';
+		warningText.cameras = [camAmogus];
+		warningText.screenCenter();
 		add(warningText);
 		confirmButton = new FlxButton(warningText.x - 50, warningText.y - 100, 'Continue', function() {
 			PlayState.SONG = Song.loadFromJson(songName.toLowerCase(), songName.toLowerCase());
@@ -1376,9 +1382,11 @@ class CharacterTestStarter extends MusicBeatSubstate {
 			}
 			MusicBeatState.switchState(new PlayState());
 		});
+		confirmButton.cameras = [camAmogus];
 		cancelButton = new FlxButton(confirmButton.x + 150, confirmButton.y, 'Cancel', function() {
 			closeSubState();
 		});
+		cancelButton.cameras = [camAmogus];
 		add(confirmButton);
 		add(cancelButton);
 	}
