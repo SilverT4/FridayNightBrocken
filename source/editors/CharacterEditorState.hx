@@ -1,5 +1,6 @@
 package editors;
 
+import sys.io.File;
 import flixel.util.FlxTimer;
 import flixel.addons.ui.FlxUIDropDownMenu;
 import flixel.addons.ui.FlxUISlider;
@@ -1366,6 +1367,7 @@ class CharacterEditorState extends MusicBeatState
 		var isModCharacter:Bool = false;
 		var fuckinPaths:Array<String> = ['assets/characters/', 'mods/characters/'];
 		var parseJsonBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 128));
+		var charFile:File = new File;
 		parseJsonBg.screenCenter();
 		parseJsonBg.cameras = [camMenu];
 		add(parseJsonBg);
@@ -1375,17 +1377,19 @@ class CharacterEditorState extends MusicBeatState
 		add(parseJsonText);
 		new FlxTimer().start(5, function (tmr:FlxTimer) {
 			if (FileSystem.exists(fuckinPaths[0] + charName + '.json')) {
+				charFile = fuckinPaths[0] + charName + '.json';
 				#if debug
 				parseJsonText.text = 'Character data for ' + charName + ' found. Output will be displayed in the console.';
 				#else
 				parseJsonText.text = 'Character data for ' + charName + ' found.';
 				#end
 				parseJsonText.updateHitbox();
-				parsedCharJson = Json.parse(fuckinPaths[0] + charName + '.json');
+				parsedCharJson = Json.parse(charFile);
 				#if debug
 				trace(parsedCharJson);
 				#end
 			} else if (FileSystem.exists(fuckinPaths[1] + charName + '.json')) {
+				charFile = fuckinPaths[1] + charName + '.json';
 				#if debug
 				parseJsonText.text = 'Character data for ' + charName + ' found. Output will be displayed in the console.';
 				#else
@@ -1393,7 +1397,7 @@ class CharacterEditorState extends MusicBeatState
 				#end
 				parseJsonText.updateHitbox();
 				isModCharacter = true;
-				parsedCharJson = Json.parse(fuckinPaths[1] + charName + '.json');
+				parsedCharJson = Json.parse(charFile);
 				#if debug
 				trace(parsedCharJson);
 				#end
