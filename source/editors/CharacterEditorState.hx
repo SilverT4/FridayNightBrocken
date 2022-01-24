@@ -615,19 +615,19 @@ class CharacterEditorState extends MusicBeatState
 		var dum = [''];
 		var dumAss = FileSystem.readDirectory('assets/data/');
 		for (i in 0...dumAss.length) {
-			if (!dumAss[i].endsWith('.txt') && !dumAss[i].endsWith('.xml') && !dumAss[i].endsWith('.json')) {
+			if (!dumAss[i].endsWith('.txt') && !dumAss[i].endsWith('.TXT') && !dumAss[i].endsWith('.xml') && !dumAss[i].endsWith('.json')) {
 			trace(Std.int(i + 1) + ' of ' + dumAss.length + ': Added song ' + dumAss[i] + ' to songlist');
 			dum.push(dumAss[i]);
 			} else {
-				trace(Std.int(i + 1) + ' of ' + dumAss.length + ': Skipping ' + dumAss[i] + ', file is of extension ' + dumAss[i].substr(0, this.length - 4));
+				trace(Std.int(i + 1) + ' of ' + dumAss.length + ': Skipping ' + dumAss[i] + ', file is of extension ' + dumAss[i].substr(this.length - 4));
 			}
 		}
-		songList = new FlxUIDropDownMenu(15, imageInputText.y + 35, FlxUIDropDownMenuCustom.makeStrIdLabelArray(dum, true), function(songForTest:String) {
+		songList = new FlxUIDropDownMenu(15, characterSide.y + 35, FlxUIDropDownMenuCustom.makeStrIdLabelArray(dum, true), function(songForTest:String) {
 			trace('selected ' + songList.selectedLabel);
 			songForTest = songList.selectedLabel;
 		});
 
-		var beginTest:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Test Char.", function()
+		var beginTest:FlxButton = new FlxButton(characterSide.x + 210, characterSide.y - 3, "Test Char.", function()
 		{
 			trace('placeholder code eh');
 		});
