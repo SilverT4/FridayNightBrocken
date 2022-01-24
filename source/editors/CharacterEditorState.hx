@@ -1,5 +1,7 @@
 package editors;
 
+import flixel.addons.ui.FlxUIDropDownMenu;
+import flixel.addons.ui.FlxUISlider;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -65,6 +67,7 @@ class CharacterEditorState extends MusicBeatState
 
 	var UI_box:FlxUITabMenu;
 	var UI_characterbox:FlxUITabMenu;
+	var UI_testbox:FlxUITabMenu;
 
 	private var camEditor:FlxCamera;
 	private var camHUD:FlxCamera;
@@ -175,6 +178,7 @@ class CharacterEditorState extends MusicBeatState
 		var tabs = [
 			{name: 'Character', label: 'Character'},
 			{name: 'Animations', label: 'Animations'},
+			{name: 'Test Character', label: 'Test Character'},
 		];
 		UI_characterbox = new FlxUITabMenu(null, tabs, true);
 		UI_characterbox.cameras = [camMenu];
@@ -192,6 +196,7 @@ class CharacterEditorState extends MusicBeatState
 
 		addCharacterUI();
 		addAnimationsUI();
+		addTestCharUI();
 		UI_characterbox.selected_tab_id = 'Character';
 
 		FlxG.mouse.visible = true;
@@ -594,6 +599,47 @@ class CharacterEditorState extends MusicBeatState
 		tab_group.add(healthColorStepperG);
 		tab_group.add(healthColorStepperB);
 		tab_group.add(saveCharacterButton);
+		UI_characterbox.addGroup(tab_group);
+	}
+	var warnLabel:FlxText;
+	var characterSide:FlxUIDropDownMenu;
+	var songList:FlxUIDropDownMenu;
+	function addTestCharUI() {
+		var tab_group = new FlxUI(null, UI_box);
+		tab_group.name = "Test Character";
+
+		characterSide = new FlxUIDropDownMenu(15, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(['boyfriend', 'girlfriend', 'dad'], true), function(charToTest:String) {
+			trace('selected');
+			charToTest = characterSide.selectedLabel;
+		});
+		var dum = [''];
+		var dumAss = FileSystem.readDirectory('assets/data/');
+		for (i in 0...dumAss.length) {
+			if (!dumAss[i].endsWith('.txt') && !dumAss[i].endsWith('.xml') && !dumAss[i].endsWith('.json')) {
+			trace(Std.int(i + 1) + ' of ' + dumAss.length + ': Added song ' + dumAss[i] + ' to songlist');
+			dum.push(dumAss[i]);
+			} else {
+				trace(Std.int(i + 1) + ' of ' + dumAss.length + ': Skipping ' + dumAss[i] + ', file is of extension ' + dumAss[i].substr(0, this.length - 4));
+			}
+		}
+		songList = new FlxUIDropDownMenu(15, imageInputText.y + 35, FlxUIDropDownMenuCustom.makeStrIdLabelArray(dum, true), function(songForTest:String) {
+			trace('selected ' + songList.selectedLabel);
+			songForTest = songList.selectedLabel;
+		});
+
+		var beginTest:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Test Char.", function()
+		{
+			trace('placeholder code eh');
+		});
+
+		// healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
+
+		tab_group.add(new FlxText(15, characterSide.y - 18, 0, 'Test character as:'));
+		tab_group.add(new FlxText(15, songList.y - 18, 0, 'Test with song:'));
+		tab_group.add(characterSide);
+		tab_group.add(beginTest);
+		// tab_group.add(healthIconInputText); I DON'T NEED THIS FOR THIS GROUP
+		tab_group.add(songList);
 		UI_characterbox.addGroup(tab_group);
 	}
 
