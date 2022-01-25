@@ -80,6 +80,18 @@ class UnlockEditorState extends MusicBeatState {
     var camLoad:FlxCamera;
     var camMain:FlxCamera;
     var camTesting:FlxCamera;
+    var reverberation:Array<Dynamic> = [
+        
+
+      '  _     ',
+      '  _ __ _____   _____ _ __| |__  ',
+      ' | \'__/ _ \\ \\ / / _ \\ \'__| \'_ \\ ',
+      ' | | |  __/\\ V /  __/ |  | |_) |',
+      ' |_|  \\___| \\_/ \\___|_|  |_.__/ ',
+      '                                ',
+      ''
+      
+    ];
     // var testScreen:FlxUILoadingScreen;
     var curState:String = 'pants';
 
@@ -91,12 +103,8 @@ class UnlockEditorState extends MusicBeatState {
         camMain.bgColor.alpha = 0;
         camTesting = new FlxCamera();
         camTesting.bgColor.alpha = 0;
-        FlxG.cameras.add(camLoad, true);
-        FlxG.cameras.add(camMain);
-        FlxG.cameras.add(camTesting);
-        new FlxTimer().start(1, function(tmr:FlxTimer) {
-            retrieveCustomUnlockables();
-        });
+        FlxG.cameras.add(camLoad);
+        retrieveCustomUnlockables();
     }
 
     override function update (elapsed:Float) {
@@ -115,10 +123,21 @@ class UnlockEditorState extends MusicBeatState {
         if (controls.BACK) {
             doExitChecks();
         }
+        if (curState == 'shidding') {
+            FlxG.cameras.add(camMain);
+        }
+        if (curState == 'pissing shit') {
+            FlxG.cameras.add(camTesting);
+        }
     }
 
     function retrieveCustomUnlockables() {
         trace('now checking unlockables');
+        trace('fart with extra...');
+        for (i in 0...reverberation.length) {
+            trace(reverberation[i]);
+        }
+        curState = 'farting';
         loadingBackground = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         loadingBackground.color = FlxColor.BLUE;
         loadingBackground.scrollFactor.set();
