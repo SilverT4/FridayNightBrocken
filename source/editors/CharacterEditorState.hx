@@ -1556,7 +1556,7 @@ class CharacterEditorState extends MusicBeatState
 				savingText.cameras = [camSave];
 				add(savingText);
 				randomChar = Random.fromArray(cumCar);
-				savingChar = new Character(0, savingText.y - 128, CharacterEditorState.instance.daAnim, false);
+				savingChar = new Character(0, savingText.y - 128, randomChar, false);
 				savingChar.dance();
 				savingChar.cameras = [camSave];
 				add(savingChar);
