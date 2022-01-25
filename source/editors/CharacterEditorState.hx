@@ -647,8 +647,10 @@ class CharacterEditorState extends MusicBeatState
 			}
 			songList = new FlxUIDropDownMenu(15, characterSide.y + 69, FlxUIDropDownMenuCustom.makeStrIdLabelArray(dum, true), function(songForTest:String) {
 				trace('selected ' + songList.selectedLabel);
+				songForTest = songList.selectedLabel;
+				trace(songForTest);
 			});
-			songForTest = songList.selectedLabel;
+			// songForTest = songList.selectedLabel;
 			trace(songForTest);
 			
 			var beginTest:FlxButton = new FlxButton(characterSide.x + 210, characterSide.y - 3, "Test Char.", function()
