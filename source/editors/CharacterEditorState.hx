@@ -151,6 +151,7 @@ class CharacterEditorState extends MusicBeatState
 		camFollow = new FlxObject(0, 0, 2, 2);
 		camFollow.screenCenter();
 		add(camFollow);
+		reParseCharJson('bf');
 		
 		var tipText:FlxText = new FlxText(FlxG.width - 20, FlxG.height, 0,
 			"E/Q - Camera Zoom In/Out
@@ -1579,7 +1580,17 @@ class CharacterEditorState extends MusicBeatState
 				}
 				if (!CharacterEditorState.savingYourShit) {
 					trace('save complete');
-					close();
+					savingText.text = 'Save complete!\nClosing in 5 seconds';
+					if (savingChar.animation.getByName('hey') != null) {
+						savingChar.playAnim('hey');
+					} else if (savingChar.animation.getByName('cheer') != null) {
+						savingChar.playAnim('cheer');
+					} else {
+						savingChar.playAnim('singUP');
+					}
+					new FlxTimer().start(5, function (tmr:FlxTimer) {
+						close();
+					});
 				}
 			}
 		}
