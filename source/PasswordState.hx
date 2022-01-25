@@ -660,8 +660,8 @@ class PasswordState extends MusicBeatState
         var beginSave = Paths.music('saveStart');
         FlxG.sound.list.add(beginSave);
         var saveLoopAudio = Paths.music('saveLoop');
-        saveLoopFuckYou = saveLoopAudio;
-        FlxG.sound.list.add(saveLoopAudio);
+        saveLoopFuckYou = FlxG.sound.load(saveLoopAudio);
+        FlxG.sound.list.add(saveLoopFuckYou);
         beginSave.play();
         new FlxTimer().start(Std.int(beginSave.length / 1000), function(tmr:FlxTimer) {
             loopBegin = true;
