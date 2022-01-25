@@ -1388,6 +1388,7 @@ class CharacterEditorState extends MusicBeatState
 		var parseJsonText:FlxText = new FlxText(0, 0, FlxG.width, 'Parsing json: ' + charName + '\nPlease wait...');
 		parseJsonText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER, OUTLINE, FlxColor.BLACK);
 		parseJsonText.screenCenter();
+		parseJsonText.cameras = [camMenu];
 		add(parseJsonText);
 		new FlxTimer().start(5, function (tmr:FlxTimer) {
 			if (FileSystem.exists(fuckinPaths[0] + charName + '.json')) {
@@ -1527,6 +1528,7 @@ class CharacterEditorState extends MusicBeatState
 		class SavingYourBullshit extends MusicBeatSubstate {
 			var savingBg:FlxSprite;
 			var savingText:FlxText;
+			var saveDone:Bool = false;
 			var savingChar:FlxSprite;
 			var speen:FlxSprite; //for future use lmao
 			var camSave:FlxCamera;
@@ -1561,17 +1563,12 @@ class CharacterEditorState extends MusicBeatState
 				add(savingText);
 				// randomChar = Random.fromArray(cumCar);
 				savingChar = new FlxSprite(0, savingText.y - 128);
-				savingChar.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/ntPixel.png', 'mods/images/characters/ntPixel.xml');
-				savingChar.animation.addByPrefix('idle', 'BF idle dance', 24, true);
-				if (savingChar.animation.getByName('BF HEY') != null) {
-					savingChar.animation.addByPrefix('hey', 'BF HEY', 24, false);
-				} else if (savingChar.animation.getByName('GF Cheer') != null) {
-					savingChar.animation.addByPrefix('cheer', 'GF Cheer', 24);
-				} else {
-					savingChar.animation.addByIndices('singUP', '', [0,1], 'UP', 24, false);
-				}
+				savingChar.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/Blitz_Assets.png', 'mods/images/characters/Blitz_Assets.xml');
+				savingChar.animation.addByPrefix('idle', 'look at this CLOWN lfmoa', 24, true);
+				savingChar.animation.addByPrefix('ayyy', 'CRINGE ASS DAB');
 				savingChar.animation.play('idle');
 				savingChar.cameras = [camSave];
+				savingChar.screenCenter(X);
 				add(savingChar);
 				speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
 				speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
@@ -1587,18 +1584,18 @@ class CharacterEditorState extends MusicBeatState
 				if (savingChar != null) {
 					savingChar.update(elapsed);
 				}
-				if (FlxG.sound.music == null && CharacterEditorState.savingYourShit) {
+				if (!FlxG.sound.music.playing && CharacterEditorState.savingYourShit) {
 					FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
 				}
+				if (speen != null) {
+					speen.update(elapsed);
+				}
 				if (!CharacterEditorState.savingYourShit) {
-					trace('save complete');
+					if (!saveDone) trace('save complete');
+					saveDone = true;
 					savingText.text = 'Save complete!\nClosing in 5 seconds';
-					if (savingChar.animation.getByName('hey') != null) {
-						savingChar.animation.play('hey');
-					} else if (savingChar.animation.getByName('cheer') != null) {
-						savingChar.animation.play('cheer');
-					} else {
-						savingChar.animation.play('singUP');
+					if (savingChar.animation.getByName('ayyy') != null) {
+						savingChar.animation.play('ayyy');
 					}
 					new FlxTimer().start(5, function (tmr:FlxTimer) {
 						close();
