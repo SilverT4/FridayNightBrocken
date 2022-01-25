@@ -113,6 +113,7 @@ class PasswordState extends MusicBeatState
     var dbgNotice:FlxText;
     var dbgNoticeBg:FlxSprite;
     var speen:FlxSprite;
+    var speenSus:FlxSprite;
     
     
     public function new() {
@@ -166,7 +167,7 @@ class PasswordState extends MusicBeatState
         } else if (needPasswd) {
             trace('lets get a password lmfao');
             FlxG.sound.music.stop();
-            FlxG.sound.playMusic(Random.fromArray(FileSystem.readDirectory('assets/songs/')) + '/Inst.ogg', 1, true);
+            FlxG.sound.playMusic(Paths.inst(Random.fromArray(FileSystem.readDirectory('assets/songs/'))), 1, true);
         } else {
             trace('sussy');
             checkSus();
@@ -200,6 +201,9 @@ class PasswordState extends MusicBeatState
         if (bfOpponent != null) {
             bfOpponent.update(elapsed);
         }
+        if (speen != null) {
+            speen.update(elapsed);
+        }
         if (hen != null) {
             hen.update(elapsed);
             if (hen.animation.curAnim.finished) {
@@ -224,11 +228,11 @@ class PasswordState extends MusicBeatState
         sussyBg.updateHitbox();
         sussyBg.screenCenter();
         add(sussyBg);
-        speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
-        speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
-		speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
-		speen.animation.play('spin');
-        add(speen);
+        speenSus = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+        speenSus.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+		speenSus.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+		speenSus.animation.play('spin');
+        add(speenSus);
         sussyText = new FlxText(0, 0, FlxG.width, 'Checking save data...', 24);
         add(sussyText);
         
@@ -709,7 +713,7 @@ class DebugPasswordShit extends MusicBeatSubstate {
     
     public function new() {
         super();
-        saveLoopAudio = FlxG.sound.load(Paths.sound('saveLoop'));
+        saveLoopAudio = FlxG.sound.load(Paths.music('saveLoop'));
         promptBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(128, 128, 0, 255));
         promptBg.screenCenter();
         promptBg.updateHitbox();
@@ -730,6 +734,7 @@ class DebugPasswordShit extends MusicBeatSubstate {
             add(savingText);
             saveLoopAudio.play(false);
             saveLoopAudio.loopTime = saveLoopAudio.length;
+            saveLoopAudio.looped = true;
             new FlxTimer().start(5, function (tmr:FlxTimer) {
                 sys.io.File.saveContent('assets/data/JOEMAMA.TXT', enterPass.text);
                 savingText.visible = false;
