@@ -1584,7 +1584,8 @@ class CharacterEditorState extends MusicBeatState
 				if (savingChar != null) {
 					savingChar.update(elapsed);
 				}
-				if (!FlxG.sound.music.playing && CharacterEditorState.savingYourShit) {
+				if (FlxG.sound.music.time == FlxG.sound.music.length && CharacterEditorState.savingYourShit) {
+					FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
 				}
 				if (speen != null) {
