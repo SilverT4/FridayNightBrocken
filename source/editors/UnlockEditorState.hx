@@ -112,7 +112,9 @@ class UnlockEditorState extends MusicBeatState {
     function retrieveCustomUnlockables() {
         trace('now checking unlockables');
         var unlockDir:Dynamic = FileSystem.readDirectory('mods/unlockable');
-        bruh = new FlxBar(0, 0, FlxBarFillDirection.LEFT_TO_RIGHT, 200, 20, null, 'files', 0, unlockDir.length, true);
+        var curFucker:Int = 0;
+        bruh = new FlxBar(0, 0, FlxBarFillDirection.LEFT_TO_RIGHT, 200, 20, curFucker, 'files', 0, unlockDir.length, true);
+        bruh.createGradientEmptyBar(FlxColor.gradient(FlxColor.BLUE, FlxColor.GREEN, 69), 1, 180, false);
         bruh.x = FlxG.width * 0.5;
         bruh.screenCenter(Y);
         bruh.cameras = [camLoad];
@@ -121,15 +123,15 @@ class UnlockEditorState extends MusicBeatState {
         speenLoad.animation.addByPrefix('spin', 'spinner go brr', 30, true);
         speenLoad.animation.play('spin');
         add(speenLoad);
-        for (i in 0...unlockDir) {
-
-            if (unlockDir[i].endsWith('.txt')) {
-                trace(Std.int(i + 1) + ' of ' + unlockDir.length + ': Skipping ' + unlockDir[i] + ' as it is not a JSON!');
+        for (curFucker in 0...unlockDir) {
+            bruh.updateEmptyBar();
+            if (unlockDir[curFucker].endsWith('.txt')) {
+                trace(Std.int(curFucker + 1) + ' of ' + unlockDir.length + ': Skipping ' + unlockDir[curFucker] + ' as it is not a JSON!');
             } else {
-                trace(Std.int(i + 1) + ' of ' + unlockDir.length + ': Adding file ' + unlockDir[i] + ' to the list!');
-                customUnlocks.push(unlockDir[i]);
+                trace(Std.int(curFucker + 1) + ' of ' + unlockDir.length + ': Adding file ' + unlockDir[curFucker] + ' to the list!');
+                customUnlocks.push(unlockDir[curFucker]);
             }
-            if (i == unlockDir.length) {
+            if (curFucker == unlockDir.length) {
                 endLoadingShit();
             }
         }
