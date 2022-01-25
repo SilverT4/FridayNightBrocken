@@ -124,6 +124,8 @@ class PasswordState extends MusicBeatState
         } else {
             dbgPasswd = sys.io.File.getContent('assets/data/JOEMAMA.TXT');
         }
+        #else
+            dbgPasswd = 'ThisIsATest'; //placeholder in case it crashes in release, tho im testing that as of this commit
         #end
         if (FlxG.save.data.usedPasswords == null) {
             FlxG.save.data.usedPasswords = [''];
@@ -226,7 +228,7 @@ class PasswordState extends MusicBeatState
         speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
 		speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
 		speen.animation.play('spin');
-        
+        add(speen);
         sussyText = new FlxText(0, 0, FlxG.width, 'Checking save data...', 24);
         add(sussyText);
         
@@ -463,7 +465,7 @@ class PasswordState extends MusicBeatState
                 displayResultMsg(0, 1, ['example', 'example song', 'Test', 'song', 1, 'test']);
                 trace('dry run');
                 #else
-                unlockSong(test, ['']);
+                unlockSong('test', ['']);
                 displayResultMsg(0, 1, ['example', 'example song', 'Test', 'song', 1, 'test']);
                 FlxG.save.data.exampleSongUsed = true;
                 #end
