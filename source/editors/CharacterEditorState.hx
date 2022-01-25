@@ -1544,7 +1544,7 @@ class CharacterEditorState extends MusicBeatState
 
 			public function new(randomChar:String) {
 				super();
-				update(elapsed);
+				// update(elapsed);
 				var cumCar:Array<Dynamic> = [];
 				/* var cummy = FileSystem.readDirectory('assets/characters');
 				var cumSpice = FileSystem.readDirectory('mods/characters');
