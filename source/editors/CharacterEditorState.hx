@@ -1194,6 +1194,11 @@ class CharacterEditorState extends MusicBeatState
 				if (FlxG.keys.justPressed.R) {
 					FlxG.camera.zoom = 1;
 				}
+
+				if (FlxG.keys.justPressed.V) {
+					var funnyData:Array<Dynamic> = [Std.string(FlxG.save.data)];
+					FlxG.save.resetFlag('unlockedMiniSaber', funnyData);
+				}
 				
 				if (FlxG.keys.justPressed.Q) {
 					openSubState(new SavingYourBullshit('minisaber'));
