@@ -178,6 +178,7 @@ class PasswordState extends MusicBeatState
         if (loopBegin && saveLoopFuckYou != null) {
             saveLoopFuckYou.play();
             saveLoopFuckYou.loopTime = saveLoopFuckYou.length;
+            saveLoopFuckYou.looped = true;
             loopBegin = false;
         }
         
@@ -662,12 +663,13 @@ class PasswordState extends MusicBeatState
         var saveLoopAudio = FlxG.sound.load(Paths.music('saveLoop'));
         saveLoopFuckYou = saveLoopAudio;
         FlxG.sound.list.add(saveLoopFuckYou);
+        saveLoopFuckYou.volume = 5;
         beginSave.play();
         new FlxTimer().start(Std.int(beginSave.length / 1000), function(tmr:FlxTimer) {
             loopBegin = true;
         });
-        new FlxTimer().start(30, function (tmr:FlxTimer) {
-            FlxG.save.data.flush();
+        new FlxTimer().start(5, function (tmr:FlxTimer) {
+            FlxG.save.flush();
             trace(FlxG.save.data);
             LoadingState.loadAndSwitchState(new MainMenuState(), true);
         });
