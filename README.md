@@ -1,3 +1,9 @@
+# Friday Night Brocken: "Emo Engine"
+**Not an actual engine! That's just what I call this mess of a repo.**
+
+Please do note that I am *not* the most experienced coder and as such, some of the code I add to this repository will be spaghetti code that I keep making more of a mess with.
+
+
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
 

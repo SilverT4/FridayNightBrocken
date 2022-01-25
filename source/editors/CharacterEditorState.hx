@@ -1524,7 +1524,7 @@ class CharacterEditorState extends MusicBeatState
 			var savingChar:Character;
 			var speen:FlxSprite; //for future use lmao
 			var camSave:FlxCamera;
-			public var instance:SavingYourBullshit;
+			public var instance:SavingYourBullshit; //dont want to cause bullshit
 
 			public function new() {
 				super();
@@ -1552,10 +1552,16 @@ class CharacterEditorState extends MusicBeatState
 				speen.cameras = [camSave];
 				add(speen);
 			}
+			
 
 			override function update(elapsed:Float) {
 				if (savingChar != null) {
 					savingChar.update(elapsed);
 				}
+
+				if (!CharacterEditorState.savingYourShit) {
+					trace('save complete');
+					close();
+				}
 			}
-	}
+		}

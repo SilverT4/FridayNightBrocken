@@ -136,7 +136,7 @@ class MusicBeatState extends FlxUIState
 	function onWindowFocusIn():Void {
 		trace('welcome back lmao');
 		if (CharacterEditorState.savingYourShit) {
-			SavingYourBullshit.weBacc();
+			CharacterEditorState.savingYourShit = false;
 		}
 	}
 
