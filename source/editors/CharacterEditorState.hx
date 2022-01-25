@@ -1455,6 +1455,7 @@ class CharacterEditorState extends MusicBeatState
 			camSussy.bgColor.alpha = 0;
 			FlxG.cameras.add(camAmogus);
 			FlxG.cameras.add(camSussy);
+			// update(elapsed);
 			
 			if (charName == 'unknown') {
 				/* saveBg = new FlxSprite(0, 0);
@@ -1527,7 +1528,9 @@ class CharacterEditorState extends MusicBeatState
 				add(confirmButton);
 				add(cancelButton);
 		}
-		}
+		
+	// var elapsed(default, null):Float;
+}
 
 		class SavingYourBullshit extends MusicBeatSubstate {
 			var savingBg:FlxSprite;
@@ -1541,6 +1544,7 @@ class CharacterEditorState extends MusicBeatState
 
 			public function new(randomChar:String) {
 				super();
+				update(elapsed);
 				var cumCar:Array<Dynamic> = [];
 				/* var cummy = FileSystem.readDirectory('assets/characters');
 				var cumSpice = FileSystem.readDirectory('mods/characters');
@@ -1608,4 +1612,6 @@ class CharacterEditorState extends MusicBeatState
 					});
 				}
 			}
-		}
+		
+	var elapsed(default, null):Float;
+}
