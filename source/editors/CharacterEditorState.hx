@@ -1563,7 +1563,7 @@ class CharacterEditorState extends MusicBeatState
 				add(savingText);
 				// randomChar = Random.fromArray(cumCar);
 				savingChar = new FlxSprite(0, savingText.y - 128);
-				savingChar.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/Blitz_Assets.png', 'mods/images/characters/Blitz_Assets.xml');
+				savingChar.frames = Paths.getSparrowAtlas('Blitz_Assets');
 				savingChar.animation.addByPrefix('idle', 'look at this CLOWN lfmoa', 24, true);
 				savingChar.animation.addByPrefix('ayyy', 'CRINGE ASS DAB');
 				savingChar.animation.play('idle');
