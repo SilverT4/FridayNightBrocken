@@ -1490,7 +1490,7 @@ class CharacterEditorState extends MusicBeatState
 			}
 		}
 
-		function openTestUI(songName:String, charType:String, charName:String) {
+		function openTestUI(songName:String = 'Dad-battle', charType:String, charName:String) {
 			warningBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.ORANGE);
 				warningBg.alpha = 0.5;
 				warningBg.screenCenter();
