@@ -25,7 +25,7 @@ import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUINumericStepper;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUIBar;
-import flixel.addons.ui.FlxUILoadingScreen;
+// import flixel.addons.ui.FlxUILoadingScreen;
 import flixel.addons.ui.FlxUITooltip.FlxUITooltipStyle;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -80,13 +80,17 @@ class UnlockEditorState extends MusicBeatState {
     var camLoad:FlxCamera;
     var camMain:FlxCamera;
     var camTesting:FlxCamera;
-    var testScreen:FlxUILoadingScreen;
+    // var testScreen:FlxUILoadingScreen;
     var curState:String = 'pants';
 
     public function new() {
         super();
+        camLoad = new FlxCamera();
+        camLoad.bgColor.alpha = 0;
         camMain = new FlxCamera();
         camMain.bgColor.alpha = 0;
+        camTesting = new FlxCamera();
+        camTesting.bgColor.alpha = 0;
         FlxG.cameras.add(camMain);
         retrieveCustomUnlockables();
     }
@@ -115,6 +119,7 @@ class UnlockEditorState extends MusicBeatState {
         var curFucker:Int = 0;
         bruh = new FlxBar(0, 0, FlxBarFillDirection.LEFT_TO_RIGHT, 200, 20, curFucker, 'files', 0, unlockDir.length, true);
         bruh.createGradientEmptyBar(FlxColor.gradient(FlxColor.BLUE, FlxColor.GREEN, 69), 1, 180, false);
+        // bruh.facing = RIGHT;
         bruh.x = FlxG.width * 0.5;
         bruh.screenCenter(Y);
         bruh.cameras = [camLoad];
@@ -171,6 +176,9 @@ class ConfirmExitDuringLoad extends MusicBeatSubstate {
     }
 
     override function update(elapsed:Float) {
+        if (confirmationBg != null) {
+            confirmationBg.update(elapsed);
+        }
         if (confirmationText != null) {
             confirmationText.update(elapsed);
         }
@@ -208,6 +216,7 @@ class ConfirmExitDuringLoad extends MusicBeatSubstate {
 			});
 		}}); */ //might use this later idk
         confirmationWindow = new FlxSprite(0).makeGraphic(Std.int(FlxG.width * 0.5), Std.int(FlxG.height * 0.5), FlxColor.WHITE);
+        confirmationWindow.alpha = 1;
         confirmationWindow.screenCenter();
         confirmationWindow.cameras = [camConfirm];
         confirmationText = new FlxText(0, 0, FlxG.height);
