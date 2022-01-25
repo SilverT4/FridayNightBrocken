@@ -109,6 +109,7 @@ class Character extends FlxSprite
 				{
 					path = Paths.getPreloadPath('characters/' + DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
 				}
+				trace(path);
 
 				#if MODS_ALLOWED
 				var rawJson = File.getContent(path);
