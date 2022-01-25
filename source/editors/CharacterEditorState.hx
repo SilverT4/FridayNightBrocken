@@ -1527,9 +1527,21 @@ class CharacterEditorState extends MusicBeatState
 			var speen:FlxSprite; //for future use lmao
 			var camSave:FlxCamera;
 			public var instance:SavingYourBullshit; //dont want to cause bullshit
+			var charas:Array<String> = [''];
 
-			public function new() {
+			public function new(randomChar:String) {
 				super();
+				var cumCar:Array<Dynamic>;
+				var cummy = FileSystem.readDirectory('assets/characters');
+				var cumSpice = FileSystem.readDirectory('mods/characters');
+				for (i in 0...cummy.length) {
+					trace(Std.int(i + 1) + ' of ' + cummy.length + ': Your shitbox looks nice, ' + cummy[i]);
+					cumCar.push(cummy[i]);
+				}
+				for (i in 0...cumSpice.length) {
+					trace(Std.int(i + cummy.length + 1) + ' of ' + Std.int(cummy.length + cumSpice.length) + ': Your shitbox looks nice, ' + cumSpice[i]);
+					cumCar.push(cumSpice[i]);
+				}
 				camSave = new FlxCamera();
 				camSave.bgColor.alpha = 0;
 				FlxG.cameras.add(camSave);
@@ -1538,11 +1550,12 @@ class CharacterEditorState extends MusicBeatState
 				savingBg.screenCenter();
 				savingBg.cameras = [camSave];
 				add(savingBg);
-				savingText = new FlxText();
+				savingText = new FlxText(0, 0);
 				savingText.text = 'Now saving your character!';
 				savingText.screenCenter();
 				savingText.cameras = [camSave];
 				add(savingText);
+				randomChar = Random.fromArray(cumCar);
 				savingChar = new Character(0, savingText.y - 128, CharacterEditorState.instance.daAnim, false);
 				savingChar.dance();
 				savingChar.cameras = [camSave];
