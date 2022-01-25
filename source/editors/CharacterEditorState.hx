@@ -1536,7 +1536,7 @@ class CharacterEditorState extends MusicBeatState
 			public function new(randomChar:String) {
 				super();
 				var cumCar:Array<Dynamic> = [];
-				var cummy = FileSystem.readDirectory('assets/characters');
+				/* var cummy = FileSystem.readDirectory('assets/characters');
 				var cumSpice = FileSystem.readDirectory('mods/characters');
 				for (i in 0...cummy.length) {
 					trace(Std.int(i + 1) + ' of ' + cummy.length + ': Your shitbox looks nice, ' + cummy[i]);
@@ -1545,7 +1545,7 @@ class CharacterEditorState extends MusicBeatState
 				for (i in 0...cumSpice.length) {
 					trace(Std.int(i + cummy.length + 1) + ' of ' + Std.int(cummy.length + cumSpice.length) + ': Your shitbox looks nice, ' + cumSpice[i]);
 					if (cumSpice[i] != 'huggy.json') cumCar.push('mods/images/characters/' + cumSpice[i].substr(0, this.length - 4));
-				}
+				} */
 				camSave = new FlxCamera();
 				camSave.bgColor.alpha = 0;
 				FlxG.cameras.add(camSave);
@@ -1559,9 +1559,9 @@ class CharacterEditorState extends MusicBeatState
 				savingText.screenCenter();
 				savingText.cameras = [camSave];
 				add(savingText);
-				randomChar = Random.fromArray(cumCar);
+				// randomChar = Random.fromArray(cumCar);
 				savingChar = new FlxSprite(0, savingText.y - 128);
-				savingChar.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/BOYFRIEND.png', 'mods/images/characters/BOYFRIEND.xml');
+				savingChar.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/ntPixel.png', 'mods/images/characters/ntPixel.xml');
 				savingChar.animation.addByPrefix('idle', 'BF idle dance', 24, true);
 				if (savingChar.animation.getByName('BF HEY') != null) {
 					savingChar.animation.addByPrefix('hey', 'BF HEY', 24, false);
