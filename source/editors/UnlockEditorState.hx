@@ -136,7 +136,7 @@ class UnlockEditorState extends MusicBeatState {
     }
 
     function endLoadingShit() {
-
+        trace('placeholder to prevent any crashes');
     }
 
     function doExitChecks() {
