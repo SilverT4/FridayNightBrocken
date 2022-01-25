@@ -167,7 +167,11 @@ class PasswordState extends MusicBeatState
         } else if (needPasswd) {
             trace('lets get a password lmfao');
             FlxG.sound.music.stop();
+            #if MODS_ALLOWED
+            if (FileSystem.readDirectory('mods/songs') != null) FlxG.sound.playMusic(Paths.inst(Random.fromArray(FileSystem.readDirectory('assets/songs/'))), 1, true) else FlxG.sound.playMusic(Paths.inst(Random.fromArray(FileSystem.readDirectory('mods/songs/'))), 1, true);
+            #else
             FlxG.sound.playMusic(Paths.inst(Random.fromArray(FileSystem.readDirectory('assets/songs/'))), 1, true);
+            #end
         } else {
             trace('sussy');
             checkSus();
@@ -410,7 +414,11 @@ class PasswordState extends MusicBeatState
                     trace(Std.int(i + 1) + ' of ' + usedPasswords.length + ': Removing ' + usedPasswords[i] + ' from the used passwords in your save data');
                     FlxG.save.data.usedPasswords.pop(usedPasswords[i]);
                 }
+                #if debug
                 displayResultMsg(3, 3);
+                #else
+                displayResultMsg(4, 3);
+                #end
             } else {
                 trace('Invalid password. Check spelling maybe?');
                 displayResultMsg(1, 3);
@@ -519,7 +527,10 @@ class PasswordState extends MusicBeatState
         var diffics:Array<String> = ['-easy', '', '-hard'];
         for (i in 0...diffics.length) {
             trace(i + ' of ' + diffics.length + ': copying file ' + songName + diffics[i] + '.json to mods folder');
-            File.copy('assets/locked/songs/' + songName + '/data/' + songName + diffics[i] + '.json', 'mods/data/' + songName + '/' + songName + diffics[i] + '.json');
+            if (FileSystem.exists('assets/locked/songs/' + songName + '/data/' + songName + diffics[i] + '.json')) {
+                trace('tf, SKIPPPPPPPPP');
+                File.copy('assets/locked/songs/' + songName + '/data/' + songName + diffics[i] + '.json', 'mods/data/' + songName + '/' + songName + diffics[i] + '.json');
+            }
         }
         var copyThese:Array<String> = ['Inst', 'Voices'];
         var copyOnlyInst:String = 'Inst';
@@ -584,7 +595,7 @@ class PasswordState extends MusicBeatState
                 }
                 sussyText.destroy();
                 sussyBg.destroy();
-                speen.destroy();
+                speenSus.destroy();
                 finishedCheck = true;
                 trueCreate();
             }
@@ -665,6 +676,31 @@ class PasswordState extends MusicBeatState
                     }
                     errorTxt.destroy();
                     errorBg.visible = false;
+                });
+            case 4:
+                trace('debug reset');
+                errorBg.color = FlxColor.fromRGB(71, 117, 0);
+                errorBg.visible = true;
+                var errorTxt:FlxText = new FlxText(0, 0, FlxG.width, 'Unlocks have been reset. You will now be returned to the main menu.', 48);
+                errorTxt.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+                errorTxt.screenCenter(Y);
+                add(errorTxt);
+                new FlxTimer().start(3, function (tmr:FlxTimer) {
+                    if (miniSaber.shader == null) {
+                        miniSaber.shader = lockedShader.shader;
+                    }
+                    if (bfOpponent.shader == null) {
+                        bfOpponent.shader = lockedShader.shader;
+                    }
+                    if (youIdiot.shader == null) {
+                        youIdiot.shader = lockedShader.shader;
+                    }
+                    errorTxt.destroy();
+                    errorBg.visible = false;
+                    for (i in 0...sussyFlags.length) {
+                        FlxG.save.resetFlag(sussyFlags[i], FlxG.save.data);
+                    }
+                    doCoolExit();
                 });
         }
     }
