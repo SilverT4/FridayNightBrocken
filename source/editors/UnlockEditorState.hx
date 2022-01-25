@@ -124,7 +124,7 @@ class UnlockEditorState extends MusicBeatState {
         speenLoad.animation.play('spin');
         add(speenLoad);
         for (curFucker in 0...unlockDir) {
-            bruh.updateEmptyBar();
+            bruh.updateBar();
             if (unlockDir[curFucker].endsWith('.txt')) {
                 trace(Std.int(curFucker + 1) + ' of ' + unlockDir.length + ': Skipping ' + unlockDir[curFucker] + ' as it is not a JSON!');
             } else {
