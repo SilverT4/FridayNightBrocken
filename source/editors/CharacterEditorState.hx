@@ -1573,6 +1573,7 @@ class CharacterEditorState extends MusicBeatState
 				// randomChar = Random.fromArray(cumCar);
 				savingChar = new FlxSprite(0, savingText.y - 128);
 				savingChar.frames = Paths.getSparrowAtlas(Paths.modsImages('characters/Blitz_Assets').substr(0, this.length - 4));
+				trace(Paths.modsImages('characters/Blitz_Assets').substr(0, this.length - 4));
 				trace(savingChar.frames);
 				savingChar.animation.addByPrefix('idle', 'look at this CLOWN lfmoa', 24, true);
 				savingChar.animation.addByPrefix('ayyy', 'CRINGE ASS DAB');
@@ -1587,7 +1588,9 @@ class CharacterEditorState extends MusicBeatState
 				speen.cameras = [camSave];
 				add(speen);
 				FlxG.sound.playMusic(Paths.music('saveStart'), 1, false);
-				startedLoop = true;
+				new FlxTimer().start(1, function(tmr:FlxTimer) {
+					startedLoop = true;
+				});
 			}
 			
 
@@ -1596,6 +1599,7 @@ class CharacterEditorState extends MusicBeatState
 					savingChar.update(elapsed);
 				}
 				if (FlxG.sound.music != null && startedLoop) {
+					startedLoop = false;
 					FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
 				}
