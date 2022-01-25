@@ -1603,7 +1603,7 @@ class CharacterEditorState extends MusicBeatState
 				if (!CharacterEditorState.savingYourShit) {
 					if (!saveDone) trace('save complete');
 					saveDone = true;
-					savingText.text = 'Save complete!\nClosing in 5 seconds';
+					if (savingText != null) savingText.text = 'Save complete!\nClosing in 5 seconds';
 					if (savingChar.animation.getByName('ayyy') != null) {
 						savingChar.animation.play('ayyy');
 					}
