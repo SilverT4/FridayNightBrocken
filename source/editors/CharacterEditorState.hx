@@ -1194,7 +1194,7 @@ class CharacterEditorState extends MusicBeatState
 				if (FlxG.keys.justPressed.R) {
 					FlxG.camera.zoom = 1;
 				}
-
+				
 				if (FlxG.keys.justPressed.Q) {
 					openSubState(new SavingYourBullshit('minisaber'));
 				}
@@ -1356,7 +1356,7 @@ class CharacterEditorState extends MusicBeatState
 				"no_antialiasing": char.noAntialiasing,
 				"healthbar_colors": char.healthColorArray
 			};
-
+			
 			savingYourShit = true;
 			
 			var data:String = Json.stringify(json, "\t");
@@ -1380,60 +1380,68 @@ class CharacterEditorState extends MusicBeatState
 			var text:String = prefix + Clipboard.text.replace('\n', '');
 			return text;
 		}
-	
-	function reParseCharJson(charName:String = 'spooky') {
-		var isModCharacter:Bool = false;
-		var fuckinPaths:Array<String> = ['assets/characters/', 'mods/characters/'];
-		var parseJsonBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 128));
-		var charFile:String;
-		parseJsonBg.screenCenter();
-		parseJsonBg.cameras = [camMenu];
-		add(parseJsonBg);
-		var parseJsonText:FlxText = new FlxText(0, 0, FlxG.width, 'Parsing json: ' + charName + '\nPlease wait...');
-		parseJsonText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER, OUTLINE, FlxColor.BLACK);
-		parseJsonText.screenCenter();
-		parseJsonText.cameras = [camMenu];
-		add(parseJsonText);
-		new FlxTimer().start(5, function (tmr:FlxTimer) {
-			if (FileSystem.exists(fuckinPaths[0] + charName + '.json')) {
-				charFile = fuckinPaths[0] + charName + '.json';
-				#if debug
-				parseJsonText.text = 'Character data for ' + charName + ' found. Output will be displayed in the console.';
-				#else
-				parseJsonText.text = 'Character data for ' + charName + ' found.';
-				#end
-				parseJsonText.updateHitbox();
-				parsedCharJson = Json.parse(File.getContent(charFile));
-				#if debug
-				trace(parsedCharJson);
-				#end
-			} else if (FileSystem.exists(fuckinPaths[1] + charName + '.json')) {
-				charFile = fuckinPaths[1] + charName + '.json';
-				#if debug
-				parseJsonText.text = 'Character data for ' + charName + ' found. Output will be displayed in the console.';
-				#else
-				parseJsonText.text = 'Character data for ' + charName + ' found.';
-				#end
-				parseJsonText.updateHitbox();
-				isModCharacter = true;
-				parsedCharJson = Json.parse(File.getContent(charFile));
-				#if debug
-				trace(parsedCharJson);
-				#end
-			} else {
-				parseJsonBg.color = FlxColor.fromRGB(128, 0, 0, 128);
-				parseJsonText.text = 'Could not find character data for ' + charName + ', is the file still there?';
-				parseJsonText.updateHitbox();
-			}
-			new FlxTimer().start(3, function(tmr:FlxTimer) {
-				parseJsonBg.destroy();
-				parseJsonText.destroy();
+		
+		function reParseCharJson(charName:String = 'spooky') {
+			var isModCharacter:Bool = false;
+			var fuckinPaths:Array<String> = ['assets/characters/', 'mods/characters/'];
+			var parseJsonBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 128));
+			var charFile:String;
+			var speen:FlxSprite;
+			parseJsonBg.screenCenter();
+			parseJsonBg.cameras = [camMenu];
+			add(parseJsonBg);
+			var parseJsonText:FlxText = new FlxText(0, 0, FlxG.width, 'Parsing json: ' + charName + '\nPlease wait...');
+			parseJsonText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER, OUTLINE, FlxColor.BLACK);
+			parseJsonText.screenCenter();
+			parseJsonText.cameras = [camMenu];
+			speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+			speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+			speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+			speen.animation.play('spin');
+			speen.cameras = [camMenu];
+			add(speen);
+			add(parseJsonText);
+			new FlxTimer().start(5, function (tmr:FlxTimer) {
+				if (FileSystem.exists(fuckinPaths[0] + charName + '.json')) {
+					charFile = fuckinPaths[0] + charName + '.json';
+					#if debug
+					parseJsonText.text = 'Character data for ' + charName + ' found. Output will be displayed in the console.';
+					#else
+					parseJsonText.text = 'Character data for ' + charName + ' found.';
+					#end
+					parseJsonText.updateHitbox();
+					parsedCharJson = Json.parse(File.getContent(charFile));
+					#if debug
+					trace(parsedCharJson);
+					#end
+				} else if (FileSystem.exists(fuckinPaths[1] + charName + '.json')) {
+					charFile = fuckinPaths[1] + charName + '.json';
+					#if debug
+					parseJsonText.text = 'Character data for ' + charName + ' found. Output will be displayed in the console.';
+					#else
+					parseJsonText.text = 'Character data for ' + charName + ' found.';
+					#end
+					parseJsonText.updateHitbox();
+					isModCharacter = true;
+					parsedCharJson = Json.parse(File.getContent(charFile));
+					#if debug
+					trace(parsedCharJson);
+					#end
+				} else {
+					parseJsonBg.color = FlxColor.fromRGB(128, 0, 0, 128);
+					parseJsonText.text = 'Could not find character data for ' + charName + ', is the file still there?';
+					parseJsonText.updateHitbox();
+				}
+				new FlxTimer().start(3, function(tmr:FlxTimer) {
+					parseJsonBg.destroy();
+					parseJsonText.destroy();
+					speen.destroy();
+				});
 			});
-		});
+		}
+		
+		public static var instance:CharacterEditorState;
 	}
-
-	public static var instance:CharacterEditorState;
-}
 	
 	class CharacterTestStarter extends MusicBeatSubstate {
 		var saveBg:FlxSprite;
@@ -1495,130 +1503,131 @@ class CharacterEditorState extends MusicBeatState
 				openTestUI(songName, charType, charName);
 			}
 		}
-
+		
 		function openTestUI(songName:String = 'Dad-battle', charType:String, charName:String) {
 			warningBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.ORANGE);
-				warningBg.alpha = 0.5;
-				warningBg.screenCenter();
-				warningBg.cameras = [camAmogus];
-				add(warningBg);
-				warningText = new FlxText(0, 0, FlxG.width, '');
-				warningText.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, CENTER, SHADOW, FlxColor.GRAY);
-				warningText.text = 'Have you saved your character? If not, make sure to save it to:\nmods/characters/' + charName + '.json\nMake sure you do this BEFORE clicking Start Test, as you CANNOT recover any unsaved edits you have made here once you click it.';
-				warningText.cameras = [camAmogus];
-				warningText.screenCenter();
-				add(warningText);
-				confirmButton = new FlxButton(warningText.x, warningText.y - 100, 'Continue', function() {
-					PlayState.SONG = Song.loadFromJson(songName.toLowerCase(), songName.toLowerCase());
-					switch (charType) {
-						case 'boyfriend':
-						PlayState.SONG.player1 = charName;
-						case 'dad':
-						PlayState.SONG.player2 = charName;
-						case 'girlfriend':
-						PlayState.SONG.player3 = charName;	
-					}
-					MusicBeatState.switchState(new PlayState());
-				});
-				confirmButton.cameras = [camAmogus];
-				cancelButton = new FlxButton(confirmButton.x + 150, confirmButton.y, 'Cancel', function() {
-					closeSubState();
-				});
-				cancelButton.cameras = [camAmogus];
-				add(confirmButton);
-				add(cancelButton);
+			warningBg.alpha = 0.5;
+			warningBg.screenCenter();
+			warningBg.cameras = [camAmogus];
+			add(warningBg);
+			warningText = new FlxText(0, 0, FlxG.width, '');
+			warningText.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, CENTER, SHADOW, FlxColor.GRAY);
+			warningText.text = 'Have you saved your character? If not, make sure to save it to:\nmods/characters/' + charName + '.json\nMake sure you do this BEFORE clicking Start Test, as you CANNOT recover any unsaved edits you have made here once you click it.';
+			warningText.cameras = [camAmogus];
+			warningText.screenCenter();
+			add(warningText);
+			confirmButton = new FlxButton(warningText.x, warningText.y - 100, 'Continue', function() {
+				PlayState.SONG = Song.loadFromJson(songName.toLowerCase(), songName.toLowerCase());
+				switch (charType) {
+					case 'boyfriend':
+					PlayState.SONG.player1 = charName;
+					case 'dad':
+					PlayState.SONG.player2 = charName;
+					case 'girlfriend':
+					PlayState.SONG.player3 = charName;	
+				}
+				MusicBeatState.switchState(new PlayState());
+			});
+			confirmButton.cameras = [camAmogus];
+			cancelButton = new FlxButton(confirmButton.x + 150, confirmButton.y, 'Cancel', function() {
+				closeSubState();
+			});
+			cancelButton.cameras = [camAmogus];
+			add(confirmButton);
+			add(cancelButton);
 		}
 		
-	// var elapsed(default, null):Float;
-}
-
-		class SavingYourBullshit extends MusicBeatSubstate {
-			var savingBg:FlxSprite;
-			var savingText:FlxText;
-			var saveDone:Bool = false;
-			var savingChar:FlxSprite;
-			var speen:FlxSprite; //for future use lmao
-			var camSave:FlxCamera;
-			public var instance:SavingYourBullshit; //dont want to cause bullshit
-			var charas:Array<String> = [''];
-			var startedLoop:Bool = false;
-
-			public function new(randomChar:String) {
-				super();
-				// update(elapsed);
-				var cumCar:Array<Dynamic> = [];
-				/* var cummy = FileSystem.readDirectory('assets/characters');
-				var cumSpice = FileSystem.readDirectory('mods/characters');
-				for (i in 0...cummy.length) {
-					trace(Std.int(i + 1) + ' of ' + cummy.length + ': Your shitbox looks nice, ' + cummy[i]);
-					cumCar.push(cummy[i]);
+		// var elapsed(default, null):Float;
+	}
+	
+	class SavingYourBullshit extends MusicBeatSubstate {
+		var savingBg:FlxSprite;
+		var savingText:FlxText;
+		var saveDone:Bool = false;
+		var savingChar:FlxSprite;
+		var speen:FlxSprite; //for future use lmao
+		var camSave:FlxCamera;
+		public var instance:SavingYourBullshit; //dont want to cause bullshit
+		var charas:Array<String> = [''];
+		var startedLoop:Bool = false;
+		
+		public function new(randomChar:String) {
+			super();
+			// update(elapsed);
+			var cumCar:Array<Dynamic> = [];
+			/* var cummy = FileSystem.readDirectory('assets/characters');
+			var cumSpice = FileSystem.readDirectory('mods/characters');
+			for (i in 0...cummy.length) {
+				trace(Std.int(i + 1) + ' of ' + cummy.length + ': Your shitbox looks nice, ' + cummy[i]);
+				cumCar.push(cummy[i]);
+			}
+			for (i in 0...cumSpice.length) {
+				trace(Std.int(i + cummy.length + 1) + ' of ' + Std.int(cummy.length + cumSpice.length) + ': Your shitbox looks nice, ' + cumSpice[i]);
+				if (cumSpice[i] != 'huggy.json') cumCar.push('mods/images/characters/' + cumSpice[i].substr(0, this.length - 4));
+			} */
+			camSave = new FlxCamera();
+			camSave.bgColor.alpha = 0;
+			FlxG.cameras.add(camSave);
+			savingBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.GREEN);
+			savingBg.alpha = 0.5;
+			savingBg.screenCenter();
+			savingBg.cameras = [camSave];
+			add(savingBg);
+			savingText = new FlxText(0, 0);
+			savingText.text = 'Now saving your character!';
+			savingText.screenCenter();
+			savingText.cameras = [camSave];
+			add(savingText);
+			// randomChar = Random.fromArray(cumCar);
+			savingChar = new FlxSprite(0, savingText.y - 128);
+			savingChar.frames = Paths.getSparrowAtlas(Paths.modsImages('characters/Blitz_Assets').substr(0, this.length - 4));
+			trace(Paths.modsImages('characters/Blitz_Assets'));
+			trace(savingChar.frames);
+			savingChar.animation.addByPrefix('idle', 'look at this CLOWN lfmoa', 24, true);
+			savingChar.animation.addByPrefix('ayyy', 'CRINGE ASS DAB');
+			savingChar.animation.play('idle');
+			savingChar.cameras = [camSave];
+			savingChar.screenCenter(X);
+			add(savingChar);
+			speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+			speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+			speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+			speen.animation.play('spin');
+			speen.cameras = [camSave];
+			add(speen);
+			FlxG.sound.playMusic(Paths.music('saveStart'), 1, false);
+			new FlxTimer().start(Std.int(FlxG.sound.music.length / 1000), function(tmr:FlxTimer) {
+				startedLoop = true;
+			});
+		}
+		
+		
+		override function update(elapsed:Float) {
+			if (savingChar != null) {
+				savingChar.update(elapsed);
+			}
+			if (FlxG.sound.music != null && startedLoop) {
+				startedLoop = false;
+				FlxG.sound.music.stop();
+				FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
+			}
+			if (speen != null) {
+				speen.update(elapsed);
+			}
+			if (!CharacterEditorState.savingYourShit) {
+				if (!saveDone) trace('save complete');
+				saveDone = true;
+				if (savingText != null) savingText.text = 'Save complete!\nClosing in 5 seconds';
+				if (savingChar.animation.getByName('ayyy') != null) {
+					savingChar.animation.play('ayyy');
 				}
-				for (i in 0...cumSpice.length) {
-					trace(Std.int(i + cummy.length + 1) + ' of ' + Std.int(cummy.length + cumSpice.length) + ': Your shitbox looks nice, ' + cumSpice[i]);
-					if (cumSpice[i] != 'huggy.json') cumCar.push('mods/images/characters/' + cumSpice[i].substr(0, this.length - 4));
-				} */
-				camSave = new FlxCamera();
-				camSave.bgColor.alpha = 0;
-				FlxG.cameras.add(camSave);
-				savingBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.GREEN);
-				savingBg.alpha = 0.5;
-				savingBg.screenCenter();
-				savingBg.cameras = [camSave];
-				add(savingBg);
-				savingText = new FlxText(0, 0);
-				savingText.text = 'Now saving your character!';
-				savingText.screenCenter();
-				savingText.cameras = [camSave];
-				add(savingText);
-				// randomChar = Random.fromArray(cumCar);
-				savingChar = new FlxSprite(0, savingText.y - 128);
-				savingChar.frames = Paths.getSparrowAtlas(Paths.modsImages('characters/Blitz_Assets').substr(0, this.length - 4));
-				trace(Paths.modsImages('characters/Blitz_Assets'));
-				trace(savingChar.frames);
-				savingChar.animation.addByPrefix('idle', 'look at this CLOWN lfmoa', 24, true);
-				savingChar.animation.addByPrefix('ayyy', 'CRINGE ASS DAB');
-				savingChar.animation.play('idle');
-				savingChar.cameras = [camSave];
-				savingChar.screenCenter(X);
-				add(savingChar);
-				speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
-				speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
-				speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
-				speen.animation.play('spin');
-				speen.cameras = [camSave];
-				add(speen);
-				FlxG.sound.playMusic(Paths.music('saveStart'), 1, false);
-				new FlxTimer().start(Std.int(FlxG.sound.music.length / 1000), function(tmr:FlxTimer) {
-					startedLoop = true;
+				new FlxTimer().start(5, function (tmr:FlxTimer) {
+					FlxG.sound.music.stop();
+					close();
 				});
 			}
-			
-
-			override function update(elapsed:Float) {
-				if (savingChar != null) {
-					savingChar.update(elapsed);
-				}
-				if (FlxG.sound.music != null && startedLoop) {
-					startedLoop = false;
-					FlxG.sound.music.stop();
-					FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
-				}
-				if (speen != null) {
-					speen.update(elapsed);
-				}
-				if (!CharacterEditorState.savingYourShit) {
-					if (!saveDone) trace('save complete');
-					saveDone = true;
-					if (savingText != null) savingText.text = 'Save complete!\nClosing in 5 seconds';
-					if (savingChar.animation.getByName('ayyy') != null) {
-						savingChar.animation.play('ayyy');
-					}
-					new FlxTimer().start(5, function (tmr:FlxTimer) {
-						FlxG.sound.music.stop();
-						close();
-					});
-				}
-			}
+		}
 		
-	var elapsed(default, null):Float;
-}
+		var elapsed(default, null):Float;
+	}
+	
