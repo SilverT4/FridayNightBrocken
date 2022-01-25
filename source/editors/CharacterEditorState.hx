@@ -1527,7 +1527,7 @@ class CharacterEditorState extends MusicBeatState
 		class SavingYourBullshit extends MusicBeatSubstate {
 			var savingBg:FlxSprite;
 			var savingText:FlxText;
-			var savingChar:Character;
+			var savingChar:FlxSprite;
 			var speen:FlxSprite; //for future use lmao
 			var camSave:FlxCamera;
 			public var instance:SavingYourBullshit; //dont want to cause bullshit
@@ -1544,7 +1544,7 @@ class CharacterEditorState extends MusicBeatState
 				}
 				for (i in 0...cumSpice.length) {
 					trace(Std.int(i + cummy.length + 1) + ' of ' + Std.int(cummy.length + cumSpice.length) + ': Your shitbox looks nice, ' + cumSpice[i]);
-					cumCar.push(cumSpice[i]);
+					if (cumSpice[i] != 'huggy.json') cumCar.push('mods/images/characters/' + cumSpice[i].substr(0, this.length - 4));
 				}
 				camSave = new FlxCamera();
 				camSave.bgColor.alpha = 0;
@@ -1560,8 +1560,17 @@ class CharacterEditorState extends MusicBeatState
 				savingText.cameras = [camSave];
 				add(savingText);
 				randomChar = Random.fromArray(cumCar);
-				savingChar = new Character(0, savingText.y - 128, randomChar, false);
-				savingChar.dance();
+				savingChar = new FlxSprite(0, savingText.y - 128);
+				savingChar.frames = FlxAtlasFrames.fromSparrow('mods/images/characters/BOYFRIEND.png', 'mods/images/characters/BOYFRIEND.xml');
+				savingChar.animation.addByPrefix('idle', 'BF idle dance', 24, true);
+				if (savingChar.animation.getByName('BF HEY') != null) {
+					savingChar.animation.addByPrefix('hey', 'BF HEY', 24, false);
+				} else if (savingChar.animation.getByName('GF Cheer') != null) {
+					savingChar.animation.addByPrefix('cheer', 'GF Cheer', 24);
+				} else {
+					savingChar.animation.addByIndices('singUP', '', [0,1], 'UP', 24, false);
+				}
+				savingChar.animation.play('idle');
 				savingChar.cameras = [camSave];
 				add(savingChar);
 				speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
@@ -1585,11 +1594,11 @@ class CharacterEditorState extends MusicBeatState
 					trace('save complete');
 					savingText.text = 'Save complete!\nClosing in 5 seconds';
 					if (savingChar.animation.getByName('hey') != null) {
-						savingChar.playAnim('hey');
+						savingChar.animation.play('hey');
 					} else if (savingChar.animation.getByName('cheer') != null) {
-						savingChar.playAnim('cheer');
+						savingChar.animation.play('cheer');
 					} else {
-						savingChar.playAnim('singUP');
+						savingChar.animation.play('singUP');
 					}
 					new FlxTimer().start(5, function (tmr:FlxTimer) {
 						close();
