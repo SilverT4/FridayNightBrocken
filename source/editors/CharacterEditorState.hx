@@ -1541,6 +1541,7 @@ class CharacterEditorState extends MusicBeatState
 			var camSave:FlxCamera;
 			public var instance:SavingYourBullshit; //dont want to cause bullshit
 			var charas:Array<String> = [''];
+			var startedLoop:Bool = false;
 
 			public function new(randomChar:String) {
 				super();
@@ -1586,6 +1587,7 @@ class CharacterEditorState extends MusicBeatState
 				speen.cameras = [camSave];
 				add(speen);
 				FlxG.sound.playMusic(Paths.music('saveStart'), 1, false);
+				startedLoop = true;
 			}
 			
 
@@ -1593,7 +1595,7 @@ class CharacterEditorState extends MusicBeatState
 				if (savingChar != null) {
 					savingChar.update(elapsed);
 				}
-				if (FlxG.sound.music.time == FlxG.sound.music.length) {
+				if (FlxG.sound.music != null && startedLoop) {
 					FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
 				}
