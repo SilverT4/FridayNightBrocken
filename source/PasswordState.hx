@@ -657,10 +657,10 @@ class PasswordState extends MusicBeatState
     }
 
 	function doCoolExit() {
-        var beginSave = Paths.music('saveStart');
+        var beginSave = FlxG.sound.load(Paths.music('saveStart'));
         FlxG.sound.list.add(beginSave);
-        var saveLoopAudio = Paths.music('saveLoop');
-        saveLoopFuckYou = FlxG.sound.load(saveLoopAudio);
+        var saveLoopAudio = FlxG.sound.load(Paths.music('saveLoop'));
+        saveLoopFuckYou = saveLoopAudio;
         FlxG.sound.list.add(saveLoopFuckYou);
         beginSave.play();
         new FlxTimer().start(Std.int(beginSave.length / 1000), function(tmr:FlxTimer) {
@@ -685,7 +685,7 @@ class DebugPasswordShit extends MusicBeatSubstate {
     
     public function new() {
         super();
-        saveLoopAudio = Paths.sound('saveLoop');
+        saveLoopAudio = FlxG.sound.load(Paths.sound('saveLoop'));
         promptBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(128, 128, 0, 255));
         promptBg.screenCenter();
         promptBg.updateHitbox();
