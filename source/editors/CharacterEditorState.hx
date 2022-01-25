@@ -1194,6 +1194,10 @@ class CharacterEditorState extends MusicBeatState
 				if (FlxG.keys.justPressed.R) {
 					FlxG.camera.zoom = 1;
 				}
+
+				if (FlxG.keys.justPressed.Q) {
+					openSubState(new SavingYourBullshit('minisaber'));
+				}
 				
 				if (FlxG.keys.pressed.E && FlxG.camera.zoom < 3) {
 					FlxG.camera.zoom += elapsed * FlxG.camera.zoom;
