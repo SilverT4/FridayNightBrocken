@@ -91,10 +91,12 @@ class UnlockEditorState extends MusicBeatState {
         camMain.bgColor.alpha = 0;
         camTesting = new FlxCamera();
         camTesting.bgColor.alpha = 0;
-        FlxG.cameras.add(camLoad);
+        FlxG.cameras.add(camLoad, true);
         FlxG.cameras.add(camMain);
         FlxG.cameras.add(camTesting);
-        retrieveCustomUnlockables();
+        new FlxTimer().start(1, function(tmr:FlxTimer) {
+            retrieveCustomUnlockables();
+        });
     }
 
     override function update (elapsed:Float) {
@@ -117,7 +119,7 @@ class UnlockEditorState extends MusicBeatState {
 
     function retrieveCustomUnlockables() {
         trace('now checking unlockables');
-        loadingBackground = new FlxSprite(0).loadGraphic(Paths.image('menuDesat'));
+        loadingBackground = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         loadingBackground.color = FlxColor.BLUE;
         loadingBackground.scrollFactor.set();
         loadingBackground.cameras = [camLoad];
@@ -133,8 +135,9 @@ class UnlockEditorState extends MusicBeatState {
         add(bruh);
         speenLoad = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
         speenLoad.frames = Paths.getSparrowAtlas('editor/speen');
-        speenLoad.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+        speenLoad.animation.addByPrefix('spin', 'spinner go brr', ClientPrefs.framerate, true);
         speenLoad.animation.play('spin');
+        speenLoad.cameras = [camLoad];
         add(speenLoad);
         for (curFucker in 0...unlockDir) {
             bruh.updateBar();
