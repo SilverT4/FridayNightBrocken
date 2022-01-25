@@ -649,6 +649,7 @@ class CharacterEditorState extends MusicBeatState
 				trace('selected ' + songList.selectedLabel);
 			});
 			songForTest = songList.selectedLabel;
+			trace(songForTest);
 			
 			var beginTest:FlxButton = new FlxButton(characterSide.x + 210, characterSide.y - 3, "Test Char.", function()
 				{
