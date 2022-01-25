@@ -143,7 +143,7 @@ class MusicBeatState extends FlxUIState
 	function onWindowFocusOut():Void {
 		if (CharacterEditorState.savingYourShit) {
 			trace('ewwwww save dialog');
-			openSubState(new SavingYourBullshit());
+			openSubState(new SavingYourBullshit('blitz'));
 		}
 	}
 }
