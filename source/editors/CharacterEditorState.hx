@@ -660,7 +660,7 @@ class CharacterEditorState extends MusicBeatState
 					daAnim = 'unknown';
 					saveCharacter();
 				}
-				openSubState(new CharacterTestStarter(songForTest, charToTest, curChar));
+				openSubState(new CharacterTestStarter(songList.selectedLabel, charToTest, curChar));
 			});
 			
 			// healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
@@ -1563,7 +1563,8 @@ class CharacterEditorState extends MusicBeatState
 				add(savingText);
 				// randomChar = Random.fromArray(cumCar);
 				savingChar = new FlxSprite(0, savingText.y - 128);
-				savingChar.frames = Paths.getSparrowAtlas(Paths.modsImages('characters/Blitz_Assets'));
+				savingChar.frames = Paths.getSparrowAtlas(Paths.modsImages('characters/Blitz_Assets').substr(0, this.length - 4));
+				trace(savingChar.frames);
 				savingChar.animation.addByPrefix('idle', 'look at this CLOWN lfmoa', 24, true);
 				savingChar.animation.addByPrefix('ayyy', 'CRINGE ASS DAB');
 				savingChar.animation.play('idle');
@@ -1584,7 +1585,7 @@ class CharacterEditorState extends MusicBeatState
 				if (savingChar != null) {
 					savingChar.update(elapsed);
 				}
-				if (FlxG.sound.music.time == FlxG.sound.music.length && CharacterEditorState.savingYourShit) {
+				if (FlxG.sound.music.time == FlxG.sound.music.length) {
 					FlxG.sound.music.stop();
 					FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
 				}
