@@ -1,5 +1,7 @@
 package;
 
+import editors.CharacterEditorState;
+import lime.app.Application;
 import Conductor.BPMChangeEvent;
 import flixel.FlxG;
 import flixel.addons.ui.FlxUIState;
@@ -29,7 +31,8 @@ class MusicBeatState extends FlxUIState
 	override function create() {
 		var skip:Bool = FlxTransitionableState.skipNextTransOut;
 		super.create();
-
+		Application.current.window.onFocusIn.add(onWindowFocusIn);
+		Application.current.window.onFocusOut.add(onWindowFocusOut);
 		// Custom made Trans out
 		if(!skip) {
 			openSubState(new CustomFadeTransition(1, true));
@@ -128,5 +131,19 @@ class MusicBeatState extends FlxUIState
 	public function beatHit():Void
 	{
 		//do literally nothing dumbass
+	}
+
+	function onWindowFocusIn():Void {
+		trace('welcome back lmao');
+		if (CharacterEditorState.savingYourShit) {
+			SavingYourBullshit.weBacc();
+		}
+	}
+
+	function onWindowFocusOut():Void {
+		if (CharacterEditorState.savingYourShit) {
+			trace('ewwwww save dialog');
+			openSubState(new SavingYourBullshit());
+		}
 	}
 }

@@ -1,5 +1,7 @@
 package editors;
 
+import flixel.graphics.frames.FlxAtlasFrames;
+import lime.app.Application;
 import sys.io.File;
 import flixel.util.FlxTimer;
 import flixel.addons.ui.FlxUIDropDownMenu;
@@ -59,6 +61,7 @@ class CharacterEditorState extends MusicBeatState
 	public var daAnim:String = 'spooky';
 	var goToPlayState:Bool = true;
 	var camFollow:FlxObject;
+	public static var savingYourShit:Bool = false;
 	
 	public function new(daAnim:String = 'spooky', goToPlayState:Bool = true)
 		{
@@ -434,7 +437,7 @@ class CharacterEditorState extends MusicBeatState
 			charDropDown = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray([''], true), function(character:String)
 				{
 				daAnim = characterList[Std.parseInt(character)];
-				reParseCharJson();
+				reParseCharJson(daAnim);
 				check_player.checked = daAnim.startsWith('bf');
 				loadChar(!check_player.checked);
 				updatePresence();
@@ -639,9 +642,8 @@ class CharacterEditorState extends MusicBeatState
 					trace(Std.int(i + dumAss.length + 1) + ' of ' + dumAssTwo.length + ': Skipping ' + dumAss[i] + ', file is of extension ' + dumAss[i].substr(this.length - 4));
 				}
 			}
-			songList = new FlxUIDropDownMenu(15, characterSide.y + 35, FlxUIDropDownMenuCustom.makeStrIdLabelArray(dum, true), function(songForTest:String) {
+			songList = new FlxUIDropDownMenu(15, characterSide.y + 69, FlxUIDropDownMenuCustom.makeStrIdLabelArray(dum, true), function(songForTest:String) {
 				trace('selected ' + songList.selectedLabel);
-				
 			});
 			songForTest = songList.selectedLabel;
 			
@@ -1344,6 +1346,8 @@ class CharacterEditorState extends MusicBeatState
 				"no_antialiasing": char.noAntialiasing,
 				"healthbar_colors": char.healthColorArray
 			};
+
+			savingYourShit = true;
 			
 			var data:String = Json.stringify(json, "\t");
 			
@@ -1472,8 +1476,10 @@ class CharacterEditorState extends MusicBeatState
 				for (i in 0...saveTexts.length) {
 					add(saveTexts[i]);
 				} */
+				trace('information about what you testin:\nSONG: ' + songName + '\nCHARACTER IS A ' + charType + ' CHARACTER\nCHARACTER NAME: ' + charName);
 				openTestUI(songName, charType, charName);
 			} else {
+				trace('information about what you testin:\nSONG: ' + songName + '\nCHARACTER IS A ' + charType + ' CHARACTER\nCHARACTER NAME: ' + charName);
 				openTestUI(songName, charType, charName);
 			}
 		}
@@ -1510,4 +1516,46 @@ class CharacterEditorState extends MusicBeatState
 				add(confirmButton);
 				add(cancelButton);
 		}
+		}
+
+		class SavingYourBullshit extends MusicBeatSubstate {
+			var savingBg:FlxSprite;
+			var savingText:FlxText;
+			var savingChar:Character;
+			var speen:FlxSprite; //for future use lmao
+			var camSave:FlxCamera;
+			public var instance:SavingYourBullshit;
+
+			public function new() {
+				super();
+				camSave = new FlxCamera();
+				camSave.bgColor.alpha = 0;
+				FlxG.cameras.add(camSave);
+				savingBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.GREEN);
+				savingBg.alpha = 0.5;
+				savingBg.screenCenter();
+				savingBg.cameras = [camSave];
+				add(savingBg);
+				savingText = new FlxText();
+				savingText.text = 'Now saving your character!';
+				savingText.screenCenter();
+				savingText.cameras = [camSave];
+				add(savingText);
+				savingChar = new Character(0, savingText.y - 128, CharacterEditorState.instance.daAnim, false);
+				savingChar.dance();
+				savingChar.cameras = [camSave];
+				add(savingChar);
+				speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+				speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+				speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+				speen.animation.play('spin');
+				speen.cameras = [camSave];
+				add(speen);
+			}
+
+			override function update(elapsed:Float) {
+				if (savingChar != null) {
+					savingChar.update(elapsed);
+				}
+			}
 	}
