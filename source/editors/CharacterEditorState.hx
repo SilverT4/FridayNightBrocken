@@ -105,6 +105,8 @@ class CharacterEditorState extends MusicBeatState
 		add(bgLayer);
 		charLayer = new FlxTypedGroup<Character>();
 		add(charLayer);
+		FlxG.sound.cache(Paths.music('saveStart'));
+		FlxG.sound.cache(Paths.music('saveLoop'));
 		
 		var pointer:FlxGraphic = FlxGraphic.fromClass(GraphicCursorCross);
 		cameraFollowPointer = new FlxSprite().loadGraphic(pointer);
@@ -1551,6 +1553,7 @@ class CharacterEditorState extends MusicBeatState
 				speen.animation.play('spin');
 				speen.cameras = [camSave];
 				add(speen);
+				FlxG.sound.playMusic(Paths.music('saveStart'), 1, false);
 			}
 			
 
@@ -1558,7 +1561,9 @@ class CharacterEditorState extends MusicBeatState
 				if (savingChar != null) {
 					savingChar.update(elapsed);
 				}
-
+				if (FlxG.sound.music == null && CharacterEditorState.savingYourShit) {
+					FlxG.sound.playMusic(Paths.music('saveLoop'), 1, true);
+				}
 				if (!CharacterEditorState.savingYourShit) {
 					trace('save complete');
 					close();
