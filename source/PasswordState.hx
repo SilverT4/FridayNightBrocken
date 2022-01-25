@@ -112,6 +112,7 @@ class PasswordState extends MusicBeatState
     var needPasswd:Bool = false;
     var dbgNotice:FlxText;
     var dbgNoticeBg:FlxSprite;
+    var speen:FlxSprite;
     
     
     public function new() {
@@ -221,6 +222,10 @@ class PasswordState extends MusicBeatState
         sussyBg.updateHitbox();
         sussyBg.screenCenter();
         add(sussyBg);
+        speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+        speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+		speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+		speen.animation.play('spin');
         
         sussyText = new FlxText(0, 0, FlxG.width, 'Checking save data...', 24);
         add(sussyText);
@@ -573,6 +578,7 @@ class PasswordState extends MusicBeatState
                 }
                 sussyText.destroy();
                 sussyBg.destroy();
+                speen.destroy();
                 finishedCheck = true;
                 trueCreate();
             }
@@ -664,6 +670,20 @@ class PasswordState extends MusicBeatState
         saveLoopFuckYou = saveLoopAudio;
         FlxG.sound.list.add(saveLoopFuckYou);
         saveLoopFuckYou.volume = 5;
+        #if !debug
+        dbgNoticeBg = new FlxSprite(0).makeGraphic(FlxG.width, 26, 0xFF000000);
+        dbgNoticeBg.alpha = 0.6;
+        add(dbgNoticeBg);
+        dbgNotice = new FlxText(dbgNoticeBg.x, dbgNoticeBg.y + 4, FlxG.width, "Saving the game, please wait...");
+        dbgNotice.setFormat(Paths.font("funny.ttf"), 16, FlxColor.WHITE, CENTER);
+        dbgNotice.scrollFactor.set();
+        add(dbgNotice);
+        #end
+        speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+        speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+		speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+		speen.animation.play('spin');
+        add(speen);
         beginSave.play();
         new FlxTimer().start(Std.int(beginSave.length / 1000), function(tmr:FlxTimer) {
             loopBegin = true;

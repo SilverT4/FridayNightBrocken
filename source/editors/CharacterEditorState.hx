@@ -1382,6 +1382,8 @@ class CharacterEditorState extends MusicBeatState
 		}
 		
 		function reParseCharJson(charName:String = 'spooky') {
+			char.visible = false;
+			textAnim.visible = false;
 			var isModCharacter:Bool = false;
 			var fuckinPaths:Array<String> = ['assets/characters/', 'mods/characters/'];
 			var parseJsonBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 128));
@@ -1411,6 +1413,9 @@ class CharacterEditorState extends MusicBeatState
 					#end
 					parseJsonText.updateHitbox();
 					parsedCharJson = Json.parse(File.getContent(charFile));
+					speen.destroy();
+					char.visible = true;
+					textAnim.visible = true;
 					#if debug
 					trace(parsedCharJson);
 					#end
@@ -1424,6 +1429,9 @@ class CharacterEditorState extends MusicBeatState
 					parseJsonText.updateHitbox();
 					isModCharacter = true;
 					parsedCharJson = Json.parse(File.getContent(charFile));
+					speen.destroy();
+					char.visible = true;
+					textAnim.visible = true;
 					#if debug
 					trace(parsedCharJson);
 					#end
@@ -1431,11 +1439,13 @@ class CharacterEditorState extends MusicBeatState
 					parseJsonBg.color = FlxColor.fromRGB(128, 0, 0, 128);
 					parseJsonText.text = 'Could not find character data for ' + charName + ', is the file still there?';
 					parseJsonText.updateHitbox();
+					speen.destroy();
+					textAnim.visible = true;
+					char.visible = true;
 				}
 				new FlxTimer().start(3, function(tmr:FlxTimer) {
 					parseJsonBg.destroy();
 					parseJsonText.destroy();
-					speen.destroy();
 				});
 			});
 		}
