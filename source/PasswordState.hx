@@ -85,6 +85,7 @@ class PasswordState extends MusicBeatState
     var bg:FlxSprite;
     var sussyFlags:Array<String> = [/* 'unlockedBosipNotes', 'unlockedBobNotes', 'unlockedMiniShoeyNotes', */'unlockedMiniSaber', 'unlockedBfOpponent', 'unlockedArsonist'];
     var sussyText:FlxText;
+    var loopBegin:Bool = false;
     /* var hahaBosip:FlxText;
     var hahaBob:FlxText;
     var hahaMiniShoey:FlxText; */
@@ -97,6 +98,8 @@ class PasswordState extends MusicBeatState
     var ohnoSaber:FlxText; 
     var ohnoBfOp:FlxText;
     var ohnoArson:FlxText;
+    // var beginSave:FlxSound;
+    var saveLoopFuckYou:FlxSound;
     var sussyBg:FlxSprite;
     var contentTypes:Array<String> = ['Character', 'Song', 'Noteskin'];
     private var shaderArray:Array<ColorSwap> = [];
@@ -169,7 +172,13 @@ class PasswordState extends MusicBeatState
     override function update(elapsed:Float) {
         if (controls.BACK && !pwInputBox.hasFocus) {
             FlxG.sound.play('mods/sounds/jumpedYaMom.ogg'); // hate the paths system challenge /j
-            if (finishedCheck) MusicBeatState.switchState(new MainMenuState()) else Sys.exit(420);
+            if (finishedCheck) doCoolExit() else Sys.exit(420);
+        }
+
+        if (loopBegin && saveLoopFuckYou != null) {
+            saveLoopFuckYou.play();
+            saveLoopFuckYou.loopTime = saveLoopFuckYou.length;
+            loopBegin = false;
         }
         
         if (finishedCheck && controls.ACCEPT && !pwInputBox.hasFocus) {
@@ -646,6 +655,23 @@ class PasswordState extends MusicBeatState
                 });
         }
     }
+
+	function doCoolExit() {
+        var beginSave = Paths.music('saveStart');
+        FlxG.sound.list.add(beginSave);
+        var saveLoopAudio = Paths.music('saveLoop');
+        saveLoopFuckYou = saveLoopAudio;
+        FlxG.sound.list.add(saveLoopAudio);
+        beginSave.play();
+        new FlxTimer().start(Std.int(beginSave.length / 1000), function(tmr:FlxTimer) {
+            loopBegin = true;
+        });
+        new FlxTimer().start(30, function (tmr:FlxTimer) {
+            FlxG.save.data.flush();
+            trace(FlxG.save.data);
+            LoadingState.loadAndSwitchState(new MainMenuState(), true);
+        });
+    }
 }
 class DebugPasswordShit extends MusicBeatSubstate {
     var enterPass:FlxUIInputText;
@@ -655,9 +681,11 @@ class DebugPasswordShit extends MusicBeatSubstate {
     var savingText:FlxText;
     var resetText:FlxText;
     var savePass:FlxButton;
+    var saveLoopAudio:FlxSound;
     
     public function new() {
         super();
+        saveLoopAudio = Paths.sound('saveLoop');
         promptBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(128, 128, 0, 255));
         promptBg.screenCenter();
         promptBg.updateHitbox();
@@ -676,6 +704,8 @@ class DebugPasswordShit extends MusicBeatSubstate {
             savingText.text = "Saving password...";
             savingText.screenCenter();
             add(savingText);
+            saveLoopAudio.play(false);
+            saveLoopAudio.loopTime = saveLoopAudio.length;
             new FlxTimer().start(5, function (tmr:FlxTimer) {
                 sys.io.File.saveContent('assets/data/JOEMAMA.TXT', enterPass.text);
                 savingText.visible = false;
