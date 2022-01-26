@@ -65,7 +65,7 @@ using StringTools;
 
 class UnlockEditorState extends MusicBeatState {
     static inline final HEALTHBAR = 'healthBar';
-
+    
     var hardCoded:Array<Dynamic> = [
         ['SuspiciousFool', 'skin', 'Mini Saber', 'minisaber', 'unlockedMiniSaber'],
         ['Grass', 'skin', 'BF.xml', 'bf-opponent', 'unlockedBfOpponent'],
@@ -88,15 +88,15 @@ class UnlockEditorState extends MusicBeatState {
     var camTesting:FlxCamera;
     var reverberation:Array<Dynamic> = [
         
-
-      '                          _     ',
-      '  _ __ _____   _____ _ __| |__  ',
-      ' | \'__/ _ \\ \\ / / _ \\ \'__| \'_ \\ ',
-      ' | | |  __/\\ V /  __/ |  | |_) |',
-      ' |_|  \\___| \\_/ \\___|_|  |_.__/ ',
-      '                                ',
-      ''
-      
+        
+        '                          _     ',
+        '  _ __ _____   _____ _ __| |__  ',
+        ' | \'__/ _ \\ \\ / / _ \\ \'__| \'_ \\ ',
+        ' | | |  __/\\ V /  __/ |  | |_) |',
+        ' |_|  \\___| \\_/ \\___|_|  |_.__/ ',
+        '                                ',
+        ''
+        
     ];
     // var testScreen:FlxUILoadingScreen;
     var curState:String = 'pants';
@@ -146,7 +146,7 @@ class UnlockEditorState extends MusicBeatState {
             "y": 0
         ]
     }'; // these will be explained in the docs as well
-
+    
     public function new() {
         super();
         loadingCamera = new FlxCamera();
@@ -163,17 +163,15 @@ class UnlockEditorState extends MusicBeatState {
         miniSaber = new Character(0, 0, 'minisaber', false);
         miniSaber.visible = false;
         add(miniSaber);
-        nt = new Character(0, 0, 'minisaber', false);
+        nt = new Character(0, 0, 'nt-pixel', false);
         nt.visible = false;
         add(nt);
         FlxG.cameras.reset(loadingCamera);
         FlxG.cameras.setDefaultDrawTarget(loadingCamera, false);
-        new FlxTimer().start(3, function (tmr:FlxTimer) {
-            convertHardCodeToArray();
-        });
+        convertHardCodeToArray();
         trace(FileSystem.readDirectory('mods/unlockable'));
     }
-
+    
     function convertHardCodeToArray() {
         var convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         convertBg.color = FlxColor.RED;
@@ -208,25 +206,27 @@ class UnlockEditorState extends MusicBeatState {
         convertBarBullshit.sprTracker = convertBar;
         trace(convertBar);
         trace(convertBarBullshit);
-        for (i in 0...hardCoded.length) {
-            var hardDong:Array<Dynamic> = hardCoded[i];
-            trace(hardDong);
-            juicyBeef.push(hardDong[0]);
-            trace(juicyBeef);
-            mouthwateringBacon.push(hardDong[1]);
-            trace(mouthwateringBacon);
-            succulentChicken.push(hardDong[2]);
-            trace(succulentChicken);
-            squishyJelly.push(hardDong[3]);
-            trace(squishyJelly);
-            aromaticLettuce.push(hardDong[4]);
-            trace(aromaticLettuce);
-            if (i == hardCoded.length) {
-                if (FileSystem.readDirectory('mods/unlockable') != null && FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
+        new FlxTimer().start(3, function (tmr:FlxTimer) {
+            for (i in 0...hardCoded.length) {
+                var hardDong:Array<Dynamic> = hardCoded[i];
+                trace(hardDong);
+                juicyBeef.push(hardDong[0]);
+                trace(juicyBeef);
+                mouthwateringBacon.push(hardDong[1]);
+                trace(mouthwateringBacon);
+                succulentChicken.push(hardDong[2]);
+                trace(succulentChicken);
+                squishyJelly.push(hardDong[3]);
+                trace(squishyJelly);
+                aromaticLettuce.push(hardDong[4]);
+                trace(aromaticLettuce);
+                if (i == hardCoded.length) {
+                    if (FileSystem.readDirectory('mods/unlockable') != null && FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
+                }
             }
-        }
+        });
     }
-
+    
     override function update (elapsed:Float) {
         if (speenLoad != null) {
             speenLoad.update(elapsed);
@@ -256,7 +256,7 @@ class UnlockEditorState extends MusicBeatState {
             FlxG.cameras.add(camTesting);
         } */
     }
-
+    
     function retrieveCustomUnlockables() {
         trace('now checking unlockables');
         trace('fart with extra...');
@@ -299,7 +299,7 @@ class UnlockEditorState extends MusicBeatState {
             }
         }
     }
-
+    
     function endLoadingShit() {
         speenLoad.destroy();
         loadingBackground.destroy();
@@ -308,22 +308,22 @@ class UnlockEditorState extends MusicBeatState {
         displayMainUI();
         trace('placeholder to prevent any crashes');
     }
-
+    
     function doExitChecks() {
         switch (curState) {
             case 'pants':
-                trace('wow, you pressed this REALLY early in the fuckin shit');
-                MusicBeatState.switchState(new MasterEditorMenu());
+            trace('wow, you pressed this REALLY early in the fuckin shit');
+            MusicBeatState.switchState(new MasterEditorMenu());
             case 'farting':
-                trace('aight lets confirm this');
-                openSubState(new ConfirmExitDuringLoad());
+            trace('aight lets confirm this');
+            openSubState(new ConfirmExitDuringLoad());
             case 'shidding':
-                trace('aight');
-                FlxG.sound.play(Paths.sound('cancelMenu', 'shared'));
-                MusicBeatState.switchState(new MasterEditorMenu());
+            trace('aight');
+            FlxG.sound.play(Paths.sound('cancelMenu', 'shared'));
+            MusicBeatState.switchState(new MasterEditorMenu());
         }
     }
-
+    
     function displayMainUI() {
         trace('im gonna brown');
         if (!FlxG.mouse.visible) {
@@ -344,7 +344,7 @@ class UnlockEditorState extends MusicBeatState {
         UI_box.x = FlxG.width - 275;
         UI_box.y = 25;
         UI_box.scrollFactor.set();
-
+        
         var tabs = [
             {name: 'Content Type', label: 'Content Type'},
             {name: 'Content Info', label: 'Content Info'},
@@ -364,20 +364,20 @@ class UnlockEditorState extends MusicBeatState {
         addUnlockInfoUI();
         UI_lmao.selected_tab_id = 'Content Info';
     }
-
+    
     var unlockDropDown:FlxUIDropDownMenuCustom;
     var curUnlockable:String;
     function addUnlockListUI() {
         var tab_group = new FlxUI(null, UI_box);
         tab_group.name = 'Unlockables';
-
+        
         unlockDropDown = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(succulentChicken, true), function(unlockableName:String) {
             trace('pp');
             curUnlockable = unlockDropDown.selectedLabel;
         });
         trace('lets not crash pls');
     }
-
+    
     function addUnlockInfoUI() {
         trace('lets also not crash pls');
     }
@@ -390,7 +390,7 @@ class ConfirmExitDuringLoad extends MusicBeatSubstate {
     var confirmationWindow:FlxSprite;
     var alphaMale:FlxTween;
     public var onFinish:Void->Void = null;
-
+    
     public function new() {
         super();
         camConfirm = new FlxCamera();
@@ -399,7 +399,7 @@ class ConfirmExitDuringLoad extends MusicBeatSubstate {
             FlxG.mouse.visible = true;
         }
     }
-
+    
     override function update(elapsed:Float) {
         if (confirmationBg != null) {
             confirmationBg.update(elapsed);
@@ -418,7 +418,7 @@ class ConfirmExitDuringLoad extends MusicBeatSubstate {
             close();
         }
     }
-
+    
     override function create() {
         confirmationBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
         confirmationBg.alpha = 0;
@@ -431,15 +431,15 @@ class ConfirmExitDuringLoad extends MusicBeatSubstate {
             }
         }, 10);
         /* alphaMale = FlxTween.tween(this, {alpha: 0}, 0.69, {onComplete: function (twn:FlxTween) {
-			alphaMale = FlxTween.tween(this, {alpha: 1}, 0.69, {
-				startDelay: 2.5,
-				onComplete: function(twn:FlxTween) {
-					alphaMale = null;
-					remove(this);
-					if(onFinish != null) onFinish();
-				}
-			});
-		}}); */ //might use this later idk
+            alphaMale = FlxTween.tween(this, {alpha: 1}, 0.69, {
+                startDelay: 2.5,
+                onComplete: function(twn:FlxTween) {
+                    alphaMale = null;
+                    remove(this);
+                    if(onFinish != null) onFinish();
+                }
+            });
+        }}); */ //might use this later idk
         confirmationWindow = new FlxSprite(0).makeGraphic(Std.int(FlxG.width * 0.5), Std.int(FlxG.height * 0.5), FlxColor.WHITE);
         confirmationWindow.alpha = 1;
         confirmationWindow.screenCenter();
