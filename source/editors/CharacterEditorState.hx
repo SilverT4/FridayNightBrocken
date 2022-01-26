@@ -56,6 +56,7 @@ class CharacterEditorState extends MusicBeatState
 	var bgLayer:FlxTypedGroup<FlxSprite>;
 	var charLayer:FlxTypedGroup<Character>;
 	var dumbTexts:FlxTypedGroup<FlxText>;
+	var speen:FlxSprite;
 	//var animList:Array<String> = [];
 	var curAnim:Int = 0;
 	public var daAnim:String = 'spooky';
@@ -147,6 +148,14 @@ class CharacterEditorState extends MusicBeatState
 		add(textAnim);
 		
 		genBoyOffsets();
+		
+		speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+		speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+		speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+		speen.animation.addByIndices('spun', 'spinner go brr', [42, 0], '', 0, false);
+		speen.animation.play('spin');
+		speen.cameras = [camHUD];
+		add(speen);
 		
 		camFollow = new FlxObject(0, 0, 2, 2);
 		camFollow.screenCenter();
@@ -717,11 +726,17 @@ class CharacterEditorState extends MusicBeatState
 			var addUpdateButton:FlxButton = new FlxButton(70, animationIndicesInputText.y + 30, "Add/Update", function() {
 				var indices:Array<Int> = [];
 				var indicesStr:Array<String> = animationIndicesInputText.text.trim().split(',');
+				speen.visible = true;
+				speen.animation.play('spin');
 				if(indicesStr.length > 1) {
 					for (i in 0...indicesStr.length) {
 						var index:Int = Std.parseInt(indicesStr[i]);
 						if(indicesStr[i] != null && indicesStr[i] != '' && !Math.isNaN(index) && index > -1) {
 							indices.push(index);
+						}
+						if (i == indicesStr.length) {
+							speen.animation.play('spun');
+							speen.visible = false;
 						}
 					}
 				}
@@ -772,6 +787,8 @@ class CharacterEditorState extends MusicBeatState
 								if(leAnim != null && leAnim.frames.length > 0) {
 									char.playAnim(char.animationsArray[i].anim, true);
 									curAnim = i;
+									speen.animation.play('spun');
+									speen.visible = false;
 									break;
 								}
 							}
@@ -1194,7 +1211,7 @@ class CharacterEditorState extends MusicBeatState
 				if (FlxG.keys.justPressed.R) {
 					FlxG.camera.zoom = 1;
 				}
-
+				
 				if (FlxG.keys.justPressed.V) {
 					var funnyData:Array<Dynamic> = [Std.string(FlxG.save.data)];
 					FlxG.save.resetFlag('unlockedMiniSaber', funnyData);
@@ -1403,7 +1420,7 @@ class CharacterEditorState extends MusicBeatState
 			parseJsonText.cameras = [camMenu];
 			speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
 			speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
-			speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+			speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
 			speen.animation.play('spin');
 			speen.cameras = [camMenu];
 			add(speen);
@@ -1418,7 +1435,7 @@ class CharacterEditorState extends MusicBeatState
 					#end
 					parseJsonText.updateHitbox();
 					parsedCharJson = Json.parse(File.getContent(charFile));
-					speen.destroy();
+					speen.visible = false;
 					char.visible = true;
 					textAnim.visible = true;
 					#if debug
@@ -1434,7 +1451,7 @@ class CharacterEditorState extends MusicBeatState
 					parseJsonText.updateHitbox();
 					isModCharacter = true;
 					parsedCharJson = Json.parse(File.getContent(charFile));
-					speen.destroy();
+					speen.visible = false;
 					char.visible = true;
 					textAnim.visible = true;
 					#if debug
@@ -1444,7 +1461,7 @@ class CharacterEditorState extends MusicBeatState
 					parseJsonBg.color = FlxColor.fromRGB(128, 0, 0, 128);
 					parseJsonText.text = 'Could not find character data for ' + charName + ', is the file still there?';
 					parseJsonText.updateHitbox();
-					speen.destroy();
+					speen.visible = false;
 					textAnim.visible = true;
 					char.visible = true;
 				}
@@ -1590,11 +1607,12 @@ class CharacterEditorState extends MusicBeatState
 			add(savingBg);
 			savingText = new FlxText(0, 0);
 			savingText.text = 'Now saving your character!';
+			savingText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			savingText.screenCenter();
 			savingText.cameras = [camSave];
 			add(savingText);
 			// randomChar = Random.fromArray(cumCar);
-			savingChar = new FlxSprite(0, savingText.y - 128);
+			/* savingChar = new FlxSprite(0, savingText.y - 128);
 			savingChar.frames = Paths.getSparrowAtlas(Paths.modsImages('characters/Blitz_Assets').substr(0, this.length - 4));
 			trace(Paths.modsImages('characters/Blitz_Assets'));
 			trace(savingChar.frames);
@@ -1603,10 +1621,10 @@ class CharacterEditorState extends MusicBeatState
 			savingChar.animation.play('idle');
 			savingChar.cameras = [camSave];
 			savingChar.screenCenter(X);
-			add(savingChar);
+			add(savingChar); */
 			speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
 			speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
-			speen.animation.addByPrefix('spin', 'spinner go brr', 24, true);
+			speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
 			speen.animation.play('spin');
 			speen.cameras = [camSave];
 			add(speen);
@@ -1633,9 +1651,9 @@ class CharacterEditorState extends MusicBeatState
 				if (!saveDone) trace('save complete');
 				saveDone = true;
 				if (savingText != null) savingText.text = 'Save complete!\nClosing in 5 seconds';
-				if (savingChar.animation.getByName('ayyy') != null) {
+				/* if (savingChar.animation.getByName('ayyy') != null) {
 					savingChar.animation.play('ayyy');
-				}
+				} */
 				new FlxTimer().start(5, function (tmr:FlxTimer) {
 					FlxG.sound.music.stop();
 					close();
