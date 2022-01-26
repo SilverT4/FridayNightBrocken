@@ -1849,7 +1849,7 @@ class PlayState extends MusicBeatState
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
-				if (Std.isOfType(songNotes[3], String) && songNotes[3] == 'Vanny Note') swagNoteGlitch.apply(swagNote.graphic.bitmap);
+				if (swagNote.noteType == 'Vanny Note') swagNoteGlitch.apply(swagNote.graphic.bitmap);
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 				
 				swagNote.scrollFactor.set();
