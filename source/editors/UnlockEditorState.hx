@@ -98,6 +98,7 @@ class UnlockEditorState extends MusicBeatState {
     var UI_lmao:FlxUITabMenu;
     var camHUD:FlxCamera;
     var camLmao:FlxCamera;
+    var mainCams:Array<FlxCamera>;
     var TemplateUnlockable:String = '{
         "details": [
             {
@@ -143,6 +144,9 @@ class UnlockEditorState extends MusicBeatState {
         camTesting.bgColor.alpha = 0;
         camHUD = new FlxCamera();
         camHUD.bgColor.alpha = 0;
+        camLmao = new FlxCamera();
+        camLmao.bgColor.alpha = 0;
+        mainCams = [camMain, camHUD, camLmao];
         FlxG.cameras.reset(camLoad);
         FlxCamera.defaultCameras = [camLoad];
         trace(FileSystem.readDirectory('mods/unlockable'));
@@ -165,10 +169,10 @@ class UnlockEditorState extends MusicBeatState {
         if (controls.BACK) {
             doExitChecks();
         }
-        if (curState == 'shidding' && !FlxG.cameras.list.contains(camMain)) {
-            FlxG.cameras.add(camMain);
+        if (curState == 'shidding' && !FlxG.cameras.list.contains(mainCams[0])) {
+            for (i in 0...mainCams.length) FlxG.cameras.add(mainCams[i]);
         }
-        if (curState == 'shidding' && !FlxG.cameras.list.contains(camHUD)) {
+        /* if (curState == 'shidding' && !FlxG.cameras.list.contains(camHUD)) {
             FlxG.cameras.add(camHUD);
         }
         if (curState == 'shidding' && !FlxG.cameras.list.contains(camLmao)) {
@@ -176,7 +180,7 @@ class UnlockEditorState extends MusicBeatState {
         }
         if (curState == 'pissing shit' && !FlxG.cameras.list.contains(camTesting)) {
             FlxG.cameras.add(camTesting);
-        }
+        } */
     }
 
     function retrieveCustomUnlockables() {
