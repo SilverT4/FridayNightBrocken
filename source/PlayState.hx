@@ -852,6 +852,9 @@ class PlayState extends MusicBeatState
 				case 'bf-pixel':
 					GameOverSubstate.characterName = 'bf-pixel-dead';
 			}
+		} else if (SONG.player1 == 'steelwolf') {
+			GameOverSubstate.endSoundName = 'gameOverEnd-burger';
+			GameOverSubstate.loopSoundName = 'gameOver-burger';
 		}
 		originalBfWidth = boyfriend.width;
 		originalBfHeight = boyfriend.height;
