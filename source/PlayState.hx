@@ -82,6 +82,8 @@ class PlayState extends MusicBeatState
 	public var modchartTimers:Map<String, FlxTimer> = new Map<String, FlxTimer>();
 	public var modchartSounds:Map<String, FlxSound> = new Map<String, FlxSound>();
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
+	var swagNoteGlitch:FlxGlitchEffect;
+	var areYaHavinFun:FlxSound;
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -299,6 +301,24 @@ class PlayState extends MusicBeatState
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
 
+		function checkMoreVannyNotes(notes:FlxTypedGroup<Note>):Void {
+			var existingVannyNotes:Array<Dynamic> = [];
+			var nonVannyNotes:Array<Dynamic> = [];
+			notes.forEachAlive(function (daNote:Note) {
+				if (daNote.noteType == 'Vanny Note') {
+					existingVannyNotes.push(daNote);
+				} else {
+					nonVannyNotes.push(daNote);
+				}
+
+				if (existingVannyNotes.length == 0) {
+					vanSound.stop();
+					if (dadGlitch.active) dadGlitch.active = false;
+					if (swagNoteGlitch.active) swagNoteGlitch.active = false;
+				}
+			});
+		}
+
 		keysArray = [
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_down')),
@@ -428,8 +448,10 @@ class PlayState extends MusicBeatState
 		vanJump.cameras = [camOther];
 		vanJump.screenCenter();
 		vanJump.setGraphicSize(1280, 720);
+		areYaHavinFun.loadEmbedded(Paths.sound('areYaHavinFunYet'));
 		add(vussy);
 		add(vanJump);
+		checkMoreVannyNotes(notes);
 		// CoolUtil.precacheSound('jumpedYaMom');
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -1819,7 +1841,7 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNoteGlitch:FlxGlitchEffect = new FlxGlitchEffect(1, 1, 0.05, HORIZONTAL);
+				swagNoteGlitch = new FlxGlitchEffect(1, 1, 0.05, HORIZONTAL);
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
@@ -1903,17 +1925,10 @@ class PlayState extends MusicBeatState
 		checkEventNote();
 		generatedMusic = true;
 
-		function checkMoreVannyNotes(notes:FlxTypedGroup<Note>) {
-			var existingVannyNotes:Array<Dynamic> = [];
-			var nonVannyNotes:Array<Dynamic> = [];
-			notes.forEachAlive(function (daNote:Note) {
-				if (daNote.noteType == 'Vanny Note') {
-					existingVannyNotes.push(daNote);
-				} else {
-					nonVannyNotes.push(daNote);
-				}
-			});
-		}
+
+//	function checkMoreVannyNotes(notes:FlxTypedGroup<Note>) {}
+
+	function checkMoreVannyNotes(notes:FlxTypedGroup<Note>) {}
 }
 
 	function eventPushed(event:Array<Dynamic>) {
@@ -2679,13 +2694,13 @@ class PlayState extends MusicBeatState
 					}
 					if (daNote.noteType == 'Vanny Note') {
 						areYaHavinFun.play();
+						checkMoreVannyNotes(notes);
 					}
 					daNote.active = false;
 					daNote.visible = false;
 
 					daNote.kill();
 					notes.remove(daNote, true);
-					checkMoreVannyNotes(notes);
 					daNote.destroy();
 				}
 			});
