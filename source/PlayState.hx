@@ -297,7 +297,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 	}
-	
+
 	override public function create()
 	{
 		#if MODS_ALLOWED
@@ -448,6 +448,7 @@ class PlayState extends MusicBeatState
 		vanJump.cameras = [camOther];
 		vanJump.screenCenter();
 		vanJump.setGraphicSize(1280, 720);
+		areYaHavinFun = new FlxSound();
 		areYaHavinFun.loadEmbedded(Paths.sound('areYaHavinFunYet'));
 		add(vussy);
 		add(vanJump);
