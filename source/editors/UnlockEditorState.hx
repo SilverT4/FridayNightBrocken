@@ -174,22 +174,23 @@ class UnlockEditorState extends MusicBeatState {
     var convertBg:FlxSprite;
     var speenPreload:FlxSprite;
     var convertBarBullshit:AttachedSprite;
-    var convertBar:FlxBar;
+    var convertBar:FlxUIBar;
     function convertHardCodeToArray() {
-        var convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        curState = 'suspicious';
+        convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         convertBg.color = FlxColor.RED;
         convertBg.scrollFactor.set();
         convertBg.cameras = [loadingCamera];
         add(convertBg);
         trace(convertBg);
-        var speenPreload = new FlxSprite(speenArgs[0], speenArgs[1]);
+        speenPreload = new FlxSprite(speenArgs[0], speenArgs[1]);
         speenPreload.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
         speenPreload.animation.addByPrefix('spin', 'spinner go brr', 30, true);
         speenPreload.animation.play('spin');
         speenPreload.cameras = [loadingCamera];
         add(speenPreload);
         trace(speenPreload);
-        var convertBarBullshit = new AttachedSprite(HEALTHBAR);
+        convertBarBullshit = new AttachedSprite(HEALTHBAR);
         convertBarBullshit.graphic = Paths.image(HEALTHBAR);
         convertBarBullshit.y = FlxG.height * 0.89;
         convertBarBullshit.screenCenter(X);
@@ -198,7 +199,7 @@ class UnlockEditorState extends MusicBeatState {
         convertBarBullshit.cameras = [loadingCamera];
         add(convertBarBullshit);
         trace(convertBarBullshit);
-        var convertBar = new FlxUIBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
+        convertBar = new FlxUIBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
         convertBar.scrollFactor.set();
         convertBar.visible = true;
         convertBar.alpha = 1;
