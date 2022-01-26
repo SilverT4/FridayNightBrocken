@@ -128,7 +128,10 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Chart Editor'://felt it would be cool maybe
 					LoadingState.loadAndSwitchState(new ChartingState(), false);
 				case 'Unlock Editor'://just puttin this here for the future
-					LoadingState.loadAndSwitchState(new UnlockEditorState(), false);
+					if (directoryTxt.text != '< No Mod Directory Loaded >')
+						LoadingState.loadAndSwitchState(new UnlockEditorState(true), false);
+					else
+						LoadingState.loadAndSwitchState(new UnlockEditorState(), false);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL

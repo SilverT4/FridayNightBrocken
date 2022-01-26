@@ -147,7 +147,7 @@ class UnlockEditorState extends MusicBeatState {
         ]
     }'; // these will be explained in the docs as well
     
-    public function new() {
+    public function new(?isModDir:Bool = false) {
         super();
         loadingCamera = new FlxCamera();
         loadingCamera.bgColor.alpha = 0;
