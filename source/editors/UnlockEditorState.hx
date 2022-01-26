@@ -96,6 +96,12 @@ class UnlockEditorState extends MusicBeatState {
     var curState:String = 'pants';
     var UI_box:FlxUITabMenu;
     var UI_lmao:FlxUITabMenu;
+    var squish:Dynamic;
+    var succulentChicken:Array<Dynamic> = [];
+    var juicyBeef:Array<Dynamic> = [];
+    var mouthwateringBacon:Array<Dynamic> = [];
+    var squishyJelly:Array<Dynamic> = [];
+    var sexyProducts:Array<Dynamic> = [];
     var camHUD:FlxCamera;
     var camLmao:FlxCamera;
     var mainCams:Array<FlxCamera>;
@@ -149,8 +155,30 @@ class UnlockEditorState extends MusicBeatState {
         mainCams = [camMain, camHUD, camLmao];
         FlxG.cameras.reset(camLoad);
         FlxCamera.defaultCameras = [camLoad];
+        convertHardCodeToArray();
         trace(FileSystem.readDirectory('mods/unlockable'));
-        if (FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
+    }
+
+    function convertHardCodeToArray() {
+        var convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        convertBg.color = FlxColor.RED;
+        convertBg.scrollFactor.set();
+        convertBg.cameras = [camLoad];
+        add(convertBg);
+        var convertBar = new FlxBar(FlxG.width * 0.5, FlxG.height - 48, LEFT_TO_RIGHT, 100, 10, this, '', 0, hardCoded.length, true);
+        convertBar.createGradientFilledBar(FlxColor.gradient(FlxColor.BLUE, FlxColor.CYAN, 69), 1, 180, true, FlxColor.BLUE);
+        convertBar.scrollFactor.set();
+        convertBar.visible = true;
+        convertBar.alpha = 1;
+        convertBar.cameras = [camLoad];
+        add(convertBar);
+        convertBar.updateBar();
+        for (i in 0...hardCoded.length) {
+            var hardDong:Array<Dynamic> = hardCoded[i];
+            juicyBeef.push(hardDong[0]);
+            mouthwateringBacon.push(hardDong[1]);
+            succulentChicken.push(hardDong[2]);
+        }
     }
 
     override function update (elapsed:Float) {
@@ -266,11 +294,45 @@ class UnlockEditorState extends MusicBeatState {
         ];
         UI_box = new FlxUITabMenu(null, tabs, true);
         UI_box.cameras = [camLmao];
+        UI_box.resize(250, 120);
+        UI_box.x = FlxG.width - 275;
+        UI_box.y = 25;
+        UI_box.scrollFactor.set();
+
+        var tabs = [
+            {name: 'Content Type', label: 'Content Type'},
+            {name: 'Content Info', label: 'Content Info'},
+            {name: 'Skin Paths', label: 'Skin Paths'},
+            {name: 'Noteskin Paths', label: 'Noteskin Paths'},
+            {name: 'Song Paths', label: 'Song Paths'}
+        ];
+        UI_lmao = new FlxUITabMenu(null, tabs, true);
+        UI_lmao.cameras = [camLmao];
+        UI_lmao.resize(350, 250);
+        UI_lmao.x = UI_box.x - 100;
+        UI_lmao.y = UI_box.y + UI_box.height;
+        UI_lmao.scrollFactor.set();
+        add(UI_lmao);
+        add(UI_box);
         addUnlockListUI();
+        addUnlockInfoUI();
+        UI_lmao.selected_tab_id = 'Content Info';
     }
 
+    var unlockDropDown = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(hardCoded, true), function(unlockableName:String) {
+        trace('pp');
+        curUnlockable = 
+    })
     function addUnlockListUI() {
+        var tab_group = new FlxUI(null, UI_box);
+        tab_group.name = 'Unlockables';
+
+        
         trace('lets not crash pls');
+    }
+
+    function addUnlockInfoUI() {
+        trace('lets also not crash pls');
     }
 }
 
