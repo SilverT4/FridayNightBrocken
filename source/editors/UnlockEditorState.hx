@@ -191,7 +191,7 @@ class UnlockEditorState extends MusicBeatState {
         convertBarBullshit.scrollFactor.set();
         convertBarBullshit.visible = true;
         add(convertBarBullshit);
-        var convertBar = new FlxBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, 100, 10, this, 'i', 0, hardCoded.length, true);
+        var convertBar = new FlxBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
         convertBar.scrollFactor.set();
         convertBar.visible = true;
         convertBar.alpha = 1;
