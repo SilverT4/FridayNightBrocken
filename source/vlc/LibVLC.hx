@@ -22,7 +22,7 @@ import lime.utils.UInt8Array;
 @:native("LibVLC*")
 extern class LibVLC
 {
-	@:native("LibVLC::create")
+	@:native("LibVLC::create") //sus
 	public static function create():LibVLC;
 
 	@:native("setPath")
