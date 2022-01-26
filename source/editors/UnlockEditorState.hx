@@ -64,6 +64,8 @@ import flash.media.Sound;
 using StringTools;
 
 class UnlockEditorState extends MusicBeatState {
+    static inline final HEALTHBAR = 'healthBar';
+
     var hardCoded:Array<Dynamic> = [
         ['SuspiciousFool', 'skin', 'Mini Saber', 'minisaber', 'unlockedMiniSaber'],
         ['Grass', 'skin', 'BF.xml', 'bf-opponent', 'unlockedBfOpponent'],
@@ -74,6 +76,7 @@ class UnlockEditorState extends MusicBeatState {
     var bruh:FlxBar;
     var speenLoad:FlxSprite;
     var speen:FlxSprite;
+    var speenArgs:Array<Dynamic> = [FlxG.width - 48, FlxG.height - 48, 'assets/images/editor/speen.png', 'assets/images/editor/speen.xml'];
     var progressPercent:FlxText;
     var mainBackground:FlxSprite;
     var loadingBackground:FlxSprite;
@@ -162,13 +165,19 @@ class UnlockEditorState extends MusicBeatState {
     }
 
     function convertHardCodeToArray() {
+        speen = new FlxSprite(speenArgs[0], speenArgs[1]);
+        speen.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
+        speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+        speen.animation.play('spin');
+        speen.cameras = [loadingCamera];
         var convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         convertBg.color = FlxColor.RED;
         convertBg.scrollFactor.set();
         convertBg.cameras = [loadingCamera];
         add(convertBg);
-        var convertBarBullshit = new AttachedSprite('healthBar', null, 'shared');
-        convertBarBullshit.graphic = Paths.image('healthBar');
+        add(speen);
+        var convertBarBullshit = new AttachedSprite(HEALTHBAR);
+        convertBarBullshit.graphic = Paths.image(HEALTHBAR);
         convertBarBullshit.y = FlxG.height * 0.89;
         convertBarBullshit.screenCenter(X);
         convertBarBullshit.scrollFactor.set();
@@ -184,6 +193,7 @@ class UnlockEditorState extends MusicBeatState {
         convertBar.updateBar();
         convertBarBullshit.sprTracker = convertBar;
         for (i in 0...hardCoded.length) {
+            convertBar.value = i;
             var hardDong:Array<Dynamic> = hardCoded[i];
             juicyBeef.push(hardDong[0]);
             mouthwateringBacon.push(hardDong[1]);
