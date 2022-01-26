@@ -168,29 +168,35 @@ class UnlockEditorState extends MusicBeatState {
         add(nt);
         FlxG.cameras.reset(loadingCamera);
         FlxG.cameras.setDefaultDrawTarget(loadingCamera, false);
-        convertHardCodeToArray();
+        new FlxTimer().start(3, function (tmr:FlxTimer) {
+            convertHardCodeToArray();
+        });
         trace(FileSystem.readDirectory('mods/unlockable'));
     }
 
     function convertHardCodeToArray() {
-        speen = new FlxSprite(speenArgs[0], speenArgs[1]);
-        speen.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
-        speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
-        speen.animation.play('spin');
-        speen.cameras = [loadingCamera];
         var convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         convertBg.color = FlxColor.RED;
         convertBg.scrollFactor.set();
         convertBg.cameras = [loadingCamera];
         add(convertBg);
+        trace(convertBg);
+        speen = new FlxSprite(speenArgs[0], speenArgs[1]);
+        speen.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
+        speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+        speen.animation.play('spin');
+        speen.cameras = [loadingCamera];
         add(speen);
+        trace(speen);
         var convertBarBullshit = new AttachedSprite(HEALTHBAR);
         convertBarBullshit.graphic = Paths.image(HEALTHBAR);
         convertBarBullshit.y = FlxG.height * 0.89;
         convertBarBullshit.screenCenter(X);
         convertBarBullshit.scrollFactor.set();
         convertBarBullshit.visible = true;
+        convertBarBullshit.cameras = [loadingCamera];
         add(convertBarBullshit);
+        trace(convertBarBullshit);
         var convertBar = new FlxBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
         convertBar.scrollFactor.set();
         convertBar.visible = true;
@@ -200,13 +206,21 @@ class UnlockEditorState extends MusicBeatState {
         convertBar.createFilledBar(FlxColor.fromRGB(miniSaber.healthColorArray[0], miniSaber.healthColorArray[1], miniSaber.healthColorArray[2]), FlxColor.fromRGB(nt.healthColorArray[0], nt.healthColorArray[1], nt.healthColorArray[2]));
         convertBar.updateBar();
         convertBarBullshit.sprTracker = convertBar;
+        trace(convertBar);
+        trace(convertBarBullshit);
         for (i in 0...hardCoded.length) {
             var hardDong:Array<Dynamic> = hardCoded[i];
+            trace(hardDong);
             juicyBeef.push(hardDong[0]);
+            trace(juicyBeef);
             mouthwateringBacon.push(hardDong[1]);
+            trace(mouthwateringBacon);
             succulentChicken.push(hardDong[2]);
+            trace(succulentChicken);
             squishyJelly.push(hardDong[3]);
+            trace(squishyJelly);
             aromaticLettuce.push(hardDong[4]);
+            trace(aromaticLettuce);
             if (i == hardCoded.length) {
                 if (FileSystem.readDirectory('mods/unlockable') != null && FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
             }
