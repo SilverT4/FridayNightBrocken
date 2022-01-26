@@ -1902,6 +1902,18 @@ class PlayState extends MusicBeatState
 		}
 		checkEventNote();
 		generatedMusic = true;
+
+		function checkMoreVannyNotes(notes:FlxTypedGroup<Note>) {
+			var existingVannyNotes:Array<Dynamic> = [];
+			var nonVannyNotes:Array<Dynamic> = [];
+			notes.forEachAlive(function (daNote:Note) {
+				if (daNote.noteType == 'Vanny Note') {
+					existingVannyNotes.push(daNote);
+				} else {
+					nonVannyNotes.push(daNote);
+				}
+			});
+		}
 }
 
 	function eventPushed(event:Array<Dynamic>) {
@@ -1999,6 +2011,10 @@ class PlayState extends MusicBeatState
 			{
 				FlxG.sound.music.pause();
 				vocals.pause();
+			}
+
+			if (vanSound.playing) {
+				vanSound.pause();
 			}
 
 			if (!startTimer.finished)
@@ -2128,6 +2144,7 @@ class PlayState extends MusicBeatState
 		Conductor.songPosition = FlxG.sound.music.time;
 		vocals.time = Conductor.songPosition;
 		vocals.play();
+		if (dadGlitch.active) vanSound.play();
 	}
 
 	public var paused:Bool = false;
@@ -2546,6 +2563,9 @@ class PlayState extends MusicBeatState
 				}*/
 
 				// i am so fucking sorry for this if condition
+				if (daNote.noteType == 'Vanny Note' && !vanSound.playing) {
+					vanSound.play();
+				}
 				var strumX:Float = 0;
 				var strumY:Float = 0;
 				var strumAngle:Float = 0;
@@ -2657,16 +2677,20 @@ class PlayState extends MusicBeatState
 					if (daNote.mustPress && !cpuControlled &&!daNote.ignoreNote && !endingSong && (daNote.tooLate || !daNote.wasGoodHit)) {
 						noteMiss(daNote);
 					}
-
+					if (daNote.noteType == 'Vanny Note') {
+						areYaHavinFun.play();
+					}
 					daNote.active = false;
 					daNote.visible = false;
 
 					daNote.kill();
 					notes.remove(daNote, true);
+					checkMoreVannyNotes(notes);
 					daNote.destroy();
 				}
 			});
 		}
+		
 		checkEventNote();
 
 		if (!inCutscene) {
