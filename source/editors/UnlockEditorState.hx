@@ -180,58 +180,6 @@ class UnlockEditorState extends MusicBeatState {
     var speenPreload:FlxSprite;
     var convertBarBullshit:AttachedSprite;
     var convertBar:FlxUIBar;
-    function convertHardCodeToArray() {
-        curState = 'suspicious';
-        convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-        convertBg.color = FlxColor.RED;
-        convertBg.scrollFactor.set();
-        convertBg.cameras = [loadingCamera];
-        add(convertBg);
-        trace(convertBg);
-        if (!speenPreload.isOnScreen(loadingCamera)) {
-            speenPreload.reset(speenArgs[0], speenArgs[1]);
-        }
-        trace(speenPreload);
-        convertBarBullshit = new AttachedSprite(HEALTHBAR);
-        convertBarBullshit.graphic = Paths.image(HEALTHBAR);
-        convertBarBullshit.y = FlxG.height * 0.89;
-        convertBarBullshit.screenCenter(X);
-        convertBarBullshit.scrollFactor.set();
-        convertBarBullshit.visible = true;
-        convertBarBullshit.cameras = [loadingCamera];
-        add(convertBarBullshit);
-        trace(convertBarBullshit);
-        convertBar = new FlxUIBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
-        convertBar.scrollFactor.set();
-        convertBar.visible = true;
-        convertBar.alpha = 1;
-        convertBar.cameras = [loadingCamera];
-        add(convertBar);
-        convertBar.createFilledBar(FlxColor.fromRGB(miniSaber.healthColorArray[0], miniSaber.healthColorArray[1], miniSaber.healthColorArray[2]), FlxColor.fromRGB(nt.healthColorArray[0], nt.healthColorArray[1], nt.healthColorArray[2]));
-        convertBar.updateBar();
-        convertBarBullshit.sprTracker = convertBar;
-        trace(convertBar);
-        trace(convertBarBullshit);
-        new FlxTimer().start(3, function (tmr:FlxTimer) {
-            for (i in 0...hardCoded.length) {
-                var hardDong:Array<Dynamic> = hardCoded[i];
-                trace(hardDong);
-                juicyBeef.push(hardDong[0]);
-                trace(juicyBeef);
-                mouthwateringBacon.push(hardDong[1]);
-                trace(mouthwateringBacon);
-                succulentChicken.push(hardDong[2]);
-                trace(succulentChicken);
-                squishyJelly.push(hardDong[3]);
-                trace(squishyJelly);
-                aromaticLettuce.push(hardDong[4]);
-                trace(aromaticLettuce);
-                if (i == hardCoded.length) {
-                    if (FileSystem.readDirectory('mods/unlockable') != null && FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
-                }
-            }
-        });
-    }
     
     override function update (elapsed:Float) {
         if (speenLoad != null) {
@@ -268,6 +216,60 @@ class UnlockEditorState extends MusicBeatState {
         if (curState == 'pissing shit' && !FlxG.cameras.list.contains(camTesting)) {
             FlxG.cameras.add(camTesting);
         } */
+    }
+
+    function convertHardCodeToArray() {
+        curState = 'suspicious';
+        convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        convertBg.color = FlxColor.RED;
+        convertBg.scrollFactor.set();
+        convertBg.cameras = [loadingCamera];
+        add(convertBg);
+        trace(convertBg);
+        if (!speenPreload.isOnScreen(loadingCamera)) {
+            speenPreload.reset(speenArgs[0], speenArgs[1]);
+        }
+        trace(speenPreload);
+        convertBarBullshit = new AttachedSprite(HEALTHBAR);
+        convertBarBullshit.graphic = Paths.image(HEALTHBAR);
+        convertBarBullshit.y = FlxG.height * 0.89;
+        convertBarBullshit.screenCenter(X);
+        convertBarBullshit.scrollFactor.set();
+        convertBarBullshit.visible = true;
+        convertBarBullshit.cameras = [loadingCamera];
+        add(convertBarBullshit);
+        trace(convertBarBullshit);
+        convertBar = new FlxUIBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
+        convertBar.scrollFactor.set();
+        convertBar.visible = true;
+        convertBar.alpha = 1;
+        convertBar.cameras = [loadingCamera];
+        add(convertBar);
+        convertBar.createFilledBar(FlxColor.fromRGB(miniSaber.healthColorArray[0], miniSaber.healthColorArray[1], miniSaber.healthColorArray[2]), FlxColor.fromRGB(nt.healthColorArray[0], nt.healthColorArray[1], nt.healthColorArray[2]));
+        convertBar.updateBar();
+        convertBarBullshit.sprTracker = convertBar;
+        trace(convertBar);
+        trace(convertBarBullshit);
+        trace(loadingCamera);
+        new FlxTimer().start(3, function (tmr:FlxTimer) {
+            for (i in 0...hardCoded.length) {
+                var hardDong:Array<Dynamic> = hardCoded[i];
+                trace(hardDong);
+                juicyBeef.push(hardDong[0]);
+                trace(juicyBeef);
+                mouthwateringBacon.push(hardDong[1]);
+                trace(mouthwateringBacon);
+                succulentChicken.push(hardDong[2]);
+                trace(succulentChicken);
+                squishyJelly.push(hardDong[3]);
+                trace(squishyJelly);
+                aromaticLettuce.push(hardDong[4]);
+                trace(aromaticLettuce);
+                if (i == hardCoded.length) {
+                    if (FileSystem.readDirectory('mods/unlockable') != null && FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
+                }
+            }
+        });
     }
     
     function retrieveCustomUnlockables() {
