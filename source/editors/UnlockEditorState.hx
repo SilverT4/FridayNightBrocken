@@ -254,6 +254,9 @@ class UnlockEditorState extends MusicBeatState {
         mainBackground.scrollFactor.set();
         mainBackground.cameras = [camMain];
         add(mainBackground);
+        var tabs = [
+            {name: 'Unlockables', label: 'Unlockables'}
+        ];
         UI_box = new FlxUITabMenu(null, tabs, true);
         UI_box.cameras = [camLmao];
         addUnlockListUI();
