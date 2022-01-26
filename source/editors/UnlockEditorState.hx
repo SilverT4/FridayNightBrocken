@@ -83,7 +83,7 @@ class UnlockEditorState extends MusicBeatState {
     var reverberation:Array<Dynamic> = [
         
 
-      '  _     ',
+      '                          _     ',
       '  _ __ _____   _____ _ __| |__  ',
       ' | \'__/ _ \\ \\ / / _ \\ \'__| \'_ \\ ',
       ' | | |  __/\\ V /  __/ |  | |_) |',
@@ -94,6 +94,44 @@ class UnlockEditorState extends MusicBeatState {
     ];
     // var testScreen:FlxUILoadingScreen;
     var curState:String = 'pants';
+    var UI_box:FlxUITabMenu;
+    var UI_lmao:FlxUITabMenu;
+    var camHUD:FlxCamera;
+    var camLmao:FlxCamera;
+    var TemplateUnlockable:String = '{
+        "details": [
+            {
+                "contentType": "skin",
+                "contentSubtype": "boyfriend",
+                "contentFriendlyName": "Mini Saber",
+                "contentIDName": "minisaber",
+                "contentIsCharSkin": true,
+                "contentIsNoteskin": false,
+                "contentIsSong": false
+            },
+            {
+                "skinPngPath": "mods/images/characters/BlitzBro.png",
+                "skinXmlPath": "mods/images/characters/BlitzBro.xml",
+            },
+            {
+                "noteskinPngPath": "",
+                "noteskinPngXml": ""
+            },
+            {
+                "songName": "",
+                "songDifficulties": [
+                    "-easy",
+                    "",
+                    "-hard"
+                ]
+            }
+        ],
+        "password": "SpookyButRed",
+        "positioning": [
+            "x": 0,
+            "y": 0
+        ]
+    }'; // these will be explained in the docs as well
 
     public function new() {
         super();
@@ -103,8 +141,12 @@ class UnlockEditorState extends MusicBeatState {
         camMain.bgColor.alpha = 0;
         camTesting = new FlxCamera();
         camTesting.bgColor.alpha = 0;
-        FlxG.cameras.add(camLoad);
-        retrieveCustomUnlockables();
+        camHUD = new FlxCamera();
+        camHUD.bgColor.alpha = 0;
+        FlxG.cameras.reset(camLoad);
+        FlxCamera.defaultCameras = [camLoad];
+        trace(FileSystem.readDirectory('mods/unlockable'));
+        if (FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
     }
 
     override function update (elapsed:Float) {
@@ -123,10 +165,13 @@ class UnlockEditorState extends MusicBeatState {
         if (controls.BACK) {
             doExitChecks();
         }
-        if (curState == 'shidding') {
+        if (curState == 'shidding' && !FlxG.cameras.list.contains(camMain)) {
             FlxG.cameras.add(camMain);
         }
-        if (curState == 'pissing shit') {
+        if (curState == 'shidding' && !FlxG.cameras.list.contains(camLmao)) {
+            FlxG.cameras.add(camLmao);
+        }
+        if (curState == 'pissing shit' && !FlxG.cameras.list.contains(camTesting)) {
             FlxG.cameras.add(camTesting);
         }
     }
@@ -153,10 +198,10 @@ class UnlockEditorState extends MusicBeatState {
         bruh.cameras = [camLoad];
         add(bruh);
         speenLoad = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
-        speenLoad.frames = Paths.getSparrowAtlas('editor/speen');
+        speenLoad.frames = Paths.getSparrowAtlas(Paths.getPreloadPath('editor/speen'));
         speenLoad.animation.addByPrefix('spin', 'spinner go brr', ClientPrefs.framerate, true);
         speenLoad.animation.play('spin');
-        speenLoad.cameras = [camLoad];
+        // speenLoad.cameras = [camLoad];
         add(speenLoad);
         for (curFucker in 0...unlockDir) {
             bruh.updateBar();
@@ -167,12 +212,19 @@ class UnlockEditorState extends MusicBeatState {
                 customUnlocks.push(unlockDir[curFucker]);
             }
             if (curFucker == unlockDir.length) {
-                endLoadingShit();
+                new FlxTimer().start(3, function (tmr:FlxTimer) {
+                    endLoadingShit();
+                });
             }
         }
     }
 
     function endLoadingShit() {
+        speenLoad.destroy();
+        loadingBackground.destroy();
+        bruh.destroy();
+        curState = 'shitting';
+        displayMainUI();
         trace('placeholder to prevent any crashes');
     }
 
@@ -184,7 +236,31 @@ class UnlockEditorState extends MusicBeatState {
             case 'farting':
                 trace('aight lets confirm this');
                 openSubState(new ConfirmExitDuringLoad());
+            case 'shidding':
+                trace('aight');
+                FlxG.sound.play(Paths.sound('cancelMenu', 'shared'));
+                MusicBeatState.switchState(new MasterEditorMenu());
         }
+    }
+
+    function displayMainUI() {
+        trace('im gonna brown');
+        if (!FlxG.mouse.visible) {
+            FlxG.mouse.visible = true;
+        }
+        curState = 'shidding';
+        mainBackground = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+        mainBackground.color = 0xFF694200;
+        mainBackground.scrollFactor.set();
+        mainBackground.cameras = [camMain];
+        add(mainBackground);
+        UI_box = new FlxUITabMenu(null, tabs, true);
+        UI_box.cameras = [camLmao];
+        addUnlockListUI();
+    }
+
+    function addUnlockListUI() {
+        trace('lets not crash pls');
     }
 }
 

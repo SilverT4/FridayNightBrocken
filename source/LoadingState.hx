@@ -42,6 +42,7 @@ class LoadingState extends MusicBeatState
 
 	var funkay:FlxSprite;
 	var loadBar:FlxSprite;
+	var speen:FlxSprite;
 	override function create()
 	{
 		var bg:FlxSprite = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d);
@@ -58,6 +59,13 @@ class LoadingState extends MusicBeatState
 		loadBar.screenCenter(X);
 		loadBar.antialiasing = ClientPrefs.globalAntialiasing;
 		add(loadBar);
+		speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+		// speen.loadGraphic(Paths.image('editor/speen'));
+		// speen.frames = Paths.getSparrowAtlas(Paths.image('editor/speen'));
+		speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml'); //test
+		speen.animation.addByPrefix('spin', 'spinner go brr', 60, true);
+		speen.animation.play('spin');
+		add(speen);
 		
 		initSongsManifest().onComplete
 		(
@@ -115,6 +123,9 @@ class LoadingState extends MusicBeatState
 		super.update(elapsed);
 		funkay.setGraphicSize(Std.int(0.88 * FlxG.width + 0.9 * (funkay.width - 0.88 * FlxG.width)));
 		funkay.updateHitbox();
+		if (speen != null) {
+			speen.update(elapsed);
+		}
 		if(controls.ACCEPT)
 		{
 			funkay.setGraphicSize(Std.int(funkay.width + 60));
