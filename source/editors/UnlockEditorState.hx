@@ -81,6 +81,8 @@ class UnlockEditorState extends MusicBeatState {
     var mainBackground:FlxSprite;
     var loadingBackground:FlxSprite;
     var testingBackground:FlxSprite;
+    var nt:Character;
+    var miniSaber:Character; //these are for the hardcode bar colours
     var loadingCamera:FlxCamera;
     var camMain:FlxCamera;
     var camTesting:FlxCamera;
@@ -158,6 +160,12 @@ class UnlockEditorState extends MusicBeatState {
         camLmao = new FlxCamera();
         camLmao.bgColor.alpha = 0;
         mainCams = [camMain, camHUD, camLmao];
+        miniSaber = new Character(0, 0, 'minisaber', false);
+        miniSaber.visible = false;
+        add(miniSaber);
+        nt = new Character(0, 0, 'minisaber', false);
+        nt.visible = false;
+        add(nt);
         FlxG.cameras.reset(loadingCamera);
         FlxG.cameras.setDefaultDrawTarget(loadingCamera, false);
         convertHardCodeToArray();
@@ -184,7 +192,7 @@ class UnlockEditorState extends MusicBeatState {
         convertBarBullshit.visible = true;
         add(convertBarBullshit);
         var convertBar = new FlxBar(FlxG.width * 0.5, FlxG.height - 48, LEFT_TO_RIGHT, 100, 10, this, 'i', 0, hardCoded.length, true);
-        convertBar.createGradientFilledBar(FlxColor.gradient(FlxColor.BLUE, FlxColor.CYAN, 69), 1, 180, true, FlxColor.BLUE);
+        convertBar.createFilledBar(FlxColor.fromRGB(miniSaber.healthColorArray[0], miniSaber.healthColorArray[1], miniSaber.healthColorArray[2]), FlxColor.fromRGB(nt.healthColorArray[0], nt.healthColorArray[1], nt.healthColorArray[2]));
         convertBar.scrollFactor.set();
         convertBar.visible = true;
         convertBar.alpha = 1;
