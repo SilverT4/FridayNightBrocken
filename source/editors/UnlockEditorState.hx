@@ -160,13 +160,19 @@ class UnlockEditorState extends MusicBeatState {
         camLmao = new FlxCamera();
         camLmao.bgColor.alpha = 0;
         mainCams = [camMain, camHUD, camLmao];
+        speenPreload = new FlxSprite(speenArgs[0], speenArgs[1]);
+        speenPreload.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
+        speenPreload.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+        speenPreload.animation.play('spin');
+        speenPreload.cameras = [loadingCamera];
+        add(speenPreload);
         miniSaber = new Character(0, 0, 'minisaber', false);
         miniSaber.visible = false;
         add(miniSaber);
         nt = new Character(0, 0, 'nt-pixel', false);
         nt.visible = false;
         add(nt);
-        FlxG.cameras.reset(loadingCamera);
+        FlxG.cameras.add(loadingCamera);
         FlxG.cameras.setDefaultDrawTarget(loadingCamera, true);
         convertHardCodeToArray();
         trace(FileSystem.readDirectory('mods/unlockable'));
@@ -183,12 +189,9 @@ class UnlockEditorState extends MusicBeatState {
         convertBg.cameras = [loadingCamera];
         add(convertBg);
         trace(convertBg);
-        speenPreload = new FlxSprite(speenArgs[0], speenArgs[1]);
-        speenPreload.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
-        speenPreload.animation.addByPrefix('spin', 'spinner go brr', 30, true);
-        speenPreload.animation.play('spin');
-        speenPreload.cameras = [loadingCamera];
-        add(speenPreload);
+        if (!speenPreload.isOnScreen(loadingCamera)) {
+            speenPreload.reset(speenArgs[0], speenArgs[1]);
+        }
         trace(speenPreload);
         convertBarBullshit = new AttachedSprite(HEALTHBAR);
         convertBarBullshit.graphic = Paths.image(HEALTHBAR);
