@@ -167,8 +167,8 @@ class UnlockEditorState extends MusicBeatState {
         convertBg.scrollFactor.set();
         convertBg.cameras = [loadingCamera];
         add(convertBg);
-        var convertBarBullshit = new AttachedSprite();
-        convertBarBullshit.loadGraphic('assets/shared/images/healthBar');
+        var convertBarBullshit = new AttachedSprite('healthBar', null, 'shared');
+        convertBarBullshit.graphic = Paths.image('healthBar');
         convertBarBullshit.y = FlxG.height * 0.89;
         convertBarBullshit.screenCenter(X);
         convertBarBullshit.scrollFactor.set();
