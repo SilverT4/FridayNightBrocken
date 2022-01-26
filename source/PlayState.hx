@@ -19,6 +19,7 @@ import flixel.addons.effects.FlxTrail;
 import flixel.addons.effects.FlxTrailArea;
 import flixel.addons.effects.chainable.FlxEffectSprite;
 import flixel.addons.effects.chainable.FlxWaveEffect;
+import flixel.addons.effects.chainable.FlxGlitchEffect;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.graphics.atlas.FlxAtlas;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -122,6 +123,7 @@ class PlayState extends MusicBeatState
 	public var vocals:FlxSound;
 
 	public var dad:Character;
+	public var dadGlitch:FlxGlitchEffect;
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
 	var alreadyStartedVannyDeath:Bool = false;
@@ -200,6 +202,7 @@ class PlayState extends MusicBeatState
 	var phillyCityLightsEvent:FlxTypedGroup<BGSprite>;
 	var phillyCityLightsEventTween:FlxTween;
 	var trainSound:FlxSound;
+	public var vanSound:FlxSound;
 
 	var limoKillingState:Int = 0;
 	var limo:BGSprite;
@@ -288,6 +291,9 @@ class PlayState extends MusicBeatState
 			trace('RESETTING CAMERA COLOUR');
 			FlxG.camera.bgColor = FlxColor.BLACK;
 		}
+		vanSound = new FlxSound();
+		vanSound.loadEmbedded(Paths.sound('vannyNoteSound', 'shared'), true, false);
+		FlxG.sound.list.add(vanSound);
 		
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
@@ -827,8 +833,15 @@ class PlayState extends MusicBeatState
 		startCharacterLua(gf.curCharacter);
 
 		dad = new Character(0, 0, SONG.player2);
+		dadGlitch = new FlxGlitchEffect(3, 3, 0.05, HORIZONTAL);
+		if (dad.curCharacter == 'bob') {
+		dadGlitch.apply(dad.graphic.bitmap);
+		dadGlitch.active = false;
+		}
+		// add(dadGlitch);
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
+		// dadGroup.add(dadGlitch);
 		startCharacterLua(dad.curCharacter);
 		
 		boyfriend = new Boyfriend(0, 0, SONG.player1);
@@ -1805,11 +1818,13 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
+				var swagNoteGlitch:FlxGlitchEffect = new FlxGlitchEffect(3, 4, 0.05, HORIZONTAL);
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
+				if (Std.isOfType(songNotes[3], String) && songNotes[3] == 'Vanny Note') swagNoteGlitch.apply(Paths.image(swagNote.texture));
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 				
 				swagNote.scrollFactor.set();
@@ -3984,6 +3999,7 @@ class PlayState extends MusicBeatState
 							boyfriend.specialAnim = true;
 							boyfriend.stunned = true;
 						}
+						vanSound.volume = 0;
 						vanHit = true;
 				}
 				

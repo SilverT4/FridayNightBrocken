@@ -110,6 +110,14 @@ class Note extends FlxSprite
 						missHealth = 0.1;
 					}
 					hitCausesMiss = true;
+					if (PlayState.instance != null) {
+						if (PlayState.instance.dadGlitch != null) {
+						PlayState.instance.dadGlitch.active = true;
+						}
+						if (PlayState.instance.vanSound != null && !PlayState.instance.vanSound.playing) {
+							PlayState.instance.vanSound.play();
+						}
+					}
 				case 'No Animation':
 					noAnimation = true;
 				case 'GF Sing':

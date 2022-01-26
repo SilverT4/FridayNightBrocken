@@ -43,7 +43,7 @@ class MasterEditorMenu extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Editors Main Menu", null);
 		#end
-		FlxG.sound.play(Paths.sound('PartsServiceThing', 'shared'));
+		FlxG.sound.play(Paths.sound('partsServiceThing', 'shared'));
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.scrollFactor.set();
