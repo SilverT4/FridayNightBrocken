@@ -1,5 +1,6 @@
 package editors;
 
+import flixel.system.debug.interaction.tools.Pointer;
 import flixel.FlxCamera;
 import flixel.ui.FlxBar;
 import flixel.addons.ui.FlxUIButton;
@@ -155,7 +156,7 @@ class UnlockEditorState extends MusicBeatState {
         camLmao.bgColor.alpha = 0;
         mainCams = [camMain, camHUD, camLmao];
         FlxG.cameras.reset(loadingCamera);
-        FlxCamera.defaultCameras = [loadingCamera];
+        FlxG.cameras.setDefaultDrawTarget(loadingCamera, false);
         convertHardCodeToArray();
         trace(FileSystem.readDirectory('mods/unlockable'));
     }
@@ -166,6 +167,13 @@ class UnlockEditorState extends MusicBeatState {
         convertBg.scrollFactor.set();
         convertBg.cameras = [loadingCamera];
         add(convertBg);
+        var convertBarBullshit = new AttachedSprite();
+        convertBarBullshit.loadGraphic(Paths.image('healthBar', 'shared'));
+        convertBarBullshit.y = FlxG.height * 0.89;
+        convertBarBullshit.screenCenter(X);
+        convertBarBullshit.scrollFactor.set();
+        convertBarBullshit.visible = true;
+        add(convertBarBullshit);
         var convertBar = new FlxBar(FlxG.width * 0.5, FlxG.height - 48, LEFT_TO_RIGHT, 100, 10, this, '', 0, hardCoded.length, true);
         convertBar.createGradientFilledBar(FlxColor.gradient(FlxColor.BLUE, FlxColor.CYAN, 69), 1, 180, true, FlxColor.BLUE);
         convertBar.scrollFactor.set();
@@ -174,6 +182,7 @@ class UnlockEditorState extends MusicBeatState {
         convertBar.cameras = [loadingCamera];
         add(convertBar);
         convertBar.updateBar();
+        convertBarBullshit.sprTracker = convertBar;
         for (i in 0...hardCoded.length) {
             var hardDong:Array<Dynamic> = hardCoded[i];
             juicyBeef.push(hardDong[0]);
