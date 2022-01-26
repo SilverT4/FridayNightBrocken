@@ -167,7 +167,7 @@ class UnlockEditorState extends MusicBeatState {
         nt.visible = false;
         add(nt);
         FlxG.cameras.reset(loadingCamera);
-        FlxG.cameras.setDefaultDrawTarget(loadingCamera, false);
+        FlxG.cameras.setDefaultDrawTarget(loadingCamera, true);
         convertHardCodeToArray();
         trace(FileSystem.readDirectory('mods/unlockable'));
     }
