@@ -168,6 +168,9 @@ class UnlockEditorState extends MusicBeatState {
         if (curState == 'shidding' && !FlxG.cameras.list.contains(camMain)) {
             FlxG.cameras.add(camMain);
         }
+        if (curState == 'shidding' && !FlxG.cameras.list.contains(camHUD)) {
+            FlxG.cameras.add(camHUD);
+        }
         if (curState == 'shidding' && !FlxG.cameras.list.contains(camLmao)) {
             FlxG.cameras.add(camLmao);
         }
