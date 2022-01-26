@@ -183,7 +183,7 @@ class UnlockEditorState extends MusicBeatState {
         convertBarBullshit.scrollFactor.set();
         convertBarBullshit.visible = true;
         add(convertBarBullshit);
-        var convertBar = new FlxBar(FlxG.width * 0.5, FlxG.height - 48, LEFT_TO_RIGHT, 100, 10, this, '', 0, hardCoded.length, true);
+        var convertBar = new FlxBar(FlxG.width * 0.5, FlxG.height - 48, LEFT_TO_RIGHT, 100, 10, this, 'i', 0, hardCoded.length, true);
         convertBar.createGradientFilledBar(FlxColor.gradient(FlxColor.BLUE, FlxColor.CYAN, 69), 1, 180, true, FlxColor.BLUE);
         convertBar.scrollFactor.set();
         convertBar.visible = true;
@@ -193,7 +193,6 @@ class UnlockEditorState extends MusicBeatState {
         convertBar.updateBar();
         convertBarBullshit.sprTracker = convertBar;
         for (i in 0...hardCoded.length) {
-            convertBar.value = i;
             var hardDong:Array<Dynamic> = hardCoded[i];
             juicyBeef.push(hardDong[0]);
             mouthwateringBacon.push(hardDong[1]);
