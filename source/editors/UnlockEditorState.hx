@@ -191,13 +191,13 @@ class UnlockEditorState extends MusicBeatState {
         convertBarBullshit.scrollFactor.set();
         convertBarBullshit.visible = true;
         add(convertBarBullshit);
-        var convertBar = new FlxBar(FlxG.width * 0.5, FlxG.height - 48, LEFT_TO_RIGHT, 100, 10, this, 'i', 0, hardCoded.length, true);
-        convertBar.createFilledBar(FlxColor.fromRGB(miniSaber.healthColorArray[0], miniSaber.healthColorArray[1], miniSaber.healthColorArray[2]), FlxColor.fromRGB(nt.healthColorArray[0], nt.healthColorArray[1], nt.healthColorArray[2]));
+        var convertBar = new FlxBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, 100, 10, this, 'i', 0, hardCoded.length, true);
         convertBar.scrollFactor.set();
         convertBar.visible = true;
         convertBar.alpha = 1;
         convertBar.cameras = [loadingCamera];
         add(convertBar);
+        convertBar.createFilledBar(FlxColor.fromRGB(miniSaber.healthColorArray[0], miniSaber.healthColorArray[1], miniSaber.healthColorArray[2]), FlxColor.fromRGB(nt.healthColorArray[0], nt.healthColorArray[1], nt.healthColorArray[2]));
         convertBar.updateBar();
         convertBarBullshit.sprTracker = convertBar;
         for (i in 0...hardCoded.length) {
