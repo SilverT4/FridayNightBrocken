@@ -101,6 +101,7 @@ class UnlockEditorState extends MusicBeatState {
     var juicyBeef:Array<Dynamic> = [];
     var mouthwateringBacon:Array<Dynamic> = [];
     var squishyJelly:Array<Dynamic> = [];
+    var aromaticLettuce:Array<Dynamic> = [];
     var sexyProducts:Array<Dynamic> = [];
     var camHUD:FlxCamera;
     var camLmao:FlxCamera;
@@ -321,8 +322,8 @@ class UnlockEditorState extends MusicBeatState {
 
     var unlockDropDown = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(hardCoded, true), function(unlockableName:String) {
         trace('pp');
-        curUnlockable = 
-    })
+        curUnlockable = unlockDropDown.selectedLabel;
+    });
     function addUnlockListUI() {
         var tab_group = new FlxUI(null, UI_box);
         tab_group.name = 'Unlockables';
