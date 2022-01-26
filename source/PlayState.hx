@@ -280,7 +280,24 @@ class PlayState extends MusicBeatState
 	
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
+	function checkMoreVannyNotes(notes:FlxTypedGroup<Note>):Void {
+		var existingVannyNotes:Array<Dynamic> = [];
+		var nonVannyNotes:Array<Dynamic> = [];
+		notes.forEachAlive(function (daNote:Note) {
+			if (daNote.noteType == 'Vanny Note') {
+				existingVannyNotes.push(daNote);
+			} else {
+				nonVannyNotes.push(daNote);
+			}
 
+			if (existingVannyNotes.length == 0) {
+				vanSound.stop();
+				if (dadGlitch.active) dadGlitch.active = false;
+				if (swagNoteGlitch.active) swagNoteGlitch.active = false;
+			}
+		});
+	}
+	
 	override public function create()
 	{
 		#if MODS_ALLOWED
@@ -301,23 +318,6 @@ class PlayState extends MusicBeatState
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
 
-		function checkMoreVannyNotes(notes:FlxTypedGroup<Note>):Void {
-			var existingVannyNotes:Array<Dynamic> = [];
-			var nonVannyNotes:Array<Dynamic> = [];
-			notes.forEachAlive(function (daNote:Note) {
-				if (daNote.noteType == 'Vanny Note') {
-					existingVannyNotes.push(daNote);
-				} else {
-					nonVannyNotes.push(daNote);
-				}
-
-				if (existingVannyNotes.length == 0) {
-					vanSound.stop();
-					if (dadGlitch.active) dadGlitch.active = false;
-					if (swagNoteGlitch.active) swagNoteGlitch.active = false;
-				}
-			});
-		}
 
 		keysArray = [
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
