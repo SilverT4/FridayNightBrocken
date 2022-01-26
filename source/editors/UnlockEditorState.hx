@@ -171,7 +171,10 @@ class UnlockEditorState extends MusicBeatState {
         convertHardCodeToArray();
         trace(FileSystem.readDirectory('mods/unlockable'));
     }
-    
+    var convertBg:FlxSprite;
+    var speenPreload:FlxSprite;
+    var convertBarBullshit:AttachedSprite;
+    var convertBar:FlxBar;
     function convertHardCodeToArray() {
         var convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         convertBg.color = FlxColor.RED;
@@ -179,13 +182,13 @@ class UnlockEditorState extends MusicBeatState {
         convertBg.cameras = [loadingCamera];
         add(convertBg);
         trace(convertBg);
-        speen = new FlxSprite(speenArgs[0], speenArgs[1]);
-        speen.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
-        speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
-        speen.animation.play('spin');
-        speen.cameras = [loadingCamera];
-        add(speen);
-        trace(speen);
+        var speenPreload = new FlxSprite(speenArgs[0], speenArgs[1]);
+        speenPreload.frames = FlxAtlasFrames.fromSparrow(speenArgs[2], speenArgs[3]);
+        speenPreload.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+        speenPreload.animation.play('spin');
+        speenPreload.cameras = [loadingCamera];
+        add(speenPreload);
+        trace(speenPreload);
         var convertBarBullshit = new AttachedSprite(HEALTHBAR);
         convertBarBullshit.graphic = Paths.image(HEALTHBAR);
         convertBarBullshit.y = FlxG.height * 0.89;
@@ -195,7 +198,7 @@ class UnlockEditorState extends MusicBeatState {
         convertBarBullshit.cameras = [loadingCamera];
         add(convertBarBullshit);
         trace(convertBarBullshit);
-        var convertBar = new FlxBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
+        var convertBar = new FlxUIBar(convertBarBullshit.x - 4, convertBarBullshit.y - 4, LEFT_TO_RIGHT, Std.int(convertBarBullshit.width - 8), Std.int(convertBarBullshit.height - 8), this, 'i', 0, hardCoded.length, true);
         convertBar.scrollFactor.set();
         convertBar.visible = true;
         convertBar.alpha = 1;
@@ -230,6 +233,13 @@ class UnlockEditorState extends MusicBeatState {
     override function update (elapsed:Float) {
         if (speenLoad != null) {
             speenLoad.update(elapsed);
+        }
+        if (convertBar != null && convertBarBullshit != null) {
+            convertBar.update(elapsed);
+            convertBarBullshit.update(elapsed);
+        }
+        if (speenPreload != null) {
+            speenPreload.update(elapsed);
         }
         if (speen != null) {
             speen.update(elapsed);
