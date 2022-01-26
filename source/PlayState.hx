@@ -836,6 +836,7 @@ class PlayState extends MusicBeatState
 		dadGlitch = new FlxGlitchEffect(3, 3, 0.05, HORIZONTAL);
 		if (dad.curCharacter == 'bob') {
 		dadGlitch.apply(dad.graphic.bitmap);
+		dadGlitch.size = 1;
 		dadGlitch.active = false;
 		}
 		// add(dadGlitch);
@@ -1818,13 +1819,13 @@ class PlayState extends MusicBeatState
 				else
 					oldNote = null;
 
-				var swagNoteGlitch:FlxGlitchEffect = new FlxGlitchEffect(3, 4, 0.05, HORIZONTAL);
+				var swagNoteGlitch:FlxGlitchEffect = new FlxGlitchEffect(1, 1, 0.05, HORIZONTAL);
 				var swagNote:Note = new Note(daStrumTime, daNoteData, oldNote);
 				swagNote.mustPress = gottaHitNote;
 				swagNote.sustainLength = songNotes[2];
 				swagNote.gfNote = (section.gfSection && (songNotes[1]<4));
 				swagNote.noteType = songNotes[3];
-				if (Std.isOfType(songNotes[3], String) && songNotes[3] == 'Vanny Note') swagNoteGlitch.apply(Paths.image(swagNote.texture));
+				if (Std.isOfType(songNotes[3], String) && songNotes[3] == 'Vanny Note') swagNoteGlitch.apply(swagNote.graphic.bitmap);
 				if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
 				
 				swagNote.scrollFactor.set();
@@ -4000,6 +4001,9 @@ class PlayState extends MusicBeatState
 							boyfriend.stunned = true;
 						}
 						vanSound.volume = 0;
+						if (dadGlitch.active) {
+							dadGlitch.active = false;
+						}
 						vanHit = true;
 				}
 				
