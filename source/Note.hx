@@ -101,7 +101,7 @@ class Note extends FlxSprite
 					hitCausesMiss = true;
 				case 'Vanny Note':
 					ignoreNote = mustPress;
-					reloadNote('', 'NOTE_Assets');
+					reloadNote('', 'NOTE_assets');
 					colorSwap.hue = 0;
 					colorSwap.saturation = 0;
 					colorSwap.brightness = 0;

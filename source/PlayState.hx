@@ -281,12 +281,15 @@ class PlayState extends MusicBeatState
 	
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
+	var existingVannyNotes:Array<Dynamic> = [];
+	var nonVannyNotes:Array<Dynamic> = [];
 	function checkMoreVannyNotes(notes:FlxTypedGroup<Note>):Void {
-		var existingVannyNotes:Array<Dynamic> = [];
-		var nonVannyNotes:Array<Dynamic> = [];
+		
 		notes.forEachAlive(function (daNote:Note) {
 			if (daNote.noteType == 'Vanny Note') {
+				trace(daNote);
 				existingVannyNotes.push(daNote);
+				trace(existingVannyNotes);
 			} else {
 				nonVannyNotes.push(daNote);
 			}
@@ -858,7 +861,7 @@ class PlayState extends MusicBeatState
 
 		dad = new Character(0, 0, SONG.player2);
 		dadGlitch = new FlxGlitchEffect(3, 3, 0.05, HORIZONTAL);
-		if (dad.curCharacter == 'amor') {
+		if (dad.curCharacter == 'amor' && existingVannyNotes.length >= 1) {
 		dadGlitch.apply(dad.graphic.bitmap);
 		dadGlitch.size = 1;
 		}
@@ -2695,7 +2698,7 @@ class PlayState extends MusicBeatState
 						noteMiss(daNote);
 					}
 					if (daNote.noteType == 'Vanny Note') {
-						areYaHavinFun.play();
+						FlxG.sound.play(Paths.sound('areYaHavinFunYet'));
 						checkMoreVannyNotes(notes);
 					}
 					daNote.active = false;
