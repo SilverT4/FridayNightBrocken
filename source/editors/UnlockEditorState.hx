@@ -77,7 +77,7 @@ class UnlockEditorState extends MusicBeatState {
     var mainBackground:FlxSprite;
     var loadingBackground:FlxSprite;
     var testingBackground:FlxSprite;
-    var camLoad:FlxCamera;
+    var loadingCamera:FlxCamera;
     var camMain:FlxCamera;
     var camTesting:FlxCamera;
     var reverberation:Array<Dynamic> = [
@@ -97,7 +97,7 @@ class UnlockEditorState extends MusicBeatState {
     var UI_box:FlxUITabMenu;
     var UI_lmao:FlxUITabMenu;
     var squish:Dynamic;
-    var succulentChicken:Array<Dynamic> = [];
+    var succulentChicken:Array<String> = [];
     var juicyBeef:Array<Dynamic> = [];
     var mouthwateringBacon:Array<Dynamic> = [];
     var squishyJelly:Array<Dynamic> = [];
@@ -143,8 +143,8 @@ class UnlockEditorState extends MusicBeatState {
 
     public function new() {
         super();
-        camLoad = new FlxCamera();
-        camLoad.bgColor.alpha = 0;
+        loadingCamera = new FlxCamera();
+        loadingCamera.bgColor.alpha = 0;
         camMain = new FlxCamera();
         camMain.bgColor.alpha = 0;
         camTesting = new FlxCamera();
@@ -154,8 +154,8 @@ class UnlockEditorState extends MusicBeatState {
         camLmao = new FlxCamera();
         camLmao.bgColor.alpha = 0;
         mainCams = [camMain, camHUD, camLmao];
-        FlxG.cameras.reset(camLoad);
-        FlxCamera.defaultCameras = [camLoad];
+        FlxG.cameras.reset(loadingCamera);
+        FlxCamera.defaultCameras = [loadingCamera];
         convertHardCodeToArray();
         trace(FileSystem.readDirectory('mods/unlockable'));
     }
@@ -164,14 +164,14 @@ class UnlockEditorState extends MusicBeatState {
         var convertBg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         convertBg.color = FlxColor.RED;
         convertBg.scrollFactor.set();
-        convertBg.cameras = [camLoad];
+        convertBg.cameras = [loadingCamera];
         add(convertBg);
         var convertBar = new FlxBar(FlxG.width * 0.5, FlxG.height - 48, LEFT_TO_RIGHT, 100, 10, this, '', 0, hardCoded.length, true);
         convertBar.createGradientFilledBar(FlxColor.gradient(FlxColor.BLUE, FlxColor.CYAN, 69), 1, 180, true, FlxColor.BLUE);
         convertBar.scrollFactor.set();
         convertBar.visible = true;
         convertBar.alpha = 1;
-        convertBar.cameras = [camLoad];
+        convertBar.cameras = [loadingCamera];
         add(convertBar);
         convertBar.updateBar();
         for (i in 0...hardCoded.length) {
@@ -179,6 +179,11 @@ class UnlockEditorState extends MusicBeatState {
             juicyBeef.push(hardDong[0]);
             mouthwateringBacon.push(hardDong[1]);
             succulentChicken.push(hardDong[2]);
+            squishyJelly.push(hardDong[3]);
+            aromaticLettuce.push(hardDong[4]);
+            if (i == hardCoded.length) {
+                if (FileSystem.readDirectory('mods/unlockable') != null && FileSystem.readDirectory('mods/unlockable').length > 1) retrieveCustomUnlockables() else displayMainUI();
+            }
         }
     }
 
@@ -222,7 +227,7 @@ class UnlockEditorState extends MusicBeatState {
         loadingBackground = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
         loadingBackground.color = FlxColor.BLUE;
         loadingBackground.scrollFactor.set();
-        loadingBackground.cameras = [camLoad];
+        loadingBackground.cameras = [loadingCamera];
         add(loadingBackground);
         var unlockDir:Dynamic = FileSystem.readDirectory('mods/unlockable');
         var curFucker:Int = 0;
@@ -231,13 +236,13 @@ class UnlockEditorState extends MusicBeatState {
         // bruh.facing = RIGHT;
         bruh.x = FlxG.width * 0.5;
         bruh.screenCenter(Y);
-        bruh.cameras = [camLoad];
+        bruh.cameras = [loadingCamera];
         add(bruh);
         speenLoad = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
         speenLoad.frames = Paths.getSparrowAtlas(Paths.getPreloadPath('editor/speen'));
         speenLoad.animation.addByPrefix('spin', 'spinner go brr', ClientPrefs.framerate, true);
         speenLoad.animation.play('spin');
-        // speenLoad.cameras = [camLoad];
+        // speenLoad.cameras = [loadingCamera];
         add(speenLoad);
         for (curFucker in 0...unlockDir) {
             bruh.updateBar();
@@ -320,15 +325,16 @@ class UnlockEditorState extends MusicBeatState {
         UI_lmao.selected_tab_id = 'Content Info';
     }
 
-    var unlockDropDown = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(hardCoded, true), function(unlockableName:String) {
-        trace('pp');
-        curUnlockable = unlockDropDown.selectedLabel;
-    });
+    var unlockDropDown:FlxUIDropDownMenuCustom;
+    var curUnlockable:String;
     function addUnlockListUI() {
         var tab_group = new FlxUI(null, UI_box);
         tab_group.name = 'Unlockables';
 
-        
+        unlockDropDown = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(succulentChicken, true), function(unlockableName:String) {
+            trace('pp');
+            curUnlockable = unlockDropDown.selectedLabel;
+        });
         trace('lets not crash pls');
     }
 
