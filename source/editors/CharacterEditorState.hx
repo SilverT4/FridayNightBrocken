@@ -780,6 +780,8 @@ class CharacterEditorState extends MusicBeatState
 					var leAnim:FlxAnimation = char.animation.getByName(lastAnim);
 					if(leAnim != null && leAnim.frames.length > 0) {
 						char.playAnim(lastAnim, true);
+						speen.animation.play('spun');
+						speen.visible = false;
 					} else {
 						for(i in 0...char.animationsArray.length) {
 							if(char.animationsArray[i] != null) {

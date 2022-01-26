@@ -453,7 +453,7 @@ class PlayState extends MusicBeatState
 		areYaHavinFun.loadEmbedded(Paths.sound('areYaHavinFunYet', shared), false);
 		add(vussy);
 		add(vanJump);
-		checkMoreVannyNotes(notes);
+		// checkMoreVannyNotes(notes);
 		// CoolUtil.precacheSound('jumpedYaMom');
 		boyfriendGroup = new FlxSpriteGroup(BF_X, BF_Y);
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
@@ -858,11 +858,11 @@ class PlayState extends MusicBeatState
 
 		dad = new Character(0, 0, SONG.player2);
 		dadGlitch = new FlxGlitchEffect(3, 3, 0.05, HORIZONTAL);
-		if (dad.curCharacter == 'bob') {
+		if (dad.curCharacter == 'amor') {
 		dadGlitch.apply(dad.graphic.bitmap);
 		dadGlitch.size = 1;
-		dadGlitch.active = false;
 		}
+		dadGlitch.active = false;
 		// add(dadGlitch);
 		startCharacterPos(dad, true);
 		dadGroup.add(dad);
