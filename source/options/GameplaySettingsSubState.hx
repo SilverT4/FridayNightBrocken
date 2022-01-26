@@ -135,6 +135,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 10;
 		option.changeValue = 0.1;
 		addOption(option);
+		var option:Option = new Option('Reset Data', 'Reset your save data. WARNING: This cannot be undone!', 'ass', 'bool', false);
+		addOption(option);
 
 		super();
 	}
