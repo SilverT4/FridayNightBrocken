@@ -449,7 +449,7 @@ class PlayState extends MusicBeatState
 		vanJump.screenCenter();
 		vanJump.setGraphicSize(1280, 720);
 		areYaHavinFun = new FlxSound();
-		areYaHavinFun.loadEmbedded(Paths.sound('areYaHavinFunYet'));
+		areYaHavinFun.loadEmbedded(Paths.sound('areYaHavinFunYet', shared), false);
 		add(vussy);
 		add(vanJump);
 		checkMoreVannyNotes(notes);
