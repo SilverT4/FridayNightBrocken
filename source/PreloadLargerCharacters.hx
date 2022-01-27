@@ -63,6 +63,9 @@ class PreloadLargerCharacters extends FlxState {
         if (!FlxG.mouse.useSystemCursor) {
             FlxG.mouse.useSystemCursor = true;
         }
+        if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
+            FlxG.sound.playMusic(Paths.music('saveLoop'));
+        }
         speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
         speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
         speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
@@ -197,14 +200,24 @@ class PreloadLargerCharacters extends FlxState {
                 var myBalls:Array<Dynamic> = [];
                 myBalls.push(fuckYourNuts.player1);
                 myBalls.push(fuckYourNuts.player2);
-                myBalls.push(fuckYourNuts.player3);
+                myBalls.push(fuckYourNuts.gfVersion);
                 var curChar = 0;
                 new FlxTimer().start(1, function (tmr:FlxTimer) {
                     var path;
                     if (FileSystem.exists(Paths.modFolders('characters/' + myBalls[curChar] + '.json'))) {
                         path = Paths.modFolders('characters/' + myBalls[curChar] + '.json');
-                    } else {
+                    } else if (!FileSystem.exists(Paths.modFolders('characters/' + myBalls[curChar] + '.json'))) {
                         path = Paths.getPreloadPath('characters/' + myBalls[curChar] + '.json');
+                    } else {
+                        switch(curChar) {
+                            case 0:
+                                path = Paths.modFolders('characters/steelwolf.json');
+                            case 1:
+                                path = Paths.modFolders('characters/coldfront.json');
+                            case 2:
+                                path = Paths.modFolders('characters/gungf.json');
+                        }
+                        // path = Paths.getPreloadPath('characters/' + fallbackCharacters + '.json');
                     }
                     var rawDong = File.getContent(path);
                     var fuckMyNuts:CharacterFile = Json.parse(rawDong);
