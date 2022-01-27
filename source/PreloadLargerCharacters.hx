@@ -73,16 +73,20 @@ class PreloadLargerCharacters extends FlxState {
         }
         var funText:FlxText = new FlxText(0, 0, FlxG.width, 'Press any key to skip preloading...');
         funText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER);
+        funText.screenCenter();
         add(funText);
         new FlxTimer().start(5, function (tmr:FlxTimer) {
             skippablePreload = false;
+            funText.destroy();
             beginPreloading(true);
         });
         #else
         var funText:FlxText = new FlxText(0, 0, FlxG.width, 'Press any key to skip preloading...');
         funText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER);
+        funText.screenCenter();
         add(funText);
         new FlxTimer().start(5, function (tmr:FlxTimer) {
+            funText.destroy();
             skippablePreload = false;
             beginPreloading();
         });
