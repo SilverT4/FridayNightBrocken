@@ -1387,6 +1387,7 @@ class CharacterEditorState extends MusicBeatState
 			
 			if (data.length > 0)
 				{
+					openSubState(new SavingYourBullshit('bf'));
 				_file = new FileReference();
 				_file.addEventListener(Event.COMPLETE, onSaveComplete);
 				_file.addEventListener(Event.CANCEL, onSaveCancel);
@@ -1558,9 +1559,9 @@ class CharacterEditorState extends MusicBeatState
 					case 'dad':
 					PlayState.SONG.player2 = charName;
 					case 'girlfriend':
-					PlayState.SONG.player3 = charName;	
+					PlayState.SONG.gfVersion = charName;	
 				}
-				MusicBeatState.switchState(new PlayState());
+				MusicBeatState.switchState(new PreloadLargerCharacters());
 			});
 			confirmButton.cameras = [camAmogus];
 			cancelButton = new FlxButton(confirmButton.x + 150, confirmButton.y, 'Cancel', function() {
@@ -1649,7 +1650,7 @@ class CharacterEditorState extends MusicBeatState
 			if (speen != null) {
 				speen.update(elapsed);
 			}
-			if (!CharacterEditorState.savingYourShit) {
+			if (!CharacterEditorState.savingYourShit && elapsed >= 1) {
 				if (!saveDone) trace('save complete');
 				saveDone = true;
 				if (savingText != null) savingText.text = 'Save complete!\nClosing in 5 seconds';
