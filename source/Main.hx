@@ -67,6 +67,8 @@ class Main extends Sprite
 
 		#if !debug
 		initialState = TitleState;
+		#else
+		initialState = PreloadLargerCharacters;
 		#end
 
 		ClientPrefs.loadDefaultKeys();

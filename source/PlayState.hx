@@ -287,9 +287,9 @@ class PlayState extends MusicBeatState
 		
 		notes.forEachAlive(function (daNote:Note) {
 			if (daNote.noteType == 'Vanny Note') {
-				trace(daNote);
+				// trace(daNote);
 				existingVannyNotes.push(daNote);
-				trace(existingVannyNotes);
+				// trace(existingVannyNotes[daNote]);
 			} else {
 				nonVannyNotes.push(daNote);
 			}
