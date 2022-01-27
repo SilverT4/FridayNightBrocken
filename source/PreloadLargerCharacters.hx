@@ -48,6 +48,9 @@ class PreloadLargerCharacters extends FlxState {
         if (sus) {
             sussy = true;
         }
+        if (!FlxG.mouse.visible) {
+            FlxG.mouse.visible = true;
+        }
     }
     override function create() {
         /* camPreload = new FlxCamera();
@@ -134,12 +137,13 @@ class PreloadLargerCharacters extends FlxState {
             new FlxTimer().start(3, function (tmr:FlxTimer) {
                 var curChar:Int = 0;
                 new FlxTimer().start(1.5, function (tmr:FlxTimer) {
+                    Paths.setCurrentLevel('shared');
                     loadingText.text = 'Now preloading ' + preloadBaseChars[curChar] + ' to improve load times';
                     var f:FlxSprite = new FlxSprite();
                     f.loadGraphic(preloadBaseChars[curChar]);
                     f.destroy();
                     curChar += 1;
-                    if (curChar >= preloadBaseChars.length && preloadModChars.length == 0) exitPreloader();
+                    if (curChar >= preloadBaseChars.length && preloadModChars.length == 0 || sussy) exitPreloader();
                 }, preloadBaseChars.length);
             });
         });
@@ -176,7 +180,7 @@ class PreloadLargerCharacters extends FlxState {
         new FlxTimer().start(3, function(tmr:FlxTimer) {
             loadingText.text = 'Done preloading!';
             var huhhhhhh:FlxSound = new FlxSound();
-            huhhhhhh.loadEmbedded(Paths.sound('phaseComplete'));
+            huhhhhhh.loadEmbedded(Paths.sound('phaseComplete', ''));
             FlxG.mouse.useSystemCursor = false;
             huhhhhhh.play();
             new FlxTimer().start(huhhhhhh.length / 1000, function (tmr:FlxTimer) {
