@@ -38,7 +38,15 @@ class PreloadLargerCharacters extends FlxState {
     var textBox:FlxSprite;
     var loadingText:FlxText;
     var skippablePreload:Bool = true;
+    var sussy:Bool = false;
     
+    public function new(?sus:Bool = false) {
+        super();
+        trace('ass');
+        if (sus) {
+            sussy = true;
+        }
+    }
     override function create() {
         /* camPreload = new FlxCamera();
         camPreload.bgColor.alpha = 0;
@@ -118,7 +126,8 @@ class PreloadLargerCharacters extends FlxState {
         loadingText = new FlxText(textBox.x, textBox.y + 4, FlxG.width, 'Preparing to preload graphics...', 16);
         add(loadingText);
         // loadingText.text = 'test';
-        new FlxTimer().start(3, function (tmr:FlxTimer) {
+        if (sussy) {
+            new FlxTimer().start(3, function (tmr:FlxTimer) {
             loadingText.text = 'Getting ready to preload character graphics in assets/shared...';
             new FlxTimer().start(3, function (tmr:FlxTimer) {
                 var curChar:Int = 0;
@@ -132,8 +141,9 @@ class PreloadLargerCharacters extends FlxState {
                 }, preloadBaseChars.length);
             });
         });
+        }
         #if MODS_ALLOWED
-        if (modsEnabled) {
+        if (modsEnabled && !sussy) {
         new FlxTimer().start(5, function(tmr:FlxTimer) {
             loadingText.text = 'Now preparing to preload mod characters. This will only preload from mods/images';
             new FlxTimer().start(3, function (tmr:FlxTimer) {
@@ -160,7 +170,11 @@ class PreloadLargerCharacters extends FlxState {
             FlxG.mouse.useSystemCursor = true;
             huhhhhhh.play();
             new FlxTimer().start(huhhhhhh.length / 1000, function (tmr:FlxTimer) {
-                MusicBeatState.switchState(new TitleState());
+                if (!sussy) {
+                    MusicBeatState.switchState(new MainMenuState());
+                } else {
+                    MusicBeatState.switchState(new TitleState());
+                }
             });
         });
     }
