@@ -192,7 +192,7 @@ class PreloadLargerCharacters extends FlxState {
         if (sussy) {
             new FlxTimer().start(5, function (tmr:FlxTimer) {
                 var fuckYourNuts:Song.SwagSong = Song.loadFromJson(susSong, susSong.toLowerCase());
-                var myBalls:Array<Dynamic>;
+                var myBalls:Array<Dynamic> = [];
                 myBalls.push(fuckYourNuts.player1);
                 myBalls.push(fuckYourNuts.player2);
                 myBalls.push(fuckYourNuts.player3);
@@ -200,9 +200,11 @@ class PreloadLargerCharacters extends FlxState {
                 new FlxTimer().start(1, function (tmr:FlxTimer) {
                     var fuckMyNuts:CharacterFile = Json.parse(Paths.json(myBalls[curChar]));
                     curChar += 1;
-
+                    var f = new FlxSprite(0);
+                    f.loadGraphic(fuckMyNuts.image);
+                    f.destroy();
                     if (curChar >= myBalls.length) exitPreloader();
-                });
+                }, myBalls.length);
             });
         }
     }

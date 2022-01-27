@@ -128,6 +128,10 @@ class Paths
 		return getPath('data/$key.json', TEXT, library);
 	}
 
+	inline static public function characterJson(key:String, ?library:String) {
+		return getPath('characters/$key.json', TEXT, library);
+	}
+
 	inline static public function lua(key:String, ?library:String)
 	{
 		return getPath('$key.lua', TEXT, library);
