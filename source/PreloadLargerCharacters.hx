@@ -63,9 +63,6 @@ class PreloadLargerCharacters extends FlxState {
         if (!FlxG.mouse.useSystemCursor) {
             FlxG.mouse.useSystemCursor = true;
         }
-        if (FlxG.sound.music == null || !FlxG.sound.music.playing) {
-            FlxG.sound.playMusic(Paths.music('saveLoop'));
-        }
         speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
         speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
         speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
@@ -203,10 +200,10 @@ class PreloadLargerCharacters extends FlxState {
                 myBalls.push(fuckYourNuts.gfVersion);
                 var curChar = 0;
                 new FlxTimer().start(1, function (tmr:FlxTimer) {
-                    var path;
+                    var path = '';
                     if (FileSystem.exists(Paths.modFolders('characters/' + myBalls[curChar] + '.json'))) {
                         path = Paths.modFolders('characters/' + myBalls[curChar] + '.json');
-                    } else if (!FileSystem.exists(Paths.modFolders('characters/' + myBalls[curChar] + '.json'))) {
+                    } else if (FileSystem.exists(Paths.getPreloadPath('characters/' + myBalls[curChar] + '.json'))) {
                         path = Paths.getPreloadPath('characters/' + myBalls[curChar] + '.json');
                     } else {
                         switch(curChar) {
