@@ -1,0 +1,122 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"loop": false,
+			"anim": "idle",
+			"fps": 24,
+			"name": "Pico Idle Dance",
+			"indices": []
+		},
+		{
+			"offsets": [
+				3,
+				8
+			],
+			"loop": false,
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "Pico Note Right0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				5,
+				-7
+			],
+			"loop": false,
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "Pico NOTE LEFT0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-4,
+				29
+			],
+			"loop": false,
+			"anim": "singRIGHTmiss",
+			"fps": 24,
+			"name": "Pico NOTE LEFT miss",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-9,
+				57
+			],
+			"loop": false,
+			"anim": "singLEFTmiss",
+			"fps": 24,
+			"name": "Pico Note Right Miss",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-13,
+				27
+			],
+			"loop": false,
+			"anim": "singUP",
+			"fps": 24,
+			"name": "pico Up note0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				257,
+				-76
+			],
+			"loop": false,
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "Pico Down Note0",
+			"indices": []
+		},
+		{
+			"offsets": [
+				247,
+				-36
+			],
+			"loop": false,
+			"anim": "singDOWNmiss",
+			"fps": 24,
+			"name": "Pico Down Note MISS",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-3,
+				63
+			],
+			"loop": false,
+			"anim": "singUPmiss",
+			"fps": 24,
+			"name": "pico Up note miss",
+			"indices": []
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Gundam_assets",
+	"position": [
+		0,
+		300
+	],
+	"healthicon": "gundam",
+	"flip_x": true,
+	"healthbar_colors": [
+		250,
+		250,
+		250
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
