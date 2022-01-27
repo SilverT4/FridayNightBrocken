@@ -53,7 +53,7 @@ class PreloadLargerCharacters extends FlxState {
                 trace('xml skip');
             } else {
                 trace('adding character ' + baseChars[i].substr(baseChars[i].length));
-                preloadBaseChars.push(preloadDirs[0] + baseChars[i]);
+                preloadBaseChars.push(preloadDirs[0] + '/' + baseChars[i]);
             }
         }
         #if MODS_ALLOWED
@@ -63,7 +63,7 @@ class PreloadLargerCharacters extends FlxState {
                 trace('xml/json skip');
             } else {
                 trace('adding character ' + modChars[i].substr(modChars[i].length));
-                preloadModChars.push(preloadDirs[1] + modChars[i]);
+                preloadModChars.push(preloadDirs[1] + '/' + modChars[i]);
             }
         }
         beginPreloading(true);
