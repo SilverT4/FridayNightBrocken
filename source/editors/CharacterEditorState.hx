@@ -1561,7 +1561,7 @@ class CharacterEditorState extends MusicBeatState
 					case 'girlfriend':
 					PlayState.SONG.gfVersion = charName;	
 				}
-				MusicBeatState.switchState(new PreloadLargerCharacters());
+				MusicBeatState.switchState(new PreloadLargerCharacters(songName, true));
 			});
 			confirmButton.cameras = [camAmogus];
 			cancelButton = new FlxButton(confirmButton.x + 150, confirmButton.y, 'Cancel', function() {
