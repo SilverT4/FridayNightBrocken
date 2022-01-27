@@ -130,6 +130,19 @@ class Paths
 
 	inline static public function characterJson(key:String, ?library:String) {
 		return getPath('characters/$key.json', TEXT, library);
+
+	}
+
+	inline static public function modsCharacterJson(key:String, ?library:String) {
+		#if MODS_ALLOWED
+		if (!FileSystem.exists('mods/characters/$key.json')) {
+			return null;
+		} else {
+			return getPath('characters/$key.json', TEXT, library);
+		}
+		#else
+		trace('tf');
+		#end
 	}
 
 	inline static public function lua(key:String, ?library:String)

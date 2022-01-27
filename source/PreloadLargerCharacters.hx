@@ -157,14 +157,14 @@ class PreloadLargerCharacters extends FlxState {
                         /* if (curChar >= preloadBaseChars.length && sussy) {
                             exitPreloader();
                         } else { */
-                            FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                            if (curChar >= preloadBaseChars.length) FlxG.sound.play(Paths.sound('lookingSpiffy'));
                         // }
                     }, preloadBaseChars.length);
                 });
             });
         }
         #if MODS_ALLOWED
-        if (modsEnabled) {
+        if (modsEnabled && !sussy) {
             new FlxTimer().start(5, function(tmr:FlxTimer) {
                 loadingText.text = 'Now preparing to preload mod characters. This will only preload from mods/images';
                 new FlxTimer().start(3, function (tmr:FlxTimer) {
@@ -184,6 +184,7 @@ class PreloadLargerCharacters extends FlxState {
                         }
                         
                         if (curChar >= preloadModChars.length) FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                        if (curChar >= preloadModChars.length && !sussy) exitPreloader();
                     }, preloadModChars.length);
                 });
             });
@@ -191,6 +192,7 @@ class PreloadLargerCharacters extends FlxState {
         #end
         if (sussy) {
             new FlxTimer().start(5, function (tmr:FlxTimer) {
+                loadingText.text = 'Now preparing to load song characters. Just a second...';
                 var fuckYourNuts:Song.SwagSong = Song.loadFromJson(susSong, susSong.toLowerCase());
                 var myBalls:Array<Dynamic> = [];
                 myBalls.push(fuckYourNuts.player1);
@@ -198,10 +200,21 @@ class PreloadLargerCharacters extends FlxState {
                 myBalls.push(fuckYourNuts.player3);
                 var curChar = 0;
                 new FlxTimer().start(1, function (tmr:FlxTimer) {
-                    var fuckMyNuts:CharacterFile = Json.parse(Paths.json(myBalls[curChar]));
+                    var path;
+                    if (FileSystem.exists(Paths.modFolders('characters/' + myBalls[curChar] + '.json'))) {
+                        path = Paths.modFolders('characters/' + myBalls[curChar] + '.json');
+                    } else {
+                        path = Paths.getPreloadPath('characters/' + myBalls[curChar] + '.json');
+                    }
+                    var rawDong = File.getContent(path);
+                    var fuckMyNuts:CharacterFile = Json.parse(rawDong);
                     curChar += 1;
                     var f = new FlxSprite(0);
-                    f.loadGraphic(fuckMyNuts.image);
+                    if (!FileSystem.exists('assets/shared/images/' + fuckMyNuts.image)) {
+                        f.loadGraphic(Paths.modsImages(fuckMyNuts.image));
+                    } else {
+                        f.loadGraphic('assets/shared/images/' + fuckMyNuts.image);
+                    }
                     f.destroy();
                     if (curChar >= myBalls.length) exitPreloader();
                 }, myBalls.length);
