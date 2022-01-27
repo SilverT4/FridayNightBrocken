@@ -11,6 +11,7 @@ import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
 import flixel.FlxSprite;
+import flixel.system.FlxSound;
 import flixel.text.FlxText;
 import openfl.Assets;
 import openfl.Lib;
@@ -36,11 +37,15 @@ class PreloadLargerCharacters extends FlxState {
     var camPreload:FlxCamera;
     var textBox:FlxSprite;
     var loadingText:FlxText;
-
+    var skippablePreload:Bool = true;
+    
     override function create() {
         /* camPreload = new FlxCamera();
         camPreload.bgColor.alpha = 0;
         FlxG.cameras.add(camPreload); */
+        if (!FlxG.mouse.useSystemCursor) {
+            FlxG.mouse.useSystemCursor = true;
+        }
         speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
         speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
         speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
@@ -59,27 +64,43 @@ class PreloadLargerCharacters extends FlxState {
         #if MODS_ALLOWED
         modChars = FileSystem.readDirectory(preloadDirs[1]);
         for (i in 0...modChars.length) {
-            if (modChars[i].endsWith('.xml') || modChars[i].endsWith('.json')) {
+            if (modChars[i].endsWith('.xml') || modChars[i].endsWith('.json') || modChars[i].endsWith('.txt')) {
                 trace('xml/json skip');
             } else {
                 trace('adding character ' + modChars[i].substr(modChars[i].length));
                 preloadModChars.push(preloadDirs[1] + '/' + modChars[i]);
             }
         }
-        beginPreloading(true);
+        var funText:FlxText = new FlxText(0, 0, FlxG.width, 'Press any key to skip preloading...');
+        funText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER);
+        add(funText);
+        new FlxTimer().start(5, function (tmr:FlxTimer) {
+            skippablePreload = false;
+            beginPreloading(true);
+        });
         #else
-        beginPreloading();
+        var funText:FlxText = new FlxText(0, 0, FlxG.width, 'Press any key to skip preloading...');
+        funText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER);
+        add(funText);
+        new FlxTimer().start(5, function (tmr:FlxTimer) {
+            skippablePreload = false;
+            beginPreloading();
+        });
         #end
-
+        
         
     }
-
+    
     override function update(elapsed:Float) {
         if (speen != null) {
             speen.update(elapsed);
         }
-    }
 
+        if (FlxG.keys.justReleased.ANY && skippablePreload) {
+            exitPreloader();
+        }
+    }
+    
     function beginPreloading(?modsEnabled:Bool) {
         if (modsEnabled == null) modsEnabled = false; //ASSUME FALSE IF UNSPECIFIED ON CALL
         textBox = new FlxSprite(0, FlxG.height - 26);
@@ -96,13 +117,46 @@ class PreloadLargerCharacters extends FlxState {
         new FlxTimer().start(3, function (tmr:FlxTimer) {
             loadingText.text = 'Getting ready to preload character graphics in assets/shared...';
             new FlxTimer().start(3, function (tmr:FlxTimer) {
-                for (i in 0...preloadBaseChars.length) {
-                    loadingText.text = 'Now preloading ' + preloadBaseChars[i] + ' to improve load times';
-                    new FlxTimer().start(1, function (tmr:FlxTimer) {
-                        var f:FlxSprite = new FlxSprite();
-                        f.loadGraphic(preloadBaseChars[i]);
-                    });
-                }
+                var curChar:Int = 0;
+                new FlxTimer().start(1.5, function (tmr:FlxTimer) {
+                    loadingText.text = 'Now preloading ' + preloadBaseChars[curChar] + ' to improve load times';
+                    var f:FlxSprite = new FlxSprite();
+                    f.loadGraphic(preloadBaseChars[curChar]);
+                    f.kill();
+                    curChar += 1;
+                    if (curChar >= preloadBaseChars.length && preloadModChars.length == 0) exitPreloader();
+                }, preloadBaseChars.length);
+            });
+        });
+        #if MODS_ALLOWED
+        if (modsEnabled) {
+        new FlxTimer().start(5, function(tmr:FlxTimer) {
+            loadingText.text = 'Now preparing to preload mod characters. This will only preload from mods/images';
+            new FlxTimer().start(3, function (tmr:FlxTimer) {
+                var curChar:Int = 0;
+                new FlxTimer().start(1, function (tmr:FlxTimer) {
+                    loadingText.text = 'Now preloading ' + preloadModChars[curChar] + ' to improve load times';
+                    var f:FlxSprite = new FlxSprite();
+                    f.loadGraphic(preloadModChars[curChar]);
+                    f.kill();
+                    curChar += 1;
+                    if (curChar >= preloadModChars.length) exitPreloader();
+                }, preloadModChars.length);
+            });
+        });
+        }
+        #end
+    }
+    
+    function exitPreloader() {
+        new FlxTimer().start(3, function(tmr:FlxTimer) {
+            loadingText.text = 'Done preloading!';
+            var huhhhhhh:FlxSound = new FlxSound();
+            huhhhhhh.loadEmbedded(Paths.sound('phaseComplete'));
+            FlxG.mouse.useSystemCursor = true;
+            huhhhhhh.play();
+            new FlxTimer().start(huhhhhhh.length / 1000, function (tmr:FlxTimer) {
+                MusicBeatState.switchState(new TitleState());
             });
         });
     }
