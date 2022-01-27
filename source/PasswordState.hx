@@ -224,7 +224,7 @@ class PasswordState extends MusicBeatState
             pwValidateButton.update(elapsed);
         }
     }
-    function checkSus() {
+    function checkSus() { // i need to  add speen here
         trace('CHECKING YOUR SAVE DATA...');
         sussyBg = new FlxSprite(-80).makeGraphic(1280, 720, FlxColor.BLUE, false);
         sussyBg.scrollFactor.set(0, 0);
