@@ -1,5 +1,6 @@
 package;
 
+import ClientPrefs;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
 import spritesheet.AnimatedSprite;
@@ -21,6 +22,7 @@ import spritesheet.Spritesheet;
 import openfl.events.Event;
 #if MODS_ALLOWED
 import sys.io.File;
+import sys.FileStat;
 import sys.FileSystem;
 #end
 
@@ -135,7 +137,7 @@ class PreloadLargerCharacters extends FlxState {
                     loadingText.text = 'Now preloading ' + preloadBaseChars[curChar] + ' to improve load times';
                     var f:FlxSprite = new FlxSprite();
                     f.loadGraphic(preloadBaseChars[curChar]);
-                    f.kill();
+                    f.destroy();
                     curChar += 1;
                     if (curChar >= preloadBaseChars.length && preloadModChars.length == 0) exitPreloader();
                 }, preloadBaseChars.length);
@@ -149,11 +151,19 @@ class PreloadLargerCharacters extends FlxState {
             new FlxTimer().start(3, function (tmr:FlxTimer) {
                 var curChar:Int = 0;
                 new FlxTimer().start(1, function (tmr:FlxTimer) {
+                    var susp:FileStat = FileSystem.stat(preloadModChars[curChar]);
+                    if (susp.size >= 4000000) {
                     loadingText.text = 'Now preloading ' + preloadModChars[curChar] + ' to improve load times';
                     var f:FlxSprite = new FlxSprite();
                     f.loadGraphic(preloadModChars[curChar]);
-                    f.kill();
+                    trace('sussy');
+                    f.destroy();
                     curChar += 1;
+                    } else {
+                        loadingText.text = 'Skipping ' + preloadModChars[curChar] + ' as it is under 4MB';
+                        curChar += 1;
+                    }
+                    
                     if (curChar >= preloadModChars.length) exitPreloader();
                 }, preloadModChars.length);
             });
@@ -167,13 +177,15 @@ class PreloadLargerCharacters extends FlxState {
             loadingText.text = 'Done preloading!';
             var huhhhhhh:FlxSound = new FlxSound();
             huhhhhhh.loadEmbedded(Paths.sound('phaseComplete'));
-            FlxG.mouse.useSystemCursor = true;
+            FlxG.mouse.useSystemCursor = false;
             huhhhhhh.play();
             new FlxTimer().start(huhhhhhh.length / 1000, function (tmr:FlxTimer) {
-                if (!sussy) {
-                    MusicBeatState.switchState(new MainMenuState());
+                if (sussy) {
+                    FlxG.switchState(new MainMenuState());
                 } else {
-                    MusicBeatState.switchState(new TitleState());
+                    FlxG.cameras.fade(FlxColor.BLACK, 1, true, function() {
+                        FlxG.switchState(new TitleState());
+                    });
                 }
             });
         });
