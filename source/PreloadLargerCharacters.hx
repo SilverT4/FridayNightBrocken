@@ -53,7 +53,7 @@ class PreloadLargerCharacters extends FlxState {
                 trace('xml skip');
             } else {
                 trace('adding character ' + baseChars[i].substr(baseChars[i].length));
-                preloadBaseChars.push(baseChars[i]);
+                preloadBaseChars.push(preloadDirs[0] + baseChars[i]);
             }
         }
         #if MODS_ALLOWED
@@ -63,7 +63,7 @@ class PreloadLargerCharacters extends FlxState {
                 trace('xml/json skip');
             } else {
                 trace('adding character ' + modChars[i].substr(modChars[i].length));
-                preloadModChars.push(modChars[i]);
+                preloadModChars.push(preloadDirs[1] + modChars[i]);
             }
         }
         beginPreloading(true);
@@ -100,7 +100,7 @@ class PreloadLargerCharacters extends FlxState {
                     loadingText.text = 'Now preloading ' + preloadBaseChars[i] + ' to improve load times';
                     new FlxTimer().start(1, function (tmr:FlxTimer) {
                         var f:FlxSprite = new FlxSprite();
-                        f.frames = FlxAtlasFrames.fromSparrow('assets/shared/images/characters/' + preloadBaseChars[i], 'assets/shared/images/characters/' + preloadBaseChars[i].substr(preloadBaseChars[i].length - 4) + '.xml');
+                        f.loadGraphic(preloadBaseChars[i]);
                     });
                 }
             });
