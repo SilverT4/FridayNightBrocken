@@ -1,5 +1,7 @@
 package;
 
+import haxe.Json;
+import Character.CharacterFile;
 import ClientPrefs;
 import flixel.util.FlxTimer;
 import flixel.util.FlxColor;
@@ -41,13 +43,15 @@ class PreloadLargerCharacters extends FlxState {
     var loadingText:FlxText;
     var skippablePreload:Bool = true;
     var sussy:Bool = false;
+    var susSong:String;
     
-    public function new(?sus:Bool = false) {
+    public function new(sussySong:String = 'high', ?sus:Bool = false) {
         super();
         trace('ass');
         if (sus) {
             sussy = true;
         }
+        susSong = sussySong;
         if (!FlxG.mouse.visible) {
             FlxG.mouse.visible = true;
         }
@@ -112,7 +116,7 @@ class PreloadLargerCharacters extends FlxState {
         if (speen != null) {
             speen.update(elapsed);
         }
-
+        
         if (FlxG.keys.justReleased.ANY && skippablePreload) {
             exitPreloader();
         }
@@ -131,61 +135,88 @@ class PreloadLargerCharacters extends FlxState {
         loadingText = new FlxText(textBox.x, textBox.y + 4, FlxG.width, 'Preparing to preload graphics...', 16);
         add(loadingText);
         // loadingText.text = 'test';
-        if (sussy) {
+        if (!sussy) {
             new FlxTimer().start(3, function (tmr:FlxTimer) {
-            loadingText.text = 'Getting ready to preload character graphics in assets/shared...';
-            new FlxTimer().start(3, function (tmr:FlxTimer) {
-                var curChar:Int = 0;
-                new FlxTimer().start(1.5, function (tmr:FlxTimer) {
-                    Paths.setCurrentLevel('shared');
-                    loadingText.text = 'Now preloading ' + preloadBaseChars[curChar] + ' to improve load times';
-                    var f:FlxSprite = new FlxSprite();
-                    f.loadGraphic(preloadBaseChars[curChar]);
-                    f.destroy();
-                    curChar += 1;
-                    if (curChar >= preloadBaseChars.length && preloadModChars.length == 0 || sussy) exitPreloader();
-                }, preloadBaseChars.length);
+                loadingText.text = 'Getting ready to preload character graphics in assets/shared...';
+                new FlxTimer().start(3, function (tmr:FlxTimer) {
+                    var curChar:Int = 0;
+                    new FlxTimer().start(1.5, function (tmr:FlxTimer) {
+                        var penis:FileStat = FileSystem.stat(preloadBaseChars[curChar]);
+                        Paths.setCurrentLevel('shared');
+                        if (penis.size >= 4000000) {
+                            loadingText.text = 'Now preloading ' + preloadBaseChars[curChar] + ' to improve load times';
+                            var f:FlxSprite = new FlxSprite();
+                            f.loadGraphic(preloadBaseChars[curChar]);
+                            trace('sussy');
+                            f.destroy();
+                            curChar += 1;
+                        } else {
+                            loadingText.text = 'Skipping ' + preloadBaseChars[curChar] + ' as it is under 4MB';
+                            curChar += 1;
+                        }
+                        /* if (curChar >= preloadBaseChars.length && sussy) {
+                            exitPreloader();
+                        } else { */
+                            FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                        // }
+                    }, preloadBaseChars.length);
+                });
             });
-        });
         }
         #if MODS_ALLOWED
-        if (modsEnabled && !sussy) {
-        new FlxTimer().start(5, function(tmr:FlxTimer) {
-            loadingText.text = 'Now preparing to preload mod characters. This will only preload from mods/images';
-            new FlxTimer().start(3, function (tmr:FlxTimer) {
-                var curChar:Int = 0;
-                new FlxTimer().start(1, function (tmr:FlxTimer) {
-                    var susp:FileStat = FileSystem.stat(preloadModChars[curChar]);
-                    if (susp.size >= 4000000) {
-                    loadingText.text = 'Now preloading ' + preloadModChars[curChar] + ' to improve load times';
-                    var f:FlxSprite = new FlxSprite();
-                    f.loadGraphic(preloadModChars[curChar]);
-                    trace('sussy');
-                    f.destroy();
-                    curChar += 1;
-                    } else {
-                        loadingText.text = 'Skipping ' + preloadModChars[curChar] + ' as it is under 4MB';
-                        curChar += 1;
-                    }
-                    
-                    if (curChar >= preloadModChars.length) exitPreloader();
-                }, preloadModChars.length);
+        if (modsEnabled) {
+            new FlxTimer().start(5, function(tmr:FlxTimer) {
+                loadingText.text = 'Now preparing to preload mod characters. This will only preload from mods/images';
+                new FlxTimer().start(3, function (tmr:FlxTimer) {
+                    var curChar:Int = 0;
+                    new FlxTimer().start(1, function (tmr:FlxTimer) {
+                        var susp:FileStat = FileSystem.stat(preloadModChars[curChar]);
+                        if (susp.size >= 4000000) {
+                            loadingText.text = 'Now preloading ' + preloadModChars[curChar] + ' to improve load times';
+                            var f:FlxSprite = new FlxSprite();
+                            f.loadGraphic(preloadModChars[curChar]);
+                            trace('sussy');
+                            f.destroy();
+                            curChar += 1;
+                        } else {
+                            loadingText.text = 'Skipping ' + preloadModChars[curChar] + ' as it is under 4MB';
+                            curChar += 1;
+                        }
+                        
+                        if (curChar >= preloadModChars.length) FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                    }, preloadModChars.length);
+                });
             });
-        });
         }
         #end
+        if (sussy) {
+            new FlxTimer().start(5, function (tmr:FlxTimer) {
+                var fuckYourNuts:Song.SwagSong = Song.loadFromJson(susSong, susSong.toLowerCase());
+                var myBalls:Array<Dynamic>;
+                myBalls.push(fuckYourNuts.player1);
+                myBalls.push(fuckYourNuts.player2);
+                myBalls.push(fuckYourNuts.player3);
+                var curChar = 0;
+                new FlxTimer().start(1, function (tmr:FlxTimer) {
+                    var fuckMyNuts:CharacterFile = Json.parse(Paths.json(myBalls[curChar]));
+                    curChar += 1;
+
+                    if (curChar >= myBalls.length) exitPreloader();
+                });
+            });
+        }
     }
     
     function exitPreloader() {
         new FlxTimer().start(3, function(tmr:FlxTimer) {
-            loadingText.text = 'Done preloading!';
+            if (loadingText != null) loadingText.text = 'Done preloading!';
             var huhhhhhh:FlxSound = new FlxSound();
-            huhhhhhh.loadEmbedded(Paths.sound('phaseComplete', ''));
+            huhhhhhh.loadEmbedded('assets/sounds/phaseComplete.ogg');
             FlxG.mouse.useSystemCursor = false;
             huhhhhhh.play();
             new FlxTimer().start(huhhhhhh.length / 1000, function (tmr:FlxTimer) {
                 if (sussy) {
-                    FlxG.switchState(new MainMenuState());
+                    FlxG.switchState(new PlayState());
                 } else {
                     FlxG.cameras.fade(FlxColor.BLACK, 1, true, function() {
                         FlxG.switchState(new TitleState());
