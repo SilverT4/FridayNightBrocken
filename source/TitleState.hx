@@ -409,6 +409,7 @@ class TitleState extends MusicBeatState
 
 		if (FlxG.keys.justReleased.B) {
 			trace('hamburger');
+			FlxG.switchState(new PreloadLargerCharacters(''));
 			// FlxG.switchState(new DebugQuickLaunch()); // DebugQuickLaunch is gitignored
 		}
 
