@@ -166,10 +166,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if (controls.UI_UP_P)
 		{
 			changeSelection(-1);
+			if (curOption.description != null) fuckYou.text = curOption.description;
 		}
 		if (controls.UI_DOWN_P)
 		{
 			changeSelection(1);
+			if (curOption.description != null) fuckYou.text = curOption.description;
 		}
 
 		if (controls.BACK) {
@@ -336,7 +338,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			}
 		}
 		curOption = optionsArray[curSelected]; //shorter lol
-		if (option.description != null) fuckYou.text = option.description;
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
