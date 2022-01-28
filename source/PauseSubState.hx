@@ -38,6 +38,7 @@ class PauseSubState extends MusicBeatSubstate
 		{
 			menuItemsOG.insert(2, 'Toggle Practice Mode');
 			menuItemsOG.insert(3, 'Toggle Botplay');
+			menuItemsOG.insert(4, 'Toggle Trollin');
 		}
 		menuItems = menuItemsOG;
 
@@ -177,9 +178,15 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Toggle Botplay':
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 					PlayState.changedDifficulty = true;
-					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
+					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled || !PlayState.instance.weDoALittleTrollin;
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
+				case 'Toggle Trollin':
+						PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
+						PlayState.changedDifficulty = true;
+						PlayState.instance.botplayTxt.visible = PlayState.instance.weDoALittleTrollin;
+						PlayState.instance.botplayTxt.alpha = 1;
+						PlayState.instance.botplaySine = 0;
 				case "Exit to menu":
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;

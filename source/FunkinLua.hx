@@ -131,6 +131,7 @@ class FunkinLua {
 		set('healthLossMultMiss', PlayState.instance.healthLossMisses);
 		set('instakillOnMiss', PlayState.instance.instakillOnMiss);
 		set('botPlay', PlayState.instance.cpuControlled);
+		set('botPlayTroll', PlayState.instance.weDoALittleTrollin);
 		set('practice', PlayState.instance.practiceMode);
 
 		for (i in 0...4) {

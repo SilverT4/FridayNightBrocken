@@ -180,6 +180,7 @@ class PlayState extends MusicBeatState
 	public var healthLossMisses:Bool = false;
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
+	public var weDoALittleTrollin:Bool = false;
 	public var practiceMode:Bool = false;
 
 	public var botplaySine:Float = 0;
@@ -288,10 +289,10 @@ class PlayState extends MusicBeatState
 		notes.forEachAlive(function (daNote:Note) {
 			if (daNote.noteType == 'Vanny Note') {
 				// trace(daNote);
-				existingVannyNotes.push(daNote);
+				if (!existingVannyNotes.contains(daNote)) existingVannyNotes.push(daNote);
 				// trace(existingVannyNotes[daNote]);
 			} else {
-				nonVannyNotes.push(daNote);
+				if (!nonVannyNotes.contains(daNote)) nonVannyNotes.push(daNote);
 			}
 
 			if (existingVannyNotes.length == 0) {
@@ -346,6 +347,7 @@ class PlayState extends MusicBeatState
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
+		weDoALittleTrollin = ClientPrefs.getGameplaySetting('botplayTroll', false);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1112,7 +1114,7 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		botplayTxt.visible = cpuControlled;
+		botplayTxt.visible = cpuControlled || !weDoALittleTrollin;
 		add(botplayTxt);
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
@@ -1329,6 +1331,10 @@ class PlayState extends MusicBeatState
 								GameOverSubstate.characterName = 'bf-pixel-dead';
 							/* case 'bf-holiday-car', 'bf-plum': // again, holiday mod is gitignored. uncomment this if you add it back in after git cloning
 								GameOverSubstate.characterName = 'bf-holiday'; */
+							case 'steelwolf':
+									GameOverSubstate.endSoundName = 'gameOverEnd-burger';
+									GameOverSubstate.loopSoundName = 'gameOver-burger';
+									GameOverSubstate.characterName = newCharacter;
 							default:
 								trace('lmao');
 								GameOverSubstate.characterName = newCharacter;
@@ -2698,7 +2704,8 @@ class PlayState extends MusicBeatState
 						noteMiss(daNote);
 					}
 					if (daNote.noteType == 'Vanny Note') {
-						FlxG.sound.play(Paths.sound('areYaHavinFunYet'));
+						if (!areYaHavinFun.playing) areYaHavinFun.play();
+						existingVannyNotes.remove(daNote);
 						checkMoreVannyNotes(notes);
 					}
 					daNote.active = false;
@@ -2777,7 +2784,7 @@ class PlayState extends MusicBeatState
 		paused = true;
 		cancelMusicFadeTween();
 		CustomFadeTransition.nextCamera = camOther;
-		MusicBeatState.switchState(new ChartingState());
+		MusicBeatState.switchState(new PreloadChartEditor());
 		chartingMode = true;
 
 		#if desktop
@@ -3880,6 +3887,7 @@ class PlayState extends MusicBeatState
 			}
 		});
 		combo = 0;
+		FlxG.sound.play(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
 
 		if (boyfriend.curCharacter == 'decktop-were' && health <= 0.05 * healthLoss) health = 0.05 * healthLoss else health -= daNote.missHealth * healthLoss;
 		trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);

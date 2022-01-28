@@ -37,6 +37,9 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
+	var textBox:FlxSprite;
+	var fuckYou:FlxText;
+
 	function getOptions()
 	{
 		var option:GameplayOption = new GameplayOption('Scroll Speed', 'scrollspeed', 'float', 1);
@@ -45,6 +48,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.maxValue = 3;
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
+		option.description = 'Change the scroll speed';
 		optionsArray.push(option);
 
 		/*var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
@@ -61,6 +65,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.maxValue = 5;
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
+		option.description = 'Change the health gain multiplier';
 		optionsArray.push(option);
 
 		var option:GameplayOption = new GameplayOption('Health Loss Multiplier', 'healthloss', 'float', 1);
@@ -69,18 +74,26 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.maxValue = 5;
 		option.changeValue = 0.1;
 		option.displayFormat = '%vX';
+		option.description = 'Change the health loss multiplier';
 		optionsArray.push(option);
 
-		var option:GameplayOption = new GameplayOption('Miss Count is Health Loss Multiplier', 'misshealthmulti', 'bool', false);
-		optionsArray.push(option);
+		/* var option:GameplayOption = new GameplayOption('Miss Count is Health Loss Multiplier', 'misshealthmulti', 'bool', false);
+		optionsArray.push(option); */
 
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 'instakill', 'bool', false);
+		option.description = 'Are we dying on a note miss, chief?';
 		optionsArray.push(option);
 
 		var option:GameplayOption = new GameplayOption('Practice Mode', 'practice', 'bool', false);
+		option.description = 'If you enable this you are a virgin';
 		optionsArray.push(option);
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
+		option.description = 'Use this to show off your songs and shit';
+		optionsArray.push(option);
+		
+		var option:GameplayOption = new GameplayOption('Are we doin a lil trollin', 'botplayTroll', 'bool', false);
+		option.description = 'Enable this to troll';
 		optionsArray.push(option);
 	}
 
@@ -91,6 +104,14 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var bg:FlxSprite = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
 		bg.alpha = 0.6;
 		add(bg);
+
+		textBox = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, FlxColor.BLACK);
+		textBox.alpha = 0.8;
+		add(textBox);
+
+		fuckYou = new FlxText(textBox.x, textBox.y - 4, FlxG.width, '', 16);
+		fuckYou.setFormat(Paths.font('funny.ttf'), 16, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(fuckYou);
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -279,6 +300,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if(option.type == 'percent') val *= 100;
 		var def:Dynamic = option.defaultValue;
 		option.text = text.replace('%v', val).replace('%d', def);
+		fuckYou.text = option.description;
 	}
 
 	function clearHold()
@@ -347,6 +369,7 @@ class GameplayOption
 	public var minValue:Dynamic = null; //Only used in int/float/percent type
 	public var maxValue:Dynamic = null; //Only used in int/float/percent type
 	public var decimals:Int = 1; //Only used in float/percent type
+	public var description:String = 'test description';
 
 	public var displayFormat:String = '%v'; //How String/Float/Percent/Int values are shown, %v = Current value, %d = Default value
 	public var name:String = 'Unknown';

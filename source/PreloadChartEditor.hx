@@ -85,7 +85,7 @@ class PreloadChartEditor extends FlxState {
         add(speen);
         
         loadingText.text = 'Now preloading note assets';
-        var preloadedNotes:Array<String> = ['assets/images/NOTE_assets', 'HURTNOTE_assets'];
+        var preloadedNotes:Array<String> = ['assets/images/NOTE_assets', 'assets/images/HURTNOTE_assets'];
         var modNotes:Array<Dynamic> = [];
         var modNotesList = FileSystem.readDirectory(Paths.modFolders('images/funnyNotes'));
         #if MODS_ALLOWED
@@ -117,7 +117,7 @@ class PreloadChartEditor extends FlxState {
                     new FlxTimer().start(3, function (tmr:FlxTimer) {
                         loadingText.text = 'Now preloading mod note asset ' + Std.int(curNotes + 1) + ' of ' + modNotes.length + ': ' + modNotes[curNotes];
                         var l:FlxSprite = new FlxSprite();
-                        l.loadGraphic(Paths.modsImages('funnyNotes/' + modNotes[curNotes]));
+                        l.loadGraphic(Paths.modFolders('images/funnyNotes/' + modNotes[curNotes]));
                         l.destroy();
                         curNotes += 1;
                         if (curNotes >= modNotes.length) {
@@ -142,7 +142,7 @@ class PreloadChartEditor extends FlxState {
             hahaha.loadEmbedded('assets/sounds/phaseComplete.ogg');
             FlxG.mouse.useSystemCursor = false;
             hahaha.play();
-            PlayState.SONG = Song.loadFromJson(susSong, susSong.toLowerCase());
+            if (PlayState.SONG == null) PlayState.SONG = Song.loadFromJson(susSong, susSong.toLowerCase());
             new FlxTimer().start(hahaha.length / 1000, function (tmr:FlxTimer) {
                 FlxG.cameras.fade(FlxColor.BLACK, 1.5, false, function() {
                     FlxG.switchState(new ChartingState());
