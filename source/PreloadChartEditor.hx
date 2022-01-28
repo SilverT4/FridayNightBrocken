@@ -64,9 +64,9 @@ class PreloadChartEditor extends FlxState {
         loadShader = new ColorSwap();
         loadShader.hue = 69;
         loadShader.saturation += 100;
-        loadingBg = new FlxSprite(0).loadGraphic('assets/images/editor/live footage of fnf charters on spammy songs.png');
+        loadingBg = new FlxSprite(0).loadGraphic('assets/images/editor/chartingPreloaderBg.png');
         loadingBg.shader = loadShader.shader;
-        loadingBg.alpha = 0.5;
+        // loadingBg.alpha = 0.5;
         add(loadingBg);
         trace('vagina');
         textBox = new FlxSprite(0, FlxG.height - 20).makeGraphic(FlxG.width, 20, FlxColor.BLACK);
@@ -76,5 +76,10 @@ class PreloadChartEditor extends FlxState {
         loadingText = new FlxText(textBox.x, textBox.y + 4, FlxG.width);
         loadingText.text = 'Preparing to preload note assets...';
         add(loadingText);
+        speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+        speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
+        speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+        speen.animation.play('spin');
+        add(speen);
     }
 }

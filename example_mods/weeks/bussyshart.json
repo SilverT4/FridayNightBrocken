@@ -1,0 +1,58 @@
+{
+	"songs": [
+		[
+			"Sugar-Rush",
+			"bandu",
+			[
+				24,
+				175,
+				11
+			]
+		],
+		[
+			"Sugar-Crash",
+			"bandu",
+			[
+				24,
+				175,
+				11
+			]
+		],
+		[
+			"Applecore",
+			"bandu",
+			[
+				24,
+				175,
+				11
+			]
+		],
+		[
+			"Bussy-Sharts",
+			"cupcakke",
+			[
+				216,
+				85,
+				142
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"difficulties": "",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "i'm on a bussy shart",
+	"weekName": "bussy-shart",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}

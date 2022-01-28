@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="dick.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="ppopbop0000" x="0" y="0" width="2347" height="453" frameX="0" frameY="-58" frameWidth="2347" frameHeight="539"/>
+	<SubTexture name="ppopbop0001" x="0" y="453" width="2347" height="481" frameX="0" frameY="-39" frameWidth="2347" frameHeight="539"/>
+	<SubTexture name="ppopbop0002" x="0" y="934" width="2347" height="510" frameX="0" frameY="-19" frameWidth="2347" frameHeight="539"/>
+	<SubTexture name="ppopbop0003" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0004" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0005" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0006" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0007" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0008" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0009" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0010" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0011" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0012" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0013" x="0" y="1444" width="2347" height="539"/>
+	<SubTexture name="ppopbop0014" x="0" y="1444" width="2347" height="539"/>
+</TextureAtlas>

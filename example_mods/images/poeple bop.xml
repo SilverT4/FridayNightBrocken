@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="poeple bop.png">
+	<!-- Created with Adobe Animate version 20.0.3.25487 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="ppopbop instance 10000" x="0" y="0" width="1567" height="322" frameX="0" frameY="-62" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10001" x="0" y="322" width="1567" height="342" frameX="0" frameY="-41" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10002" x="0" y="664" width="1567" height="363" frameX="0" frameY="-20" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10003" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10004" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10005" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10006" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10007" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10008" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10009" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10010" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10011" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10012" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10013" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+	<SubTexture name="ppopbop instance 10014" x="0" y="1027" width="1567" height="383" frameX="0" frameY="0" frameWidth="1567" frameHeight="384"/>
+</TextureAtlas>

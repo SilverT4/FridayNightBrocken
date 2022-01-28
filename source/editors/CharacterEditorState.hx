@@ -1387,7 +1387,7 @@ class CharacterEditorState extends MusicBeatState
 			
 			if (data.length > 0)
 				{
-					openSubState(new SavingYourBullshit('bf'));
+				openSubState(new SavingYourBullshit('bf'));
 				_file = new FileReference();
 				_file.addEventListener(Event.COMPLETE, onSaveComplete);
 				_file.addEventListener(Event.CANCEL, onSaveCancel);
@@ -1659,6 +1659,7 @@ class CharacterEditorState extends MusicBeatState
 				} */
 				new FlxTimer().start(5, function (tmr:FlxTimer) {
 					FlxG.sound.music.stop();
+					FlxG.sound.play('assets/sounds/lookingSpiffy.ogg');
 					close();
 				});
 			}
