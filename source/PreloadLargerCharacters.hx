@@ -44,6 +44,7 @@ class PreloadLargerCharacters extends FlxState {
     var skippablePreload:Bool = true;
     var sussy:Bool = false;
     var susSong:String;
+    var wet:Bool = false;
     
     public function new(sussySong:String = 'high', ?sus:Bool = false) {
         super();
@@ -51,7 +52,12 @@ class PreloadLargerCharacters extends FlxState {
         if (sus) {
             sussy = true;
         }
-        susSong = sussySong;
+        if (susSong == 'chartEditor') {
+            susSong = 'Tutorial'; //fallback until i fix test
+            wet = true;
+        } else {
+            susSong = sussySong;
+        }
         if (!FlxG.mouse.visible) {
             FlxG.mouse.visible = true;
         }
@@ -135,7 +141,7 @@ class PreloadLargerCharacters extends FlxState {
         loadingText = new FlxText(textBox.x, textBox.y + 4, FlxG.width, 'Preparing to preload graphics...', 16);
         add(loadingText);
         // loadingText.text = 'test';
-        if (!sussy) {
+        if (!sussy && !wet) {
             new FlxTimer().start(3, function (tmr:FlxTimer) {
                 loadingText.text = 'Getting ready to preload character graphics in assets/shared...';
                 new FlxTimer().start(3, function (tmr:FlxTimer) {
@@ -230,6 +236,49 @@ class PreloadLargerCharacters extends FlxState {
                     if (curChar >= myBalls.length) exitPreloader();
                 }, myBalls.length);
             });
+        } else if (wet) {
+            loadingText.text = 'Now preloading note assets';
+            var preloadedNotes:Array<String> = ['assets/images/NOTE_assets', 'HURTNOTE_assets'];
+            var modNotes:Array<Dynamic>;
+            #if MODS_ALLOWED
+            if (FileSystem.exists('mods/images/funnyNotes')) {
+                modNotes = FileSystem.readDirectory(Paths.modFolders('images/funnyNotes'));
+            } else {
+                trace('skipping mod notes');
+                loadingText.text = 'Now preloading note assets (skipping mod notes)';
+            }
+            #end
+            var curNotes:Int = 0;
+            new FlxTimer().start(3, function (tmr:FlxTimer) {
+                loadingText.text = 'Now preloading base game note asset ' + Std.int(curNotes + 1) + ' of ' + preloadedNotes.length + ': ' + preloadedNotes[curNotes];
+                var f:FlxSprite = new FlxSprite();
+                f.loadGraphic(preloadedNotes[curNotes] + '.png');
+                f.destroy();
+                curNotes += 1;
+                if (curNotes >= preloadedNotes.length) {
+                    #if MODS_ALLOWED
+                    if (modNotes != null) {
+                    loadingText.text = 'Getting ready to load mod notes...';
+                    curNotes = 0;
+                    new FlxTimer().start(3, function (tmr:FlxTimer) {
+                        loadingText.text = 'Now preloading mod note asset ' + Std.int(curNotes + 1) + ' of ' + modNotes.length + ': ' + modNotes[curChar];
+                        var l:FlxSprite = new FlxSprite();
+                        l.loadGraphic(modNotes[curNotes]);
+                        l.destroy();
+                        curNotes += 1;
+                        if (curNotes >= modNotes.length) {
+                            FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                            exitPreloader();
+                        }
+                    });
+                    } else {
+                        exitPreloader();
+                    }
+                    #else
+                    exitPreloader();
+                    #end
+                }
+            }
         }
     }
     
