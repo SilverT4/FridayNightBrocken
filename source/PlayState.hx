@@ -3542,7 +3542,7 @@ class PlayState extends MusicBeatState
 			spawnNoteSplashOnNote(note);
 		}
 
-		if(!practiceMode && !cpuControlled) {
+		if(!practiceMode && (!cpuControlled || weDoALittleTrollin)) {
 			songScore += score;
 			songHits++;
 			totalPlayed++;
