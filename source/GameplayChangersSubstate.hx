@@ -111,7 +111,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		fuckYou = new FlxText(textBox.x, textBox.y - 4, FlxG.width, '', 16);
 		fuckYou.setFormat(Paths.font('funny.ttf'), 16, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(fuckYou);
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -153,6 +152,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			}
 			updateTextFrom(optionsArray[i]);
 		}
+		add(fuckYou);
 
 		changeSelection();
 		reloadCheckboxes();

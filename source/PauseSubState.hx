@@ -178,13 +178,13 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Toggle Botplay':
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 					PlayState.changedDifficulty = true;
-					if (!PlayState.instance.weDoALittleTrollin) PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
+					if (!PlayState.instance.weDoALittleTrollin) PlayState.instance.botplayTxt.text = 'BOTPLAY';
 					PlayState.instance.botplayTxt.alpha = 1;
 					PlayState.instance.botplaySine = 0;
 				case 'Toggle Trollin':
-						PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
+						PlayState.instance.weDoALittleTrollin = !PlayState.instance.weDoALittleTrollin;
 						PlayState.changedDifficulty = true;
-						PlayState.instance.botplayTxt.visible = PlayState.instance.weDoALittleTrollin;
+						PlayState.instance.botplayTxt.text = '';
 						PlayState.instance.botplayTxt.alpha = 1;
 						PlayState.instance.botplaySine = 0;
 				case "Exit to menu":

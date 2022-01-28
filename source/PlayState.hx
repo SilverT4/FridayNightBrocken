@@ -318,6 +318,7 @@ class PlayState extends MusicBeatState
 		vanSound = new FlxSound();
 		vanSound.loadEmbedded(Paths.sound('vannyNoteSound', 'shared'), true, false);
 		FlxG.sound.list.add(vanSound);
+		trace(weDoALittleTrollin);
 		
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
@@ -1114,7 +1115,8 @@ class PlayState extends MusicBeatState
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		botplayTxt.scrollFactor.set();
 		botplayTxt.borderSize = 1.25;
-		if (!weDoALittleTrollin) botplayTxt.visible = cpuControlled;
+		botplayTxt.visible = cpuControlled;
+		if (weDoALittleTrollin) botplayTxt.text = '';
 		add(botplayTxt);
 		if(ClientPrefs.downScroll) {
 			botplayTxt.y = timeBarBG.y - 78;
@@ -4032,7 +4034,7 @@ class PlayState extends MusicBeatState
 	{
 		if (!note.wasGoodHit)
 		{
-			if(cpuControlled && (note.ignoreNote || note.hitCausesMiss)) return;
+			if(cpuControlled && !weDoALittleTrollin && (note.ignoreNote || note.hitCausesMiss)) return;
 
 			if(note.hitCausesMiss) {
 				noteMiss(note);
