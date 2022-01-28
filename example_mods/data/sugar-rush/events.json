@@ -1,0 +1,29 @@
+{
+	"song": {
+		"speed": 3.5,
+		"stage": null,
+		"player1": "steelwolf",
+		"player2": "bandu-candy",
+		"player3": null,
+		"events": [
+			[
+				92792.5531914893,
+				[
+					[
+						"White Woman Jumpscare",
+						"",
+						""
+					]
+				]
+			]
+		],
+		"notes": [],
+		"splashSkin": null,
+		"validScore": false,
+		"gfVersion": "gf",
+		"bpm": 188,
+		"arrowSkin": null,
+		"needsVoices": true,
+		"song": "Sugar-Rush"
+	}
+}
