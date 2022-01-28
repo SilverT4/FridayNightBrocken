@@ -126,7 +126,7 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Dialogue Editor':
 					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
 				case 'Chart Editor'://felt it would be cool maybe
-					LoadingState.loadAndSwitchState(new ChartingState(), false);
+					LoadingState.loadAndSwitchState(new PreloadChartEditor(null, true), false);
 				case 'Unlock Editor'://just puttin this here for the future
 					if (directoryTxt.text != '< No Mod Directory Loaded >')
 						LoadingState.loadAndSwitchState(new UnlockEditorState(true), false);
