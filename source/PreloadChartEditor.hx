@@ -1,5 +1,7 @@
 package;
 
+import editors.ChartingState;
+import editors.ChartingState.AttachedFlxText;
 import haxe.Json;
 import Character.CharacterFile;
 import ClientPrefs;
@@ -40,7 +42,7 @@ class PreloadChartEditor extends FlxState {
     var sussySong:Song.SwagSong;
     var wet:Bool = false;
     var loadShader:ColorSwap;
-
+    
     public function new(?songName:String, ?enteringFromMEM:Bool) {
         super();
         if (songName != null) {
@@ -53,13 +55,13 @@ class PreloadChartEditor extends FlxState {
             FlxG.mouse.useSystemCursor = true;
         }
     }
-
+    
     override function update(elapsed:Float) {
         if (speen != null) {
             speen.update(elapsed);
         }
     }
-
+    
     override function create() {
         loadShader = new ColorSwap();
         loadShader.hue = 69;
@@ -81,5 +83,71 @@ class PreloadChartEditor extends FlxState {
         speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
         speen.animation.play('spin');
         add(speen);
+        
+        loadingText.text = 'Now preloading note assets';
+        var preloadedNotes:Array<String> = ['assets/images/NOTE_assets', 'HURTNOTE_assets'];
+        var modNotes:Array<Dynamic> = [];
+        var modNotesList = FileSystem.readDirectory(Paths.modFolders('images/funnyNotes'));
+        #if MODS_ALLOWED
+        if (FileSystem.exists('mods/images/funnyNotes')) {
+            for (i in 0...modNotesList.length) {
+                if (modNotesList[i].endsWith('.xml')) {
+                    trace('skip');
+                } else {
+                    modNotes.push(modNotesList[i]);
+                }
+            }
+        } else {
+            trace('skipping mod notes');
+            loadingText.text = 'Now preloading note assets (skipping mod notes)';
+        }
+        #end
+        var curNotes:Int = 0;
+        new FlxTimer().start(3, function (tmr:FlxTimer) {
+            loadingText.text = 'Now preloading base game note asset ' + Std.int(curNotes + 1) + ' of ' + preloadedNotes.length + ': ' + preloadedNotes[curNotes];
+            var f:FlxSprite = new FlxSprite();
+            f.loadGraphic(preloadedNotes[curNotes] + '.png');
+            f.destroy();
+            curNotes += 1;
+            if (curNotes >= preloadedNotes.length) {
+                #if MODS_ALLOWED
+                if (modNotes != null) {
+                    loadingText.text = 'Getting ready to load mod notes...';
+                    curNotes = 0;
+                    new FlxTimer().start(3, function (tmr:FlxTimer) {
+                        loadingText.text = 'Now preloading mod note asset ' + Std.int(curNotes + 1) + ' of ' + modNotes.length + ': ' + modNotes[curNotes];
+                        var l:FlxSprite = new FlxSprite();
+                        l.loadGraphic(Paths.modsImages('funnyNotes/' + modNotes[curNotes]));
+                        l.destroy();
+                        curNotes += 1;
+                        if (curNotes >= modNotes.length) {
+                            FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                            exitPreloader();
+                        }
+                    }, modNotes.length);
+                } else {
+                    exitPreloader();
+                }
+                #else
+                exitPreloader();
+                #end
+            }
+        }, preloadedNotes.length);
+    }
+
+    function exitPreloader() {
+        new FlxTimer().start(3, function (tmr:FlxTimer) {
+            if (loadingText != null) loadingText.text = 'Done preloading!';
+            var hahaha:FlxSound = new FlxSound();
+            hahaha.loadEmbedded('assets/sounds/phaseComplete.ogg');
+            FlxG.mouse.useSystemCursor = false;
+            hahaha.play();
+            PlayState.SONG = Song.loadFromJson(susSong, susSong.toLowerCase());
+            new FlxTimer().start(hahaha.length / 1000, function (tmr:FlxTimer) {
+                FlxG.cameras.fade(FlxColor.BLACK, 1.5, false, function() {
+                    FlxG.switchState(new ChartingState());
+                });
+            });
+        });
     }
 }
