@@ -300,7 +300,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if(option.type == 'percent') val *= 100;
 		var def:Dynamic = option.defaultValue;
 		option.text = text.replace('%v', val).replace('%d', def);
-		fuckYou.text = option.description;
 	}
 
 	function clearHold()
@@ -337,6 +336,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			}
 		}
 		curOption = optionsArray[curSelected]; //shorter lol
+		if (option.description != null) fuckYou.text = option.description;
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
