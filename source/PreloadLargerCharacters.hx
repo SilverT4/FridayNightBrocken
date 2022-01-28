@@ -154,42 +154,43 @@ class PreloadLargerCharacters extends FlxState {
                             loadingText.text = 'Skipping ' + preloadBaseChars[curChar] + ' as it is under 4MB';
                             curChar += 1;
                         }
-                        /* if (curChar >= preloadBaseChars.length && sussy) {
+                        #if MODS_ALLOWED
+                        if (modsEnabled && !sussy) {
+                            new FlxTimer().start(5, function(tmr:FlxTimer) {
+                                loadingText.text = 'Now preparing to preload mod characters. This will only preload from mods/images';
+                                new FlxTimer().start(3, function (tmr:FlxTimer) {
+                                    var curChar:Int = 0;
+                                    new FlxTimer().start(1, function (tmr:FlxTimer) {
+                                        var susp:FileStat = FileSystem.stat(preloadModChars[curChar]);
+                                        if (susp.size >= 4000000) {
+                                            loadingText.text = 'Now preloading ' + preloadModChars[curChar] + ' to improve load times';
+                                            var f:FlxSprite = new FlxSprite();
+                                            f.loadGraphic(preloadModChars[curChar]);
+                                            trace('sussy');
+                                            f.destroy();
+                                            curChar += 1;
+                                        } else {
+                                            loadingText.text = 'Skipping ' + preloadModChars[curChar] + ' as it is under 4MB';
+                                            curChar += 1;
+                                        }
+                                        
+                                        if (curChar >= preloadModChars.length) FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                                        if (curChar >= preloadModChars.length && !sussy) exitPreloader();
+                                    }, preloadModChars.length);
+                                });
+                            });
+                        }
+                        #else
+                        if (curChar >= preloadBaseChars.length) {
+                            FlxG.sound.play(Paths.sound('lookingSpiffy'));
                             exitPreloader();
-                        } else { */
-                            if (curChar >= preloadBaseChars.length) FlxG.sound.play(Paths.sound('lookingSpiffy'));
+                        }
+                        #end
                         // }
                     }, preloadBaseChars.length);
                 });
             });
         }
-        #if MODS_ALLOWED
-        if (modsEnabled && !sussy) {
-            new FlxTimer().start(5, function(tmr:FlxTimer) {
-                loadingText.text = 'Now preparing to preload mod characters. This will only preload from mods/images';
-                new FlxTimer().start(3, function (tmr:FlxTimer) {
-                    var curChar:Int = 0;
-                    new FlxTimer().start(1, function (tmr:FlxTimer) {
-                        var susp:FileStat = FileSystem.stat(preloadModChars[curChar]);
-                        if (susp.size >= 4000000) {
-                            loadingText.text = 'Now preloading ' + preloadModChars[curChar] + ' to improve load times';
-                            var f:FlxSprite = new FlxSprite();
-                            f.loadGraphic(preloadModChars[curChar]);
-                            trace('sussy');
-                            f.destroy();
-                            curChar += 1;
-                        } else {
-                            loadingText.text = 'Skipping ' + preloadModChars[curChar] + ' as it is under 4MB';
-                            curChar += 1;
-                        }
-                        
-                        if (curChar >= preloadModChars.length) FlxG.sound.play(Paths.sound('lookingSpiffy'));
-                        if (curChar >= preloadModChars.length && !sussy) exitPreloader();
-                    }, preloadModChars.length);
-                });
-            });
-        }
-        #end
         if (sussy) {
             new FlxTimer().start(5, function (tmr:FlxTimer) {
                 loadingText.text = 'Now preparing to load song characters. Just a second...';
@@ -208,11 +209,11 @@ class PreloadLargerCharacters extends FlxState {
                     } else {
                         switch(curChar) {
                             case 0:
-                                path = Paths.modFolders('characters/steelwolf.json');
+                            path = Paths.modFolders('characters/steelwolf.json');
                             case 1:
-                                path = Paths.modFolders('characters/coldfront.json');
+                            path = Paths.modFolders('characters/coldfront.json');
                             case 2:
-                                path = Paths.modFolders('characters/gungf.json');
+                            path = Paths.modFolders('characters/gungf.json');
                         }
                         // path = Paths.getPreloadPath('characters/' + fallbackCharacters + '.json');
                     }
