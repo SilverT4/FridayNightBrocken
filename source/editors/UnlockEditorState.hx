@@ -65,7 +65,9 @@ using StringTools;
 
 class UnlockEditorState extends MusicBeatState {
     static inline final HEALTHBAR = 'healthBar';
-    
+    /**
+     * The hardcoded passwords from PasswordState
+     */
     var hardCoded:Array<Dynamic> = [
         ['SuspiciousFool', 'skin', 'Mini Saber', 'minisaber', 'unlockedMiniSaber'],
         ['Grass', 'skin', 'BF.xml', 'bf-opponent', 'unlockedBfOpponent'],
@@ -86,6 +88,9 @@ class UnlockEditorState extends MusicBeatState {
     var loadingCamera:FlxCamera;
     var camMain:FlxCamera;
     var camTesting:FlxCamera;
+    /**
+     * reverb
+     */
     var reverberation:Array<Dynamic> = [
         
         
@@ -103,15 +108,38 @@ class UnlockEditorState extends MusicBeatState {
     var UI_box:FlxUITabMenu;
     var UI_lmao:FlxUITabMenu;
     var squish:Dynamic;
+    /**
+     *  FOOD VARIABLE ONE
+     */
     var succulentChicken:Array<String> = [];
+    /**
+     *  FOOD VARIABLE TWO
+     */
     var juicyBeef:Array<Dynamic> = [];
+    /**
+     *  FOOD VARIABLE THREE
+     */
     var mouthwateringBacon:Array<Dynamic> = [];
+    /**
+     *  FOOD VARIABLE FOUR
+     */
     var squishyJelly:Array<Dynamic> = [];
+    /**
+     * FOOD VARIABLE FIVE
+     */
     var aromaticLettuce:Array<Dynamic> = [];
+    /**
+     * DUMB BOYFRIEND CHEAT ON YOU? 😡😡😡🥴🥴🥴🥺🥺🥺
+     * 
+     * BUY THIS SEXY JIAFEI PRODUCT AND ABSOLUTELY RUIN HIS DIGNITY 😍😍😍😃😃😃✝️✝️✝️🛐🛐🛐🍷🍷🍷
+     */
     var sexyProducts:Array<Dynamic> = [];
     var camHUD:FlxCamera;
     var camLmao:FlxCamera;
     var mainCams:Array<FlxCamera>;
+    /**
+     * Unlockable content template. I still need to save this to the unlockable folder in `example_mods` to actually get things to work properly in terms of loading 😭
+     */
     var TemplateUnlockable:String = '{
         "details": [
             {
@@ -146,7 +174,10 @@ class UnlockEditorState extends MusicBeatState {
             "y": 0
         ]
     }'; // these will be explained in the docs as well
-    
+    /**
+     * new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new new 
+     * @param isModDir If the modDir in MasterEditorMenu is a mod directory, YES, this is necessary.
+     */
     public function new(?isModDir:Bool = false) {
         super();
         loadingCamera = new FlxCamera();
@@ -253,6 +284,9 @@ class UnlockEditorState extends MusicBeatState {
         trace(loadingCamera);
         new FlxTimer().start(3, function (tmr:FlxTimer) {
             for (i in 0...hardCoded.length) {
+                /**
+                 * HARD DONG
+                 */
                 var hardDong:Array<Dynamic> = hardCoded[i];
                 trace(hardDong);
                 juicyBeef.push(hardDong[0]);
@@ -271,7 +305,9 @@ class UnlockEditorState extends MusicBeatState {
             }
         });
     }
-    
+    /**
+     * feewin wike a fwart with extwa wevewb
+     */
     function retrieveCustomUnlockables() {
         trace('now checking unlockables');
         trace('fart with extra...');
@@ -397,7 +433,9 @@ class UnlockEditorState extends MusicBeatState {
         trace('lets also not crash pls');
     }
 }
-
+/**
+ * sexy jiafei cum product
+ **/
 class ConfirmExitDuringLoad extends MusicBeatSubstate {
     var confirmationBg:FlxSprite;
     var camConfirm:FlxCamera;

@@ -1,0 +1,40 @@
+{
+	"songs": [
+		[
+			"Copy-Cat",
+			"glooper",
+			[
+				255,
+				255,
+				255
+			]
+		],
+		[
+			"Jump-Out",
+			"gloopy",
+			[
+				255,
+				255,
+				255
+			]
+		]
+	],
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"difficulties": "",
+	"weekCharacters": [
+		"dad",
+		"bf",
+		"gf"
+	],
+	"storyName": "bobs takeover",
+	"weekName": "gloop",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"hideStoryMode": false,
+	"weekBefore": "tutorial",
+	"startUnlocked": true
+}

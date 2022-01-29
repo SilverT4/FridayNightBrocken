@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="placeholder.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="you CANNOT stop this0000" x="0" y="0" width="498" height="498"/>
+	<SubTexture name="you CANNOT stop this0001" x="498" y="0" width="498" height="498"/>
+	<SubTexture name="you CANNOT stop this0002" x="996" y="0" width="498" height="498"/>
+	<SubTexture name="you CANNOT stop this0003" x="1494" y="0" width="498" height="498"/>
+	<SubTexture name="you CANNOT stop this0004" x="0" y="498" width="498" height="498"/>
+	<SubTexture name="you CANNOT stop this0005" x="498" y="498" width="498" height="498"/>
+</TextureAtlas>

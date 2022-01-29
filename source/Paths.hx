@@ -175,11 +175,24 @@ class Paths
 		return getPath('sounds/$key.$SOUND_EXT', SOUND, library);
 	}
 	
+	/** 
+	 * Plays a random sound with a prefix of key between min and max
+	 * 
+	 * @param key
+	 * @param library
+	 * @return sound(key + FlxG.random.int(min, max), library)
+	 **/
 	inline static public function soundRandom(key:String, min:Int, max:Int, ?library:String)
 	{
 		return sound(key + FlxG.random.int(min, max), library);
 	}
-
+	/**
+	 * Plays the music specified by `key`, searching in an optional `library`
+	 * 
+	 * @param key Music to play
+	 * @param library Library to search in (Optional)
+	 * @return Dynamic
+	 */
 	inline static public function music(key:String, ?library:String):Dynamic
 	{
 		#if MODS_ALLOWED
@@ -193,7 +206,11 @@ class Paths
 		#end
 		return getPath('music/$key.$SOUND_EXT', MUSIC, library);
 	}
-
+	/**
+	 * Gets the voices for `song` and returns `Any`
+	 * @param song 
+	 * @return Any
+	 */
 	inline static public function voices(song:String):Any
 	{
 		#if MODS_ALLOWED

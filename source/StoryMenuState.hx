@@ -1,5 +1,6 @@
 package;
 
+import flixel.system.FlxSound;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -50,6 +51,11 @@ class StoryMenuState extends MusicBeatState
 	var sprDifficulty:FlxSprite;
 	var leftArrow:FlxSprite;
 	var rightArrow:FlxSprite;
+
+	var whiteWoman:FlxSprite;
+	var whiteLady:FlxSound;
+	var jumpscareBg:FlxSprite;
+	var bobCount:Int = 0;
 
 	override function create()
 	{
@@ -178,7 +184,21 @@ class StoryMenuState extends MusicBeatState
 		// add(rankText);
 		add(scoreText);
 		add(txtWeekTitle);
-
+		jumpscareBg = new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xFF000000);
+		jumpscareBg.scrollFactor.set();
+		jumpscareBg.screenCenter();
+		jumpscareBg.visible = false;
+		add(jumpscareBg);
+		whiteWoman = new FlxSprite(0, 0);
+		whiteWoman.frames = Paths.getSparrowAtlas('vanessa');
+		whiteWoman.animation.addByPrefix('vanny', 'You Get No Vussy Today, Sir', 24, false);
+		whiteWoman.animation.addByIndices('lame', "You Get No Vussy Today, Sir", [32, 33], "", 24, false);
+		whiteWoman.animation.play('lame');
+		whiteWoman.screenCenter();
+		whiteWoman.visible = false;
+		add(whiteWoman);
+		whiteLady = new FlxSound();
+		whiteLady.loadEmbedded(Paths.sound('jumpedYaMom'), false);
 		changeWeek();
 
 		super.create();
@@ -265,6 +285,14 @@ class StoryMenuState extends MusicBeatState
 		{
 			lock.y = grpWeekText.members[lock.ID].y;
 		});
+
+		if (whiteWoman.visible && whiteWoman.animation.finished && whiteWoman.animation.curAnim.name == 'vanny') {
+			new FlxTimer().start(0.5, function(tmr:FlxTimer) {
+				whiteWoman.animation.play('lame');
+				whiteWoman.visible = false;
+				jumpscareBg.visible = false;
+			});
+		}
 	}
 
 	var movedBack:Bool = false;
@@ -273,7 +301,7 @@ class StoryMenuState extends MusicBeatState
 
 	function selectWeek()
 	{
-		if (!weekIsLocked(curWeek))
+		if (!weekIsLocked(curWeek) && (curWeek != 8 || (curWeek == 8 && curDifficulty != 1)))
 		{
 			if (stopspamming == false)
 			{
@@ -309,9 +337,17 @@ class StoryMenuState extends MusicBeatState
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 				FreeplayState.destroyFreeplayVocals();
 			});
+		} else if (!weekIsLocked(curWeek) && curWeek == 8 && curDifficulty < 2) {
+			whiteLady.play();
+			jumpscareBg.visible = true;
+			whiteWoman.visible = true;
+			whiteWoman.animation.play('vanny');
+			if (bobCount < 10) bobCount += 1 else selectWeek();
+			curDifficulty = 2;
+			changeDifficulty();
 		} else {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
-		}
+		} 
 	}
 
 	var tweenDifficulty:FlxTween;
@@ -371,6 +407,7 @@ class StoryMenuState extends MusicBeatState
 
 		var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[curWeek]);
 		WeekData.setDirectoryFromWeek(leWeek);
+		trace(curWeek);
 
 		var leName:String = leWeek.storyName;
 		txtWeekTitle.text = leName.toUpperCase();

@@ -1,0 +1,155 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "BOB idle dance"
+		},
+		{
+			"offsets": [
+				-11,
+				-61
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "BOB Sing Note DOWN0"
+		},
+		{
+			"offsets": [
+				17,
+				26
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "BOB Sing Note UP0"
+		},
+		{
+			"offsets": [
+				-37,
+				-7
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "BOB Sing Note RIGHT0"
+		},
+		{
+			"offsets": [
+				94,
+				3
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "BOB Sing Note LEFT0"
+		},
+		{
+			"offsets": [
+				-40,
+				-7
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"loop": false,
+			"name": "Bob Miss right"
+		},
+		{
+			"offsets": [
+				31,
+				24
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUPmiss",
+			"loop": false,
+			"name": "Bob Miss up"
+		},
+		{
+			"offsets": [
+				102,
+				-2
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"loop": false,
+			"name": "Bob Miss left"
+		},
+		{
+			"offsets": [
+				-7,
+				-61
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"loop": false,
+			"name": "Bob Miss down"
+		},
+		{
+			"offsets": [
+				116,
+				-60
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "firstDeath",
+			"loop": false,
+			"name": "bob fucking dies0"
+		},
+		{
+			"offsets": [
+				115,
+				-62
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "deathLoop",
+			"loop": true,
+			"name": "bob fucking dies loop"
+		},
+		{
+			"offsets": [
+				115,
+				-51
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "deathConfirm",
+			"loop": false,
+			"name": "bob fucking dies confirm"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Worriedbob",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "bob",
+	"flip_x": true,
+	"healthbar_colors": [
+		243,
+		228,
+		28
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 1
+}

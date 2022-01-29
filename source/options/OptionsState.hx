@@ -1,5 +1,6 @@
 package options;
 
+import editors.TestPlayState.ConfirmYourContent;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -26,10 +27,12 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 using StringTools;
-
+/**
+ *  The Options menu of FNF. There's no real arguments.
+ */
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Test PlayState'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -48,6 +51,12 @@ class OptionsState extends MusicBeatState
 				openSubState(new options.GameplaySettingsSubState());
 			case 'Adjust Delay and Combo':
 				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
+			case 'Test PlayState':
+				#if debug
+				openSubState(new editors.ConfirmYourContent(4, 0, null, 'bf', 'bf', 'high'));
+				#else
+				openSubState(new editors.ReleaseRejection());
+				#end
 		}
 	}
 
@@ -59,7 +68,7 @@ class OptionsState extends MusicBeatState
 		DiscordClient.changePresence("Options Menu", null);
 		#end
 		trace(FlxG.sound.music);
-	/* if(FlxG.sound.music == null) {
+	if(FlxG.sound.music == null) {
 		FlxG.sound.playMusic(Paths.music('desktop'), 0);
 
 		FlxG.sound.music.fadeIn(4, 0, 0.7);
@@ -68,7 +77,7 @@ class OptionsState extends MusicBeatState
 		FlxG.sound.playMusic(Paths.music('desktop'), 0);
 
 		FlxG.sound.music.fadeIn(4, 0, 0.7);
-	} */ // bob and bosip content is gitignored
+	} // bob and bosip content is gitignored for the most part. replace this with freakyMenu just to prevent any errors
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFea71fd;

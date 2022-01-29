@@ -29,14 +29,34 @@ import sys.FileSystem;
 #end
 
 using StringTools;
-
+/**
+ *  A "loading screen" state of sorts. I'm gonna be honest, I don't know what I'm really doin' with this one. lmao
+ * 
+ * @param sussySong A String for a song name. Defaults to `high`.
+ * @param sus Boolean. If `true`, sends you to `PlayState`. Otherwise, returns you to `TitleState`. Defaults to `false`. (Optional)
+ */
 class PreloadLargerCharacters extends FlxState {
+    /**
+     * The directories to preload by default. On builds without mods allowed, this only has the shared folder.
+     */
     var preloadDirs:Array<String> = ['assets/shared/images/characters'#if MODS_ALLOWED , 'mods/images/characters' #end];
+    /**
+     *  Base game characters
+     */
     var baseChars:Array<String>;
+    /**
+     * Mod characters
+     */
     var modChars:Array<String>;
     var preloadBaseChars:Array<Dynamic> = [];
     var preloadModChars:Array<Dynamic> = [];
-    var speener:Spritesheet;
+    // var speener:Spritesheet;
+    /**
+     * SPEEEEEEEEEEEEN
+     * 
+     * 
+     * This variable is responsible for the loading spinner.
+     */
     var speen:FlxSprite;
     var camPreload:FlxCamera;
     var textBox:FlxSprite;
@@ -84,6 +104,7 @@ class PreloadLargerCharacters extends FlxState {
                 preloadBaseChars.push(preloadDirs[0] + '/' + baseChars[i]);
             }
         }
+        loadingText = new FlxText(textBox.x, textBox.y + 4, FlxG.width, 'Getting ready...', 16);
         #if MODS_ALLOWED
         modChars = FileSystem.readDirectory(preloadDirs[1]);
         for (i in 0...modChars.length) {
@@ -127,7 +148,11 @@ class PreloadLargerCharacters extends FlxState {
             exitPreloader();
         }
     }
-    
+    /**
+     * Starts the preload process. If MODS_ALLOWED is set in `Project.xml`, also preloads characters in the **base** mods directory. In the future, I may rework this to allow for any other mod folders you may have to work.
+     * 
+     * @param modsEnabled Boolean. If set to `true` by `create()`, the game will preload mod characters in `mods` (ONLY `mods`, I need to figure out how to get it to work with other dirs!) in addition to base game. Otherwise, just loads base game characters. (Optional, defaults to `false`)
+     */
     function beginPreloading(?modsEnabled:Bool) {
         if (modsEnabled == null) modsEnabled = false; //ASSUME FALSE IF UNSPECIFIED ON CALL
         textBox = new FlxSprite(0, FlxG.height - 26);
@@ -138,7 +163,7 @@ class PreloadLargerCharacters extends FlxState {
         // textBox.screenCenter(Y);
         add(textBox);
         add(speen);
-        loadingText = new FlxText(textBox.x, textBox.y + 4, FlxG.width, 'Preparing to preload graphics...', 16);
+        loadingText.text = 'Preparing to preload graphics...';
         add(loadingText);
         // loadingText.text = 'test';
         if (!sussy && !wet) {
@@ -240,8 +265,11 @@ class PreloadLargerCharacters extends FlxState {
             trace('vagina');
         }
     }
-    
+    /**
+     *  Exits the preloader state. If `sussy` is set to true on state call, the game will send you to `PlayState`. Otherwise, it sends you to `TitleState`.
+     */
     function exitPreloader() {
+        if (skippablePreload) skippablePreload = false; // stfu dread unit we dont need to hear you 3 million times lmfao
         new FlxTimer().start(3, function(tmr:FlxTimer) {
             if (loadingText != null) loadingText.text = 'Done preloading!';
             var huhhhhhh:FlxSound = new FlxSound();

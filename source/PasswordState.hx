@@ -58,9 +58,14 @@ import flash.media.Sound;
 #end
 
 using StringTools;
-
+/**
+ *  Password menu state. At the moment, the passwords are **hard-coded** into the game, so you'll have to do that too. Read the [README](source/README.md) to learn more about how to create a hard-coded unlockable.
+ */
 class PasswordState extends MusicBeatState
 {
+    /**
+     * Hardcoded password list. The commented passwords are either content that I do not have permission to upload on GitHub or do not want to upload.
+     */
     static var passwordList:Array<String> = // Type any passwords you want to create here. If you know how to handle txt files in FNF, let me know how to implement that kind of thing. I'd love to improve this. Lol
     [
         'SuspiciousFool',
@@ -72,19 +77,62 @@ class PasswordState extends MusicBeatState
         'BosipBestShipOC',
         'ThoseShoesAreKindaSmall' */
     ];
+    /**
+     * Currently unused, but may have a purpose in the future ;)
+     */
     var unlocks:Array<Dynamic>;
+    /**
+     * Character variable associated with Henry on the main screen of the state.
+     * You *can* change who appears if you want.
+     */
     var hen:Character;
+    /**
+     * Input text box associated with actually entering your password.
+     */
     var pwInputBox:FlxUIInputText;
+    /**
+     * FlxButton for validating `pwInputBox` input
+     */
     var pwValidateButton:FlxButton;
+    /**
+     * Prompt for input
+     */
     var pwPromptText:FlxText;
+    /**
+     * Mini Saber's sprite. By default will have the `lockedShader` shader.
+     */
     var miniSaber:FlxSprite;
+    /**
+     * Flamestarter's sprite. By default will have the `lockedShader` shader.
+     */
     var youIdiot:FlxSprite;
+    /**
+     * Are we ready for some trollin?
+     */
     var finishedCheck:Bool;
+    /**
+     * Set to `true` upon pressing the ESC key.
+     */
     var exitingMenu:Bool = false;
+    /**
+     * Makes the BF appear.
+     */
     var bfOpponent:FlxSprite;
+    /**
+     * Background
+     */
     var bg:FlxSprite;
+    /**
+     *  List of flags the game is *supposed* to use to control unlocks. Though I don't know much about `FlxG.save` lmao
+     */
     var sussyFlags:Array<String> = [/* 'unlockedBosipNotes', 'unlockedBobNotes', 'unlockedMiniShoeyNotes', */'unlockedMiniSaber', 'unlockedBfOpponent', 'unlockedArsonist'];
+    /**
+     * Sus text
+     */
     var sussyText:FlxText;
+    /**
+     * Used for the saveLoop audio to prevent it from interrupting the saveStart audio
+     */
     var loopBegin:Bool = false;
     /* var hahaBosip:FlxText;
     var hahaBob:FlxText;
@@ -101,13 +149,50 @@ class PasswordState extends MusicBeatState
     // var beginSave:FlxSound;
     var saveLoopFuckYou:FlxSound;
     var sussyBg:FlxSprite;
+    /**
+     * Content types.
+     * 
+     * When creating a custom hardcoded unlock:
+     * 
+     * `contentTypes[0]` - Character
+     * 
+     * `contentTypes[1]` - Song
+     * 
+     * `contentTypes[2]` - Noteskin
+     */
     var contentTypes:Array<String> = ['Character', 'Song', 'Noteskin'];
     private var shaderArray:Array<ColorSwap> = [];
+    /**
+     * The shader used to hide content until it's unlocked.
+     */
     var lockedShader:ColorSwap = new ColorSwap();
+    /**
+     * This array remains uninitialised until set to the usedPasswords array in `FlxG.save.data` by `new()`
+     */
     var usedPasswords:Array<String>;
     var contentString:String;
+    /**
+     * A 6-entry array with the following key:
+     * 
+     * Entry 0 - Second content subtype if applicable
+     * 
+     * Entry 1 - Content subtype
+     * 
+     * Entry 2 - Friendly name for the content.
+     * 
+     * Entry 3 - Content type
+     * 
+     * Entry 4 - Unused, you can just put 0 here for now.
+     * 
+     * Entry 5 - The name a player needs to use to use the content in game. In the future, I'll create an FlxText that appears under unlocked content.
+     */
     var unlockedContent:Array<Dynamic>;
     var useInstructions:Array<String>;
+    /**
+     * Debug password. Gets set to `ThisIsATest` by `new()` in release builds.
+     * 
+     * In debug builds, the game will prompt you to set it yourself by using the `DebugPasswordShit` substate.
+     */
     var dbgPasswd:String;
     var needPasswd:Bool = false;
     var dbgNotice:FlxText;
@@ -224,6 +309,9 @@ class PasswordState extends MusicBeatState
             pwValidateButton.update(elapsed);
         }
     }
+    /**
+     * Checks your save data flags to see if you've unlocked anything.
+     */
     function checkSus() { // i need to  add speen here
         trace('CHECKING YOUR SAVE DATA...');
         sussyBg = new FlxSprite(-80).makeGraphic(1280, 720, FlxColor.BLUE, false);
@@ -318,6 +406,9 @@ class PasswordState extends MusicBeatState
             
         }
     }
+    /**
+     *  Because `create()` will call on `checkSus()`, I made `trueCreate()` as a means of getting around that and still having the main UI appear. I'm gonna be honest, I DO NOT like the way this screen looks and want to change it to a screen similar to `PreloadLargerCharacters` :skull:
+     */
     function trueCreate() {
         /* if (FlxG.sound.music.playing || FlxG.sound.music == null) {
             FlxG.sound.music.stop();
@@ -396,7 +487,15 @@ class PasswordState extends MusicBeatState
         if (!FlxG.save.data.unlockedArsonist) youIdiot.shader = lockedShader.shader;
         add(youIdiot);
     }
-    
+    /**
+     * Validates the input from the password input box. If it's in the password list, it checks for one of two things:
+     *  1. Is this password in the list of used passwords?
+     *  if `true` --> display error
+     *  else --> unlock `funnyWord`'s associated content
+     *  2. If in debug mode, is the password the debug password? Regular release builds will use a similar password to *reset* save flags.
+     * 
+     * @param funnyWord String value that takes input from `pwInputBox` and validates it against the list of passwords and your used passwords.
+     */
     function validateInput(funnyWord:String) {
         trace('Checking input: ' + funnyWord);
         trace(passwordList);
@@ -425,7 +524,27 @@ class PasswordState extends MusicBeatState
             }
         });
     }
-    
+    /**
+     * Begins the process of unlocking content associated with a password. Currently works on a `switch` case basis, though I hope to implement jsons into this entire thing eventually.
+     * 
+     * To create your own unlock, using Mini Saber as an example:
+     * ```haxe
+     * case 'SuspiciousFool':
+     *      trace('unlocking mini saber');
+     *      setUnlockedContent(0); // replace with 1 or 2 if song or noteskin respectively
+     *      #if debug
+     *      displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'mss']);
+     *      trace('dry run');
+     *      #else
+     *      unlockCharacter(['', '-opponent'], 'minisaber');
+     *      displayResultMsg(0, 1, ['boyfriend', 'mod character', 'Mini Saber', 'skin', 0, 'mss']);
+     *      FlxG.save.data.unlockedMiniSaber = true;
+     *      #end
+     *      miniSaber.shader = null;
+     *      miniSaber.animation.play('hey');
+     * ```
+     * @param funnyWords String value for the `switch` case mentioned above. May be deprecated in the future.
+     */
     function beginUnlockShit(funnyWords:String) {
         trace('Just a sec...');
         FlxG.save.data.usedPasswords.push(funnyWords);
@@ -492,6 +611,11 @@ class PasswordState extends MusicBeatState
                 unlockNoteskin('minishoey'); */
         }
     }
+    /**
+     * Character unlocker. For each entry of `charVars`, it'll copy a json file of `charName` with the variant in that entry attached.
+     * @param charVars Character variants. Example: `['', '-opponent', '-pixel', '-pixel-dead']`
+     * @param charName Character name.
+     */
     function unlockCharacter(charVars:Array<String>, charName:String) {
         #if debug
         trace('dry run bc somehow we bypassed idk');
@@ -502,7 +626,11 @@ class PasswordState extends MusicBeatState
         }
         #end
     }
-    
+    /**
+     * Noteskin unlocker.
+     * @param skinName Name of the skin. Must be the EXACT name of the files. Case sensitive!
+     * @param folderName Specify another folder to put your noteskin into. Defaults to `funnyNotes`, located in `mods/images`. (Optional)
+     */
     function unlockNoteskin(skinName:String, ?folderName:String = 'funnyNotes') {
         var fileTypes:Array<String> = ['.png', '.xml'];
         for (i in 0...1) {
@@ -522,7 +650,12 @@ class PasswordState extends MusicBeatState
                 trace('ass'); //placeholder
         }
     }
-    
+    /**
+     * Song unlocker
+     * @param songName Name of your song. Must be lowercase.
+     * @param diffics Difficulty list in case your song has different difficulties from the defaults. (Optional)
+     * @param needsVoices If your song needs voices, the game can copy those over too if you set this to `true`. (Optional)
+     */
     function unlockSong(songName:String, ?diffics:Array<String>, ?needsVoices:Bool) {
         var diffics:Array<String> = ['-easy', '', '-hard'];
         for (i in 0...diffics.length) {
@@ -546,7 +679,10 @@ class PasswordState extends MusicBeatState
             }
         }
     }
-    
+    /**
+     * Set the unlocked content type.
+     * @param contentType This entire function is unused atm
+     */
     function setUnlockedContent(contentType:Int) {
         switch (contentType) {
             case 0:
@@ -560,6 +696,10 @@ class PasswordState extends MusicBeatState
         // return unlockedContent;
         // displayResultMsg(0, contentType);
     }
+    /**
+     * Checks the progress of `checkSus()` and, if complete, calls `trueCreate()`.
+     * @param i Flag number in `checkSus()`
+     */
     function prepMainCreate(i:Int) {
         new FlxTimer().start(3, function (tmr:FlxTimer) {
             if (i == sussyFlags.length) {
@@ -601,7 +741,21 @@ class PasswordState extends MusicBeatState
             }
         });
     }
-
+    /**
+     * Displays a message on screen depending on the result of `validateInput`. The results are defined in the definition for `suspiciousResultCode`, but not the array properties for `unlockedContent`, which are:
+     * ```haxe
+     * [
+     * 'boyfriend', // subtype of content if applicable
+     * 'mod character', // type of content but friendly
+     * 'your uncle', // a friendly name for the character.
+     * 'skin', // The content type. Should be `skin`, `noteskin`, or `song`.
+     * 0, // Unused, you can leave this as 0. This may change in the future.
+     * 'larry-cucumber'] // the name associated with the content in order to use it in game.
+     * ```
+     * @param suspiciousResultCode The result from `validateInput()`. If 0, displays a **green** window with a message stating what you unlocked, using the properties of `unlockedContent`. If 1, displays a **red** window with a message stating your entry was invalid. If 2, displays a **yellow** message stating your password has already been used. 3 and 4 have similar functions, but 4 actually resets your flag data.
+     * @param fuckYouHaxe Currently unused variable.
+     * @param unlockedContent What the player unlocked as a Dynamic array. Example: `['boyfriend', 'mod character', 'your uncle', 'skin', 0, 'larry-cucumber']`
+     */
     function displayResultMsg(suspiciousResultCode:Int, fuckYouHaxe:Int, ?unlockedContent:Array<Dynamic>) {
         var errorBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.RED);
         errorBg.alpha = 0.3;
@@ -704,7 +858,9 @@ class PasswordState extends MusicBeatState
                 });
         }
     }
-
+	/**
+	 * This function saves your game and exits.
+	 */
 	function doCoolExit() {
         var beginSave = FlxG.sound.load(Paths.music('saveStart'));
         FlxG.sound.list.add(beginSave);
@@ -737,6 +893,11 @@ class PasswordState extends MusicBeatState
         });
     }
 }
+/**
+ * **DEBUG ONLY**
+ * 
+ * Password substate that allows you to set a password to reset the debug flags.
+ */
 class DebugPasswordShit extends MusicBeatSubstate {
     var enterPass:FlxUIInputText;
     var passPrompt:FlxText;

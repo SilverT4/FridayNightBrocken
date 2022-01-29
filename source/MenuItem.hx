@@ -1,5 +1,7 @@
 package;
 
+import haxe.ValueException;
+import sys.FileSystem;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -14,7 +16,18 @@ class MenuItem extends FlxSprite
 	public function new(x:Float, y:Float, weekName:String = '')
 	{
 		super(x, y);
+		if(FileSystem.exists(Paths.image('storymenu/' + weekName))) {
 		loadGraphic(Paths.image('storymenu/' + weekName));
+		} else if (FileSystem.exists('assets/images/storymenu/placeholder.png')) {
+		 frames = FlxAtlasFrames.fromSparrow('assets/images/storymenu/placeholder.png', 'assets/images/storymenu/placeholder.xml');
+		 setGraphicSize(128, 128);
+		 updateHitbox();
+		 animation.addByPrefix('placeholder', 'you CANNOT stop this', 30, true);
+		 animation.addByPrefix('selected', 'you CANNOT stop this', 90, true);
+		 animation.play('placeholder');
+		} else {
+			throw new ValueException("How could you get rid of the amogus placeholder? You can't use the story menu until you get that back, so I recommend either redownloading it from GitHub or just using the amogus placeholder.fla in the source");
+		}
 		//trace('Test added: ' + WeekData.getWeekNumber(weekNum) + ' (' + weekNum + ')');
 		antialiasing = ClientPrefs.globalAntialiasing;
 	}
@@ -23,6 +36,9 @@ class MenuItem extends FlxSprite
 
 	public function startFlashing():Void
 	{
+		if (frames == Paths.getSparrowAtlas('storymenu/placeholder.png') && animation.getByName('selected') != null) {
+			animation.play('selected');
+		}
 		isFlashing = true;
 	}
 

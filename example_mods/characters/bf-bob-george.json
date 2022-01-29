@@ -1,0 +1,133 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "Bob Idle0"
+		},
+		{
+			"offsets": [
+				-37,
+				-42
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "Bob Left0"
+		},
+		{
+			"offsets": [
+				-41,
+				56
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "Bob Up0"
+		},
+		{
+			"offsets": [
+				-40,
+				57
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUPmiss",
+			"loop": false,
+			"name": "Bob Up Miss0"
+		},
+		{
+			"offsets": [
+				-99,
+				13
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "BobRight0"
+		},
+		{
+			"offsets": [
+				-99,
+				11
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHTmiss",
+			"loop": false,
+			"name": "Bob Right Miss0"
+		},
+		{
+			"offsets": [
+				-28,
+				-41
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWNmiss",
+			"loop": false,
+			"name": "Bob Down Miss0"
+		},
+		{
+			"offsets": [
+				-29,
+				-50
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "Bob Down0"
+		},
+		{
+			"offsets": [
+				-37,
+				-42
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFTmiss",
+			"loop": false,
+			"name": "Bob Left Miss0"
+		},
+		{
+			"offsets": [
+				-99,
+				13
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "hey",
+			"loop": false,
+			"name": "BobRight0"
+		}
+	],
+	"no_antialiasing": false,
+	"image": "characters/Minecraft_Bob",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "bob",
+	"flip_x": true,
+	"healthbar_colors": [
+		243,
+		228,
+		28
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 6.1,
+	"scale": 0.7
+}

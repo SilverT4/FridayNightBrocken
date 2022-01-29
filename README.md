@@ -3,6 +3,9 @@
 
 Please do note that I am *not* the most experienced coder and as such, some of the code I add to this repository will be spaghetti code that I keep making more of a mess with.
 
+## Building from source
+As this repository has made some modifications to *dependencies*, you'll want to follow [this guide](docs/BuildingFromSource.md) instead of the installation instructions below. 😅
+
 
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.

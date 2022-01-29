@@ -1,5 +1,7 @@
 package editors;
 
+import editors.TestPlayState.ConfirmYourContent;
+import flixel.system.FlxSound;
 import flixel.graphics.frames.FlxAtlasFrames;
 import lime.app.Application;
 import sys.io.File;
@@ -1219,7 +1221,7 @@ class CharacterEditorState extends MusicBeatState
 					FlxG.save.resetFlag('unlockedMiniSaber', funnyData);
 				}
 				
-				if (FlxG.keys.justPressed.Q) {
+				if (FlxG.keys.justPressed.COMMA) {
 					openSubState(new SavingYourBullshit('minisaber'));
 				}
 				
@@ -1381,13 +1383,13 @@ class CharacterEditorState extends MusicBeatState
 				"healthbar_colors": char.healthColorArray
 			};
 			
-			savingYourShit = true;
+			// savingYourShit = true;
 			
 			var data:String = Json.stringify(json, "\t");
 			
 			if (data.length > 0)
 				{
-				openSubState(new SavingYourBullshit('bf'));
+				// openSubState(new SavingYourBullshit('bf'));
 				_file = new FileReference();
 				_file.addEventListener(Event.COMPLETE, onSaveComplete);
 				_file.addEventListener(Event.CANCEL, onSaveCancel);
@@ -1407,29 +1409,29 @@ class CharacterEditorState extends MusicBeatState
 		}
 		
 		function reParseCharJson(charName:String = 'spooky') {
-			char.visible = false;
-			textAnim.visible = false;
+			// char.visible = false;
+			// textAnim.visible = false;
 			var isModCharacter:Bool = false;
 			var fuckinPaths:Array<String> = ['assets/characters/', 'mods/characters/'];
 			var parseJsonBg:FlxSprite = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(0, 128, 128, 128));
 			var charFile:String;
 			var speen:FlxSprite;
-			parseJsonBg.screenCenter();
+			/* parseJsonBg.screenCenter();
 			parseJsonBg.cameras = [camMenu];
 			add(parseJsonBg);
 			var parseJsonText:FlxText = new FlxText(0, 0, FlxG.width, 'Parsing json: ' + charName + '\nPlease wait...');
 			parseJsonText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, CENTER, OUTLINE, FlxColor.BLACK);
 			parseJsonText.screenCenter();
-			parseJsonText.cameras = [camMenu];
+			parseJsonText.cameras = [camMenu]; */
 			speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
 			speen.frames = FlxAtlasFrames.fromSparrow('assets/images/editor/speen.png', 'assets/images/editor/speen.xml');
 			speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
 			speen.animation.play('spin');
 			speen.cameras = [camMenu];
 			add(speen);
-			add(parseJsonText);
+			// add(parseJsonText);
 			new FlxTimer().start(5, function (tmr:FlxTimer) {
-				if (FileSystem.exists(fuckinPaths[0] + charName + '.json')) {
+				/* if (FileSystem.exists(fuckinPaths[0] + charName + '.json')) {
 					charFile = fuckinPaths[0] + charName + '.json';
 					#if debug
 					parseJsonText.text = 'Character data for ' + charName + ' found. Output will be displayed in the console.';
@@ -1437,9 +1439,9 @@ class CharacterEditorState extends MusicBeatState
 					parseJsonText.text = 'Character data for ' + charName + ' found.';
 					#end
 					parseJsonText.updateHitbox();
-					parsedCharJson = Json.parse(File.getContent(charFile));
+					parsedCharJson = Json.parse(File.getContent(charFile)); */
 					speen.visible = false;
-					char.visible = true;
+					/* char.visible = true;
 					textAnim.visible = true;
 					#if debug
 					trace(parsedCharJson);
@@ -1455,7 +1457,7 @@ class CharacterEditorState extends MusicBeatState
 					isModCharacter = true;
 					parsedCharJson = Json.parse(File.getContent(charFile));
 					speen.visible = false;
-					char.visible = true;
+					/* char.visible = true;
 					textAnim.visible = true;
 					#if debug
 					trace(parsedCharJson);
@@ -1465,13 +1467,13 @@ class CharacterEditorState extends MusicBeatState
 					parseJsonText.text = 'Could not find character data for ' + charName + ', is the file still there?';
 					parseJsonText.updateHitbox();
 					speen.visible = false;
-					textAnim.visible = true;
+					/*textAnim.visible = true;
 					char.visible = true;
 				}
 				new FlxTimer().start(3, function(tmr:FlxTimer) {
 					parseJsonBg.destroy();
 					parseJsonText.destroy();
-				});
+				}); */
 			});
 		}
 		
@@ -1532,10 +1534,10 @@ class CharacterEditorState extends MusicBeatState
 					add(saveTexts[i]);
 				} */
 				trace('information about what you testin:\nSONG: ' + songName + '\nCHARACTER IS A ' + charType + ' CHARACTER\nCHARACTER NAME: ' + charName);
-				openTestUI(songName, charType, charName);
+				openSubState(new editors.ConfirmYourContent(1, 0, 'funnyNotes/gloopy', charName, charType, songName));
 			} else {
 				trace('information about what you testin:\nSONG: ' + songName + '\nCHARACTER IS A ' + charType + ' CHARACTER\nCHARACTER NAME: ' + charName);
-				openTestUI(songName, charType, charName);
+				openSubState(new editors.ConfirmYourContent(1, 0, 'funnyNotes/gloopy', charName, charType, songName));
 			}
 		}
 		
@@ -1582,6 +1584,7 @@ class CharacterEditorState extends MusicBeatState
 		var savingChar:FlxSprite;
 		var speen:FlxSprite; //for future use lmao
 		var camSave:FlxCamera;
+		var spiffy:FlxSound;
 		public var instance:SavingYourBullshit; //dont want to cause bullshit
 		var charas:Array<String> = [''];
 		var startedLoop:Bool = false;
@@ -1600,6 +1603,8 @@ class CharacterEditorState extends MusicBeatState
 				trace(Std.int(i + cummy.length + 1) + ' of ' + Std.int(cummy.length + cumSpice.length) + ': Your shitbox looks nice, ' + cumSpice[i]);
 				if (cumSpice[i] != 'huggy.json') cumCar.push('mods/images/characters/' + cumSpice[i].substr(0, this.length - 4));
 			} */
+			spiffy = new FlxSound();
+			spiffy.loadEmbedded(Paths.sound('lookingSpiffy'), false);
 			camSave = new FlxCamera();
 			camSave.bgColor.alpha = 0;
 			FlxG.cameras.add(camSave);
@@ -1650,7 +1655,7 @@ class CharacterEditorState extends MusicBeatState
 			if (speen != null) {
 				speen.update(elapsed);
 			}
-			if (!CharacterEditorState.savingYourShit && elapsed >= 1) {
+			if (!CharacterEditorState.savingYourShit) {
 				if (!saveDone) trace('save complete');
 				saveDone = true;
 				if (savingText != null) savingText.text = 'Save complete!\nClosing in 5 seconds';
@@ -1659,7 +1664,8 @@ class CharacterEditorState extends MusicBeatState
 				} */
 				new FlxTimer().start(5, function (tmr:FlxTimer) {
 					FlxG.sound.music.stop();
-					FlxG.sound.play('assets/sounds/lookingSpiffy.ogg');
+					if (!spiffy.playing) spiffy.play();
+					// FlxG.sound.play('assets/sounds/lookingSpiffy.ogg');
 					close();
 				});
 			}
