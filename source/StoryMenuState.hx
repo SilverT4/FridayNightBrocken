@@ -21,7 +21,9 @@ import flixel.graphics.FlxGraphic;
 import WeekData;
 
 using StringTools;
-
+/** Story Menu state. This state is just the story menu lmao
+ * 
+ * sus**/
 class StoryMenuState extends MusicBeatState
 {
 	// Wether you have to beat the previous week for playing this one

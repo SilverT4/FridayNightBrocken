@@ -899,6 +899,9 @@ class PlayState extends MusicBeatState
 		} else if (SONG.player1 == 'steelwolf') {
 			GameOverSubstate.endSoundName = 'gameOverEnd-burger';
 			GameOverSubstate.loopSoundName = 'gameOver-burger';
+		} else if (SONG.player1 == 'bf-worriedbob' || SONG.player1 == 'bf-bob-george') {
+			GameOverSubstate.endSoundName = 'gameOverEnd-bnb';
+			GameOverSubstate.loopSoundName = 'gameOver-bnb';
 		}
 		originalBfWidth = boyfriend.width;
 		originalBfHeight = boyfriend.height;
@@ -1098,6 +1101,9 @@ class PlayState extends MusicBeatState
 		add(iconP1);
 
 		iconP2 = new HealthIcon(dad.healthIcon, false);
+		if (dad.curCharacter == 'nobody') {
+			iconP2.changeIcon(gf.healthIcon);
+		}
 		iconP2.y = healthBar.y - 75;
 		iconP2.visible = !ClientPrefs.hideHud;
 		iconP2.alpha = ClientPrefs.healthBarAlpha;
@@ -1307,9 +1313,13 @@ class PlayState extends MusicBeatState
 	}
 
 	public function reloadHealthBarColors() {
+		if (SONG.player2 == 'nobody') {
+			healthBar.createFilledBar(FlxColor.fromRGB(gf.healthColorArray[0], gf.healthColorArray[1], gf.healthColorArray[2]),
+			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
+		} else {
 		healthBar.createFilledBar(FlxColor.fromRGB(dad.healthColorArray[0], dad.healthColorArray[1], dad.healthColorArray[2]),
 			FlxColor.fromRGB(boyfriend.healthColorArray[0], boyfriend.healthColorArray[1], boyfriend.healthColorArray[2]));
-			
+		}
 		healthBar.updateBar();
 	}
 
@@ -1331,8 +1341,10 @@ class PlayState extends MusicBeatState
 								GameOverSubstate.characterName = 'blitz';
 							case 'bf-pixel', 'nt-pixel': 
 								GameOverSubstate.characterName = 'bf-pixel-dead';
-							/* case 'bf-holiday-car', 'bf-plum': // again, holiday mod is gitignored. uncomment this if you add it back in after git cloning
-								GameOverSubstate.characterName = 'bf-holiday'; */
+							#if FARTLOG
+							case 'bf-holiday-car', 'bf-plum': // again, holiday mod is gitignored. uncomment this if you add it back in after git cloning
+								GameOverSubstate.characterName = 'bf-holiday';
+							#end
 							case 'steelwolf':
 									GameOverSubstate.endSoundName = 'gameOverEnd-burger';
 									GameOverSubstate.loopSoundName = 'gameOver-burger';

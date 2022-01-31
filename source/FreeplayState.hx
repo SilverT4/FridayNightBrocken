@@ -107,7 +107,9 @@ class FreeplayState extends MusicBeatState
 
 		for (i in 0...songs.length)
 		{
-			var songText:Alphabet = new Alphabet(0, (70 * i) + 30, songs[i].songName, true, false);
+			var songText:Alphabet;
+			if (songs[i].songName == 'Jump-Out') songText = new Alphabet(0, (70 * i) + 30, 'Jump-Out (A Window)', true, false);
+			else songText = new Alphabet(0, (70 * i) + 30, songs[i].songName, true, false);
 			songText.isMenuItem = true;
 			songText.targetY = i;
 			grpSongs.add(songText);
@@ -196,7 +198,11 @@ class FreeplayState extends MusicBeatState
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
 	{
+		if (songName != 'jump-out') {
 		songs.push(new SongMetadata(songName, weekNum, songCharacter, color));
+		} else {
+			songs.push(new SongMetadata('Jump-Out (A Window)', weekNum, songCharacter, color));
+		}
 	}
 
 	/*public function addWeek(songs:Array<String>, weekNum:Int, weekColor:Int, ?songCharacters:Array<String>)
@@ -309,7 +315,10 @@ class FreeplayState extends MusicBeatState
 
 		else if (accepted)
 		{
-			var songLowercase:String = Paths.formatToSongPath(songs[curSelected].songName);
+			var songLowercase:String;
+			if (songs[curSelected].songName != 'Jump-Out (A Window)') 
+				songLowercase = Paths.formatToSongPath(songs[curSelected].songName);
+			else songLowercase = Paths.formatToSongPath('jump-out');
 			var poop:String;
 			if (songs[curSelected].songName == 'Test') { poop = Highscore.formatSong(songLowercase, 1); } else { poop = Highscore.formatSong(songLowercase, curDifficulty); }
 			trace(poop);

@@ -30,6 +30,8 @@ typedef CharacterFile = {
 	var flip_x:Bool;
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
+	var chartingButtonColour:Int;
+	var chartingButtonLabelTheme:Int;
 }
 
 typedef AnimArray = {
@@ -325,4 +327,7 @@ class Character extends FlxSprite
 	{
 		animation.addByPrefix(name, anim, 24, false);
 	}
+
+	public var chartingButtonColour:Int = 0x00fafafa;
+	public var chartingButtonLabelTheme:Int = 0x00fafafa;
 }

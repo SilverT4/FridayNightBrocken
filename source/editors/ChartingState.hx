@@ -1,5 +1,7 @@
 package editors;
 
+import Character.CharacterFile;
+import flixel.addons.display.FlxExtendedSprite;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -192,6 +194,12 @@ class ChartingState extends MusicBeatState
 	public static var curQuant = 0;
 	var text:String = "";
 	public static var vortex:Bool = false;
+	var player1Button:FlxButton;
+	var player2Button:FlxButton;
+	var player3Button:FlxButton;
+	var curBf:Character;
+	var curDad:Character;
+	var curGf:Character;
 	override function create()
 	{
 		if (PlayState.SONG != null)
@@ -511,6 +519,10 @@ class ChartingState extends MusicBeatState
 		});
 		player1DropDown.selectedLabel = _song.player1;
 		blockPressWhileScrolling.push(player1DropDown);
+		player1Button = new FlxButton(player1DropDown.x, player1DropDown.y, _song.player1, function () {
+			openSubState(new CharacterSelector(player1Button.text, 'bf'));
+			trace('sussy');
+		});
 
 		var player3DropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, player1DropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
@@ -519,6 +531,10 @@ class ChartingState extends MusicBeatState
 		});
 		player3DropDown.selectedLabel = _song.gfVersion;
 		blockPressWhileScrolling.push(player3DropDown);
+		player3Button = new FlxButton(player3DropDown.x, player3DropDown.y, _song.gfVersion, function () {
+			openSubState(new CharacterSelector(player1Button.text, 'gf'));
+			trace('sussy');
+		});
 
 		var player2DropDown = new FlxUIDropDownMenuCustom(player1DropDown.x, player3DropDown.y + 40, FlxUIDropDownMenuCustom.makeStrIdLabelArray(characters, true), function(character:String)
 		{
@@ -527,6 +543,12 @@ class ChartingState extends MusicBeatState
 		});
 		player2DropDown.selectedLabel = _song.player2;
 		blockPressWhileScrolling.push(player2DropDown);
+		player2Button = new FlxButton(player2DropDown.x, player2DropDown.y, _song.player2, function() {
+			openSubState(new CharacterSelector(player1Button.text, 'dad'));
+			trace('sussy');
+		});
+		if (curDad != null && curDad.chartingButtonColour != 0x00fafafa) player2Button.color = curDad.chartingButtonColour;
+		if (curDad != null && curDad.chartingButtonLabelTheme != 0x00fafafa) player2Button.label.color = curDad.chartingButtonLabelTheme;
 
 		#if MODS_ALLOWED
 		var directories:Array<String> = [Paths.mods('stages/'), Paths.mods(Paths.currentModDirectory + '/stages/'), Paths.getPreloadPath('stages/')];
@@ -611,8 +633,11 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(new FlxText(noteSkinInputText.x, noteSkinInputText.y - 15, 0, 'Note Texture:'));
 		tab_group_song.add(new FlxText(noteSplashesInputText.x, noteSplashesInputText.y - 15, 0, 'Note Splashes Texture:'));
 		tab_group_song.add(player2DropDown);
+		tab_group_song.add(player2Button);
 		tab_group_song.add(player3DropDown);
+		tab_group_song.add(player3Button);
 		tab_group_song.add(player1DropDown);
+		tab_group_song.add(player1Button);
 		tab_group_song.add(stageDropDown);
 
 		UI_box.addGroup(tab_group_song);
@@ -1655,6 +1680,16 @@ class ChartingState extends MusicBeatState
 			
 			if (FlxG.keys.pressed.SHIFT){
 				style = 3;
+			}
+
+			if (player1Button != null) {
+				player1Button.update(elapsed);
+			}
+			if (player2Button != null) {
+				player2Button.update(elapsed);
+			}
+			if (player3Button != null) {
+				player3Button.update(elapsed);
 			}
 			
 			var conductorTime = Conductor.songPosition; //+ sectionStartTime();Conductor.songPosition / Conductor.stepCrochet;
@@ -2719,7 +2754,96 @@ class ChartingState extends MusicBeatState
 		FlxG.log.error("Problem saving Level data");
 	}
 }
+/**
+ * UI that appears whenever you click one of the character buttons
+ * 
+ * @param patpat Character type. (Also, patpats are cute. YOU CANNOT CHANGE MY MIND)
+ * @param curChar Current character. This is set by `player` buttons.
+ */
+class CharacterSelector extends MusicBeatSubstate {
+	var characterList:Array<String> = [];
+	var basicBg:FlxSprite;
+	var selectPrompt:FlxText;
+	var characterNames:FlxTypedGroup<FlxText>;
+	var characterIcons:FlxTypedGroup<HealthIcon>;
+	var characterButtons:FlxTypedGroup<FlxExtendedSprite>;
+	var curCharIcon:HealthIcon;
+	var currentCharacter:String = 'bf';
+	var characterLocations:Array<String> = ['assets/characters'];
+	var setType:String = 'bf';
+	var cantDoJackShit:Bool = false;
+	var speen:FlxSprite;
 
+	public function new (curChar:String, patpat:String) {
+		super();
+		switch (patpat) {
+			case 'bf':
+				trace('selectin bf');
+				setType = patpat;
+			case 'gf':
+				trace('selectin gf');
+				setType = patpat;
+			case 'dad':
+				trace('selectin dad');
+				setType = patpat;
+		}
+
+		currentCharacter = curChar;
+	}
+
+	override function create() {
+		basicBg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.GREEN);
+		basicBg.alpha = 0.6;
+		selectPrompt = new FlxText(0, 4, FlxG.width, 'Select a ' + setType + ' character', 24);
+		selectPrompt.setFormat(Paths.font('funny.ttf'), 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(selectPrompt);
+		#if MODS_ALLOWED
+		characterLocations.push('mods');
+		updateMods();
+		#else
+		addIcons();
+		#end
+	}
+	/**
+	 * Scans the mods directory for any additional mods.
+	 */
+	inline function updateMods() {
+		trace('updating mods');
+		cantDoJackShit = true;
+
+		speen = new FlxSprite(FlxG.width - 48, FlxG.height - 48);
+		speen.frames = Paths.getSparrowAtlas('editor/speen', 'preload');
+		speen.animation.addByPrefix('spin', 'spinner go brr', 30, true);
+		speen.animation.play('spin');
+		
+		var loadTB:FlxSprite = new FlxSprite(0, FlxG.height - 26);
+		loadTB.makeGraphic(FlxG.width, 26, FlxColor.BLACK);
+		loadTB.alpha = 0.6;
+		add(loadTB);
+		add(speen);
+		var loadText:FlxText = new FlxText(0, loadTB.y - 4, FlxG.width, 'Checking mod folders...', 24);
+		loadText.setFormat(null, 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(loadText);
+
+		var modsDir = FileSystem.readDirectory('mods');
+		var modsBase:Array<String> = ['characters', 'custom_events', 'custom_notetypes', 'data', 'fonts', 'images', 'music', 'scripts', 'songs', 'sounds', 'stages', 'unlockable', 'videos' , 'weeks', 'pack.json', 'readme.txt'];
+		for (i in 0...modsDir.length) {
+			if (!modsBase.contains(modsDir[i])) {
+				trace('found ' + modsDir[i]);
+			}
+		}
+	}
+
+	override function update (elapsed:Float) {
+	/**
+	 * FUCKING FALLBACK LMAO
+	 */
+	 if (controls.BACK) {
+		 trace('exit');
+		 close();
+	 }
+	}
+}
 class AttachedFlxText extends FlxText
 {
 	public var sprTracker:FlxSprite;

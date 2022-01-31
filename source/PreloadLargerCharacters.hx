@@ -104,7 +104,10 @@ class PreloadLargerCharacters extends FlxState {
                 preloadBaseChars.push(preloadDirs[0] + '/' + baseChars[i]);
             }
         }
-        loadingText = new FlxText(textBox.x, textBox.y + 4, FlxG.width, 'Getting ready...', 16);
+        loadingText = new FlxText(0, 0, FlxG.width, 'Getting ready...', 16);
+        textBox = new FlxSprite(0, FlxG.height - 26);
+        textBox.makeGraphic(FlxG.width, 26, FlxColor.fromRGB(16, 16, 16));
+        loadingText.setPosition(textBox.x, textBox.y + 4);
         #if MODS_ALLOWED
         modChars = FileSystem.readDirectory(preloadDirs[1]);
         for (i in 0...modChars.length) {
@@ -155,8 +158,6 @@ class PreloadLargerCharacters extends FlxState {
      */
     function beginPreloading(?modsEnabled:Bool) {
         if (modsEnabled == null) modsEnabled = false; //ASSUME FALSE IF UNSPECIFIED ON CALL
-        textBox = new FlxSprite(0, FlxG.height - 26);
-        textBox.makeGraphic(FlxG.width, 26, FlxColor.fromRGB(16, 16, 16));
         // textBox.color = FlxColor.fromRGB(16, 16, 16);
         textBox.alpha = 0.6;
         textBox.scrollFactor.set();

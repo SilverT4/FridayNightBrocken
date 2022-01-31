@@ -1,5 +1,9 @@
 package editors;
 
+import flixel.input.keyboard.FlxKeyboard;
+import flixel.input.FlxBaseKeyList;
+import flixel.input.keyboard.FlxKeyList;
+import Controls.Device;
 import flixel.addons.ui.FlxUIInputText;
 import Section.SwagSection;
 import Song.SwagSong;
@@ -21,6 +25,7 @@ import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
 import flixel.ui.FlxButton;
 import FlxUIDropDownMenuCustom as DropDown;
+import flixel.input.keyboard.FlxKeyList;
 #if MODS_ALLOWED
 import sys.io.File;
 import sys.FileSystem;
@@ -37,13 +42,14 @@ class ReleaseRejection extends MusicBeatSubstate {
     private var eatMyBalls:FlxText;
     private var continueBox:FlxSprite;
     private var eatYourOwnFingers:FlxText;
+	private var susTimer:Int = 6;
     public function new() {
         super();
         windowBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, 0x69690000);
         windowBg.scrollFactor.set();
         windowBg.screenCenter();
         add(windowBg);
-        eatMyBalls = new FlxText(0, 0, FlxG.width, 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.');
+        eatMyBalls = new FlxText(0, 0, FlxG.width, 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.\n\nClose in $susTimer second(s)');
         eatMyBalls.screenCenter();
         eatMyBalls.scrollFactor.set();
         eatMyBalls.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -51,14 +57,25 @@ class ReleaseRejection extends MusicBeatSubstate {
         continueBox = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0x69000000);
         continueBox.scrollFactor.set();
         add(continueBox);
-        eatYourOwnFingers = new FlxText(continueBox.x, continueBox.y - 4, FlxG.width, 'Press ' + controls.ACCEPT + ' to continue.');
+        eatYourOwnFingers = new FlxText(continueBox.x, continueBox.y - 4, FlxG.width, 'Press your ACCEPT keybind to continue.');
         eatYourOwnFingers.setFormat(Paths.font('funny.ttf'), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		new FlxTimer().start(1, function (tmr:FlxTimer) {
+			if (susTimer > 1 || susTimer == 0) eatMyBalls.text = 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.\n\nClose in $susTimer seconds' else 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.\n\nClose in $susTimer second';
+			trace(susTimer);
+			--susTimer;
+		}, 7);
+		new FlxTimer().start(7, function (tmr:FlxTimer) {
+			add(eatYourOwnFingers);
+		});
     }
 
     override function update(elapsed:Float) {
-        if (controls.ACCEPT) {
+        if (susTimer == 0 && controls.ACCEPT) {
             close();
         }
+		if (eatMyBalls != null) {
+			eatMyBalls.update(elapsed);
+		}
     }
 }
 /**
@@ -341,9 +358,19 @@ class TestPlayState extends MusicBeatState
         trace(babaGrill);
         trace(hotDad);
     }
-
+    /**
+     * Made as a way of checking if types match. Supposed to return `true` if `weCheckin` matches `weLookinFor`.
+     * @param weCheckin What are we looking to check the type of?
+     * @param weLookinAt What are we looking to check the type against?
+     * @param weLookinFor What type are we looking for?
+     * @return Bool Returns `true` if types match, otherwise false.
+     */
     private inline static function typesMatch(weCheckin:Dynamic, weLookinAt:Dynamic, weLookinFor:Dynamic):Bool {
-        if (Std.isOfType(weCheckin, weLookinFor) && Std.isOfType(weLookinAt, weLookinFor) && Std.isOfType(weCheckin, weLookinAt)) {
+        #if linux
+		if (Std.is(Type.typeof(weCheckin), Type.typeof(weLookinFor)) && Std.is(Type.typeof(weLookinAt), Type.typeof(weLookinFor)) && Std.is(weCheckin, weLookinAt)) {
+		#else
+		if (Std.isOfType(weCheckin, weLookinFor) && Std.isOfType(weLookinAt, weLookinFor) && Std.isOfType(weCheckin, weLookinAt)) {
+		#end
             return true;
         } else {
             FlxG.log.warn(weCheckin + ' is not of type ' + weLookinFor + '; Type: ' + Type.typeof(weCheckin));
@@ -540,7 +567,11 @@ class TestPlayState extends MusicBeatState
 						swagNote.mustPress = gottaHitNote;
 						swagNote.sustainLength = songNotes[2];
 						swagNote.noteType = songNotes[3];
+						#if !linux
 						if(!Std.isOfType(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]]; //Backward compatibility + compatibility with Week 7 charts
+						#else
+						if(!Std.is(songNotes[3], String)) swagNote.noteType = editors.ChartingState.noteTypeList[songNotes[3]];
+						#end
 						swagNote.scrollFactor.set();
 
 						var susLength:Float = swagNote.sustainLength;

@@ -1,5 +1,6 @@
 package editors;
 
+import random.util.ColorUtil;
 import editors.TestPlayState.ConfirmYourContent;
 import flixel.system.FlxSound;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -424,6 +425,8 @@ class CharacterEditorState extends MusicBeatState
 				161,
 				161
 			],
+			"chartingButtonColour": 0xFFFF6666,
+			"chartingButtonLabelTheme": 0xFF000000;
 			"camera_position": [
 				0,
 				0
@@ -530,6 +533,8 @@ class CharacterEditorState extends MusicBeatState
 		var healthColorStepperR:FlxUINumericStepper;
 		var healthColorStepperG:FlxUINumericStepper;
 		var healthColorStepperB:FlxUINumericStepper;
+
+		var cbColorSameAsHealth:FlxUICheckBox;
 		
 		function addCharacterUI() {
 			var tab_group = new FlxUI(null, UI_box);
@@ -581,6 +586,12 @@ class CharacterEditorState extends MusicBeatState
 					char.antialiasing = true;
 				}
 				char.noAntialiasing = noAntialiasingCheckBox.checked;
+			};
+
+			cbColorSameAsHealth = new FlxUICheckBox(flipXCheckBox.x, flipXCheckBox.y + 80, null, null, "Charting Button Colour = Health Colour", 80);
+			cbColorSameAsHealth.checked = false;
+			cbColorSameAsHealth.callback = function() {
+				char.chartingButtonColour = ColorUtil.rgbaToHex(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2], 255);
 			};
 			
 			positionXStepper = new FlxUINumericStepper(flipXCheckBox.x + 110, flipXCheckBox.y, 10, char.positionArray[0], -9000, 9000, 0);
@@ -1407,6 +1418,15 @@ class CharacterEditorState extends MusicBeatState
 			var text:String = prefix + Clipboard.text.replace('\n', '');
 			return text;
 		}
+
+		/* function convertHealthToButtonColours () {
+			trace('just a sec');
+			if (!speen.visible) speen.visible = true;
+			new FlxTimer().start(3, function (tmr:FlxTimer) {
+				var tmpColour = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[1]);
+				
+			})
+		} */
 		
 		function reParseCharJson(charName:String = 'spooky') {
 			// char.visible = false;

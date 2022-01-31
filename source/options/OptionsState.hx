@@ -1,5 +1,6 @@
 package options;
 
+import lime.system.System;
 import editors.TestPlayState.ConfirmYourContent;
 #if desktop
 import Discord.DiscordClient;
@@ -24,6 +25,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
+import lime.app.Application;
 import Controls;
 
 using StringTools;
@@ -55,7 +57,8 @@ class OptionsState extends MusicBeatState
 				#if debug
 				openSubState(new editors.ConfirmYourContent(4, 0, null, 'bf', 'bf', 'high'));
 				#else
-				openSubState(new editors.ReleaseRejection());
+				trace(System.platformName);
+				openSubState(new editors.TestPlayState.ReleaseRejection());
 				#end
 		}
 	}

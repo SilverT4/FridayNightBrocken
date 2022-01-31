@@ -19,6 +19,7 @@ Download the latest version of Haxe for your platform.
 
 Once that's installed, get HaxeFlixel installed with the following commands:
 ```
+haxelib setup
 haxelib install lime
 haxelib install openfl
 haxelib install flixel
@@ -28,3 +29,6 @@ haxelib install flixel-tools
 haxelib run flixel-tools setup
 haxelib install linc_luajit
 ```
+
+##Step 1: CLONE THIS FUCKIN REPOSITORY IF YOU HAVEN'T LMAO
+I'M NOT EVEN JOKING. **CLONE IT!**
