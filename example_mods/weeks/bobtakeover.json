@@ -1,4 +1,16 @@
 {
+	"storyName": "bobs takeover",
+	"difficulties": "Hard",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": false,
 	"songs": [
 		[
 			"Copy-Cat",
@@ -19,22 +31,10 @@
 			]
 		]
 	],
-	"hideFreeplay": false,
-	"weekBackground": "stage",
-	"difficulties": "",
 	"weekCharacters": [
 		"dad",
 		"bf",
 		"gf"
 	],
-	"storyName": "bobs takeover",
-	"weekName": "gloop",
-	"freeplayColor": [
-		146,
-		113,
-		253
-	],
-	"hideStoryMode": false,
-	"weekBefore": "tutorial",
-	"startUnlocked": true
+	"weekName": "gloop"
 }

@@ -138,6 +138,9 @@ class MusicBeatState extends FlxUIState
 		if (CharacterEditorState.savingYourShit) {
 			CharacterEditorState.savingYourShit = false;
 		}
+		if (HealthIconFromGrid.instance != null && HealthIconFromGrid.instance.loadin) {
+			HealthIconFromGrid.instance.loadin = false;
+		}
 	}
 
 	function onWindowFocusOut():Void {

@@ -12,11 +12,14 @@ class MenuItem extends FlxSprite
 {
 	public var targetY:Float = 0;
 	public var flashingInt:Int = 0;
+	var sussy:Bool = false;
 
 	public function new(x:Float, y:Float, weekName:String = '')
 	{
 		super(x, y);
-		if(FileSystem.exists(Paths.image('storymenu/' + weekName))) {
+		if (FileSystem.exists(Paths.modsImages('storymenu/' + weekName))) {
+			loadGraphic(Paths.modsImages('storymenu/' + weekName));
+		}else if(FileSystem.exists(Paths.image('storymenu/' + weekName))) {
 		loadGraphic(Paths.image('storymenu/' + weekName));
 		} else if (FileSystem.exists('assets/images/storymenu/placeholder.png')) {
 		 frames = FlxAtlasFrames.fromSparrow('assets/images/storymenu/placeholder.png', 'assets/images/storymenu/placeholder.xml');
@@ -38,6 +41,7 @@ class MenuItem extends FlxSprite
 	{
 		if (frames == Paths.getSparrowAtlas('storymenu/placeholder.png') && animation.getByName('selected') != null) {
 			animation.play('selected');
+			sussy = true;
 		}
 		isFlashing = true;
 	}
@@ -55,6 +59,10 @@ class MenuItem extends FlxSprite
 
 		if (isFlashing)
 			flashingInt += 1;
+
+		/*if (sussy) {
+			fakeFramerate = 300;
+		}*/
 
 		if (flashingInt % fakeFramerate >= Math.floor(fakeFramerate / 2))
 			color = 0xFF33ffff;

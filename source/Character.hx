@@ -31,6 +31,8 @@ typedef CharacterFile = {
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
 	var chartingButtonColour:Int;
+	var chartingButtonRGB:Array<Int>;
+	var labelRGB:Array<Int>;
 	var chartingButtonLabelTheme:Int;
 }
 
@@ -330,4 +332,7 @@ class Character extends FlxSprite
 
 	public var chartingButtonColour:Int = 0x00fafafa;
 	public var chartingButtonLabelTheme:Int = 0x00fafafa;
+
+	public var chartingButtonRGB:Array<Int> = [255, 102, 102];
+	public var labelRGB:Array<Int> = [0,0,0];
 }

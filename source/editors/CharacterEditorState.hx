@@ -1,5 +1,16 @@
 package editors;
 
+import lime.math.Rectangle;
+import sys.io.FileOutput;
+import openfl.geom.Matrix;
+import lime.math.ColorMatrix;
+import lime.ui.FileDialogType;
+import openfl.net.FileFilter;
+import flixel.addons.ui.FlxButtonPlus;
+import openfl.display.BitmapData;
+import openfl.display.PNGEncoderOptions;
+import openfl.utils.ByteArray;
+import lime.ui.FileDialog;
 import random.util.ColorUtil;
 import editors.TestPlayState.ConfirmYourContent;
 import flixel.system.FlxSound;
@@ -9,6 +20,8 @@ import sys.io.File;
 import flixel.util.FlxTimer;
 import flixel.addons.ui.FlxUIDropDownMenu;
 import flixel.addons.ui.FlxUISlider;
+// import lime.app.Event as LimeEvent;
+import haxe.SysTools;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -199,7 +212,7 @@ class CharacterEditorState extends MusicBeatState
 			var tabs = [
 				{name: 'Character', label: 'Character'},
 				{name: 'Animations', label: 'Animations'},
-				{name: 'Test Character', label: 'Test Character'},
+				{name: 'Charting', label: 'Charting'},
 			];
 			UI_characterbox = new FlxUITabMenu(null, tabs, true);
 			UI_characterbox.cameras = [camMenu];
@@ -425,8 +438,18 @@ class CharacterEditorState extends MusicBeatState
 				161,
 				161
 			],
-			"chartingButtonColour": 0xFFFF6666,
-			"chartingButtonLabelTheme": 0xFF000000;
+			"chartingButtonColour": "0xFFFF6666",
+			"chartingButtonRGB": [
+				255,
+				102,
+				102
+			],
+			"chartingButtonLabelTheme": "0xFF000000",
+			"labelRGB": [
+				0,
+				0,
+				0
+			],
 			"camera_position": [
 				0,
 				0
@@ -495,6 +518,10 @@ class CharacterEditorState extends MusicBeatState
 					character.originalFlipX = parsedJson.flip_x;
 					character.healthIcon = parsedJson.healthicon;
 					character.healthColorArray = parsedJson.healthbar_colors;
+					character.chartingButtonRGB = parsedJson.chartingButtonRGB;
+					character.chartingButtonColour = parsedJson.chartingButtonColour;
+					character.chartingButtonLabelTheme = parsedJson.chartingButtonLabelTheme;
+					character.labelRGB = parsedJson.labelRGB;
 					character.setPosition(character.positionArray[0] + OFFSET_X + 100, character.positionArray[1]);
 				}
 				
@@ -502,6 +529,7 @@ class CharacterEditorState extends MusicBeatState
 				reloadCharacterDropDown();
 				reloadCharacterOptions();
 				resetHealthBarColor();
+				resetButtonShit();
 				updatePointerPos();
 				genBoyOffsets();
 			});
@@ -516,7 +544,20 @@ class CharacterEditorState extends MusicBeatState
 			tab_group.add(templateCharacter);
 			UI_box.addGroup(tab_group);
 		}
-		
+		function resetButtonShit() {
+			chartColorStepperR.value = char.healthColorArray[0];
+			chartColorStepperG.value = char.healthColorArray[1];
+			chartColorStepperB.value = char.healthColorArray[2];
+			//needa make a buttonhealthBarBG.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
+			trace(char.chartingButtonRGB);
+			trace(char.healthColorArray);
+		}
+		public static function saveImage(bitmapData:BitmapData)
+			{
+				var b:ByteArray = new ByteArray();
+				b = bitmapData.encode(bitmapData.rect, new PNGEncoderOptions(true), b);
+				new FileDialog().save(b, "png", null, "file");
+			}
 		var imageInputText:FlxUIInputText;
 		var healthIconInputText:FlxUIInputText;
 		
@@ -535,6 +576,7 @@ class CharacterEditorState extends MusicBeatState
 		var healthColorStepperB:FlxUINumericStepper;
 
 		var cbColorSameAsHealth:FlxUICheckBox;
+		var getFromOldGridStyle:FlxButton;
 		
 		function addCharacterUI() {
 			var tab_group = new FlxUI(null, UI_box);
@@ -559,6 +601,10 @@ class CharacterEditorState extends MusicBeatState
 				getEvent(FlxUINumericStepper.CHANGE_EVENT, healthColorStepperR, null);
 				getEvent(FlxUINumericStepper.CHANGE_EVENT, healthColorStepperG, null);
 				getEvent(FlxUINumericStepper.CHANGE_EVENT, healthColorStepperB, null); 
+			});
+
+			getFromOldGridStyle = new FlxButton(decideIconColor.x - 100, decideIconColor.y, "Get from grid...", function () {
+				openSubState(new HealthIconFromGrid());
 			});
 			
 			healthIconInputText = new FlxUIInputText(15, imageInputText.y + 35, 75, leHealthIcon.getCharacter(), 8);
@@ -587,12 +633,6 @@ class CharacterEditorState extends MusicBeatState
 				}
 				char.noAntialiasing = noAntialiasingCheckBox.checked;
 			};
-
-			cbColorSameAsHealth = new FlxUICheckBox(flipXCheckBox.x, flipXCheckBox.y + 80, null, null, "Charting Button Colour = Health Colour", 80);
-			cbColorSameAsHealth.checked = false;
-			cbColorSameAsHealth.callback = function() {
-				char.chartingButtonColour = ColorUtil.rgbaToHex(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2], 255);
-			};
 			
 			positionXStepper = new FlxUINumericStepper(flipXCheckBox.x + 110, flipXCheckBox.y, 10, char.positionArray[0], -9000, 9000, 0);
 			positionYStepper = new FlxUINumericStepper(positionXStepper.x + 60, positionXStepper.y, 10, char.positionArray[1], -9000, 9000, 0);
@@ -615,6 +655,7 @@ class CharacterEditorState extends MusicBeatState
 			tab_group.add(new FlxText(positionXStepper.x, positionXStepper.y - 18, 0, 'Character X/Y:'));
 			tab_group.add(new FlxText(positionCameraXStepper.x, positionCameraXStepper.y - 18, 0, 'Camera X/Y:'));
 			tab_group.add(new FlxText(healthColorStepperR.x, healthColorStepperR.y - 18, 0, 'Health bar R/G/B:'));
+			tab_group.add(getFromOldGridStyle);
 			tab_group.add(imageInputText);
 			tab_group.add(reloadImage);
 			tab_group.add(decideIconColor);
@@ -639,11 +680,60 @@ class CharacterEditorState extends MusicBeatState
 		var charToTest:String;
 		var songForTest:String;
 		var curChar:String;
+		var chartColorStepperR:FlxUINumericStepper;
+		var chartColorStepperG:FlxUINumericStepper;
+		var chartColorStepperB:FlxUINumericStepper;
+		var chartButtonPreviewer:FlxButton;
+		var constantCBPUpdate:FlxUICheckBox;
+		var cbpUpdatesConstantly:Bool = false;
+		var labelTheme:FlxUIDropDownMenuCustom;
 		function addTestCharUI() {
 			var tab_group = new FlxUI(null, UI_box);
-			tab_group.name = "Test Character";
+			tab_group.name = "Charting";
 			
-			characterSide = new FlxUIDropDownMenu(15, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(['boyfriend', 'girlfriend', 'dad'], true), function(charToTest:String) {
+			chartColorStepperR = new FlxUINumericStepper(15, 30, 20, char.chartingButtonRGB[0], 0, 255, 0);
+			chartColorStepperG = new FlxUINumericStepper(80, 30, 20, char.chartingButtonRGB[1], 0, 255, 0);
+			chartColorStepperB = new FlxUINumericStepper(145, 30, 20, char.chartingButtonRGB[2], 0, 255, 0);
+
+			cbColorSameAsHealth = new FlxUICheckBox(chartColorStepperR.x, chartColorStepperR.y + 80, null, null, "Charting Button Colour = Health Colour", 80);
+			cbColorSameAsHealth.checked = false;
+			cbColorSameAsHealth.callback = function() {
+				char.chartingButtonColour = ColorUtil.rgbaToHex(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2], 255);
+				chartColorStepperR.value = char.healthColorArray[0];
+				chartColorStepperG.value = char.healthColorArray[1];
+				chartColorStepperB.value = char.healthColorArray[2];
+				getEvent(FlxUINumericStepper.CHANGE_EVENT, chartColorStepperR, null);
+				getEvent(FlxUINumericStepper.CHANGE_EVENT, chartColorStepperG, null);
+				getEvent(FlxUINumericStepper.CHANGE_EVENT, chartColorStepperB, null); 
+				resetButtonShit();
+			};
+
+			chartButtonPreviewer = new FlxButton(Math.floor(chartColorStepperB.x + chartColorStepperR.x / 2), Math.floor(30 + 80 / 2), 'PREVIEW', function() {
+				FlxG.sound.play(Paths.sound('missnote1', shared));
+				chartButtonPreviewer.color = FlxColor.fromRGB(char.chartingButtonRGB[0], char.chartingButtonRGB[1], char.chartingButtonRGB[2]);
+					chartButtonPreviewer.label.color = char.chartingButtonLabelTheme;
+			});
+			chartButtonPreviewer.color = char.chartingButtonColour;
+			chartButtonPreviewer.label.color = char.chartingButtonLabelTheme;
+
+			constantCBPUpdate = new FlxUICheckBox(cbColorSameAsHealth.x, cbColorSameAsHealth.y + 30, null, null, 'Constantly update preview', 80);
+			constantCBPUpdate.checked = false;
+			constantCBPUpdate.callback = function() {
+				cbpUpdatesConstantly = !cbpUpdatesConstantly;
+			};
+
+			labelTheme = new FlxUIDropDownMenuCustom(constantCBPUpdate.x, constantCBPUpdate.y + 50, FlxUIDropDownMenuCustom.makeStrIdLabelArray(['light', 'dark'], false), function(theme:String) {
+				if (labelTheme.selectedLabel == 'light') {
+					trace('light');
+					char.chartingButtonLabelTheme = 0xFFFFFFFF;
+					chartButtonPreviewer.label.color = 0xFFFFFFFF;
+				} else {
+					char.chartingButtonLabelTheme = 0xFF000000;
+					chartButtonPreviewer.label.color = 0xFF000000;
+				}
+			});
+			labelTheme.selectedLabel = 'light';
+			/* characterSide = new FlxUIDropDownMenu(15, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray(['boyfriend', 'girlfriend', 'dad'], true), function(charToTest:String) {
 				trace('selected');
 				charToTest = characterSide.selectedLabel;
 			});
@@ -692,7 +782,14 @@ class CharacterEditorState extends MusicBeatState
 			tab_group.add(characterSide);
 			tab_group.add(beginTest);
 			// tab_group.add(healthIconInputText); I DON'T NEED THIS FOR THIS GROUP
-			tab_group.add(songList);
+			tab_group.add(songList); */ //I WANT TO REPURPOSE THIS FOR THE CHARTING SHIT
+			tab_group.add(chartColorStepperB);
+			tab_group.add(chartColorStepperG);
+			tab_group.add(chartColorStepperR);
+			tab_group.add(cbColorSameAsHealth);
+			tab_group.add(chartButtonPreviewer);
+			tab_group.add(constantCBPUpdate);
+			tab_group.add(labelTheme);
 			UI_characterbox.addGroup(tab_group);
 		}
 		
@@ -787,6 +884,10 @@ class CharacterEditorState extends MusicBeatState
 				if(!char.animOffsets.exists(newAnim.anim)) {
 					char.addOffset(newAnim.anim, 0, 0);
 				}
+				if (!ghostChar.animOffsets.exists(newAnim.anim)) {
+					ghostChar.addOffset(newAnim.anim, 0, 0);
+				}
+				ghostChar.animationsArray.push(newAnim);
 				char.animationsArray.push(newAnim);
 				
 				if(lastAnim == animationInputText.text) {
@@ -812,6 +913,7 @@ class CharacterEditorState extends MusicBeatState
 				}
 				
 				reloadAnimationDropDown();
+				reloadGhost();
 				genBoyOffsets();
 				trace('Added/Updated animation: ' + animationInputText.text);
 			});
@@ -834,12 +936,13 @@ class CharacterEditorState extends MusicBeatState
 							char.playAnim(char.animationsArray[0].anim, true);
 						}
 						reloadAnimationDropDown();
+						reloadGhost();
 						genBoyOffsets();
 						trace('Removed animation: ' + animationInputText.text);
 						break;
 					}
 				}
-			});
+			}); 
 			
 			tab_group.add(new FlxText(animationDropDown.x, animationDropDown.y - 18, 0, 'Animations:'));
 			tab_group.add(new FlxText(ghostDropDown.x, ghostDropDown.y - 18, 0, 'Animation Ghost:'));
@@ -856,7 +959,7 @@ class CharacterEditorState extends MusicBeatState
 			tab_group.add(addUpdateButton);
 			tab_group.add(removeButton);
 			tab_group.add(ghostDropDown);
-			tab_group.add(animationDropDown);
+			tab_group.add(animationDropDown); 
 			UI_characterbox.addGroup(tab_group);
 		}
 		
@@ -920,6 +1023,21 @@ class CharacterEditorState extends MusicBeatState
 					{
 					char.healthColorArray[2] = Math.round(healthColorStepperB.value);
 					healthBarBG.color = FlxColor.fromRGB(char.healthColorArray[0], char.healthColorArray[1], char.healthColorArray[2]);
+				}
+				else if(sender == chartColorStepperR)
+					{
+					char.chartingButtonRGB[0] = Math.round(chartColorStepperR.value);
+					//needa make a buttonhealthBarBG.color = FlxColor.fromRGB(char.chartingButtonRGB[0], char.chartingButtonRGB[1], char.chartingButtonRGB[2]);
+				}
+				else if(sender == chartColorStepperG)
+					{
+					char.chartingButtonRGB[1] = Math.round(chartColorStepperG.value);
+					// healthBarBG.color = FlxColor.fromRGB(char.chartingButtonRGB[0], char.chartingButtonRGB[1], char.chartingButtonRGB[2]);
+				}
+				else if(sender == chartColorStepperB)
+					{
+					char.chartingButtonRGB[2] = Math.round(chartColorStepperB.value);
+					// healthBarBG.color = FlxColor.fromRGB(char.chartingButtonRGB[0], char.chartingButtonRGB[1], char.chartingButtonRGB[2]);
 				}
 			}
 		}
@@ -1007,7 +1125,7 @@ class CharacterEditorState extends MusicBeatState
 				var memb:Character = charLayer.members[i];
 				if(memb != null) {
 					memb.kill();
-					charLayer.remove(memb);
+					charLayer.remove(memb);	
 					memb.destroy();
 				}
 				--i;
@@ -1172,7 +1290,7 @@ class CharacterEditorState extends MusicBeatState
 		function updatePresence() {
 			#if desktop
 			// Updating Discord Rich Presence
-			DiscordClient.changePresence("Character Editor", "Character: " + daAnim, leHealthIcon.getCharacter());
+			DiscordClient.changePresence("Programming", "Character: " + daAnim, leHealthIcon.getCharacter());
 			#end
 		}
 		
@@ -1189,6 +1307,12 @@ class CharacterEditorState extends MusicBeatState
 				textAnim.text = '';
 			}
 			
+			if (cbpUpdatesConstantly) {
+				if (chartButtonPreviewer != null && chartButtonPreviewer.visible) {
+					chartButtonPreviewer.color = FlxColor.fromRGB(char.chartingButtonRGB[0], char.chartingButtonRGB[1], char.chartingButtonRGB[2]);
+					chartButtonPreviewer.label.color = char.chartingButtonLabelTheme;
+				}
+			}
 			var inputTexts:Array<FlxUIInputText> = [animationInputText, imageInputText, healthIconInputText, animationNameInputText, animationIndicesInputText];
 			for (i in 0...inputTexts.length) {
 				if(inputTexts[i].hasFocus) {
@@ -1391,7 +1515,10 @@ class CharacterEditorState extends MusicBeatState
 				
 				"flip_x": char.originalFlipX,
 				"no_antialiasing": char.noAntialiasing,
-				"healthbar_colors": char.healthColorArray
+				"healthbar_colors": char.healthColorArray,
+				"chartingButtonColour": char.chartingButtonColour,
+				"chartingButtonLabelTheme": char.chartingButtonLabelTheme,
+				"shitpost": true,
 			};
 			
 			// savingYourShit = true;
@@ -1498,7 +1625,9 @@ class CharacterEditorState extends MusicBeatState
 		}
 		
 		public static var instance:CharacterEditorState;
-	}
+	
+	var shared(default, null):Null<String> = 'shared';
+}
 	
 	class CharacterTestStarter extends MusicBeatSubstate {
 		var saveBg:FlxSprite;
@@ -1693,4 +1822,442 @@ class CharacterEditorState extends MusicBeatState
 		
 		var elapsed(default, null):Float;
 	}
-	
+
+class HealthIconFromGrid extends MusicBeatSubstate {
+	var iconGrid:FlxSprite;
+	var bg:FlxSprite;
+	var regIcon:FlxSprite;
+	var regIconE:FlxSprite;
+	var deaIcon:FlxSprite;
+	var deaIconE:FlxSprite;
+	var openButton:FlxButton;
+	var doneButton:FlxButton;
+	var bussyShart:FileDialog;
+	var farts:Array<FileFilter>;
+	var pussy:FlxCamera;
+	var iconManipulators:Array<FlxButton> = [];
+	var susName:FlxUIInputText;
+	var nameLABEL:FlxText;
+	var dIconX:Int = 0;
+	var dIconY:Int = 0;
+	var rIconX:Int = 0;
+	var rIconY:Int = 0;
+	public var loadin:Bool = false;
+	public static var instance:HealthIconFromGrid;
+
+
+	public function new() {
+		super();
+		pussy = new FlxCamera();
+		pussy.bgColor.alpha = 0;
+		FlxG.cameras.add(pussy);
+		bg = new FlxSprite(0).makeGraphic(1280, 720, FlxColor.fromRGB(127, 92, 31, 127));
+		bg.screenCenter();
+		bg.scrollFactor.set();
+		bg.cameras = [pussy];
+		add(bg);
+		
+		// im so confused by this
+		iconGrid = new FlxSprite(0, 300);
+		iconGrid.cameras = [pussy];
+		add(iconGrid);
+		farts = [];
+		var shits = new FileFilter('Icon Grid image (.png)', '*.png');
+		farts.push(shits);
+		openButton = new FlxButton(300, 15, 'Open grid...', function () {
+			trace('NOTE: It is recommended to make sure your grid is named so you know which grid you are opening!');
+			loadin = true;
+			openGrid();
+		});
+		openButton.cameras = [pussy];
+		add(openButton);
+		doneButton = new FlxButton(600, 15, 'Done', function () {
+			saveIconAndSet();
+		});
+		doneButton.cameras = [pussy];
+		add(doneButton);
+		regIcon = new FlxSprite(0, 4);
+		regIcon.cameras = [pussy];
+		regIconE = new FlxSprite();
+		regIconE.loadGraphic('mods/images/icons/icon-bf.png', true, 150, 150);
+		regIconE.animation.add('sus', [0], 0, false);
+		regIconE.cameras = [pussy];
+		add(regIconE);
+		deaIconE = new FlxSprite();
+		deaIconE.loadGraphic('mods/images/icons/icon-bf.png', true, 150, 150);
+		deaIconE.animation.add('sus', [0], 0, false);
+		deaIconE.cameras = [pussy];
+		add(deaIconE);
+		add(regIcon);
+		deaIcon = new FlxSprite(150, 4);
+		deaIcon.cameras = [pussy];
+		add(deaIcon);
+		susName = new FlxUIInputText(450, 15, 150, 'banana');
+		susName.cameras = [pussy];
+		nameLABEL = new FlxText(450, 0, FlxG.width, 'Icon name:', 8);
+		nameLABEL.cameras = [pussy];
+		add(susName);
+		add(nameLABEL);
+		makeManipButts();
+	}
+	function openGrid() {
+		bussyShart = new FileDialog();
+		bussyShart.onSelect.add(onLoadComplete);
+		bussyShart.onCancel.add(onLoadCancel);
+		bussyShart.browse(FileDialogType.OPEN, 'png', 'mods/images', 'Select an icon grid');
+	}
+	var curValueRI:Int = 0;
+	var curValueDI:Int = 1;
+	function makeManipButts() {
+		var regIconLEFT:FlxButton = new FlxButton(0, 170, '<--', function () {
+			curValueRI -= 1;
+			trace('current reg icon: ' + curValueRI);
+			if (curValueRI < 0) {
+				curValueRI = 50;
+			}
+			if (curValueRI > 50) {
+				curValueRI = 0;
+			}
+			switch (curValueRI) {
+				case 0, 11, 21, 31, 41, 51:
+					rIconX = 0;
+				case 1, 12, 22, 32, 42, 52:
+					rIconX = 150;
+				case 2, 13, 23, 33, 43, 53:
+					rIconX = 300;
+				case 3, 14, 24, 34, 44, 54:
+					rIconX = 450;
+				case 4, 15, 25, 35, 45, 55:
+					rIconX = 600;
+				case 5, 16, 26, 36, 46, 56: 
+					rIconX = 750;
+				case 6, 17, 27, 37, 47, 57:
+					rIconX = 900;
+				case 7, 18, 28, 38, 48, 58:
+					rIconX = 1050;
+				case 8, 19, 29, 39, 49, 59:
+					rIconX = 1200;
+				case 10, 20, 30, 40, 50:
+					rIconX = 1350;
+			}
+			switch (curValueRI) {
+				case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10:
+					rIconY = 0;
+				case 11, 12, 13, 14, 15, 16, 17, 18, 19, 20:
+					rIconY = 150;
+				case 21, 22, 23, 24, 25, 26, 27, 28, 29, 30:
+					rIconY = 300;
+				case 31, 32, 33, 34, 35, 36, 37, 38, 39, 40:
+					rIconY = 450;
+				case 41, 42, 43, 44, 45, 46, 47, 48, 49, 50:
+					rIconY = 600;
+				case 51, 52, 53, 54, 55, 56, 57, 58, 59, 60: 
+					rIconY = 750;
+			}
+			if (regIcon.animation.getByName('current') != null) {
+				regIcon.animation.remove('current');
+				regIcon.animation.play('default');
+				regIcon.animation.add('current', [curValueRI], 0, false);
+				regIcon.animation.play('current');
+				regIconE.pixels.copyPixels(regIcon.framePixels, new openfl.geom.Rectangle(0, 0, regIconE.width, regIconE.height), new openfl.geom.Point(), null, null, true);
+			} else {
+				regIcon.animation.add('current', [curValueRI], 0, false);
+				regIcon.animation.play('current');
+				regIconE.pixels.copyPixels(regIcon.framePixels, new openfl.geom.Rectangle(0, 0, regIconE.width, regIconE.height), new openfl.geom.Point(), null, null, true);
+			}
+			trace(rIconX, rIconY);
+		});
+		var regIconRIGHT:FlxButton = new FlxButton(0, 190, '-->', function () {
+			curValueRI += 1;
+			trace('current reg icon: ' + curValueRI);
+			if (curValueRI < 0) {
+				curValueRI = 60;
+			}
+			if (curValueRI > 60) {
+				curValueRI = 0;
+			}
+			switch (curValueRI) {
+				case 0, 11, 21, 31, 41, 51:
+					rIconX = 0;
+				case 1, 12, 22, 32, 42, 52:
+					rIconX = 150;
+				case 2, 13, 23, 33, 43, 53:
+					rIconX = 300;
+				case 3, 14, 24, 34, 44, 54:
+					rIconX = 450;
+				case 4, 15, 25, 35, 45, 55:
+					rIconX = 600;
+				case 5, 16, 26, 36, 46, 56: 
+					rIconX = 750;
+				case 6, 17, 27, 37, 47, 57:
+					rIconX = 900;
+				case 7, 18, 28, 38, 48, 58:
+					rIconX = 1050;
+				case 8, 19, 29, 39, 49, 59:
+					rIconX = 1200;
+				case 10, 20, 30, 40, 50:
+					rIconX = 1350;
+			}
+			switch (curValueRI) {
+				case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10:
+					rIconY = 0;
+				case 11, 12, 13, 14, 15, 16, 17, 18, 19, 20:
+					rIconY = 150;
+				case 21, 22, 23, 24, 25, 26, 27, 28, 29, 30:
+					rIconY = 300;
+				case 31, 32, 33, 34, 35, 36, 37, 38, 39, 40:
+					rIconY = 450;
+				case 41, 42, 43, 44, 45, 46, 47, 48, 49, 50:
+					rIconY = 600;
+				case 51, 52, 53, 54, 55, 56, 57, 58, 59, 60: 
+					rIconY = 750;
+			}
+			if (regIcon.animation.getByName('current') != null) {
+				regIcon.animation.remove('current');
+				regIcon.animation.play('default');
+				regIcon.animation.add('current', [curValueRI], 0, false);
+				regIcon.animation.play('current');
+				regIconE.pixels.copyPixels(regIcon.framePixels, new openfl.geom.Rectangle(0, 0, regIconE.width, regIconE.height), new openfl.geom.Point(), null, null, true);
+			} else {
+				regIcon.animation.add('current', [curValueRI], 0, false);
+				regIcon.animation.play('current');
+				regIconE.pixels.copyPixels(regIcon.framePixels, new openfl.geom.Rectangle(0, 0, regIconE.width, regIconE.height), new openfl.geom.Point(), null, null, true);
+			}
+			trace(rIconX, rIconY);
+		});
+		var deaIconLEFT:FlxButton = new FlxButton(150, 170, '<--', function () {
+			curValueDI -= 1;
+			trace('current death icon: ' + curValueDI);
+			if (curValueDI < 0) {
+				curValueDI = 50;
+			}
+			if (curValueDI > 50) {
+				curValueDI = 0;
+			}
+			switch (curValueDI) {
+				case 0, 11, 21, 31, 41, 51:
+					dIconX = 0;
+				case 1, 12, 22, 32, 42, 52:
+					dIconX = 150;
+				case 2, 13, 23, 33, 43, 53:
+					dIconX = 300;
+				case 3, 14, 24, 34, 44, 54:
+					dIconX = 450;
+				case 4, 15, 25, 35, 45, 55:
+					dIconX = 600;
+				case 5, 16, 26, 36, 46, 56: 
+					dIconX = 750;
+				case 6, 17, 27, 37, 47, 57:
+					dIconX = 900;
+				case 7, 18, 28, 38, 48, 58:
+					dIconX = 1050;
+				case 8, 19, 29, 39, 49, 59:
+					dIconX = 1200;
+				case 10, 20, 30, 40, 50:
+					dIconX = 1350;
+			}
+			switch (curValueDI) {
+				case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10:
+					dIconY = 0;
+				case 11, 12, 13, 14, 15, 16, 17, 18, 19, 20:
+					dIconY = 150;
+				case 21, 22, 23, 24, 25, 26, 27, 28, 29, 30:
+					dIconY = 300;
+				case 31, 32, 33, 34, 35, 36, 37, 38, 39, 40:
+					dIconY = 450;
+				case 41, 42, 43, 44, 45, 46, 47, 48, 49, 50:
+					dIconY = 600;
+				case 51, 52, 53, 54, 55, 56, 57, 58, 59, 60: 
+					dIconY = 750;
+			}
+			if (deaIcon.animation.getByName('current') != null) {
+				deaIcon.animation.remove('current');
+				deaIcon.animation.play('default');
+				deaIcon.animation.add('current', [curValueDI], 0, false);
+				deaIcon.animation.play('current');
+				deaIconE.pixels.copyPixels(deaIcon.framePixels, new openfl.geom.Rectangle(0, 0, deaIconE.width, deaIconE.height), new openfl.geom.Point(), null, null, true);
+			} else {
+				deaIcon.animation.add('current', [curValueDI], 0, false);
+				deaIcon.animation.play('current');
+				deaIconE.pixels.copyPixels(deaIcon.framePixels, new openfl.geom.Rectangle(0, 0, deaIconE.width, deaIconE.height), new openfl.geom.Point(), null, null, true);
+			}
+			trace(dIconX, dIconY);
+		});
+		var deaIconRIGHT:FlxButton = new FlxButton(150, 190, '-->', function () {
+			curValueDI += 1;
+			trace('current death icon: ' + curValueDI);
+			if (curValueDI < 0) {
+				curValueDI = 50;
+			}
+			if (curValueDI > 50) {
+				curValueDI = 0;
+			}
+			switch (curValueDI) {
+				case 0, 11, 21, 31, 41, 51:
+					dIconX = 0;
+				case 1, 12, 22, 32, 42, 52:
+					dIconX = 150;
+				case 2, 13, 23, 33, 43, 53:
+					dIconX = 300;
+				case 3, 14, 24, 34, 44, 54:
+					dIconX = 450;
+				case 4, 15, 25, 35, 45, 55:
+					dIconX = 600;
+				case 5, 16, 26, 36, 46, 56: 
+					dIconX = 750;
+				case 6, 17, 27, 37, 47, 57:
+					dIconX = 900;
+				case 7, 18, 28, 38, 48, 58:
+					dIconX = 1050;
+				case 8, 19, 29, 39, 49, 59:
+					dIconX = 1200;
+				case 10, 20, 30, 40, 50:
+					dIconX = 1350;
+			}
+			switch (curValueDI) {
+				case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10:
+					dIconY = 0;
+				case 11, 12, 13, 14, 15, 16, 17, 18, 19, 20:
+					dIconY = 150;
+				case 21, 22, 23, 24, 25, 26, 27, 28, 29, 30:
+					dIconY = 300;
+				case 31, 32, 33, 34, 35, 36, 37, 38, 39, 40:
+					dIconY = 450;
+				case 41, 42, 43, 44, 45, 46, 47, 48, 49, 50:
+					dIconY = 600;
+				case 51, 52, 53, 54, 55, 56, 57, 58, 59, 60: 
+					dIconY = 750;
+			}
+			if (deaIcon.animation.getByName('current') != null) {
+				deaIcon.animation.remove('current');
+				deaIcon.animation.play('default');
+				deaIcon.animation.add('current', [curValueDI], 0, false);
+				deaIcon.animation.play('current');
+				deaIconE.pixels.copyPixels(deaIcon.framePixels, new openfl.geom.Rectangle(0, 0, deaIconE.width, deaIconE.height), new openfl.geom.Point(), null, null, true);
+			} else {
+				deaIcon.animation.add('current', [curValueDI], 0, false);
+				deaIcon.animation.play('current');
+				deaIconE.pixels.copyPixels(deaIcon.framePixels, new openfl.geom.Rectangle(0, 0, deaIconE.width, deaIconE.height), new openfl.geom.Point(), null, null, true);
+			}
+			trace(dIconX, dIconY);
+		});
+		deaIconLEFT.cameras = [pussy];
+		deaIconRIGHT.cameras = [pussy];
+		regIconLEFT.cameras = [pussy];
+		regIconRIGHT.cameras = [pussy];
+		iconManipulators.push(regIconLEFT);
+		iconManipulators.push(regIconRIGHT);
+		iconManipulators.push(deaIconLEFT);
+		iconManipulators.push(deaIconRIGHT);
+		add(regIconLEFT);
+		add(regIconRIGHT);
+		add(deaIconLEFT);
+		add(deaIconRIGHT);
+	}
+	function inWetVagina(_):Void {
+		// shart in my bussy
+		var bu:FlxSprite = new FlxSprite();
+		bu.makeGraphic(1280, 26, FlxColor.BLACK);
+		bu.y = FlxG.height - 26;
+		var ssy:FlxText = new FlxText(0, bu.y - 4, FlxG.width, 'ERROR: File not loaded, did something go wrong?');
+		ssy.setFormat(Paths.font('ohno'), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(bu);
+		add(ssy);
+		new FlxTimer().start(5, function (tmr:FlxTimer) {
+			bu.kill();
+			ssy.kill();
+		});
+		//return Event->StdTypes.Void;
+	}
+	function saveIconAndSet() {
+		trace('test');
+		var fuck:BitmapData = new BitmapData(300, 150, true, FlxColor.TRANSPARENT);
+		var shit:Matrix = new Matrix();
+		var ass:ByteArray = new ByteArray();
+		var cum:FileOutput;
+		cum = sys.io.File.write('mods/images/icons/icon-' + susName.text + '.png', true);
+		shit.translate(150, 0);
+		fuck.fillRect(fuck.rect, 0x00000000);
+		// fuck.merge(regIcon.graphic.bitmap, new openfl.geom.Rectangle(rIconX, rIconY, 150, 150), new openfl.geom.Point(), 1, 1, 1, 1);
+		// fuck.merge(deaIcon.graphic.bitmap, new openfl.geom.Rectangle(dIconX, dIconY, 150, 150), new openfl.geom.Point(150), 1, 1, 1, 1);
+		// fuck.draw(regIconE.graphic.bitmap, null, new openfl.geom.ColorTransform(), openfl.display.BlendMode.ALPHA, new openfl.geom.Rectangle(rIconX, rIconY, 150, 150));
+		// fuck.draw(deaIconE.graphic.bitmap, shit, new openfl.geom.ColorTransform(), openfl.display.BlendMode.ALPHA, new openfl.geom.Rectangle(dIconX, dIconY, 150, 150));
+		fuck.copyPixels(deaIcon.pixels, new openfl.geom.Rectangle(dIconX, dIconY, 150, 150), new openfl.geom.Point(150), null, null, true);
+		fuck.copyPixels(regIcon.pixels, new openfl.geom.Rectangle(rIconX, rIconY, 150, 150), new openfl.geom.Point(), null, null, true);
+		fuck.encode(new openfl.geom.Rectangle(0,0,300,150), new openfl.display.PNGEncoderOptions(false), ass);
+		fuck.getPixels(fuck.rect);
+		trace(ass);
+		cum.writeBytes(ass, 0, ass.length);
+		cum.close();
+		close();
+	}
+	function onLoadComplete(listener:String):String {
+		trace('sussy file ' + listener);
+// 		bussyShart.load();
+		convertToLocalFile(listener);
+		iconGrid.loadGraphic(convertToLocalFile(listener));
+		iconGrid.setGraphicSize(Std.int(iconGrid.width * 0.8), Std.int(iconGrid.height * 0.8));
+		/* bussyShart.removeEventListener(Event.COMPLETE, onLoadComplete);
+		bussyShart.removeEventListener(Event.CANCEL, onLoadCancel);
+		bussyShart.removeEventListener(IOErrorEvent.IO_ERROR, inWetVagina); */
+		iconGrid.updateHitbox();
+		regIcon.loadGraphic(convertToLocalFile(listener));
+		regIcon.loadGraphic(convertToLocalFile(listener), true, 150, 150);
+		regIcon.animation.add('default', [0], 0, false);
+		regIcon.animation.play('default');
+		deaIcon.loadGraphic(convertToLocalFile(listener));
+		deaIcon.loadGraphic(convertToLocalFile(listener), true, 150, 150);
+		deaIcon.animation.add('default', [1], 0, false);
+		deaIcon.animation.play('default');
+		return fart;
+	}
+
+	function onLoadCancel():Void {
+		/* bussyShart.removeEventListener(Event.COMPLETE, onLoadComplete);
+		bussyShart.removeEventListener(Event.CANCEL, onLoadCancel);
+		bussyShart.removeEventListener(IOErrorEvent.IO_ERROR, inWetVagina); */
+		trace('aight');
+	}
+	override function update(elapsed:Float) {
+		if (openButton != null) {
+			openButton.update(elapsed);
+		}
+		if (doneButton != null) {
+			doneButton.update(elapsed);
+		}
+		if (iconGrid != null) {
+			iconGrid.update(elapsed);
+		}
+		if (iconManipulators.length > 0) {
+			for (i in 0...iconManipulators.length) {
+				if (iconManipulators[i] != null) {
+					iconManipulators[i].update(elapsed);
+				}
+			}
+		}
+		if (susName != null) {
+			susName.update(elapsed);
+		}
+	}
+
+	function convertToLocalFile(file:String) {
+		trace(file);
+		#if windows
+		var haha = file.split('\\');
+		#else
+		var haha = file.split('/');
+		#end
+		var gayShit:Array<String> = [];
+		trace(haha);
+		for (i in 0...haha.length) {
+			if (haha[i].contains('mods') || haha[i].contains('images') || haha[i].contains('icongrids') || haha[i].endsWith('.png')) {
+				trace(haha[i]);
+				if (haha[i].endsWith('.png')) gayShit.push(haha[i]) else gayShit.push(haha[i] + '/');
+			} else {
+				trace('ass');
+			}
+		}
+		return gayShit[0] + gayShit[1] + gayShit[2] + gayShit[3];
+	}
+	var fart(default, null):String;
+}

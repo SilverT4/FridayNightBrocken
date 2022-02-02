@@ -60,7 +60,7 @@ class ReleaseRejection extends MusicBeatSubstate {
         eatYourOwnFingers = new FlxText(continueBox.x, continueBox.y - 4, FlxG.width, 'Press your ACCEPT keybind to continue.');
         eatYourOwnFingers.setFormat(Paths.font('funny.ttf'), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		new FlxTimer().start(1, function (tmr:FlxTimer) {
-			if (susTimer > 1 || susTimer == 0) eatMyBalls.text = 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.\n\nClose in $susTimer seconds' else 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.\n\nClose in $susTimer second';
+			if (susTimer != 1) eatMyBalls.text = 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.\n\nClose in $susTimer seconds' else eatMyBalls.text = 'You\'re running this on a RELEASE build of the game. As a precaution, the Test PlayState option is disabled on these builds to help prevent potential issues from how messy its code is.\n\nClose in $susTimer second';
 			trace(susTimer);
 			--susTimer;
 		}, 7);
@@ -70,7 +70,8 @@ class ReleaseRejection extends MusicBeatSubstate {
     }
 
     override function update(elapsed:Float) {
-        if (susTimer == 0 && controls.ACCEPT) {
+        if (susTimer <= 0 && controls.ACCEPT) {
+			trace('balls');
             close();
         }
 		if (eatMyBalls != null) {

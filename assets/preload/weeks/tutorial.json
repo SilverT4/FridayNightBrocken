@@ -1,20 +1,43 @@
 {
-	"songs": [
-		["Tutorial", "gf", [165, 0, 77]]
-	],
-
+	"storyName": "funny beep bop tutorial",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"startUnlocked": true,
 	"weekCharacters": [
 		"",
 		"bf",
 		"gf"
 	],
-	"weekBackground": "stage",
-
-	"storyName": "",
-	"weekBefore": "tutorial",
-	"weekName": "Tutorial",
-	"startUnlocked": true,
-
+	"songs": [
+		[
+			"Tutorial-Fns",
+			"gf",
+			[
+				165,
+				0,
+				77
+			]
+		],
+		[
+			"Tutorial",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		],
+		[
+			"Starcrossed",
+			"dad",
+			[
+				146,
+				113,
+				253
+			]
+		]
+	],
 	"hideStoryMode": false,
-	"hideFreeplay": false
+	"weekName": "Tutorial"
 }
