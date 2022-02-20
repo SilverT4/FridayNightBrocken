@@ -1353,7 +1353,8 @@ class CharacterEditorState extends MusicBeatState
 				
 				if (FlxG.keys.justPressed.V) {
 					var funnyData:Array<Dynamic> = [Std.string(FlxG.save.data)];
-					FlxG.save.resetFlag('unlockedMiniSaber', funnyData);
+					trace('im dumb');
+					// FlxG.save.resetFlag('unlockedMiniSaber', funnyData);
 				}
 				
 				if (FlxG.keys.justPressed.COMMA) {

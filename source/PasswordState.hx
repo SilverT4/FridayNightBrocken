@@ -852,7 +852,8 @@ class PasswordState extends MusicBeatState
                     errorTxt.destroy();
                     errorBg.visible = false;
                     for (i in 0...sussyFlags.length) {
-                        FlxG.save.resetFlag(sussyFlags[i], FlxG.save.data);
+                        //FlxG.save.resetFlag(sussyFlags[i], FlxG.save.data);
+                        trace('test bc im dumb');
                     }
                     doCoolExit();
                 });
