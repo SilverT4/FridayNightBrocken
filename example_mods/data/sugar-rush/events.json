@@ -1,11 +1,71 @@
 {
 	"song": {
 		"speed": 3.5,
-		"stage": null,
-		"player1": "steelwolf",
+		"stage": "philly",
+		"player1": "miniapt",
 		"player2": "bandu-candy",
 		"player3": null,
 		"events": [
+			[
+				9574.46808510638,
+				[
+					[
+						"Blammed Lights",
+						"69",
+						""
+					]
+				]
+			],
+			[
+				20425.5319148936,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				23457.4468085106,
+				[
+					[
+						"Blammed Lights",
+						"69",
+						""
+					]
+				]
+			],
+			[
+				45319.1489361702,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
+			[
+				65106.3829787234,
+				[
+					[
+						"Blammed Lights",
+						"69",
+						""
+					]
+				]
+			],
+			[
+				85531.914893617,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
+			],
 			[
 				92792.5531914893,
 				[
@@ -15,12 +75,32 @@
 						""
 					]
 				]
+			],
+			[
+				107232.04787234,
+				[
+					[
+						"Blammed Lights",
+						"69",
+						""
+					]
+				]
+			],
+			[
+				127659.574468085,
+				[
+					[
+						"Blammed Lights",
+						"0",
+						""
+					]
+				]
 			]
 		],
 		"notes": [],
 		"splashSkin": null,
 		"validScore": false,
-		"gfVersion": "gf",
+		"gfVersion": "decktop-were-gf",
 		"bpm": 188,
 		"arrowSkin": null,
 		"needsVoices": true,

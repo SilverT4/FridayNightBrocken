@@ -1,0 +1,7 @@
+{
+	"name": "Screen Shake Challenge",
+	"description": "Makes the screen shake in every song. 
+-HARD MODE ONLY-",
+	"restart":false,
+	"color": [240, 240, 240]
+}

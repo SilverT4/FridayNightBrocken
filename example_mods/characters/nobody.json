@@ -1,24 +1,27 @@
 {
 	"animations": [
 		{
+			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"indices": [],
-			"fps": 24,
 			"anim": "idle",
-			"loop": false,
-			"name": "tiny white woman"
+			"fps": 24,
+			"name": "tiny white woman",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
-	"image": "characters/tinyBlueDot",
+	"shitpost": true,
+	"image": "characters/Bambi_ChillingWithTheCorn",
 	"position": [
 		0,
-		0
+		350
 	],
+	"chartingButtonLabelTheme": 16448250,
 	"healthicon": "dunce",
+	"chartingButtonColour": 16448250,
 	"flip_x": false,
 	"healthbar_colors": [
 		223,

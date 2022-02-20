@@ -14,17 +14,6 @@
 		{
 			"loop": false,
 			"offsets": [
-				5,
-				-6
-			],
-			"anim": "singLEFT",
-			"fps": 24,
-			"name": "BF NOTE LEFT0",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
 				-10,
 				-50
 			],
@@ -42,17 +31,6 @@
 			"anim": "singUP",
 			"fps": 24,
 			"name": "BF NOTE UP0",
-			"indices": []
-		},
-		{
-			"loop": false,
-			"offsets": [
-				-48,
-				-7
-			],
-			"anim": "singRIGHT",
-			"fps": 24,
-			"name": "BF NOTE RIGHT0",
 			"indices": []
 		},
 		{
@@ -197,15 +175,40 @@
 			"fps": 24,
 			"name": "bf pre attack",
 			"indices": []
+		},
+		{
+			"offsets": [
+				5,
+				-6
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "BF NOTE LEFT0"
+		},
+		{
+			"offsets": [
+				-48,
+				-7
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "BF NOTE RIGHT0"
 		}
 	],
 	"no_antialiasing": false,
+	"shitpost": true,
 	"image": "characters/FlamethrowingRoboyfriend",
 	"position": [
 		0,
 		350
 	],
+	"chartingButtonLabelTheme": 16448250,
 	"healthicon": "blaze",
+	"chartingButtonColour": 16448250,
 	"flip_x": true,
 	"healthbar_colors": [
 		255,

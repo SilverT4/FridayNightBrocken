@@ -1,4 +1,16 @@
 {
+	"storyName": "i'm on a bussy shart",
+	"difficulties": "",
+	"hideFreeplay": false,
+	"weekBackground": "stage",
+	"weekBefore": "tutorial",
+	"freeplayColor": [
+		146,
+		113,
+		253
+	],
+	"startUnlocked": true,
+	"hideStoryMode": false,
 	"songs": [
 		[
 			"Sugar-Rush",
@@ -44,24 +56,21 @@
 				85,
 				142
 			]
+		],
+		[
+			"Personal-Fuck-You",
+			"blaze",
+			[
+				255,
+				150,
+				0
+			]
 		]
 	],
-	"hideFreeplay": false,
-	"weekBackground": "stage",
-	"difficulties": "",
 	"weekCharacters": [
 		"dad",
 		"bf",
 		"gf"
 	],
-	"storyName": "i'm on a bussy shart",
-	"weekName": "bussy-shart",
-	"freeplayColor": [
-		146,
-		113,
-		253
-	],
-	"hideStoryMode": false,
-	"weekBefore": "tutorial",
-	"startUnlocked": true
+	"weekName": "bussy-shart"
 }
