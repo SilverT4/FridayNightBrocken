@@ -26,7 +26,9 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 using StringTools;
-
+/**
+    This state is a **dangerous state** if you do not know what you are doing!! All of your Friday Night Brocken save data will be erased if you go through with this!
+*/
 class ResetDataState extends MusicBeatState {
     var resetBG:FlxSprite;
     var bf:Boyfriend;
