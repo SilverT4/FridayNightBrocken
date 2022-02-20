@@ -34,7 +34,7 @@ using StringTools;
  */
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Test PlayState'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Test PlayState', 'Reset Save Data'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -60,6 +60,8 @@ class OptionsState extends MusicBeatState
 				trace(System.platformName);
 				openSubState(new editors.TestPlayState.ReleaseRejection());
 				#end
+			case 'Reset Save Data':
+				LoadingState.loadAndSwitchState(new options.ResetDataState());
 		}
 	}
 

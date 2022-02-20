@@ -10,6 +10,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.system.FlxSound;
 import flixel.util.FlxColor;
 import lime.utils.Assets;
 import flixel.FlxSubState;
@@ -33,4 +34,34 @@ class ResetDataState extends MusicBeatState {
     var resetBG:FlxSprite;
     var bf:Boyfriend;
     var confirmButton:FlxButton;
+    /**
+        This sound will be played when you're asked to confirm!
+        */
+    var warningSound:FlxSound;
+    var infoSound:FlxSound;
+
+    public function new() {
+        super();
+        trace('oh god');
+    }
+
+    override function create() {
+        resetBG = new FlxSprite(0).loadGraphic(Paths.image('menuDesat'));
+        resetBG.setGraphicSize(Std.int(resetBG.width * 1.1));
+        resetBG.updateHitbox();
+        resetBG.screenCenter();
+        add(resetBG);
+        bf = new Boyfriend(400, 150, 'bf');
+        bf.dance();
+        add(bf);
+    }
+
+    override function update(elapsed:Float) {
+        if (controls.BACK) {
+            LoadingState.loadAndSwitchState(new OptionsState());
+        }
+        if (bf != null) {
+            bf.update(elapsed);
+        }
+    }
 }
