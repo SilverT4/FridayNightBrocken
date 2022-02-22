@@ -343,8 +343,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 		vore = Random.int(0, (bfRandom.length - 1));
 
-		boyfriend = new Character(840, 170, bfRandom[vore], true);
-		trace('randomly selected ' + bfRandom[vore]);
+		boyfriend = new Character(840, 170, 'ralph', true);
+	//	trace('randomly selected ' + bfRandom[vore]);
 		boyfriend.setGraphicSize(Std.int(boyfriend.width * 0.75));
 		boyfriend.updateHitbox();
 		boyfriend.dance();

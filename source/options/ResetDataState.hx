@@ -86,7 +86,7 @@ class ResetDataState extends MusicBeatState {
         if (bf != null && bf.visible) {
             bf.update(elapsed);
             if (bf.animation.curAnim.finished) {
-                bf.playAnim('scared');
+                bf.dance();
             }
         }
         if (confirmButton != null && confirmButton.visible) {
@@ -104,6 +104,9 @@ class ConfirmResetData extends MusicBeatSubstate {
     var warnBG:FlxSprite;
     var okButton:FlxButton;
     var cancelButton:FlxButton;
+    var warnText:FlxText;
+    var speen:FlxSprite;
+    var finishButton:FlxButton;
 
     public function new() {
         super();
@@ -117,11 +120,68 @@ class ConfirmResetData extends MusicBeatSubstate {
         if (controls.BACK) {
             close();
         }
+
+        if (okButton != null && okButton.alive) {
+            okButton.update(elapsed);
+        }
+        if (cancelButton != null && cancelButton.alive) {
+            cancelButton.update(elapsed);
+        }
+        if (finishButton != null && finishButton.alive) {
+            finishButton.update(elapsed);
+        }
+        if (warnText != null) {
+            warnText.update(elapsed);
+        }
+        if (speen != null && speen.alive) {
+            speen.update(elapsed);
+        }
     }
     override function create() {
+        var overlays:FlxSprite = new FlxSprite(0);
+        overlays.makeGraphic(1280, 720, FlxColor.BLACK);
+        overlays.alpha = 0.69;
+        add(overlays);
         warnBG = new FlxSprite(100);
         warnBG.makeGraphic(1080, 520, FlxColor.WHITE);
         warnBG.screenCenter();
         add(warnBG);
+        warnText = new FlxText(0, 150, 800, 'Are you COMPLETELY sure you want to reset your save data? This action is irreversable!', 24);
+        warnText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.RED, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        warnText.screenCenter(X);
+        add(warnText);
+        okButton = new FlxButton(450, 450, 'RESET', function() {
+            trace('ERASING!');
+            okButton.kill();
+            cancelButton.kill();
+            warnText.text = 'Erasing your save data...';
+            speen.revive();
+            new FlxTimer().start(3, function (tmr:FlxTimer) {
+                FlxG.save.erase();
+                speen.kill();
+                warnText.text = 'Save data erased. You must now restart the game.';
+                finishButton.revive();
+            });
+        });
+        okButton.color = FlxColor.RED;
+        okButton.label.setFormat(Paths.font('funny.ttf'), 14, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.RED);
+        add(okButton);
+        cancelButton = new FlxButton(800, 450, 'Never mind', function() {
+            close();
+        });
+        add(cancelButton);
+        finishButton = new FlxButton(800, 450, 'Done', function() {
+            trace('exiting');
+            Sys.exit(69);
+        });
+        add(finishButton);
+        speen = new FlxSprite(Std.int(1080 - 48), Std.int(520 - 48));
+        speen.frames = Paths.getSparrowAtlas('editor/speen');
+        speen.animation.addByPrefix('speen', 'spinner go brr', 60, true);
+        speen.animation.play('speen');
+        add(speen);
+        speen.kill();
+        finishButton.kill();
+        warnSound.play();
     }
 }

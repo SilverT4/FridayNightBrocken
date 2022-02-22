@@ -29,7 +29,7 @@ class PauseSubState extends MusicBeatSubstate
 
 	public static var transCamera:FlxCamera;
 
-	public function new(x:Float, y:Float)
+	public function new(x:Float, y:Float, ?sus:Bool = false)
 	{
 		super();
 		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
@@ -40,14 +40,15 @@ class PauseSubState extends MusicBeatSubstate
 			menuItemsOG.insert(3, 'Toggle Botplay');
 			menuItemsOG.insert(4, 'Toggle Trollin');
 		}
-		menuItems = menuItemsOG;
+		if (!sus) menuItems = menuItemsOG;
 
 		for (i in 0...CoolUtil.difficulties.length) {
 			var diff:String = '' + CoolUtil.difficulties[i];
 			difficultyChoices.push(diff);
 		}
-		difficultyChoices.push('BACK');
-
+		// difficultyChoices.push('BACK');
+		if (sus) difficultyChoices.push('RETURN TO BUTTON MODE') else difficultyChoices.push('BACK');
+		if (sus) menuItems = difficultyChoices;
 		pauseMusic = new FlxSound().loadEmbedded(Paths.music('breakfast'), true, true);
 		pauseMusic.volume = 0;
 		pauseMusic.play(false, FlxG.random.int(0, Std.int(pauseMusic.length / 2)));
@@ -149,7 +150,7 @@ class PauseSubState extends MusicBeatSubstate
 		if (accepted)
 		{
 			var daSelected:String = menuItems[curSelected];
-			if(daSelected != 'BACK' && difficultyChoices.contains(daSelected)) {
+			if(daSelected != 'BACK' && daSelected != 'RETURN TO BUTTON MODE' && difficultyChoices.contains(daSelected)) {
 				var name:String = PlayState.SONG.song.toLowerCase();
 				var poop = Highscore.formatSong(name, curSelected);
 				PlayState.SONG = Song.loadFromJson(poop, name);
@@ -202,6 +203,9 @@ class PauseSubState extends MusicBeatSubstate
 				case 'BACK':
 					menuItems = menuItemsOG;
 					regenMenu();
+				
+				case 'RETURN TO BUTTON MODE':
+					close();
 			}
 		}
 	}
@@ -272,4 +276,6 @@ class PauseSubState extends MusicBeatSubstate
 		curSelected = 0;
 		changeSelection();
 	}
+
+	public static var instance(default, null):PauseSubState;
 }
