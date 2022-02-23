@@ -2943,6 +2943,8 @@ class PlayState extends MusicBeatState
 				if (value1.length >= 1) {
 					triggerEventNote('Change Character', '0', value1); // this is a funny trick tho
 				}
+			case 'Well Well Well': //WELL WELL WELL
+				FlxG.sound.play(Paths.sound('daFunniWell'), 2);
 			case 'Set GF Speed':
 				var value:Int = Std.parseInt(value1);
 				if(Math.isNaN(value)) value = 1;
@@ -4087,6 +4089,14 @@ class PlayState extends MusicBeatState
 						if(boyfriend.animation.getByName('hurt') != null) {
 							boyfriend.playAnim('hurt', true);
 							boyfriend.specialAnim = true;
+							if (weDoALittleTrollin) {
+								trace('WHAT THE FUCK');
+								FlxG.log.warn('The note we just hit was a hurt note, what the fuck?!');
+								/* susText.text = 'Suspicious hurt note hit';
+								new FlxTimer().start(1, function(tmr:FlxTimer) {
+									susText.text = ''; //reset sustext bc yes
+								}); */
+							}
 						}
 					case 'Vanny Note':
 						if(boyfriend.animation.getByName('hurt') != null) {
