@@ -98,6 +98,7 @@ class SelectChara extends MusicBeatState {
     var fnameDisplay:FlxText;
     var loadNotice:FlxText;
     var timeElapse:FlxText;
+    var startingSong:Bool = false;
 
     public function new() {
         super();
@@ -194,6 +195,7 @@ class SelectChara extends MusicBeatState {
         // leftButton.cameras = [camButtons];
         add(leftButton);
         startButton = new FlxButton(0, FlxG.height - 100, 'START', function() {
+            startingSong = true;
             beginSong(daBoyf.curCharacter);
         });
         startButton.color = FlxColor.LIME;
@@ -215,7 +217,7 @@ class SelectChara extends MusicBeatState {
         fnameDisplay.setFormat(Paths.font('vcr.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(fnameDisplay);
         backButton = new FlxExtendedSprite(0,0);
-        backButton.frames = Paths.getSparrowAtlas(Paths.image('debug/backButton'));
+        backButton.frames = Paths.getSparrowAtlas('debug/backButton');
         backButton.animation.addByIndices('idle', 'Arrow BACK', [0, 1], null, 24);
         backButton.animation.addByIndices('hover-Start', 'Arrow BACK', [2, 3, 4, 5], null, 24);
         backButton.animation.addByIndices('hover-Hold', 'Arrow BACK', [4, 5], null, 24);
@@ -314,7 +316,7 @@ class SelectChara extends MusicBeatState {
             trace('editing ' + daBoyf.curCharacter);
         }
 
-        if (backButton != null) {
+        if (backButton != null && backButton.isOnScreen()) {
             backButton.update(elapsed);
 
             if (backButton.mouseOver) {
@@ -332,6 +334,9 @@ class SelectChara extends MusicBeatState {
             if (backButton.isPressed) {
                 backButton.animation.play('clicked');
                 exitMenu();
+            }
+            if (startingSong) {
+                backButton.clickable = false;
             }
         }
     }
