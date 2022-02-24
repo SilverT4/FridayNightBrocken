@@ -214,6 +214,16 @@ class SelectChara extends MusicBeatState {
         fnameDisplay = new FlxText(0, 20, FlxG.width, 'Boyfriend', 64);
         fnameDisplay.setFormat(Paths.font('vcr.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(fnameDisplay);
+        backButton = new FlxExtendedSprite(0,0);
+        backButton.frames = Paths.getSparrowAtlas(Paths.image('debug/backButton'));
+        backButton.animation.addByIndices('idle', 'Arrow BACK', [0, 1], null, 24);
+        backButton.animation.addByIndices('hover-Start', 'Arrow BACK', [2, 3, 4, 5], null, 24);
+        backButton.animation.addByIndices('hover-Hold', 'Arrow BACK', [4, 5], null, 24);
+        backButton.animation.addByIndices('hover-Stop', 'Arrow BACK', [2, 3, 0, 1], null, 24);
+        backButton.animation.addByPrefix('clicked', 'Arrow BACK', 48, true);
+        backButton.animation.play('idle');
+        // backButton.mousePressedCallback(backButton, backButton.mouseX, backButton.mouseY);
+        add(backButton);
     }
     /**Starts the song. How much more simply would I need to explain that?*/
     inline function beginSong(character:String = 'bf') {
@@ -302,10 +312,36 @@ class SelectChara extends MusicBeatState {
 
         if (daBoyf != null && FlxG.keys.justPressed.E) {
             trace('editing ' + daBoyf.curCharacter);
+        }
 
+        if (backButton != null) {
+            backButton.update(elapsed);
+
+            if (backButton.mouseOver) {
+                backButton.animation.play('hover-Start');
+            }
+            if (backButton.animation.curAnim.finished && backButton.animation.curAnim.name == 'hover-Start' && backButton.mouseOver) {
+                backButton.animation.play('hover-Hold');
+            }
+            if (backButton.animation.curAnim.name == 'hover-Hold' && !backButton.mouseOver) {
+                backButton.animation.play('hover-Stop');
+            }
+            if (backButton.animation.curAnim.finished && backButton.animation.curAnim.name == 'hover-Stop') {
+                backButton.animation.play('idle');
+            }
+            if (backButton.isPressed) {
+                backButton.animation.play('clicked');
+                exitMenu();
+            }
         }
     }
-
+    function exitMenu() {
+        if (PlayState.isStoryMode) {
+            MusicBeatState.switchState(new StoryMenuState());
+        } else {
+            MusicBeatState.switchState(new FreeplayState());
+        }
+    }
     public static var instance:SelectChara;
 }
 
