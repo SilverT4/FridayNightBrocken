@@ -39,6 +39,7 @@ import Boyfriend as Bruhfriend;
 
 #if sys
 import sys.FileSystem;
+import sys.FileStat;
 #end
 
 using StringTools;
@@ -95,6 +96,8 @@ class SelectChara extends MusicBeatState {
     var charShit:CharSelShit;
     /**displays friendly name*/
     var fnameDisplay:FlxText;
+    var loadNotice:FlxText;
+    var timeElapse:FlxText;
 
     public function new() {
         super();
@@ -114,6 +117,14 @@ class SelectChara extends MusicBeatState {
         FlxG.cameras.add(camButtons);
         add(camButtons);
         trace(FlxG.cameras.list);
+        charShit = cast Json.parse(SelectableCreatorState.defaults);
+        loadNotice = new FlxText(0, 0, FlxG.width, 'If you see this for more than 30 seconds, press ESCAPE to exit the menu!');
+        loadNotice.setFormat(Paths.font('funny.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        loadNotice.screenCenter();
+        add(loadNotice);
+        /*timeElapse = new FlxText(0, FlxG.height - 24, FlxG.width, null, 24);
+        timeElapse.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.GREEN);
+        add(timeElapse);*/
         checkSong();
     }
 
@@ -135,17 +146,17 @@ class SelectChara extends MusicBeatState {
             bgToUse = Paths.image('songback/' + PlayState.SONG.song.toLowerCase());
         }
         addMoreBoyfriends();
-        createDaUI();
     }
     /**adds player characters in mods/selectable*/
     function addMoreBoyfriends() {
         trace('amogus');
-        if (FileSystem.exists(Paths.mods('selectable'))) {
-            var path:String = Paths.modFolders('selectable');
+        if (FileSystem.exists('mods/selectable')) {
+            var path:String = 'mods/selectable';
             var shit:Array<String> = [];
-            var jsons:Array<String> = FileSystem.readDirectory(Paths.modFolders('selectable'));
+            var jsons:Array<String> = FileSystem.readDirectory('mods/selectable');
             for (i in 0...jsons.length) {
                 checkEntry(jsons[i]);
+                loadNotice.text = 'Press SPACE to continue';
             }
         }
     }
@@ -153,11 +164,15 @@ class SelectChara extends MusicBeatState {
         if (input.endsWith('.txt')) {
             trace('skip this');
         } else {
-            bfVariations.push(input.substring(0, Std.int(input.length - 4)));
+            trace(input.substring(0, Std.int(input.length - 5)));
+            bfVariations.push(input.substring(0, Std.int(input.length - 5)));
+            trace(bfVariations);
+            FlxG.log.notice(bfVariations);
         }
     }
     /**this'll be called after checksong finishes*/
     function createDaUI() {
+        loadNotice.kill();
         songBg = new FlxSprite();
         songBg.loadGraphic(bgToUse);
         if (bgToUse == Paths.image('menuDesat')) {
@@ -225,7 +240,7 @@ class SelectChara extends MusicBeatState {
         daBoyf.screenCenter();
         add(daBoyf);
         if (FileSystem.exists(Paths.modsSelectable(daBoyf.curCharacter))) {
-            var bullshit = cast Json.parse(Paths.modsSelectable(daBoyf.curCharacter));
+            var bullshit = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(daBoyf.curCharacter)));
             trace(bullshit);
             charShit.characterName = bullshit.characterName;
             charShit.deathCharacter = bullshit.deathCharacter;
@@ -252,6 +267,10 @@ class SelectChara extends MusicBeatState {
         if (startButton != null && startButton.isOnScreen()) {
             startButton.update(elapsed);
         }
+
+        if (rightButton != null && rightButton.isOnScreen()) {
+            rightButton.update(elapsed);
+        }
         
         if (fnameDisplay != null) {
             fnameDisplay.update(elapsed);
@@ -259,11 +278,26 @@ class SelectChara extends MusicBeatState {
                 fnameDisplay.text = charShit.friendlyName;
             }
         }
+        if (timeElapse != null) {
+            timeElapse.update(elapsed);
+            timeElapse.text = Std.string(elapsed);
+        }
+        if (loadNotice != null) {
+            loadNotice.update(elapsed);
+        }
+        if (FlxG.keys.justPressed.SPACE && loadNotice.text == 'Press SPACE to continue' && loadNotice != null) {
+            createDaUI();
+        }
 
         if (FlxG.keys.justPressed.L && !susOver) {
             daBoyf.kill();
             susOver = true;
             openSubState(new GameOverPreview(daBoyf.getGraphicMidpoint().x, daBoyf.getGraphicMidpoint().y, daBoyf.curCharacter)); //daBoyf.curCharacter is a placeholder until I set up the actual selectable shit!
+        }
+
+        if (daBoyf != null && FlxG.keys.justPressed.E) {
+            trace('editing ' + daBoyf.curCharacter);
+
         }
     }
 
@@ -275,7 +309,7 @@ class SelectChara extends MusicBeatState {
     This state allows you to create a selectable JSON.*/
 class SelectableCreatorState extends MusicBeatState {
     /**Template*/
-    var defaults:String = '{
+    public static var defaults:String = '{
         "friendlyName": "Boyfriend",
         "characterName": "bf",
         "hasHey": true,
@@ -297,6 +331,11 @@ class SelectableCreatorState extends MusicBeatState {
     /**Camera for the UI elements.*/
     var camBruh:FlxCamera;
     
+    public function new(?chara:String = 'snowcon') {
+        super();
+        if (chara != null) characterName = chara;
+    }
+
 }
 /**
     bruh*/

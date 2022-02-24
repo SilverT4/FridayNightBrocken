@@ -1,5 +1,6 @@
 package editors;
 
+import flixel.util.FlxTimer;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -27,7 +28,8 @@ class MasterEditorMenu extends MusicBeatState
 		'Dialogue Portrait Editor',
 		'Character Editor',
 		'Chart Editor',
-		'Unlock Editor'
+		'Unlock Editor',
+		'Selectable Character Editor'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -132,6 +134,8 @@ class MasterEditorMenu extends MusicBeatState
 						LoadingState.loadAndSwitchState(new UnlockEditorState(true), false);
 					else
 						LoadingState.loadAndSwitchState(new UnlockEditorState(), false);
+				case 'Selectable Character Editor':
+					showTempMsg();
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
@@ -156,7 +160,26 @@ class MasterEditorMenu extends MusicBeatState
 		}
 		super.update(elapsed);
 	}
-
+	var noteBg:FlxSprite;
+	var noteBox:FlxSprite;
+	var noteTxt:FlxText;
+	function showTempMsg() {
+		noteBg = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+		noteBg.alpha = 0.69;
+		noteBg.screenCenter();
+		add(noteBg);
+		noteBox = new FlxSprite(0).makeGraphic(FlxG.width - 250, FlxG.height - 200, FlxColor.WHITE);
+		noteBox.screenCenter();
+		add(noteBox);
+		noteTxt = new FlxText(0, noteBox.getGraphicMidpoint().y, FlxG.width - 250, "This editor isn't ready just yet. Come back another time.");
+		noteTxt.setFormat(Paths.font('funny.ttf'), 48, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLUE);
+		add(noteTxt);
+		new FlxTimer().start(3, function(tmr:FlxTimer) {
+			noteBg.destroy();
+			noteBox.destroy();
+			noteTxt.destroy();
+		});
+	}
 	function changeSelection(change:Int = 0)
 	{
 		FlxG.sound.play(Paths.sound('scrollMenu'), 0.4);
