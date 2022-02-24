@@ -36,6 +36,7 @@ import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
 import Boyfriend as Bruhfriend;
+import Character.CharacterFile;
 
 #if sys
 import sys.FileSystem;
@@ -100,6 +101,10 @@ class SelectChara extends MusicBeatState {
     var isModSong:Bool = false;
     var loadNotice:FlxText;
     var timeElapse:FlxText;
+    /**just so i can get colours from gf if player2 is nobody*/
+    var babaGrill:CharacterFile;
+    /**get dad colours*/
+    var daddyIssues:CharacterFile;
     var startingSong:Bool = false;
     /**This contains a list of base game songs. With each new **base game** week, I'll update it.*/
     var baseSongs:Array<String> = [
@@ -173,6 +178,22 @@ class SelectChara extends MusicBeatState {
         }
         if (!baseSongs.contains(PlayState.SONG.song.toLowerCase())) isModSong = true;
         addMoreBoyfriends();
+        getHealthColours();
+    }
+    /**get the health colours*/
+    inline function getHealthColours() {
+        var feet:String;
+        if (PlayState.SONG.player2 == 'nobody') {
+            feet = PlayState.SONG.player3;
+        } else {
+            feet = PlayState.SONG.player2;
+        }
+        var semen = cast Json.parse(sys.io.File.getContent(Paths.characterJson(feet)));
+        if (feet == PlayState.SONG.player3) {
+            babaGrill = semen;
+        } else {
+            daddyIssues = semen;
+        }
     }
     /**adds player characters in mods/selectable*/
     function addMoreBoyfriends() {
@@ -203,8 +224,13 @@ class SelectChara extends MusicBeatState {
         FlxG.sound.playMusic(Paths.music('mktFriends'));
         songBg = new FlxSprite();
         songBg.loadGraphic(bgToUse);
-        if (bgToUse == Paths.image('menuDesat')) {
+        /* if (bgToUse == Paths.image('menuDesat')) {
             songBg.color = 0xFFA6D388;
+        } */
+        if (PlayState.SONG.player2 == 'nobody') {
+            songBg.color = FlxColor.fromRGB(babaGrill.healthbar_colors[0], babaGrill.healthbar_colors[1], babaGrill.healthbar_colors[2]);
+        } else {
+            songBg.color = FlxColor.fromRGB(daddyIssues.healthbar_colors[0], daddyIssues.healthbar_colors[1], daddyIssues.healthbar_colors[2]);
         }
         songBg.scrollFactor.set();
         songBg.screenCenter();
@@ -343,7 +369,7 @@ class SelectChara extends MusicBeatState {
         if (FlxG.keys.justPressed.SPACE && loadNotice.text == 'Press SPACE to continue' && loadNotice != null) {
             createDaUI();
         }
-        if (FlxG.keys.justPressed.L && isModSong && !showingBgMsg) {
+        if (FlxG.keys.justPressed.B && isModSong && !showingBgMsg) {
             showBgMsg();
         }
         if (FlxG.keys.justPressed.L && !susOver) {
@@ -396,6 +422,7 @@ class SelectChara extends MusicBeatState {
         add(msgBg);
         var msgBox:FlxSprite = new FlxSprite(0).makeGraphic(FlxG.width - 200, FlxG.height - 200, FlxColor.WHITE);
         msgBox.screenCenter();
+        add(msgBox);
         var msg:FlxText = new FlxText(0, 0, FlxG.width - 200, 'To make a custom background for your song and display it here, just do the following steps:\n1. Play your song. Get to a point where you think it would be good to take your screenshot.\n2. Take a screenshot of your game window (preferably without the titlebar) and save it to the following path in your game files:\nmods/images/songBack/' + PlayState.SONG.song.toLowerCase() + '.png\n3. Relaunch the game and your background should appear!\n\nThis window will close automatically in 5 seconds.', 24);
         msg.setFormat(Paths.font('funny.ttf'), 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLUE);
         msg.screenCenter();

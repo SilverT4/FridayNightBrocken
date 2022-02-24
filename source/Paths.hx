@@ -131,13 +131,17 @@ class Paths
 	}
 
 	inline static public function characterJson(key:String, ?library:String) {
-		return getPath('characters/$key.json', TEXT, library);
+		if (!FileSystem.exists(modFolders('characters/$key.json'))) {
+			return getPath('characters/$key.json', TEXT, library);
+		} else {
+			return modFolders('characters/$key.json');
+		}
 
 	}
 
 	inline static public function modsCharacterJson(key:String, ?library:String) {
 		#if MODS_ALLOWED
-		if (!FileSystem.exists('mods/characters/$key.json')) {
+		if (!FileSystem.exists('mods/$currentModDirectory/characters/$key.json')) {
 			return null;
 		} else {
 			return getPath('characters/$key.json', TEXT, library);
