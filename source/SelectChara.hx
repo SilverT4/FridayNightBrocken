@@ -93,6 +93,8 @@ class SelectChara extends MusicBeatState {
     /**
         this gets set with updatebf if available*/
     var charShit:CharSelShit;
+    /**displays friendly name*/
+    var fnameDisplay:FlxText;
 
     public function new() {
         super();
@@ -138,7 +140,7 @@ class SelectChara extends MusicBeatState {
     /**adds player characters in mods/selectable*/
     function addMoreBoyfriends() {
         trace('amogus');
-        if (FileSystem.exists(Paths.modFolders('selectable'))) {
+        if (FileSystem.exists(Paths.mods('selectable'))) {
             var path:String = Paths.modFolders('selectable');
             var shit:Array<String> = [];
             var jsons:Array<String> = FileSystem.readDirectory(Paths.modFolders('selectable'));
@@ -186,6 +188,16 @@ class SelectChara extends MusicBeatState {
         startButton.updateHitbox();
         startButton.screenCenter(X);
         add(startButton);
+        rightButton = new FlxButton(FlxG.width - 250, FlxG.height - 100, '->', function() {
+            updateBoyfriend(1);
+        });
+        rightButton.color = FlxColor.BLUE;
+        rightButton.label.color = FlxColor.BLACK;
+        // rightButton.cameras = [camButtons];
+        add(rightButton);
+        fnameDisplay = new FlxText(0, 20, FlxG.width, 'Boyfriend', 64);
+        fnameDisplay.setFormat(Paths.font('vcr.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        add(fnameDisplay);
     }
     /**Starts the song. How much more simply would I need to explain that?*/
     inline function beginSong(character:String = 'bf') {
@@ -212,8 +224,8 @@ class SelectChara extends MusicBeatState {
         daBoyf.flipX = true;
         daBoyf.screenCenter();
         add(daBoyf);
-        if (FileSystem.exists(Paths.modFolders('selectable/' + daBoyf.curCharacter + '.json'))) {
-            var bullshit = Json.parse(Paths.modFolders('selectable/' + daBoyf.curCharacter + '.json'));
+        if (FileSystem.exists(Paths.modsSelectable(daBoyf.curCharacter))) {
+            var bullshit = cast Json.parse(Paths.modsSelectable(daBoyf.curCharacter));
             trace(bullshit);
             charShit.characterName = bullshit.characterName;
             charShit.deathCharacter = bullshit.deathCharacter;
@@ -239,6 +251,13 @@ class SelectChara extends MusicBeatState {
 
         if (startButton != null && startButton.isOnScreen()) {
             startButton.update(elapsed);
+        }
+        
+        if (fnameDisplay != null) {
+            fnameDisplay.update(elapsed);
+            if (fnameDisplay.text != charShit.friendlyName) {
+                fnameDisplay.text = charShit.friendlyName;
+            }
         }
 
         if (FlxG.keys.justPressed.L && !susOver) {

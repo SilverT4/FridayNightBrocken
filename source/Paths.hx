@@ -44,7 +44,9 @@ class Paths
 		'stages',
 		'weeks',
 		'fonts',
-		'scripts'
+		'scripts',
+		'unlockable',
+		'selectable'
 	];
 	#end
 
@@ -399,6 +401,10 @@ class Paths
 
 	inline static public function modsJson(key:String) {
 		return modFolders('data/' + key + '.json');
+	}
+
+	inline static public function modsSelectable(key:String) {
+		return modFolders('selectable/' + key + '.json');
 	}
 
 	inline static public function modsVideo(key:String) {
