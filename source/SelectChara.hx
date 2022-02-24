@@ -224,6 +224,9 @@ class SelectChara extends MusicBeatState {
         backButton.animation.addByIndices('hover-Stop', 'Arrow BACK', [2, 3, 0, 1], null, 24);
         backButton.animation.addByPrefix('clicked', 'Arrow BACK', 48, true);
         backButton.animation.play('idle');
+        backButton.setGraphicSize(Std.int(backButton.width * 0.69));
+        backButton.updateHitbox();
+        backButton.clickable = true;
         // backButton.mousePressedCallback(backButton, backButton.mouseX, backButton.mouseY);
         add(backButton);
     }
