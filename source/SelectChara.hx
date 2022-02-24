@@ -217,7 +217,7 @@ class SelectChara extends MusicBeatState {
         fnameDisplay.setFormat(Paths.font('vcr.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(fnameDisplay);
         backButton = new FlxExtendedSprite(0,0);
-        backButton.frames = Paths.getSparrowAtlas('debug/backButton');
+        backButton.frames = Paths.getSparrowAtlas('debug/backArrow');
         backButton.animation.addByIndices('idle', 'Arrow BACK', [0, 1], null, 24);
         backButton.animation.addByIndices('hover-Start', 'Arrow BACK', [2, 3, 4, 5], null, 24);
         backButton.animation.addByIndices('hover-Hold', 'Arrow BACK', [4, 5], null, 24);
