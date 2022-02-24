@@ -91,9 +91,8 @@ class SelectChara extends MusicBeatState {
         bf override for playstate in story mode*/
     public var bfOverride:String;
     /**
-        this array will contain the values in a character's selectable json
-        **Dynamic to allow for this!***/
-    var charShit:Array<Dynamic>;
+        this gets set with updatebf if available*/
+    var charShit:CharSelShit;
 
     public function new() {
         super();
@@ -183,6 +182,7 @@ class SelectChara extends MusicBeatState {
         startButton.label.color = FlxColor.WHITE;
         startButton.setGraphicSize(Std.int(startButton.width * 3));
         startButton.label.setFormat(null, 48);
+        startButton.label.fieldWidth *= 3;
         startButton.updateHitbox();
         startButton.screenCenter(X);
         add(startButton);
@@ -196,9 +196,31 @@ class SelectChara extends MusicBeatState {
         bfOverride = character;
         LoadingState.loadAndSwitchState(new PlayState());
     }
+    /**used for updatebf*/
+    var chump:Int = 0;
     /**Updates the bf on screen.*/
     inline function updateBoyfriend(?change:Int = 0) {
         trace('sus');
+        chump += change;
+        if (chump < 0) {
+            chump = bfVariations.length - 1;
+        } else if (chump > bfVariations.length) {
+            chump = 0;
+        }
+        daBoyf.destroy();
+        daBoyf = new Character(0, 0, bfVariations[chump]);
+        daBoyf.flipX = true;
+        daBoyf.screenCenter();
+        add(daBoyf);
+        if (FileSystem.exists(Paths.modFolders('selectable/' + daBoyf.curCharacter + '.json'))) {
+            var bullshit = Json.parse(Paths.modFolders('selectable/' + daBoyf.curCharacter + '.json'));
+            trace(bullshit);
+            charShit.characterName = bullshit.characterName;
+            charShit.deathCharacter = bullshit.deathCharacter;
+            charShit.friendlyName = bullshit.friendlyName;
+            charShit.hasHey = bullshit.hasHey;
+            charShit.heyName = bullshit.heyName;
+        }
     }
     public var susOver:Bool = false;
     override function update(elapsed:Float) {
