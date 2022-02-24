@@ -96,9 +96,34 @@ class SelectChara extends MusicBeatState {
     var charShit:CharSelShit;
     /**displays friendly name*/
     var fnameDisplay:FlxText;
+    /**if this is true, the game will check for a songBg and if none is found, display a notice on screen to tell the player how to create one.*/
+    var isModSong:Bool = false;
     var loadNotice:FlxText;
     var timeElapse:FlxText;
     var startingSong:Bool = false;
+    /**This contains a list of base game songs. With each new **base game** week, I'll update it.*/
+    var baseSongs:Array<String> = [
+        'tutorial',
+        'bopeebo',
+        'fresh',
+        'dad-battle',
+        'spookeez',
+        'south',
+        'monster',
+        'pico',
+        'philly-nice',
+        'blammed',
+        'satin-panties',
+        'milf',
+        'high',
+        'winter-horrorland',
+        'eggnog',
+        'cocoa',
+        'senpai',
+        'roses',
+        'thorns',
+        'test'
+    ];
 
     public function new() {
         super();
@@ -134,18 +159,19 @@ class SelectChara extends MusicBeatState {
         if (PlayState.SONG == null) {
             PlayState.SONG = Song.loadFromJson('test', 'test');
         }
-        if (!FileSystem.exists('assets/images/songback/' + PlayState.SONG.song.toLowerCase() + '.png')) {
+        if (!FileSystem.exists('assets/images/songBack/' + PlayState.SONG.song.toLowerCase() + '.png')) {
             trace('must not be base game');
-            if (!FileSystem.exists(Paths.modsImages('songback/' + PlayState.SONG.song.toLowerCase()))) {
+            if (!FileSystem.exists(Paths.modsImages('songBack/' + PlayState.SONG.song.toLowerCase()))) {
                 trace('lets use default menu bg');
                 bgToUse = Paths.image('menuDesat');
             } else {
                 trace('sus');
-                bgToUse = Paths.modsImages('songback/' + PlayState.SONG.song.toLowerCase());
+                bgToUse = Paths.modsImages('songBack/' + PlayState.SONG.song.toLowerCase());
             }
         } else {
-            bgToUse = Paths.image('songback/' + PlayState.SONG.song.toLowerCase());
+            bgToUse = Paths.image('songBack/' + PlayState.SONG.song.toLowerCase());
         }
+        if (!baseSongs.contains(PlayState.SONG.song.toLowerCase())) isModSong = true;
         addMoreBoyfriends();
     }
     /**adds player characters in mods/selectable*/
@@ -174,9 +200,7 @@ class SelectChara extends MusicBeatState {
     /**this'll be called after checksong finishes*/
     function createDaUI() {
         loadNotice.kill();
-        if (!FlxG.sound.music.playing) {
-            FlxG.sound.playMusic(Paths.music('mktFriends', 'shared'));
-        }
+        FlxG.sound.playMusic(Paths.music('mktFriends'));
         songBg = new FlxSprite();
         songBg.loadGraphic(bgToUse);
         if (bgToUse == Paths.image('menuDesat')) {
@@ -185,6 +209,9 @@ class SelectChara extends MusicBeatState {
         songBg.scrollFactor.set();
         songBg.screenCenter();
         add(songBg);
+        var customBgNote:FlxText = new FlxText(0, FlxG.height - 24, FlxG.width, 'You can put your own background here! Press B to find out how.', 24);
+        customBgNote.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.BLUE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.WHITE);
+        if (bgToUse == Paths.image('menuDesat') && isModSong) add(customBgNote);
         daBoyf = new Character(0, 0, PlayState.SONG.player1);
         daBoyf.flipX = true;
         daBoyf.updateHitbox();
@@ -316,7 +343,9 @@ class SelectChara extends MusicBeatState {
         if (FlxG.keys.justPressed.SPACE && loadNotice.text == 'Press SPACE to continue' && loadNotice != null) {
             createDaUI();
         }
-
+        if (FlxG.keys.justPressed.L && isModSong && !showingBgMsg) {
+            showBgMsg();
+        }
         if (FlxG.keys.justPressed.L && !susOver) {
             daBoyf.kill();
             susOver = true;
@@ -357,6 +386,26 @@ class SelectChara extends MusicBeatState {
         } else {
             MusicBeatState.switchState(new FreeplayState());
         }
+    }
+    var showingBgMsg:Bool = false;
+    function showBgMsg() {
+        showingBgMsg = true;
+        var msgBg:FlxSprite = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK);
+        msgBg.alpha = 0.69;
+        msgBg.screenCenter();
+        add(msgBg);
+        var msgBox:FlxSprite = new FlxSprite(0).makeGraphic(FlxG.width - 200, FlxG.height - 200, FlxColor.WHITE);
+        msgBox.screenCenter();
+        var msg:FlxText = new FlxText(0, 0, FlxG.width - 200, 'To make a custom background for your song and display it here, just do the following steps:\n1. Play your song. Get to a point where you think it would be good to take your screenshot.\n2. Take a screenshot of your game window (preferably without the titlebar) and save it to the following path in your game files:\nmods/images/songBack/' + PlayState.SONG.song.toLowerCase() + '.png\n3. Relaunch the game and your background should appear!\n\nThis window will close automatically in 5 seconds.', 24);
+        msg.setFormat(Paths.font('funny.ttf'), 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLUE);
+        msg.screenCenter();
+        add(msg);
+        new FlxTimer().start(5, function(tmr:FlxTimer) {
+            showingBgMsg = false;
+            msgBg.destroy();
+            msgBox.destroy();
+            msg.destroy();
+        });
     }
     public static var instance:SelectChara;
 }
