@@ -1,5 +1,11 @@
 package;
 
+import openfl.events.IOErrorEvent;
+import openfl.events.Event;
+import openfl.net.FileReference;
+import flixel.addons.ui.FlxUI;
+import flixel.addons.ui.FlxUICheckBox;
+import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
@@ -463,12 +469,159 @@ class SelectableCreatorState extends MusicBeatState {
     var UI_shit:FlxUITabMenu;
     /**Camera for the UI elements.*/
     var camBruh:FlxCamera;
+    /**joe mama*/
+    var joe:CharSelShit;
+    /**get list of current selectable characters*/
+    var selectables:Array<String> = [];
+    /**this is the bg*/
+    var cumShot:FlxSprite;
+    /**show the bf*/
+    var boyWitDaSHOES:Boyfriend;
+    /**show death*/
+    var skelly:Boyfriend;
     
     public function new(?chara:String = 'snowcon') {
         super();
         if (chara != null) characterName = chara;
+        camBruh = new FlxCamera();
+        camBruh.bgColor.alpha = 0;
+        FlxG.cameras.add(camBruh);
+        if (FileSystem.exists(Paths.modsSelectable(characterName))) joe = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(characterName)));
     }
 
+    override function create() {
+        if (!FlxG.sound.music.playing) {
+            FlxG.sound.playMusic(Paths.music('desktop'));
+        }
+        cumShot = new FlxSprite(0).loadGraphic(Paths.image('menuDesat'));
+        cumShot.setGraphicSize(Std.int(cumShot.width * 1.1));
+        cumShot.scrollFactor.set();
+        cumShot.screenCenter();
+        add(cumShot);
+
+        boyWitDaSHOES = new Boyfriend(0, 0, joe.characterName);
+        boyWitDaSHOES.x += boyWitDaSHOES.positionArray[0];
+        boyWitDaSHOES.y += boyWitDaSHOES.positionArray[1];
+        add(boyWitDaSHOES);
+
+        skelly = new Boyfriend(0, 0, joe.deathCharacter);
+        skelly.x += skelly.positionArray[0] + 350;
+        skelly.y = boyWitDaSHOES.y;
+        add(skelly);
+
+        var tabs = [
+            {name: 'Settings', label: 'Settings'},
+        ];
+
+        UI_shit = new FlxUITabMenu(null, tabs, true);
+        UI_shit.cameras = [camBruh];
+        UI_shit.resize(350, 250);
+        UI_shit.x = FlxG.width - 275;
+        UI_shit.y = 25;
+        UI_shit.scrollFactor.set();
+        add(UI_shit);
+
+        addCumUI();
+    }
+    var fnameInput:FlxUIInputText;
+    var cnameInput:FlxUIInputText;
+    var creload:FlxButton;
+    var heyBox:FlxUICheckBox;
+    var hnameInput:FlxUIInputText;
+    var dnameInput:FlxUIInputText;
+    var saveButton:FlxButton;
+    function addCumUI() {
+        var tab_group = new FlxUI(null, UI_shit);
+        tab_group.name = "Settings";
+
+        fnameInput = new FlxUIInputText(10, 30, 200, joe.friendlyName, 8);
+        cnameInput = new FlxUIInputText(10, cnameInput.y + 35, 200, joe.characterName, 8);
+        creload = new FlxButton(cnameInput.x + 250, cnameInput.y, 'RELOAD CHAR.', function() {
+            reloadChara(cnameInput.text, 1);
+        });
+        heyBox = new FlxUICheckBox(10, creload.y + 35, null, null, 'Has hey?', 200);
+        heyBox.checked = joe.hasHey;
+        heyBox.callback = cumCutely;
+        hnameInput = new FlxUIInputText(10, heyBox.y + 35, 200, joe.heyName, 8);
+        dnameInput = new FlxUIInputText(10, hnameInput.y + 35, 200, joe.deathCharacter, 8);
+
+        tab_group.add(new FlxText(10, fnameInput.y - 18, 0, 'Friendly name:'));
+        tab_group.add(new FlxText(10, cnameInput.y - 18, 0, 'Character name:'));
+        tab_group.add(new FlxText(10, hnameInput.y - 18, 0, 'Hey anim name:'));
+        tab_group.add(new FlxText(10, dnameInput.y - 18, 0, 'Death character name:'));
+        tab_group.add(fnameInput);
+        tab_group.add(cnameInput);
+        tab_group.add(creload);
+        tab_group.add(heyBox);
+        tab_group.add(hnameInput);
+        tab_group.add(dnameInput);
+        UI_shit.addGroup(tab_group);
+    }
+    function cumCutely() {
+        joe.hasHey = !joe.hasHey;
+    }
+    function reloadChara(name:String, charType:Int) {
+        if (charType == 1) {
+            boyWitDaSHOES.destroy();
+            boyWitDaSHOES = new Boyfriend(0, 0, name);
+            boyWitDaSHOES.x += boyWitDaSHOES.positionArray[0];
+            boyWitDaSHOES.y += boyWitDaSHOES.positionArray[1];
+            add(boyWitDaSHOES);
+            if (!skelly.alive && skelly.curCharacter != boyWitDaSHOES.curCharacter) skelly.revive();
+        } else {
+            skelly.destroy();
+            skelly = new Boyfriend(0, 0, name);
+            skelly.x += skelly.positionArray[0] + 350;
+            skelly.y = boyWitDaSHOES.y;
+            add(skelly);
+            if (skelly.curCharacter == boyWitDaSHOES.curCharacter) skelly.kill();
+        }
+    }
+    var _file:FileReference;
+    function saveBullshit() {
+        var json = {
+            "friendlyName": fnameInput.text,
+            "characterName": cnameInput.text,
+            "hasHey": joe.hasHey,
+            "heyName": hnameInput.text,
+            "deathCharacter": dnameInput.text,
+        };
+
+        var piss:String = Json.stringify(json, "\t");
+
+        if (piss.length > 0)
+            {
+            // openSubState(new SavingYourBullshit('bf'));
+            _file = new FileReference();
+            _file.addEventListener(Event.COMPLETE, onSaveComplete);
+            _file.addEventListener(Event.CANCEL, onSaveCancel);
+            _file.addEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+            _file.save(piss, joe.characterName + ".json");
+        }
+    }
+    function onSaveComplete(_):Void
+        {
+        _file.removeEventListener(Event.COMPLETE, onSaveComplete);
+        _file.removeEventListener(Event.CANCEL, onSaveCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+        _file = null;
+        FlxG.log.notice("Successfully saved file.");
+    }
+    function onSaveCancel(_):Void
+        {
+        _file.removeEventListener(Event.COMPLETE, onSaveComplete);
+        _file.removeEventListener(Event.CANCEL, onSaveCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+        _file = null;
+    }
+    function onSaveError(_):Void
+        {
+        _file.removeEventListener(Event.COMPLETE, onSaveComplete);
+        _file.removeEventListener(Event.CANCEL, onSaveCancel);
+        _file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
+        _file = null;
+        FlxG.log.error("Problem saving file");
+    }
 }
 /**
     bruh*/

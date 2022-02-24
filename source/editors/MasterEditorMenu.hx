@@ -135,7 +135,7 @@ class MasterEditorMenu extends MusicBeatState
 					else
 						LoadingState.loadAndSwitchState(new UnlockEditorState(), false);
 				case 'Selectable Character Editor':
-					showTempMsg();
+					LoadingState.loadAndSwitchState(new SelectChara.SelectableCreatorState('henry'), true);
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
