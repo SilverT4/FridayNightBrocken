@@ -174,6 +174,9 @@ class SelectChara extends MusicBeatState {
     /**this'll be called after checksong finishes*/
     function createDaUI() {
         loadNotice.kill();
+        if (!FlxG.sound.music.playing) {
+            FlxG.sound.playMusic(Paths.music('mktFriends', 'shared'));
+        }
         songBg = new FlxSprite();
         songBg.loadGraphic(bgToUse);
         if (bgToUse == Paths.image('menuDesat')) {
