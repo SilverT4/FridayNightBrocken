@@ -268,6 +268,7 @@ class MainMenuState extends MusicBeatState
 			}
 			else if (FlxG.keys.justPressed.NINE) {
 				selectedSomethin = true;
+				FlxG.sound.music.stop();
 				MusicBeatState.switchState(new SelectChara());
 			}
 			#end

@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.ui.FlxUITabMenu;
 import flixel.ui.FlxButton;
 import flixel.FlxBasic;
 import flixel.FlxCamera;
@@ -34,6 +35,7 @@ import flixel.util.FlxSort;
 import flixel.util.FlxStringUtil;
 import flixel.util.FlxTimer;
 import haxe.Json;
+import Boyfriend as Bruhfriend;
 
 #if sys
 import sys.FileSystem;
@@ -45,12 +47,14 @@ using StringTools;
     @param friendlyName The friendly name of your character. As an example, bf is Boyfriend.
     @param characterName The name of your character on the json file. You pick this in the chart editor.
     @param hasHey Does your character have a hey animation?
-    @param heyName The name of your character's hey animation.*/
+    @param heyName The name of your character's hey animation.
+    @param deathCharacter If this is a variation, put the normal character here.*/
 typedef CharSelShit = {
     var friendlyName:String;
     var characterName:String;
     var hasHey:Bool;
     var heyName:String;
+    var deathCharacter:String;
 }
 /**
     This is a character selection screen. You can add a character from the editor. BF and his base-game variants are already here!
@@ -62,7 +66,7 @@ class SelectChara extends MusicBeatState {
     var songBg:FlxSprite;
     /** 
         BF. What more can I say. As you navigate the menu, this'll be updated.*/
-    var daBoyf:Character;
+    public var daBoyf:Character;
     /**
         What background are we using for the menu? This variable determines that.*/
     var bgToUse:String = 'menuDesat';
@@ -86,19 +90,28 @@ class SelectChara extends MusicBeatState {
     /**
         bf override for playstate in story mode*/
     public var bfOverride:String;
+    /**
+        this array will contain the values in a character's selectable json
+        **Dynamic to allow for this!***/
+    var charShit:Array<Dynamic>;
 
     public function new() {
         super();
+        instance = this;
         if (!FlxG.mouse.visible) {
             FlxG.mouse.visible = true;
             #if debug
             FlxG.mouse.useSystemCursor = true;
             #end
         }
+        if (!FlxG.sound.music.playing) {
+            FlxG.sound.playMusic(Paths.music('mktFriends', 'shared'));
+        }
         trace('check SONG');
         camButtons = new FlxCamera();
         camButtons.bgColor.alpha = 0;
         FlxG.cameras.add(camButtons);
+        add(camButtons);
         trace(FlxG.cameras.list);
         checkSong();
     }
@@ -119,8 +132,28 @@ class SelectChara extends MusicBeatState {
             }
         } else {
             bgToUse = Paths.image('songback/' + PlayState.SONG.song.toLowerCase());
-        } 
+        }
+        addMoreBoyfriends();
         createDaUI();
+    }
+    /**adds player characters in mods/selectable*/
+    function addMoreBoyfriends() {
+        trace('amogus');
+        if (FileSystem.exists(Paths.modFolders('selectable'))) {
+            var path:String = Paths.modFolders('selectable');
+            var shit:Array<String> = [];
+            var jsons:Array<String> = FileSystem.readDirectory(Paths.modFolders('selectable'));
+            for (i in 0...jsons.length) {
+                checkEntry(jsons[i]);
+            }
+        }
+    }
+    inline function checkEntry(input:String) {
+        if (input.endsWith('.txt')) {
+            trace('skip this');
+        } else {
+            bfVariations.push(input.substring(0, Std.int(input.length - 4)));
+        }
     }
     /**this'll be called after checksong finishes*/
     function createDaUI() {
@@ -136,17 +169,38 @@ class SelectChara extends MusicBeatState {
         daBoyf.flipX = true;
         daBoyf.screenCenter();
         add(daBoyf);
-        leftButton = new FlxButton(150, FlxG.height - 200, '<');
+        leftButton = new FlxButton(150, FlxG.height - 100, '<-', function() {
+            updateBoyfriend(-1);
+        });
         leftButton.color = FlxColor.BLUE;
         leftButton.label.color = FlxColor.BLACK;
-        leftButton.cameras = [camButtons];
+        // leftButton.cameras = [camButtons];
         add(leftButton);
+        startButton = new FlxButton(0, FlxG.height - 100, 'START', function() {
+            beginSong(daBoyf.curCharacter);
+        });
+        startButton.color = FlxColor.LIME;
+        startButton.label.color = FlxColor.WHITE;
+        startButton.setGraphicSize(Std.int(startButton.width * 3));
+        startButton.label.setFormat(null, 48);
+        startButton.updateHitbox();
+        startButton.screenCenter(X);
+        add(startButton);
     }
-
+    /**Starts the song. How much more simply would I need to explain that?*/
+    inline function beginSong(character:String = 'bf') {
+        trace('STOP TALKING ABOUT AMONG US');
+        FlxG.sound.music.stop();
+        FlxG.sound.playMusic(Paths.music('gameOverEnd', 'shared'));
+        PlayState.SONG.player1 = character;
+        bfOverride = character;
+        LoadingState.loadAndSwitchState(new PlayState());
+    }
+    /**Updates the bf on screen.*/
     inline function updateBoyfriend(?change:Int = 0) {
         trace('sus');
     }
-
+    public var susOver:Bool = false;
     override function update(elapsed:Float) {
         if (controls.BACK) {
             MusicBeatState.switchState(new MainMenuState());
@@ -157,5 +211,177 @@ class SelectChara extends MusicBeatState {
                 daBoyf.dance();
             }
         }
+        if (leftButton != null && leftButton.isOnScreen()) {
+            leftButton.update(elapsed);
+        }
+
+        if (startButton != null && startButton.isOnScreen()) {
+            startButton.update(elapsed);
+        }
+
+        if (FlxG.keys.justPressed.L && !susOver) {
+            daBoyf.kill();
+            susOver = true;
+            openSubState(new GameOverPreview(daBoyf.getGraphicMidpoint().x, daBoyf.getGraphicMidpoint().y, daBoyf.curCharacter)); //daBoyf.curCharacter is a placeholder until I set up the actual selectable shit!
+        }
+    }
+
+    public static var instance:SelectChara;
+}
+
+/**
+    I'll move this to its own file later. ANYWAY.
+    This state allows you to create a selectable JSON.*/
+class SelectableCreatorState extends MusicBeatState {
+    /**Template*/
+    var defaults:String = '{
+        "friendlyName": "Boyfriend",
+        "characterName": "bf",
+        "hasHey": true,
+        "heyName": "hey",
+        "deathCharacter": "bf"
+    }';
+    /**friendly name*/
+    var friendlyName:String;
+    /**character name*/
+    var characterName:String;
+    /**has hey?*/
+    var hasHey:Bool;
+    /**hey name*/
+    var heyName:String;
+    /**death chara*/
+    var deathCharacter:String;
+    /**The main UI box. This'll contain all the settings.*/
+    var UI_shit:FlxUITabMenu;
+    /**Camera for the UI elements.*/
+    var camBruh:FlxCamera;
+    
+}
+/**
+    bruh*/
+class Bruh {
+    var moment:String = 'bruh';
+}
+/**A preview of the gameover substate for the selectable editor because yes.*/
+class GameOverPreview extends MusicBeatSubstate {
+    static inline final SHARED = 'shared';
+
+    /**character name, defaults to bf*/
+    var charName:String = 'bf';
+    /**gameover music*/
+    var gameOverMusic:String = 'gameOver-bnb';
+    /**end sound*/
+    var gameOverEndingSound:String = 'gameOverEnd-bnb';
+    /**bruh*/
+    var bruh:Bruh;
+    /**bf for sake of SHITPOST /j*/
+    var bruhFriend:Bruhfriend;
+    /**so we can follow bf like real game over*/
+    var camFollow:FlxPoint;
+    /**same as camFollow*/
+    var camFollowPos:FlxObject;
+    /**mic drops*/
+    var deathSoundName:String = 'fnf_loss_sfx';
+    /**update cam thing idk*/
+    var updateCamera:Bool = false;
+    override function create() {
+        super.create();
+    }
+    public function new(x:Float, y:Float, ?charName:String = 'bf', ?overMusic:String = 'gameOver-bnb', ?endSound:String = 'gameOverEnd-bnb') {
+        super();
+        var fuckme:FlxSprite = new FlxSprite(x - 1000, y - 1000).makeGraphic(Std.int(FlxG.width * 2), Std.int(FlxG.height * 2), FlxColor.BLACK);
+        add(fuckme);
+        bruhFriend = new Bruhfriend(x, y, charName);
+        bruhFriend.x += bruhFriend.positionArray[0];
+        bruhFriend.y += bruhFriend.positionArray[1];
+        add(bruhFriend);
+
+        camFollow = new FlxPoint(bruhFriend.getGraphicMidpoint().x, bruhFriend.getGraphicMidpoint().y);
+        if (overMusic != null && endSound != null) {
+            gameOverMusic = overMusic;
+            gameOverEndingSound = endSound;
+        }
+        FlxG.sound.music.stop();
+        FlxG.sound.play(Paths.sound(deathSoundName, SHARED));
+		Conductor.changeBPM(100);
+		// FlxG.camera.followLerp = 1;
+		// FlxG.camera.focusOn(FlxPoint.get(FlxG.width / 2, FlxG.height / 2));
+		FlxG.camera.scroll.set();
+		FlxG.camera.target = null;
+
+        bruhFriend.playAnim('firstDeath');
+
+        camFollowPos = new FlxObject(0, 0, 1, 1);
+		camFollowPos.setPosition(FlxG.camera.scroll.x + (FlxG.camera.width / 2), FlxG.camera.scroll.y + (FlxG.camera.height / 2));
+		add(camFollowPos);
+    }
+    var isEnding:Bool = false;
+    var isFollowingAlready:Bool = false;
+    override function update(elapsed:Float) {
+        super.update(elapsed);
+        if(updateCamera) {
+			var lerpVal:Float = CoolUtil.boundTo(elapsed * 0.6, 0, 1);
+			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
+		}
+        if (bruhFriend != null) {
+            bruhFriend.update(elapsed);
+        }
+        if (controls.ACCEPT)
+            {
+                endBullshit();
+            }
+            if (bruhFriend.animation.curAnim.name == 'firstDeath')
+                {
+                    if(bruhFriend.animation.curAnim.curFrame >= 12 && !isFollowingAlready)
+                    {
+                        FlxG.camera.follow(camFollowPos, LOCKON, 1);
+                        updateCamera = true;
+                        isFollowingAlready = true;
+                    }
+        
+                    if (bruhFriend.animation.curAnim.finished)
+                    {
+                        coolStartDeath();
+                        bruhFriend.startedDeath = true;
+                    }
+                }
+                if (FlxG.sound.music.playing)
+                    {
+                        Conductor.songPosition = FlxG.sound.music.time;
+                    }
+    }
+    override function beatHit()
+        {
+            super.beatHit();
+    
+            //FlxG.log.add('beat');
+        }
+    function endBullshit() {
+        if (!isEnding)
+            {
+                isEnding = true;
+                trace(SelectChara.instance.susOver);
+                if (!SelectChara.instance.daBoyf.alive) {
+                    SelectChara.instance.daBoyf.revive();
+                    camFollow.x = SelectChara.instance.daBoyf.getGraphicMidpoint().x;
+                    camFollow.y = SelectChara.instance.daBoyf.getGraphicMidpoint().y;
+                }
+                bruhFriend.playAnim('deathConfirm', true);
+                FlxG.sound.music.stop();
+                FlxG.sound.play(Paths.music(gameOverEndingSound, SHARED));
+                new FlxTimer().start(0.7, function(tmr:FlxTimer)
+                    {
+                        FlxG.camera.fade(FlxColor.BLACK, 3, false, function()
+                        {
+                            FlxG.camera.stopFX();
+                            close();
+                        });
+                    });
+                }
+            
+    }
+
+	function coolStartDeath() {
+        FlxG.sound.playMusic(Paths.music(gameOverMusic, SHARED));
     }
 }
