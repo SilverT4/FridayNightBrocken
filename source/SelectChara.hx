@@ -183,6 +183,7 @@ class SelectChara extends MusicBeatState {
         add(songBg);
         daBoyf = new Character(0, 0, PlayState.SONG.player1);
         daBoyf.flipX = true;
+        daBoyf.updateHitbox();
         daBoyf.screenCenter();
         add(daBoyf);
         leftButton = new FlxButton(150, FlxG.height - 100, '<-', function() {
@@ -222,7 +223,10 @@ class SelectChara extends MusicBeatState {
         if (charShit.hasHey) daBoyf.playAnim(charShit.heyName);
         PlayState.SONG.player1 = character;
         bfOverride = character;
-        LoadingState.loadAndSwitchState(new PlayState());
+        new FlxTimer().start(0.5, function(tmr:FlxTimer) {
+            LoadingState.loadAndSwitchState(new PlayState());
+        });
+        
     }
     /**used for updatebf*/
     var chump:Int = 0;
