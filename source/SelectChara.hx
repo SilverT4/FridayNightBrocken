@@ -219,6 +219,7 @@ class SelectChara extends MusicBeatState {
         trace('STOP TALKING ABOUT AMONG US');
         FlxG.sound.music.stop();
         FlxG.sound.playMusic(Paths.music('gameOverEnd', 'shared'));
+        if (charShit.hasHey) daBoyf.playAnim(charShit.heyName);
         PlayState.SONG.player1 = character;
         bfOverride = character;
         LoadingState.loadAndSwitchState(new PlayState());
