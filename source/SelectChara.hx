@@ -217,12 +217,17 @@ class SelectChara extends MusicBeatState {
         fnameDisplay.setFormat(Paths.font('vcr.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(fnameDisplay);
         backButton = new FlxExtendedSprite(0,0);
-        backButton.frames = Paths.getSparrowAtlas('debug/backArrow');
-        backButton.animation.addByIndices('idle', 'Arrow BACK', [0, 1], null, 24);
+        backButton.frames = Paths.getSparrowAtlas('debug/backArrowTest');
+        /* backButton.animation.addByIndices('idle', 'Arrow BACK', [0], null, 24);
         backButton.animation.addByIndices('hover-Start', 'Arrow BACK', [2, 3, 4, 5], null, 24);
-        backButton.animation.addByIndices('hover-Hold', 'Arrow BACK', [4, 5], null, 24);
+        backButton.animation.addByIndices('hover-Hold', 'Arrow BACK', [4], null, 24);
         backButton.animation.addByIndices('hover-Stop', 'Arrow BACK', [2, 3, 0, 1], null, 24);
-        backButton.animation.addByPrefix('clicked', 'Arrow BACK', 48, true);
+        backButton.animation.addByPrefix('clicked', 'Arrow BACK', 48, true); */
+        backButton.animation.addByPrefix('idle', 'Arrow IDLE', 24);
+        backButton.animation.addByPrefix('hover-Start', 'Arrow HOVER', 24);
+        backButton.animation.addByPrefix('hover-Hold', 'Arrow OVER', 24);
+        backButton.animation.addByPrefix('hover-Stop', 'Arrow HOVER', 24);
+        backButton.animation.addByPrefix('clicked', 'Arrow CLICKED', 48, true);
         backButton.animation.play('idle');
         backButton.setGraphicSize(Std.int(backButton.width * 0.69));
         backButton.updateHitbox();
