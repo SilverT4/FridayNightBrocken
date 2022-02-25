@@ -16,6 +16,7 @@ class FuckYouToo extends MusicBeatSubstate {
 
     public function new() {
         super();
+        FlxG.sound.play(Paths.sound('daFunniWell'));
         var fu:FlxSprite = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(255, 128, 255, 128));
         fu.screenCenter();
         add(fu);
