@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.addons.ui.FlxUICheckBox;
 import Controls.Control;
 import flixel.FlxG;
@@ -42,6 +43,7 @@ class FunnySandwich extends MusicBeatSubstate {
         */
     var difficultyButton:FlxButton;
     var optionDescription:FlxText;
+    var vussy:FlxSprite; //copy from playstate
 
     public function new(x:Float, y:Float) {
         super();
@@ -87,16 +89,20 @@ class FunnySandwich extends MusicBeatSubstate {
         add(restartButton);
 
         quitButton = new FlxButton(15, 50 + 200, 'Exit to Menu', function() {
-            PlayState.deathCounter = 0;
-					PlayState.seenCutscene = false;
-					if(PlayState.isStoryMode) {
-						MusicBeatState.switchState(new StoryMenuState());
-					} else {
-						MusicBeatState.switchState(new FreeplayState());
-					}
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
-					PlayState.changedDifficulty = false;
-					PlayState.chartingMode = false;
+            if (!PlayState.dunFuckedUpNow) {
+                PlayState.deathCounter = 0;
+			    PlayState.seenCutscene = false;
+                if(PlayState.isStoryMode) {
+                    MusicBeatState.switchState(new StoryMenuState());
+                } else {
+                    MusicBeatState.switchState(new FreeplayState());
+                }
+                FlxG.sound.playMusic(Paths.music('freakyMenu'));
+                PlayState.changedDifficulty = false;
+                PlayState.chartingMode = false;
+            } else {
+                whereYouGoinMate();
+            }
         });
         quitButton.cameras = [fuckYou];
         add(quitButton);
@@ -106,6 +112,10 @@ class FunnySandwich extends MusicBeatSubstate {
         botplayCheckbox.callback = toggleBotplay;
         botplayCheckbox.cameras = [fuckYou];
         add(botplayCheckbox);
+        if (PlayState.dunFuckedUpNow) {
+            botplayCheckbox.text = 'You\'re not clever, bud.';
+            botplayCheckbox.callback = fuckYouBuddy;
+        }
 
         trollButton = new FlxUICheckBox(15, botplayCheckbox.y + 50, null, null, 'Are we trollin?', 200);
         trollButton.checked = PlayState.instance.weDoALittleTrollin;
@@ -132,7 +142,22 @@ class FunnySandwich extends MusicBeatSubstate {
                         trollButton.revive();
                     }
     }
-
+    var hahaha:FlxText;
+    function whereYouGoinMate() {
+        var pussy = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(255, 0, 0, 200));
+        pussy.screenCenter();
+        pussy.cameras = [fuckYou];
+        add(pussy);
+        hahaha = new FlxText(0, 0, FlxG.width, 'And where do you think you\'re going, buddy?\n\nYou\'re not getting out of this song.');
+        hahaha.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.PINK, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.RED);
+        hahaha.screenCenter();
+        hahaha.cameras = [fuckYou];
+        add(hahaha);
+        new FlxTimer().start(3, function(tmr:FlxTimer) {
+            pussy.destroy();
+            hahaha.destroy();
+        });
+    }
     function lmaoNice() {
         PlayState.instance.weDoALittleTrollin = !PlayState.instance.weDoALittleTrollin;
 		PlayState.changedDifficulty = true;
@@ -155,6 +180,22 @@ class FunnySandwich extends MusicBeatSubstate {
 		{
 			MusicBeatState.resetState();
 		}
+    }
+    function fuckYouBuddy() {
+        if (vussy == null) {
+            vussy = new FlxSprite(0, 0);
+		vussy.frames = Paths.getSparrowAtlas('vanessa');
+		vussy.animation.addByPrefix('vanny', 'You Get No Vussy Today, Sir', 24, false);
+		vussy.animation.addByIndices('andTheyDontSmellLikeCheetos', "You Get No Vussy Today, Sir", [32, 33], "", 24, false);
+		vussy.animation.play('andTheyDontSmellLikeCheetos');
+        vussy.setGraphicSize(1280, 720);
+        vussy.screenCenter();
+        }
+		if (vussy != null && !vussy.alive) vussy.revive();
+		vussy.animation.play('vanny', true);
+        FlxG.sound.play(Paths.sound('jumpedYaMom'), 1, false);
+        vussy.cameras = [fuckYou];
+        add(vussy);
     }
     override function update(elapsed) {
         if (controls.BACK) {
@@ -183,5 +224,11 @@ class FunnySandwich extends MusicBeatSubstate {
         if (difficultyButton != null) {
             difficultyButton.update(elapsed);
         }
+        if (vussy.visible && vussy.animation.finished && vussy.animation.curAnim.name == 'vanny') {
+			new FlxTimer().start(0.5, function(tmr:FlxTimer) {
+				vussy.animation.play('andTheyDontSmellLikeCheetos');
+                vussy.kill();
+			});
+		}
     }
 }
