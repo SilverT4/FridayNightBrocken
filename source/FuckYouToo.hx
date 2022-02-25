@@ -26,8 +26,8 @@ class FuckYouToo extends MusicBeatSubstate {
         fuckYouText.screenCenter();
         add(fuckYouText);
         bamber = new FlxSprite(fuckYouText.x, fuckYouText.y);
-        bamber.frames = Paths.getSparrowAtlas(Paths.image('characters/bamb'));
-        bamber.animation.addByPrefix('fuckYou', 'Bf Meow', 24);
+        bamber.frames = Paths.getSparrowAtlas('characters/bamb', 'shared');
+        bamber.animation.addByPrefix('fuckYou', 'BF HEY', 24);
         bamber.animation.play('fuckYou');
         add(bamber);
         PlayState.dunFuckedUpNow = true;

@@ -82,9 +82,11 @@ art/build_x64-officialrelease.bat
 art/test_x64-debug-officialrelease.bat
 assets/preload/images/characters/bamb.png
 assets/preload/images/characters/bamb.xml
-assets/preload/images/characters/bambi-old.png
-assets/preload/images/characters/bambi-old.xml
+assets/shared/images/characters/bambi-old.png
+assets/shared/images/characters/bambi-old.xml
 assets/preload/images/characters/bevel_bambi.png
 assets/preload/images/characters/bevel_bambi.xml
 assets/preload/images/icons/icon-fuckyou.png
 assets/preload/characters/bambi-old.json
+assets/shared/images/characters/bamb.png
+assets/shared/images/characters/bamb.xml

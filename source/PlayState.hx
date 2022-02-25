@@ -1000,6 +1000,7 @@ class PlayState extends MusicBeatState
 		if (dunFuckedUpNow) add(fuckBg);
 		fuckText = new FlxText(0, 4, FlxG.width, 'Just know you did this to yourself. Ghost tapping is forced off! Fuck you!');
 		fuckText.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		fuckText.cameras = [camOther];
 		if (dunFuckedUpNow) add(fuckText);
 
 		var splash:NoteSplash = new NoteSplash(100, 100, 0);
