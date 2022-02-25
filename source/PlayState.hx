@@ -3523,6 +3523,7 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
+				if (!dunFuckedUpNow) {
 				trace('WENT BACK TO FREEPLAY??');
 				cancelMusicFadeTween();
 				CustomFadeTransition.nextCamera = camOther;
@@ -3532,6 +3533,18 @@ class PlayState extends MusicBeatState
 				MusicBeatState.switchState(new FreeplayState());
 				FlxG.sound.playMusic(Paths.music('freakyMenu'));
 				changedDifficulty = false;
+			} else {
+				trace('YOU BEAT IT???');
+				dunFuckedUpNow = false;
+				cancelMusicFadeTween();
+				CustomFadeTransition.nextCamera = camOther;
+				if(FlxTransitionableState.skipNextTransIn) {
+					CustomFadeTransition.nextCamera = null;
+				}
+				MusicBeatState.switchState(new MainMenuState());
+				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				changedDifficulty = false;
+			}
 			}
 			transitioning = true;
 		}
