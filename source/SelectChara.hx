@@ -52,7 +52,7 @@ import sys.FileStat;
 using StringTools;
 /**
     Let's get a typedef for character things.
-    @param friendlyName The friendly name of your character. As an example, bf is Boyfriend.
+    @param friendlyName The friendly name of your character. As an example, bf is Bruhfriend.
     @param characterName The name of your character on the json file. You pick this in the chart editor.
     @param hasHey Does your character have a hey animation?
     @param heyName The name of your character's hey animation.
@@ -85,8 +85,8 @@ class SelectChara extends MusicBeatState {
         i want a separate camera for the UI just in case. lmao*/
     var camButtons:FlxCamera;
     /**
-        The character's name. For BF, it's just Boyfriend.*/
-    var charFriendlyName:String = 'Boyfriend';
+        The character's name. For BF, it's just Bruhfriend.*/
+    var charFriendlyName:String = 'Bruhfriend';
     /**temp*/
     var leftButton:FlxButton;
     /**temp*/
@@ -97,7 +97,7 @@ class SelectChara extends MusicBeatState {
     var bfVariations:Array<String> = ['bf', 'bf-car', 'bf-christmas', 'bf-pixel'];
     /**
         bf override for playstate in story mode*/
-    public var bfOverride:String;
+    public static var bfOverride:String;
     /**
         this gets set with updatebf if available*/
     var charShit:CharSelShit;
@@ -107,6 +107,7 @@ class SelectChara extends MusicBeatState {
     var isModSong:Bool = false;
     var loadNotice:FlxText;
     var timeElapse:FlxText;
+    var joe:CharSelShit;
     /**just so i can get colours from gf if player2 is nobody*/
     var babaGrill:CharacterFile;
     /**get dad colours*/
@@ -155,6 +156,7 @@ class SelectChara extends MusicBeatState {
         add(camButtons);
         trace(FlxG.cameras.list);
         charShit = cast Json.parse(SelectableCreatorState.defaults);
+        joe = charShit;
         loadNotice = new FlxText(0, 0, FlxG.width, 'If you see this for more than 30 seconds, press ESCAPE to exit the menu!');
         loadNotice.setFormat(Paths.font('funny.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         loadNotice.screenCenter();
@@ -183,7 +185,7 @@ class SelectChara extends MusicBeatState {
             bgToUse = Paths.image('songBack/' + PlayState.SONG.song.toLowerCase());
         }
         if (!baseSongs.contains(PlayState.SONG.song.toLowerCase())) isModSong = true;
-        addMoreBoyfriends();
+        addMoreBruhfriends();
         getHealthColours();
     }
     /**get the health colours*/
@@ -202,7 +204,7 @@ class SelectChara extends MusicBeatState {
         }
     }
     /**adds player characters in mods/selectable*/
-    function addMoreBoyfriends() {
+    function addMoreBruhfriends() {
         trace('amogus');
         if (FileSystem.exists('mods/selectable')) {
             var path:String = 'mods/selectable';
@@ -250,7 +252,7 @@ class SelectChara extends MusicBeatState {
         daBoyf.screenCenter();
         add(daBoyf);
         leftButton = new FlxButton(150, FlxG.height - 100, '<-', function() {
-            updateBoyfriend(-1);
+            updateBruhfriend(-1);
         });
         leftButton.color = FlxColor.BLUE;
         leftButton.label.color = FlxColor.BLACK;
@@ -269,13 +271,13 @@ class SelectChara extends MusicBeatState {
         startButton.screenCenter(X);
         add(startButton);
         rightButton = new FlxButton(FlxG.width - 250, FlxG.height - 100, '->', function() {
-            updateBoyfriend(1);
+            updateBruhfriend(1);
         });
         rightButton.color = FlxColor.BLUE;
         rightButton.label.color = FlxColor.BLACK;
         // rightButton.cameras = [camButtons];
         add(rightButton);
-        fnameDisplay = new FlxText(0, 20, FlxG.width, 'Boyfriend', 64);
+        fnameDisplay = new FlxText(0, 20, FlxG.width, 'Bruhfriend', 64);
         fnameDisplay.setFormat(Paths.font('vcr.ttf'), 64, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(fnameDisplay);
         backButton = new FlxExtendedSprite(0,0);
@@ -295,7 +297,7 @@ class SelectChara extends MusicBeatState {
         backButton.updateHitbox();
         backButton.clickable = true;
         // backButton.mousePressedCallback(backButton, backButton.mouseX, backButton.mouseY);
-        add(backButton);
+        if (!PlayState.dunFuckedUpNow) add(backButton);
     }
     /**Starts the song. How much more simply would I need to explain that?*/
     inline function beginSong(character:String = 'bf') {
@@ -313,7 +315,7 @@ class SelectChara extends MusicBeatState {
     /**used for updatebf*/
     var chump:Int = 0;
     /**Updates the bf on screen.*/
-    inline function updateBoyfriend(?change:Int = 0) {
+    inline function updateBruhfriend(?change:Int = 0) {
         trace('sus');
         chump += change;
         if (chump < 0) {
@@ -338,7 +340,7 @@ class SelectChara extends MusicBeatState {
     }
     public var susOver:Bool = false;
     override function update(elapsed:Float) {
-        if (controls.BACK) {
+        if (controls.BACK && !PlayState.dunFuckedUpNow) {
             MusicBeatState.switchState(new MainMenuState());
         }
         if (daBoyf != null) {
@@ -449,7 +451,7 @@ class SelectChara extends MusicBeatState {
 class SelectableCreatorState extends MusicBeatState {
     /**Template*/
     public static var defaults:String = '{
-        "friendlyName": "Boyfriend",
+        "friendlyName": "Bruhfriend",
         "characterName": "bf",
         "hasHey": true,
         "heyName": "hey",
@@ -469,6 +471,8 @@ class SelectableCreatorState extends MusicBeatState {
     var UI_shit:FlxUITabMenu;
     /**Camera for the UI elements.*/
     var camBruh:FlxCamera;
+    /**primary camera*/
+    var cumCamera:FlxCamera;
     /**joe mama*/
     var joe:CharSelShit;
     /**get list of current selectable characters*/
@@ -476,18 +480,28 @@ class SelectableCreatorState extends MusicBeatState {
     /**this is the bg*/
     var cumShot:FlxSprite;
     /**show the bf*/
-    var boyWitDaSHOES:Boyfriend;
+    var boyWitDaSHOES:Bruhfriend;
     /**show death*/
-    var skelly:Boyfriend;
+    var skelly:Bruhfriend;
     
     public function new(?chara:String = 'snowcon') {
         super();
+        FlxG.mouse.useSystemCursor = true;
+        if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
         if (chara != null) characterName = chara;
+        cumCamera = new FlxCamera();
+        cumCamera.bgColor.alpha = 0;
         camBruh = new FlxCamera();
         camBruh.bgColor.alpha = 0;
+        FlxG.cameras.reset(cumCamera);
         FlxG.cameras.add(camBruh);
-        if (FileSystem.exists(Paths.modsSelectable(characterName))) joe = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(characterName)));
+
+        FlxCamera.defaultCameras = [cumCamera];
+        if (FileSystem.exists(Paths.modsSelectable(characterName))) joe = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(characterName))) else joe = cast Json.parse(defaults);
+        joe.characterName = characterName;
+        trace(joe);
     }
+    var cockRing:Array<FlxUIInputText> = [];
 
     override function create() {
         if (!FlxG.sound.music.playing) {
@@ -499,24 +513,26 @@ class SelectableCreatorState extends MusicBeatState {
         cumShot.screenCenter();
         add(cumShot);
 
-        boyWitDaSHOES = new Boyfriend(0, 0, joe.characterName);
+        boyWitDaSHOES = new Bruhfriend(0, 0, joe.characterName);
         boyWitDaSHOES.x += boyWitDaSHOES.positionArray[0];
         boyWitDaSHOES.y += boyWitDaSHOES.positionArray[1];
         add(boyWitDaSHOES);
 
-        skelly = new Boyfriend(0, 0, joe.deathCharacter);
+        skelly = new Bruhfriend(0, 0, joe.deathCharacter);
         skelly.x += skelly.positionArray[0] + 350;
         skelly.y = boyWitDaSHOES.y;
+        skelly.playAnim('firstDeath');
         add(skelly);
+        if (joe.deathCharacter == joe.characterName) skelly.kill();
 
         var tabs = [
             {name: 'Settings', label: 'Settings'},
         ];
 
         UI_shit = new FlxUITabMenu(null, tabs, true);
-        UI_shit.cameras = [camBruh];
+        // UI_shit.cameras = [camBruh];
         UI_shit.resize(350, 250);
-        UI_shit.x = FlxG.width - 275;
+        UI_shit.x = FlxG.width - 350;
         UI_shit.y = 25;
         UI_shit.scrollFactor.set();
         add(UI_shit);
@@ -530,13 +546,15 @@ class SelectableCreatorState extends MusicBeatState {
     var hnameInput:FlxUIInputText;
     var dnameInput:FlxUIInputText;
     var saveButton:FlxButton;
+    var dreload:FlxButton;
+    var exitButton:FlxButton;
     function addCumUI() {
         var tab_group = new FlxUI(null, UI_shit);
         tab_group.name = "Settings";
 
         fnameInput = new FlxUIInputText(10, 30, 200, joe.friendlyName, 8);
-        cnameInput = new FlxUIInputText(10, cnameInput.y + 35, 200, joe.characterName, 8);
-        creload = new FlxButton(cnameInput.x + 250, cnameInput.y, 'RELOAD CHAR.', function() {
+        cnameInput = new FlxUIInputText(10, fnameInput.y + 35, 200, joe.characterName, 8);
+        creload = new FlxButton(cnameInput.x + 200, cnameInput.y, 'RELOAD CHAR.', function() {
             reloadChara(cnameInput.text, 1);
         });
         heyBox = new FlxUICheckBox(10, creload.y + 35, null, null, 'Has hey?', 200);
@@ -544,6 +562,13 @@ class SelectableCreatorState extends MusicBeatState {
         heyBox.callback = cumCutely;
         hnameInput = new FlxUIInputText(10, heyBox.y + 35, 200, joe.heyName, 8);
         dnameInput = new FlxUIInputText(10, hnameInput.y + 35, 200, joe.deathCharacter, 8);
+        dreload = new FlxButton(dnameInput.x + 200, dnameInput.y, 'RELOAD DEATH', function() {
+            reloadChara(dnameInput.text, 0);
+        });
+        saveButton = new FlxButton(200, 0, 'Save', saveBullshit);
+        exitButton = new FlxButton(200, saveButton.y + 50, 'Exit', function() {
+            MusicBeatState.switchState(new editors.MasterEditorMenu());
+        });
 
         tab_group.add(new FlxText(10, fnameInput.y - 18, 0, 'Friendly name:'));
         tab_group.add(new FlxText(10, cnameInput.y - 18, 0, 'Character name:'));
@@ -555,7 +580,15 @@ class SelectableCreatorState extends MusicBeatState {
         tab_group.add(heyBox);
         tab_group.add(hnameInput);
         tab_group.add(dnameInput);
+        tab_group.add(saveButton);
+        tab_group.add(exitButton);
+        tab_group.add(dreload);
+        cockRing.push(fnameInput);
+        cockRing.push(cnameInput);
+        cockRing.push(hnameInput);
+        cockRing.push(dnameInput);
         UI_shit.addGroup(tab_group);
+        UI_shit.color = FlxColor.BLUE;
     }
     function cumCutely() {
         joe.hasHey = !joe.hasHey;
@@ -563,16 +596,17 @@ class SelectableCreatorState extends MusicBeatState {
     function reloadChara(name:String, charType:Int) {
         if (charType == 1) {
             boyWitDaSHOES.destroy();
-            boyWitDaSHOES = new Boyfriend(0, 0, name);
+            boyWitDaSHOES = new Bruhfriend(0, 0, name);
             boyWitDaSHOES.x += boyWitDaSHOES.positionArray[0];
             boyWitDaSHOES.y += boyWitDaSHOES.positionArray[1];
             add(boyWitDaSHOES);
             if (!skelly.alive && skelly.curCharacter != boyWitDaSHOES.curCharacter) skelly.revive();
         } else {
             skelly.destroy();
-            skelly = new Boyfriend(0, 0, name);
+            skelly = new Bruhfriend(0, 0, name);
             skelly.x += skelly.positionArray[0] + 350;
             skelly.y = boyWitDaSHOES.y;
+            skelly.playAnim('firstDeath');
             add(skelly);
             if (skelly.curCharacter == boyWitDaSHOES.curCharacter) skelly.kill();
         }
@@ -621,6 +655,37 @@ class SelectableCreatorState extends MusicBeatState {
         _file.removeEventListener(IOErrorEvent.IO_ERROR, onSaveError);
         _file = null;
         FlxG.log.error("Problem saving file");
+    }
+    override function update(elapsed:Float) {
+        if (boyWitDaSHOES != null) {
+            boyWitDaSHOES.update(elapsed);
+        }
+        if (skelly != null && skelly.alive) {
+            skelly.update(elapsed);
+        }
+
+        if (UI_shit != null) {
+            UI_shit.update(elapsed);
+        }
+
+        if (cockRing.length >= 1) {
+            for (balls in cockRing) {
+                if (balls.hasFocus) {
+                    FlxG.sound.muteKeys = [];
+                    FlxG.sound.volumeDownKeys = [];
+                    FlxG.sound.volumeUpKeys = [];
+                    break;
+                } else {
+                    FlxG.sound.muteKeys = TitleState.muteKeys;
+                    FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+                    FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+                    break;
+                }
+            }
+        }
+        /* if (skelly != null && !skelly.alive) {
+            sameTxt.revive();
+        }*/
     }
 }
 /**
@@ -749,5 +814,36 @@ class GameOverPreview extends MusicBeatSubstate {
 
 	function coolStartDeath() {
         FlxG.sound.playMusic(Paths.music(gameOverMusic, SHARED));
+    }
+}
+
+/**test*/
+class SCThing extends MusicBeatSubstate {
+    var shutup:FlxUIInputText;
+    var okAss:FlxButton;
+    
+    public function new() {
+        super();
+        if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
+        var fuckyou:FlxSprite = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(0,0,0,128));
+        fuckyou.screenCenter();
+        add(fuckyou);
+        shutup = new FlxUIInputText(0,0,200,null,8);
+        shutup.screenCenter();
+        add(shutup);
+        add(new FlxText(shutup.x, shutup.y - 18, FlxG.width, 'enter a character name', 8));
+        okAss = new FlxButton(0, 0, 'ok', function() {
+            MusicBeatState.switchState(new SelectableCreatorState(shutup.text));
+        });
+        add(okAss);
+    }
+
+    override function update(elapsed:Float) {
+        if (shutup != null) {
+            shutup.update(elapsed);
+        }
+        if (okAss != null) {
+            okAss.update(elapsed);
+        }
     }
 }

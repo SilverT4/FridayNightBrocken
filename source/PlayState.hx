@@ -52,6 +52,7 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
+import SelectChara.CharSelShit as BussyWater;
 
 #if sys
 import sys.FileSystem;
@@ -97,6 +98,10 @@ class PlayState extends MusicBeatState
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
 	#end
 
+	var bfOverride:String;
+	/**if you trigger the FuckYouToo message this gets set to true for the song that plays after it exits.*/
+	public static var dunFuckedUpNow:Bool = false;
+
 	public var lastVanessa:Int = 0;
 	var whiteWoman:Bool = false;
 	public var BF_X:Float = 770;
@@ -129,10 +134,13 @@ class PlayState extends MusicBeatState
 	public var gf:Character;
 	public var boyfriend:Boyfriend;
 	var alreadyStartedVannyDeath:Bool = false;
+	var boyPussy:BussyWater;
 
 	public var notes:FlxTypedGroup<Note>;
 	public var unspawnNotes:Array<Note> = [];
 	public var eventNotes:Array<Dynamic> = [];
+	var fuckBg:FlxSprite;
+	var fuckText:FlxText;
 
 	private var strumLine:FlxSprite;
 
@@ -280,6 +288,11 @@ class PlayState extends MusicBeatState
 	private var debugKeysChart:Array<FlxKey>;
 	private var debugKeysCharacter:Array<FlxKey>;
 	
+	var commonVariations:Array<String> = [
+		'-car',
+		'-christmas',
+		'-pixel'
+	];
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 	var existingVannyNotes:Array<Dynamic> = [];
@@ -875,34 +888,20 @@ class PlayState extends MusicBeatState
 		// dadGroup.add(dadGlitch);
 		startCharacterLua(dad.curCharacter);
 		
-		boyfriend = new Boyfriend(0, 0, SONG.player1);
+		if (SelectChara.bfOverride != null) {
+			bfOverride = SelectChara.bfOverride;
+		} else {
+			bfOverride = SONG.player1;
+		}
+		//boyfriend = new Boyfriend(0, 0, SONG.player1);
+		boyfriend = new Boyfriend(0, 0, bfOverride);
+		if (FileSystem.exists(Paths.modsSelectable(bfOverride))) {
+			boyPussy = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(bfOverride)));
+		}
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
-		GameOverSubstate.characterName = SONG.player1;
-		if (SONG.player1 == 'devan') {
-			GameOverSubstate.deathSoundName = 'fnf_loss_sfx-jump';
-		} else if (SONG.player1.contains('-car') && SONG.player1 != 'henry-car') {
-			GameOverSubstate.characterName = SONG.player1.substr(0, this.length - 5);
-		} /* else if (SONG.player1 == 'bf-holiday-car') {
-			GameOverSubstate.characterName = 'bf-holiday'; // I gitignored holiday stuff, uncomment this block yourself if you want to add it back in after adding the mod to your own build. lol
-		} else if (SONG.player1 == 'edd') {
-			GameOverSubstate.characterName = 'blitz';
-			GameOverSubstate.deathSoundName = 'TOM';
-		} */ else if (SONG.player1.contains('pixel')) {
-			switch (SONG.player1) {
-				case 'nt-pixel':
-					// GameOverSubstate.characterName = 'nt-pixel-dead'; (I DON'T HAVE AN NT PIXEL DEAD YET)
-					GameOverSubstate.characterName = 'bf-pixel-dead'; // FALLBACK FOR NOW
-				case 'bf-pixel':
-					GameOverSubstate.characterName = 'bf-pixel-dead';
-			}
-		} else if (SONG.player1 == 'steelwolf') {
-			GameOverSubstate.endSoundName = 'gameOverEnd-burger';
-			GameOverSubstate.loopSoundName = 'gameOver-burger';
-		} else if (SONG.player1 == 'bf-worriedbob' || SONG.player1 == 'bf-bob-george') {
-			GameOverSubstate.endSoundName = 'gameOverEnd-bnb';
-			GameOverSubstate.loopSoundName = 'gameOver-bnb';
-		}
+		setGameOverShit();
+		// GameOverSubstate.characterName = SONG.player1;
 		originalBfWidth = boyfriend.width;
 		originalBfHeight = boyfriend.height;
 		startCharacterLua(boyfriend.curCharacter);
@@ -996,6 +995,12 @@ class PlayState extends MusicBeatState
 			timeTxt.size = 24;
 			timeTxt.y += 3;
 		}
+		fuckBg = new FlxSprite(0).makeGraphic(FlxG.width, 26, FlxColor.fromRGB(255, 0, 0, 128));
+		fuckBg.cameras = [camOther];
+		if (dunFuckedUpNow) add(fuckBg);
+		fuckText = new FlxText(0, 4, FlxG.width, 'Just know you did this to yourself. Ghost tapping is forced off! Fuck you!');
+		fuckText.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		if (dunFuckedUpNow) add(fuckText);
 
 		var splash:NoteSplash = new NoteSplash(100, 100, 0);
 		grpNoteSplashes.add(splash);
@@ -1463,6 +1468,30 @@ class PlayState extends MusicBeatState
 	}
 
 	var dialogueCount:Int = 0;
+	/**sets game over character better than i did before*/
+	function setGameOverShit() {
+		trace('fail prevention is go');
+		if (boyPussy == null) {
+		for (penis in commonVariations) {
+			if (bfOverride.contains(penis)) {
+				switch (penis) {
+					case '-car':
+						GameOverSubstate.characterName = bfOverride.substr(0, bfOverride.length - 4);
+					case '-christmas':
+						GameOverSubstate.characterName = bfOverride.substr(0, bfOverride.length - 10);
+					case '-pixel':
+						if (FileSystem.exists(Paths.characterJson(bfOverride + '-dead'))) {
+							GameOverSubstate.characterName = bfOverride + '-dead';
+						} else {
+							GameOverSubstate.characterName = 'bf-pixel-dead';
+						}
+				}
+ 			}
+		}
+	} else {
+		GameOverSubstate.characterName = boyPussy.deathCharacter;
+	}
+	}
 	public var psychDialogue:DialogueBoxPsych;
 	//You don't have to add a song, just saying. You can just do "startDialogue(dialogueJson);" and it should work
 	public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
@@ -3754,6 +3783,7 @@ class PlayState extends MusicBeatState
 				Conductor.songPosition = FlxG.sound.music.time;
 
 				var canMiss:Bool = !ClientPrefs.ghostTapping;
+				if (dunFuckedUpNow) canMiss = true;
 
 				// heavily based on my own code LOL if it aint broke dont fix it
 				var pressNotes:Array<Note> = [];

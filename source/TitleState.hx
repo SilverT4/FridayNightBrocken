@@ -61,6 +61,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	var fuckinAsshole:Bool = false;
 
 	var curWacky:Array<String> = [];
 
@@ -107,6 +108,9 @@ class TitleState extends MusicBeatState
 		}
 		//trace(path, FileSystem.exists(path));
 		titleJSON = Json.parse(File.getContent(path));
+		if (FileSystem.exists('mods/fuckyoulmfao')) {
+			fuckinAsshole = true;
+		}
 		#else
 		var path = Paths.getPreloadPath("images/gfDanceTitle.json");
 		titleJSON = Json.parse(Assets.getText(path)); 
@@ -375,7 +379,12 @@ class TitleState extends MusicBeatState
 			skipIntro();
 		else
 			initialized = true;
-
+		/*#if (desktop && MODS_ALLOWED)
+		if (FileSystem.exists('mods/lmfaofuckyou') && initialized) {
+			PlayState.SONG = Song.loadFromJson(Paths.json('cheating', 'cheating'));
+			LoadingState.loadAndSwitchState(new FuckYouToo());
+		}
+		#end */
 		// credGroup.add(credTextShit);
 	}
 
@@ -456,6 +465,8 @@ class TitleState extends MusicBeatState
 				{
 					if (mustUpdate) {
 						MusicBeatState.switchState(new OutdatedState());
+					} else if (fuckinAsshole) {
+						openSubState(new FuckYouToo());
 					} else {
 						MusicBeatState.switchState(new MainMenuState());
 					}
