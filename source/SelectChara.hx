@@ -50,9 +50,18 @@ import sys.FileStat;
 #end
 
 using StringTools;
-/**
+/**hey there, you're lookin like a certified bussy shart today.
+    so i just want to mention one thing about this hx file in particular.
+    the code is VERY MUCH spaghetti code. i'm not good at organising code or any of that shit, so it's gonna be spaghetti for as long as this repo exists really
+    admittedly that may be *forever* lmao
+    ANYWAY! if you want to improve this at all feel free to make adjustments and make a pull request.
+    if you want to use this in your own repo, **give me credit** for it. you can leave a link to my github in the readme of your repo and/or just leave [this link](https://github.com/devin503) in this file.*/
+typedef Amogus = {
+    var readthenote:Bruh;
+}
+        /**
     Let's get a typedef for character things.
-    @param friendlyName The friendly name of your character. As an example, bf is Bruhfriend.
+    @param friendlyName The friendly name of your character. As an example, bf is Boyfriend.
     @param characterName The name of your character on the json file. You pick this in the chart editor.
     @param hasHey Does your character have a hey animation?
     @param heyName The name of your character's hey animation.
@@ -113,6 +122,10 @@ class SelectChara extends MusicBeatState {
     /**get dad colours*/
     var daddyIssues:CharacterFile;
     var startingSong:Bool = false;
+    /**player 1's gonna have a placeholder in the list.*/
+    var songBfPlaceholder:CharSelShit;
+    /**idk if thisll work*/
+    var bfInfos:Array<CharSelShit> = [];
     /**This contains a list of base game songs. With each new **base game** week, I'll update it.*/
     var baseSongs:Array<String> = [
         'tutorial',
@@ -165,8 +178,50 @@ class SelectChara extends MusicBeatState {
         timeElapse.setFormat(Paths.font('vcr.ttf'), 24, FlxColor.GREEN);
         add(timeElapse);*/
         checkSong();
+        addBaseBfs();
     }
-
+    /**this adds placeholders for base-game BF information if needed. if you have a custom json for any of the defaults, that'll be inserted in addmorebfs*/
+    function addBaseBfs() {
+        trace('adding bf');
+        var bfDefault:String = '{
+            "characterName": "bf",
+            "friendlyName": "Boyfriend",
+            "hasHey": true,
+            "heyName": "hey",
+            "deathCharacter": "bf",
+        }';
+        var bfCarDefault:String = '{
+            "characterName": "bf-car",
+            "friendlyName": "Boyfriend (Car)",
+            "hasHey": false,
+            "heyName": "bruh",
+            "deathCharacter": "bf",
+        }';
+        var bfChristmasDefault:String = '{
+            "characterName": "bf-christmas",
+            "friendlyName": "Festive Boyfriend",
+            "hasHey": true,
+            "heyName": "hey",
+            "deathCharacter": "bf",
+        }';
+        var bfPixelDefault:String = '{
+            "characterName": "bf-pixel",
+            "friendlyName": "Pixel Boyfriend",
+            "hasHey": false,
+            "heyName": "bruh",
+            "deathCharacter": "bf-pixel-dead",
+        }';
+        var bfPlaceholder:CharSelShit = cast Json.parse(bfDefault);
+        var bfCarPlaceholder:CharSelShit = cast Json.parse(bfCarDefault);
+        var bfChristmasPlaceholder:CharSelShit = cast Json.parse(bfChristmasDefault);
+        var bfPixelPlaceholder:CharSelShit = cast Json.parse(bfPixelDefault);
+        if (!FileSystem.exists(Paths.modsSelectable('bf'))) bfInfos.push(bfPlaceholder);
+        if (!FileSystem.exists(Paths.modsSelectable('bf-car'))) bfInfos.push(bfCarPlaceholder);
+        if (!FileSystem.exists(Paths.modsSelectable('bf-christmas'))) bfInfos.push(bfChristmasPlaceholder);
+        if (!FileSystem.exists(Paths.modsSelectable('bf-pixel'))) bfInfos.push(bfPixelPlaceholder);
+        trace('added placeholders');
+        trace(bfInfos);
+    }
     function checkSong() {
         trace('crash prevention go');
         if (PlayState.SONG == null) {
@@ -192,12 +247,12 @@ class SelectChara extends MusicBeatState {
     inline function getHealthColours() {
         var feet:String;
         if (PlayState.SONG.player2 == 'nobody') {
-            feet = PlayState.SONG.player3;
+            if (PlayState.SONG.player3 != null) feet = PlayState.SONG.player3 else feet = PlayState.SONG.gfVersion;
         } else {
             feet = PlayState.SONG.player2;
         }
         var semen = cast Json.parse(sys.io.File.getContent(Paths.characterJson(feet)));
-        if (feet == PlayState.SONG.player3) {
+        if (feet == PlayState.SONG.player3 || feet == PlayState.SONG.gfVersion) {
             babaGrill = semen;
         } else {
             daddyIssues = semen;
@@ -215,6 +270,16 @@ class SelectChara extends MusicBeatState {
                 loadNotice.text = 'Press SPACE to continue';
             }
         }
+        var songInfo:String = '
+        {
+            "characterName": "' + PlayState.SONG.player1 + '",
+            "friendlyName": "Song\'s BF",
+            "hasHey": false,
+            "heyName": "hey",
+            "deathCharacter": "' + PlayState.SONG.player1 + '",
+        }';
+        songBfPlaceholder = cast Json.parse(songInfo);
+        bfVariations.insert(0, PlayState.SONG.player1);
     }
     inline function checkEntry(input:String) {
         if (input.endsWith('.txt')) {
@@ -222,8 +287,26 @@ class SelectChara extends MusicBeatState {
         } else {
             trace(input.substring(0, Std.int(input.length - 5)));
             bfVariations.push(input.substring(0, Std.int(input.length - 5)));
+            var bfVar:CharSelShit = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(input)));
+            for (penis in bfVariations) {
+                if (input == penis) {
+                    switch (penis) {
+                        case 'bf':
+                            bfInfos.insert(0, bfVar);
+                        case 'bf-car':
+                            bfInfos.insert(1, bfVar);
+                        case 'bf-christmas':
+                            bfInfos.insert(2, bfVar);
+                        case 'bf-pixel':
+                            bfInfos.insert(3, bfVar);
+                    }
+                } else {
+                    bfInfos.push(bfVar);
+                }
+            }
             trace(bfVariations);
             FlxG.log.notice(bfVariations);
+            FlxG.log.notice(bfInfos);
         }
     }
     /**this'll be called after checksong finishes*/
@@ -328,7 +411,7 @@ class SelectChara extends MusicBeatState {
         daBoyf.flipX = true;
         daBoyf.screenCenter();
         add(daBoyf);
-        if (FileSystem.exists(Paths.modsSelectable(daBoyf.curCharacter))) {
+        if (FileSystem.exists(Paths.modsSelectable(daBoyf.curCharacter))) {//this'll be retired soon lol
             var bullshit = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(daBoyf.curCharacter)));
             trace(bullshit);
             charShit.characterName = bullshit.characterName;

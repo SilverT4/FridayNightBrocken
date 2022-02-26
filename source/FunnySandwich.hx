@@ -83,7 +83,11 @@ class FunnySandwich extends MusicBeatSubstate {
         add(resumeButton);
 
         restartButton = new FlxButton(15, 50 + 100, 'Restart Song', function() {
-            restartSong();
+            if (!PlayState.dunFuckedUpNow) {
+                restartSong();
+            } else {
+                whereYouGoinMate('Restart');
+            }
         });
         restartButton.cameras = [fuckYou];
         add(restartButton);
@@ -101,7 +105,7 @@ class FunnySandwich extends MusicBeatSubstate {
                 PlayState.changedDifficulty = false;
                 PlayState.chartingMode = false;
             } else {
-                whereYouGoinMate();
+                whereYouGoinMate('Quit');
             }
         });
         quitButton.cameras = [fuckYou];
@@ -124,7 +128,11 @@ class FunnySandwich extends MusicBeatSubstate {
         if (!PlayState.instance.cpuControlled) trollButton.kill();
 
         difficultyButton = new FlxButton(15, 50 + 150, 'Change Difficulty', function() {
-            openSubState(new PauseSubState(x, y, true));
+            if (!PlayState.dunFuckedUpNow) { 
+                openSubState(new PauseSubState(x, y, true));
+            } else {
+                whereYouGoinMate('Difficulty');
+            }
         });
         difficultyButton.cameras = [fuckYou];
         add(difficultyButton);
@@ -143,12 +151,22 @@ class FunnySandwich extends MusicBeatSubstate {
                     }
     }
     var hahaha:FlxText;
-    function whereYouGoinMate() {
+    function whereYouGoinMate(?button:String) {
         var pussy = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(255, 0, 0, 200));
         pussy.screenCenter();
         pussy.cameras = [fuckYou];
         add(pussy);
-        hahaha = new FlxText(0, 0, FlxG.width, 'And where do you think you\'re going, buddy?\n\nYou\'re not getting out of this song.');
+        var text:String = '';
+        if (button == 'Quit') {
+            text = 'And where do you think you\'re going, buddy?\n\nYou\'re not getting out of this song.';
+        } else if (button == 'Restart') {
+            text = 'Why? Why restart the song, it won\'t fix your problem!';
+        } else if (button == 'Difficulty') {
+            text = 'You\'re desperate to escape, aren\'t you?\n\nThe difficulty won\'t change.';
+        } else {
+            text = 'wtf';
+        }
+        hahaha = new FlxText(0, 0, FlxG.width, text);
         hahaha.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.PINK, FlxTextAlign.CENTER, FlxTextBorderStyle.SHADOW, FlxColor.RED);
         hahaha.screenCenter();
         hahaha.cameras = [fuckYou];
@@ -224,7 +242,10 @@ class FunnySandwich extends MusicBeatSubstate {
         if (difficultyButton != null) {
             difficultyButton.update(elapsed);
         }
-        if (vussy.visible && vussy.animation.finished && vussy.animation.curAnim.name == 'vanny') {
+        if (vussy != null && vussy.alive) {
+            vussy.update(elapsed);
+        }
+        if (vussy != null && vussy.visible && vussy.animation.finished && vussy.animation.curAnim.name == 'vanny') {
 			new FlxTimer().start(0.5, function(tmr:FlxTimer) {
 				vussy.animation.play('andTheyDontSmellLikeCheetos');
                 vussy.kill();

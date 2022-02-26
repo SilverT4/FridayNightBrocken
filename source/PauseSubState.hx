@@ -39,6 +39,10 @@ class PauseSubState extends MusicBeatSubstate
 			menuItemsOG.insert(2, 'Toggle Practice Mode');
 			menuItemsOG.insert(3, 'Toggle Botplay');
 			menuItemsOG.insert(4, 'Toggle Trollin');
+		} else if (PlayState.dunFuckedUpNow) {
+			menuItemsOG.remove('Restart Song');
+			menuItemsOG.remove('Exit to menu');
+			menuItemsOG.insert(1, 'There is no escape');
 		}
 		if (!sus) menuItems = menuItemsOG;
 
@@ -165,7 +169,7 @@ class PauseSubState extends MusicBeatSubstate
 
 			switch (daSelected)
 			{
-				case "Resume":
+				case "Resume" | "There is no escape":
 					close();
 				case 'Change Difficulty':
 					menuItems = difficultyChoices;
