@@ -237,7 +237,11 @@ class TitleState extends MusicBeatState
 			// music.play();
 
 			if(FlxG.sound.music == null) {
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				if (!fuckinAsshole) {
+					FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+				} else {
+					FlxG.sound.playMusic(Paths.music('clownThemeFull'), 0);
+				}
 
 				FlxG.sound.music.fadeIn(4, 0, 0.7);
 			}

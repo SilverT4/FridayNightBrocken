@@ -3469,7 +3469,11 @@ class PlayState extends MusicBeatState
 
 				if (storyPlaylist.length <= 0)
 				{
-					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					if (!TitleState.fuckinAsshole) {
+						FlxG.sound.playMusic(Paths.music('freakyMenu'));
+					} else {
+						FlxG.sound.playMusic(Paths.music('clownTheme'));
+					}
 
 					cancelMusicFadeTween();
 					CustomFadeTransition.nextCamera = camOther;
@@ -3544,7 +3548,11 @@ class PlayState extends MusicBeatState
 					CustomFadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new FreeplayState());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				if (!TitleState.fuckinAsshole) {
+					FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				} else {
+					FlxG.sound.playMusic(Paths.music('clownTheme'));
+				}
 				changedDifficulty = false;
 			} else {
 				trace('YOU BEAT IT???');
@@ -3555,7 +3563,7 @@ class PlayState extends MusicBeatState
 					CustomFadeTransition.nextCamera = null;
 				}
 				MusicBeatState.switchState(new MainMenuState());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'));
+				FlxG.sound.playMusic(Paths.music('clownTheme'));
 				changedDifficulty = false;
 			}
 			}

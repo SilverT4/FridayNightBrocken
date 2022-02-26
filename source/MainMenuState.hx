@@ -56,7 +56,11 @@ class MainMenuState extends MusicBeatState
 
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		if(FlxG.sound.music == null) {
-			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			if (!TitleState.fuckinAsshole) {
+				FlxG.sound.playMusic(Paths.music('freakyMenu'), 0);
+			} else {
+				FlxG.sound.playMusic(Paths.music('clownThemeFull'), 0);
+			}
 
 			FlxG.sound.music.fadeIn(4, 0, 0.7);
 		}

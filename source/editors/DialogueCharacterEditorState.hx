@@ -634,7 +634,11 @@ class DialogueCharacterEditorState extends MusicBeatState
 
 			if(FlxG.keys.justPressed.ESCAPE) {
 				MusicBeatState.switchState(new editors.MasterEditorMenu());
-				FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
+				if (!TitleState.fuckinAsshole) {
+					FlxG.sound.playMusic(Paths.music('freakyMenu'), 1);
+				} else {
+					FlxG.sound.playMusic(Paths.music('clownTheme'), 1);
+				}
 				transitioning = true;
 			}
 
