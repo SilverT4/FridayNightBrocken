@@ -138,6 +138,13 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+		if (TitleState.fuckinAsshole) {
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "You know what you did. Fuck you!", 12);
+			versionShit.scrollFactor.set();
+			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			add(versionShit);
+			bg.color = 0xFFFF69FF;
+		}
 
 		// NG.core.calls.event.logEvent('swag').send();
 

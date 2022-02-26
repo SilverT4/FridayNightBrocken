@@ -61,7 +61,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
-	var fuckinAsshole:Bool = false;
+	public static var fuckinAsshole:Bool = false;
 
 	var curWacky:Array<String> = [];
 
@@ -468,7 +468,15 @@ class TitleState extends MusicBeatState
 					if (mustUpdate) {
 						MusicBeatState.switchState(new OutdatedState());
 					} else if (fuckinAsshole) {
+						#if debug
+						if (FlxG.keys.pressed.SHIFT) {
+							MusicBeatState.switchState(new MainMenuState());
+						} else {
+							openSubState(new FuckYouToo());
+						}
+						#else
 						openSubState(new FuckYouToo());
+						#end
 					} else {
 						MusicBeatState.switchState(new MainMenuState());
 					}
