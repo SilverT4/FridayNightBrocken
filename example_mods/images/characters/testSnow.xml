@@ -418,38 +418,38 @@
 	<SubTexture name="BF dies0063" x="3321" y="2072" width="364" height="427" frameX="-9" frameY="-25" frameWidth="380" frameHeight="452"/>
 	<SubTexture name="BF dies0064" x="3321" y="2072" width="364" height="427" frameX="-9" frameY="-25" frameWidth="380" frameHeight="452"/>
 	<SubTexture name="BF dies0065" x="3321" y="2072" width="364" height="427" frameX="-9" frameY="-25" frameWidth="380" frameHeight="452"/>
-	<SubTexture name="BF dies0066" x="0" y="512" width="364" height="427" frameX="-9" frameY="-25" frameWidth="364" frameHeight="427"/>
+	<SubTexture name="BF dies0066" x="3321" y="2072" width="364" height="427" frameX="-9" frameY="-25" frameWidth="380" frameHeight="452"/>
 	<SubTexture name="BF dies0067" x="0" y="512" width="364" height="427" frameX="-9" frameY="-25" frameWidth="364" frameHeight="427"/>
-	<SubTexture name="BF dies0068" x="3690" y="2072" width="364" height="427" frameX="-9" frameY="-25" frameWidth="380" frameHeight="452"/>
-	<SubTexture name="BF dies0069" x="4059" y="2072" width="364" height="427" frameX="-9" frameY="-25" frameWidth="380" frameHeight="452"/>
-	<SubTexture name="BF idle dance0000" x="4428" y="2072" width="345" height="515" frameX="0" frameY="-15" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0001" x="4778" y="2072" width="329" height="515" frameX="0" frameY="-15" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0002" x="5112" y="2072" width="347" height="519" frameX="0" frameY="-13" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0003" x="5464" y="2072" width="331" height="519" frameX="0" frameY="-13" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0004" x="5800" y="2072" width="344" height="522" frameX="-1" frameY="-10" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0005" x="6149" y="2072" width="329" height="522" frameX="-1" frameY="-10" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0006" x="6483" y="2072" width="343" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0007" x="6831" y="2072" width="328" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0008" x="7164" y="2072" width="342" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0009" x="7511" y="2072" width="327" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0010" x="7843" y="2072" width="313" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0011" x="0" y="2609" width="308" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0012" x="7164" y="2072" width="342" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle dance0013" x="7511" y="2072" width="327" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
-	<SubTexture name="BF idle shaking0000" x="313" y="2609" width="263" height="532" frameX="0" frameY="-1" frameWidth="264" frameHeight="533"/>
-	<SubTexture name="BF idle shaking0001" x="581" y="2609" width="262" height="532" frameX="0" frameY="-1" frameWidth="264" frameHeight="533"/>
-	<SubTexture name="BF idle shaking0002" x="848" y="2609" width="264" height="533"/>
-	<SubTexture name="BF idle shaking0003" x="1117" y="2609" width="262" height="533" frameX="0" frameY="0" frameWidth="264" frameHeight="533"/>
-	<SubTexture name="well well well0000" x="1384" y="2609" width="336" height="670" frameX="0" frameY="-4" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0001" x="1384" y="2609" width="336" height="670" frameX="0" frameY="-4" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0002" x="1725" y="2609" width="335" height="673" frameX="0" frameY="0" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0003" x="1725" y="2609" width="335" height="673" frameX="0" frameY="0" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0004" x="2065" y="2609" width="336" height="672" frameX="0" frameY="-2" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0005" x="2065" y="2609" width="336" height="672" frameX="0" frameY="-2" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0006" x="2406" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0007" x="2406" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0008" x="2746" y="2609" width="336" height="673" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0009" x="2746" y="2609" width="336" height="673" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0010" x="3087" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
-	<SubTexture name="well well well0011" x="3087" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="BF dies0068" x="0" y="512" width="364" height="427" frameX="-9" frameY="-25" frameWidth="364" frameHeight="427"/>
+	<SubTexture name="BF dies0069" x="3690" y="2072" width="364" height="427" frameX="-9" frameY="-25" frameWidth="380" frameHeight="452"/>
+	<SubTexture name="BF idle dance0000" x="4059" y="2072" width="345" height="515" frameX="0" frameY="-15" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0001" x="4409" y="2072" width="329" height="515" frameX="0" frameY="-15" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0002" x="4743" y="2072" width="347" height="519" frameX="0" frameY="-13" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0003" x="5095" y="2072" width="331" height="519" frameX="0" frameY="-13" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0004" x="5431" y="2072" width="344" height="522" frameX="-1" frameY="-10" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0005" x="5780" y="2072" width="329" height="522" frameX="-1" frameY="-10" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0006" x="6114" y="2072" width="343" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0007" x="6462" y="2072" width="328" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0008" x="6795" y="2072" width="342" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0009" x="7142" y="2072" width="327" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0010" x="7474" y="2072" width="313" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0011" x="7792" y="2072" width="308" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0012" x="6795" y="2072" width="342" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle dance0013" x="7142" y="2072" width="327" height="532" frameX="-1" frameY="0" frameWidth="347" frameHeight="532"/>
+	<SubTexture name="BF idle shaking0000" x="0" y="2609" width="263" height="532" frameX="0" frameY="-1" frameWidth="264" frameHeight="533"/>
+	<SubTexture name="BF idle shaking0001" x="268" y="2609" width="262" height="532" frameX="0" frameY="-1" frameWidth="264" frameHeight="533"/>
+	<SubTexture name="BF idle shaking0002" x="535" y="2609" width="264" height="533"/>
+	<SubTexture name="BF idle shaking0003" x="804" y="2609" width="262" height="533" frameX="0" frameY="0" frameWidth="264" frameHeight="533"/>
+	<SubTexture name="well well well0000" x="1071" y="2609" width="336" height="670" frameX="0" frameY="-4" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0001" x="1071" y="2609" width="336" height="670" frameX="0" frameY="-4" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0002" x="1412" y="2609" width="335" height="673" frameX="0" frameY="0" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0003" x="1412" y="2609" width="335" height="673" frameX="0" frameY="0" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0004" x="1752" y="2609" width="336" height="672" frameX="0" frameY="-2" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0005" x="1752" y="2609" width="336" height="672" frameX="0" frameY="-2" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0006" x="2093" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0007" x="2093" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0008" x="2433" y="2609" width="336" height="673" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0009" x="2433" y="2609" width="336" height="673" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0010" x="2774" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
+	<SubTexture name="well well well0011" x="2774" y="2609" width="335" height="672" frameX="0" frameY="-1" frameWidth="336" frameHeight="674"/>
 </TextureAtlas>
