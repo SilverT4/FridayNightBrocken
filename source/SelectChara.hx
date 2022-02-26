@@ -103,7 +103,7 @@ class SelectChara extends MusicBeatState {
     /**temp*/
     var startButton:FlxButton;
     /**This variable will contain the base game bf variations by default. A function called after checkSong will add mod characters*/
-    var bfVariations:Array<String> = ['bf', 'bf-car', 'bf-christmas', 'bf-pixel'];
+    var bfVariations:Array<String> = [];
     /**
         bf override for playstate in story mode*/
     public static var bfOverride:String;
@@ -188,37 +188,49 @@ class SelectChara extends MusicBeatState {
             "friendlyName": "Boyfriend",
             "hasHey": true,
             "heyName": "hey",
-            "deathCharacter": "bf",
+            "deathCharacter": "bf"
         }';
         var bfCarDefault:String = '{
             "characterName": "bf-car",
             "friendlyName": "Boyfriend (Car)",
             "hasHey": false,
             "heyName": "bruh",
-            "deathCharacter": "bf",
+            "deathCharacter": "bf"
         }';
         var bfChristmasDefault:String = '{
             "characterName": "bf-christmas",
             "friendlyName": "Festive Boyfriend",
             "hasHey": true,
             "heyName": "hey",
-            "deathCharacter": "bf",
+            "deathCharacter": "bf"
         }';
         var bfPixelDefault:String = '{
             "characterName": "bf-pixel",
             "friendlyName": "Pixel Boyfriend",
             "hasHey": false,
             "heyName": "bruh",
-            "deathCharacter": "bf-pixel-dead",
+            "deathCharacter": "bf-pixel-dead"
         }';
         var bfPlaceholder:CharSelShit = cast Json.parse(bfDefault);
         var bfCarPlaceholder:CharSelShit = cast Json.parse(bfCarDefault);
         var bfChristmasPlaceholder:CharSelShit = cast Json.parse(bfChristmasDefault);
         var bfPixelPlaceholder:CharSelShit = cast Json.parse(bfPixelDefault);
-        if (!FileSystem.exists(Paths.modsSelectable('bf'))) bfInfos.push(bfPlaceholder);
-        if (!FileSystem.exists(Paths.modsSelectable('bf-car'))) bfInfos.push(bfCarPlaceholder);
-        if (!FileSystem.exists(Paths.modsSelectable('bf-christmas'))) bfInfos.push(bfChristmasPlaceholder);
-        if (!FileSystem.exists(Paths.modsSelectable('bf-pixel'))) bfInfos.push(bfPixelPlaceholder);
+        if (!FileSystem.exists(Paths.modsSelectable('bf'))) {
+            bfInfos.push(bfPlaceholder);
+            bfVariations.push('bf');
+        }
+        if (!FileSystem.exists(Paths.modsSelectable('bf-car'))) {
+            bfInfos.push(bfCarPlaceholder);
+            bfVariations.push('bf-car');
+        } 
+        if (!FileSystem.exists(Paths.modsSelectable('bf-christmas'))) {
+            bfInfos.push(bfChristmasPlaceholder);
+            bfVariations.push('bf-christmas');
+        }
+        if (!FileSystem.exists(Paths.modsSelectable('bf-pixel'))) {
+            bfInfos.push(bfPixelPlaceholder);
+            bfVariations.push('bf-pixel');
+        }
         trace('added placeholders');
         trace(bfInfos);
     }
@@ -267,7 +279,7 @@ class SelectChara extends MusicBeatState {
             var jsons:Array<String> = FileSystem.readDirectory('mods/selectable');
             for (i in 0...jsons.length) {
                 checkEntry(jsons[i]);
-                loadNotice.text = 'Press SPACE to continue';
+                if (i == jsons.length - 1) loadNotice.text = 'Press SPACE to continue';
             }
         }
         var songInfo:String = '
@@ -276,8 +288,9 @@ class SelectChara extends MusicBeatState {
             "friendlyName": "Song\'s BF",
             "hasHey": false,
             "heyName": "hey",
-            "deathCharacter": "' + PlayState.SONG.player1 + '",
+            "deathCharacter": "' + PlayState.SONG.player1 + '"
         }';
+        trace(songInfo);
         songBfPlaceholder = cast Json.parse(songInfo);
         bfVariations.insert(0, PlayState.SONG.player1);
     }
@@ -286,9 +299,9 @@ class SelectChara extends MusicBeatState {
             trace('skip this');
         } else {
             trace(input.substring(0, Std.int(input.length - 5)));
-            bfVariations.push(input.substring(0, Std.int(input.length - 5)));
-            var bfVar:CharSelShit = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(input)));
-            for (penis in bfVariations) {
+            if (input != 'bf-car.json') bfVariations.push(input.substring(0, Std.int(input.length - 5)));
+            var bfVar:CharSelShit = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(input.substring(0, Std.int(input.length - 5)))));
+            /*for (penis in bfVariations) {
                 if (input == penis) {
                     switch (penis) {
                         case 'bf':
@@ -300,13 +313,11 @@ class SelectChara extends MusicBeatState {
                         case 'bf-pixel':
                             bfInfos.insert(3, bfVar);
                     }
-                } else {
+                } else { */
                     bfInfos.push(bfVar);
-                }
-            }
+                /*}
+            }*/
             trace(bfVariations);
-            FlxG.log.notice(bfVariations);
-            FlxG.log.notice(bfInfos);
         }
     }
     /**this'll be called after checksong finishes*/
@@ -411,7 +422,8 @@ class SelectChara extends MusicBeatState {
         daBoyf.flipX = true;
         daBoyf.screenCenter();
         add(daBoyf);
-        if (FileSystem.exists(Paths.modsSelectable(daBoyf.curCharacter))) {//this'll be retired soon lol
+        /*if (FileSystem.exists(Paths.modsSelectable(daBoyf.curCharacter))) {//this has been retired in favour of the code below!
+
             var bullshit = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(daBoyf.curCharacter)));
             trace(bullshit);
             charShit.characterName = bullshit.characterName;
@@ -419,6 +431,11 @@ class SelectChara extends MusicBeatState {
             charShit.friendlyName = bullshit.friendlyName;
             charShit.hasHey = bullshit.hasHey;
             charShit.heyName = bullshit.heyName;
+        } */
+        for (dick in 0...bfInfos.length) {
+            if (bfInfos[dick].characterName == daBoyf.curCharacter) {
+                charShit = bfInfos[dick];
+            }
         }
     }
     public var susOver:Bool = false;

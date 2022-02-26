@@ -2399,9 +2399,11 @@ class PlayState extends MusicBeatState
 			}
 		}
 
-		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene)
+		if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene && !dunFuckedUpNow)
 		{
 			openChartEditor();
+		} else if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene && dunFuckedUpNow) {
+			crashGame();
 		}
 
 		if (FlxG.keys.justPressed.BACKSPACE && startedCountdown && canPause) {
@@ -2849,7 +2851,17 @@ class PlayState extends MusicBeatState
 		setOnLuas('botPlay', cpuControlled);
 		callOnLuas('onUpdatePost', [elapsed]);
 	}
+	function crashGame() {
+		persistentUpdate = false;
+		paused = true;
+		cancelMusicFadeTween();
+		CustomFadeTransition.nextCamera = camOther;
+		MusicBeatState.switchState(new shitpost.YouThoughtYouAte());
 
+		#if desktop
+		DiscordClient.changePresence("Fucked Up... BAD", null, null, true);
+		#end
+	}
 	function openChartEditor()
 	{
 		persistentUpdate = false;
