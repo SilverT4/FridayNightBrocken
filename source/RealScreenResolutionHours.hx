@@ -1,5 +1,6 @@
 package;
 
+import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxColor;
 import haxe.Json;
 import flixel.FlxSprite;
@@ -48,6 +49,7 @@ class RealScreenResolutionHours extends MusicBeatState {
         back.color = 0xFFAACCFF;
         back.scrollFactor.set();
         add(back);
+        grabbed = cast Json.parse('{ "scWidth": 0, "scHeight": 0 }');
         grabbed.scWidth = Capabilities.screenResolutionX;
         grabbed.scHeight = Capabilities.screenResolutionY;
         grabbedString = grabbed.scWidth + 'x' + grabbed.scHeight;
@@ -156,7 +158,10 @@ class RealScreenResolutionHours extends MusicBeatState {
         }
         currentStep = 1;
         startDialogue(curDialogue);
+        selectionIndicator = new Alphabet(0, 0, '>', true, false);
+        add(selectionIndicator);
     }
+    var selectingOption:Bool = false;
     override function update(elapsed:Float) {
         if (FlxG.keys.justPressed.PERIOD) {
             MusicBeatState.switchState(new MainMenuState());
@@ -168,6 +173,14 @@ class RealScreenResolutionHours extends MusicBeatState {
         if (explanText != null) {
             explanText.update(elapsed);
             if (explanText.text != explanTexts[cum]) explanText.text = explanTexts[cum];
+        }
+        if (selectingOption) {
+            if (controls.UI_UP_P) {
+                changeSelection(-1);
+            }
+            if (controls.UI_DOWN_P) {
+                changeSelection(1);
+            }
         }
         if (inExplanation) {
             if (FlxG.keys.justPressed.ENTER) {
@@ -184,9 +197,31 @@ class RealScreenResolutionHours extends MusicBeatState {
             }
         }
     }
+    var currentSelection:Int = 0;
+    var realOptionList:Array<Alphabet> = [];
+    function changeSelection(change:Int = 0) {
+        currentSelection += change;
+        if (currentSelection < 0) currentSelection = realOptionList.length - 1;
+        if (currentSelection >= realOptionList.length) currentSelection = 0;
+        var bullSHIT:Int = 0;
+        for (vagina in grpOptions.members) {
+            vagina.targetY = bullSHIT - currentSelection;
+            bullSHIT++;
+
+            vagina.alpha = 0.6;
+            if (vagina.targetY == 0) {
+                vagina.alpha = 1;
+                selectionIndicator.x = vagina.x - 69;
+                selectionIndicator.y = vagina.y;
+            }
+        }
+        FlxG.sound.play(Paths.sound('scrollMenu'));
+    }
     /**actually displays the available options lmao*/
     var optionDesc:FlxText;
     var optionBg:FlxSprite;
+    var grpOptions:FlxTypedGroup<Alphabet>;
+    var selectionIndicator:Alphabet;
     function showOptions() {
         trace('prevent compile fail');
         if (!seenExplanation) {
@@ -199,11 +234,14 @@ class RealScreenResolutionHours extends MusicBeatState {
         optionDesc = new FlxText(0,4,FlxG.width,'Option description will be displayed here');
         optionDesc.setFormat("VCR OSD Mono", 2, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(optionDesc);
-        /* if (currentStep == 2) {
+        if (currentStep == 2) {
             for (e in 0...2) {
-                var optionChoice = 'a';
+                var optionChoice:Alphabet = new Alphabet(0,0, optionTextArray[e], true, false);
+                optionChoice.screenCenter();
+                optionChoice.y += (100 * (e - (optionTextArray.length / 2))) + 50;
+                grpOptions.add(optionChoice);
             }
-        }*/ //i need to check how options sets it up
+        } //i need to check how options sets it up
     }
     /**this should be called at the end of every step*/
     function doStepThings(step:Int) {
@@ -324,8 +362,8 @@ class RealScreenResolutionHours extends MusicBeatState {
                         doStepThings(currentStep);
                     }
                 }
-                // psychDialogue.nextDialogueThing = startNextDialogue;
-                // psychDialogue.skipDialogueThing = skipDialogue;
+                psychDialogue.nextDialogueThing = startNextDialogue;
+                psychDialogue.skipDialogueThing = skipDialogue;
                 // psychDialogue.cameras = [camHUD];
                 add(psychDialogue);
             } else {
@@ -336,6 +374,15 @@ class RealScreenResolutionHours extends MusicBeatState {
                     showOptions();
                 }
             }
+        }
+        var dialogueCount:Int = 0;
+        function startNextDialogue() {
+            dialogueCount++;
+        }
+
+        function skipDialogue() {
+            //callOnLuas('onSkipDialogue', [dialogueCount]);
+            trace('ass');
         }
 }
 
