@@ -489,7 +489,15 @@ class TitleState extends MusicBeatState
 						openSubState(new FuckYouToo());
 						#end
 					} else {
+						#if debug
+						if (FlxG.keys.pressed.SHIFT) {
+							MusicBeatState.switchState(new RealScreenResolutionHours());
+						} else {
+							MusicBeatState.switchState(new MainMenuState());
+						}
+						#else
 						MusicBeatState.switchState(new MainMenuState());
+						#end
 					}
 					closedState = true;
 				});

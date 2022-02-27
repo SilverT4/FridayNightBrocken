@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="windTaskShit.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="action0000" x="0" y="0" width="1366" height="768"/>
+	<SubTexture name="desktop0000" x="1371" y="0" width="1366" height="768"/>
+	<SubTexture name="setMain0000" x="0" y="773" width="1366" height="768"/>
+	<SubTexture name="setPersMain0000" x="1371" y="773" width="1366" height="768"/>
+	<SubTexture name="setPersTask0000" x="0" y="1546" width="1366" height="768"/>
+</TextureAtlas>
