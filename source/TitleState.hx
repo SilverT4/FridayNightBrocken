@@ -15,6 +15,7 @@ import flixel.addons.transition.TransitionData;
 import haxe.Json;
 import openfl.display.Bitmap;
 import openfl.display.BitmapData;
+import openfl.system.Capabilities;
 #if MODS_ALLOWED
 import sys.FileSystem;
 import sys.io.File;
@@ -74,11 +75,17 @@ class TitleState extends MusicBeatState
 	var mustUpdate:Bool = false;
 	
 	var titleJSON:TitleData;
+
+	public static var realScreenResolution:Array<Float> = [];
 	
 	public static var updateVersion:String = '';
 
 	override public function create():Void
 	{
+		trace('screen res.');
+		realScreenResolution.push(Capabilities.screenResolutionX);
+		realScreenResolution.push(Capabilities.screenResolutionY);
+		trace(realScreenResolution); //the screen stuff will be moved to a separate state that loads when you press enter, before the main menu.
 		#if MODS_ALLOWED
 		// Just to load a mod on start up if ya got one. For mods that change the menu music and bg
 		if (FileSystem.exists("modsList.txt")){
