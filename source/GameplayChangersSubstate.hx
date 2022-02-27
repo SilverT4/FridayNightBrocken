@@ -88,6 +88,14 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.description = 'If you enable this you are a virgin';
 		optionsArray.push(option);
 
+		var option:GameplayOption = new GameplayOption('Freeplay Cutscenes', 'fpScenes', 'bool', false);
+		option.description = '*insert ENTER mashing here*';
+		optionsArray.push(option);
+		
+		var option:GameplayOption = new GameplayOption('Freeplay Cutscenes Repeat on Death', 'fpScenesRepeat', 'bool', false);
+		option.description = 'Don\'t break your keyboard!';
+		optionsArray.push(option);
+
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		option.description = 'Use this to show off your songs and shit';
 		optionsArray.push(option);

@@ -34,6 +34,7 @@ class FuckYouToo extends MusicBeatSubstate {
         PlayState.SONG = Song.loadFromJson('cheating', 'cheating');
         PlayState.SONG.player2 = 'bambi-old';
         PlayState.SONG.player3 = 'nogflol';
+        PlayState.isStoryMode = true;
         new FlxTimer().start(3, function pussy(tmr:FlxTimer) {
             MusicBeatState.switchState(new SelectChara());
         });

@@ -77,7 +77,13 @@ class DialogueCharacter extends FlxSprite
 
 		if(character == null) character = DEFAULT_CHARACTER;
 		this.curCharacter = character;
-
+		switch (PlayState.SONG.song.toLowerCase()) {
+			case 'test':
+				if (FileSystem.exists(Paths.music('DaveDialogue'))) {
+					FlxG.sound.playMusic(Paths.music('DaveDialogue'), 0);
+					FlxG.sound.music.fadeIn(1, 0, 0.8);
+				}
+		}
 		reloadCharacterJson(character);
 		frames = Paths.getSparrowAtlas('dialogue/' + jsonFile.image);
 		reloadAnimations();

@@ -62,6 +62,8 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	static inline final WEEK4 = 'week4';
+
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
@@ -190,6 +192,8 @@ class PlayState extends MusicBeatState
 	public var cpuControlled:Bool = false;
 	public var weDoALittleTrollin:Bool = false;
 	public var practiceMode:Bool = false;
+	public var freeplayCutscenes:Bool = false;
+	public var freeplayCutsceneRepeats:Bool = false;
 
 	public var botplaySine:Float = 0;
 	public var botplayTxt:FlxText;
@@ -362,6 +366,8 @@ class PlayState extends MusicBeatState
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
 		cpuControlled = ClientPrefs.getGameplaySetting('botplay', false);
 		weDoALittleTrollin = ClientPrefs.getGameplaySetting('botplayTroll', false);
+		freeplayCutscenes = ClientPrefs.getGameplaySetting('fpScenes', false);
+		freeplayCutsceneRepeats = ClientPrefs.getGameplaySetting('fpScenesRepeat', false);
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -392,9 +398,14 @@ class PlayState extends MusicBeatState
 		storyDifficultyText = CoolUtil.difficulties[storyDifficulty];
 
 		// String that contains the mode defined here so it isn't necessary to call changePresence for each mode
-		if (isStoryMode)
+		if (isStoryMode && !dunFuckedUpNow)
 		{
 			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
+		}
+		else if (isStoryMode && dunFuckedUpNow && SONG.song.toLowerCase() == 'cheating') {
+			detailsText = "CLOWNING!!";
+		} else if (dunFuckedUpNow && SONG.song.toLowerCase() != 'cheating') {
+			detailsText = "Probably debugging? 🤷‍♂️";
 		}
 		else
 		{
@@ -562,14 +573,14 @@ class PlayState extends MusicBeatState
 				add(street);
 
 			case 'limo': //Week 4
-				var skyBG:BGSprite = new BGSprite('limo/limoSunset', -120, -50, 0.1, 0.1);
+				var skyBG:BGSprite = new BGSprite('limo/limoSunset', -120, -50, 0.1, 0.1, null, WEEK4);
 				add(skyBG);
 
 				if(!ClientPrefs.lowQuality) {
-					limoMetalPole = new BGSprite('gore/metalPole', -500, 220, 0.4, 0.4);
+					limoMetalPole = new BGSprite('gore/metalPole', -500, 220, 0.4, 0.4, null, WEEK4);
 					add(limoMetalPole);
 
-					bgLimo = new BGSprite('limo/bgLimo', -150, 480, 0.4, 0.4, ['background limo pink'], true);
+					bgLimo = new BGSprite('limo/bgLimo', -150, 480, 0.4, 0.4, ['background limo pink'], true, WEEK4);
 					add(bgLimo);
 
 					limoCorpse = new BGSprite('gore/noooooo', -500, limoMetalPole.y - 130, 0.4, 0.4, ['Henchmen on rail'], true);
@@ -588,14 +599,14 @@ class PlayState extends MusicBeatState
 						grpLimoDancers.add(dancer);
 					}
 
-					limoLight = new BGSprite('gore/coldHeartKiller', limoMetalPole.x - 180, limoMetalPole.y - 80, 0.4, 0.4);
+					limoLight = new BGSprite('gore/coldHeartKiller', limoMetalPole.x - 180, limoMetalPole.y - 80, 0.4, 0.4, null, WEEK4);
 					add(limoLight);
 
 					grpLimoParticles = new FlxTypedGroup<BGSprite>();
 					add(grpLimoParticles);
 
 					//PRECACHE BLOOD
-					var particle:BGSprite = new BGSprite('gore/stupidBlood', -400, -400, 0.4, 0.4, ['blood'], false);
+					var particle:BGSprite = new BGSprite('gore/stupidBlood', -400, -400, 0.4, 0.4, ['blood'], false, WEEK4);
 					particle.alpha = 0.01;
 					grpLimoParticles.add(particle);
 					resetLimoKill();
@@ -604,9 +615,9 @@ class PlayState extends MusicBeatState
 					CoolUtil.precacheSound('dancerdeath');
 				}
 
-				limo = new BGSprite('limo/limoDrive', -120, 550, 1, 1, ['Limo stage'], true);
+				limo = new BGSprite('limo/limoDrive', -120, 550, 1, 1, ['Limo stage'], true, WEEK4);
 
-				fastCar = new BGSprite('limo/fastCarLol', -300, 160);
+				fastCar = new BGSprite('limo/fastCarLol', -300, 160, null, WEEK4);
 				fastCar.active = true;
 				limoKillingState = 0;
 
@@ -1185,7 +1196,7 @@ class PlayState extends MusicBeatState
 		#end
 		
 		var daSong:String = Paths.formatToSongPath(curSong);
-		if (isStoryMode && !seenCutscene)
+		if ((isStoryMode || freeplayCutscenes) && (!seenCutscene || freeplayCutsceneRepeats))
 		{
 			switch (daSong)
 			{
@@ -1245,7 +1256,10 @@ class PlayState extends MusicBeatState
 				case 'senpai' | 'roses' | 'thorns':
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
-
+				
+				case 'test':
+						dialogueJson = cast Json.parse(sys.io.File.getContent('mods/data/test/dialogue.json'));
+						startDialogue(dialogueJson);
 				default:
 					startCountdown();
 			}

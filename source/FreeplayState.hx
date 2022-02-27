@@ -345,6 +345,9 @@ class FreeplayState extends MusicBeatState
 			
 			if (FlxG.keys.pressed.SHIFT){
 				LoadingState.loadAndSwitchState(new ChartingState());
+			} else if (FlxG.keys.pressed.ALT) {
+				PlayState.SONG.player1 = 'snowcon';
+				LoadingState.loadAndSwitchState(new PlayState());
 			}else{
 				LoadingState.loadAndSwitchState(new SelectChara());
 				// LoadingState.loadAndSwitchState(new PreloadLargerCharacters(songLowercase, true));
