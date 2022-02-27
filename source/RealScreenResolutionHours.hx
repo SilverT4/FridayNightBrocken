@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxColor;
 import haxe.Json;
 import flixel.FlxSprite;
 import DialogueBoxPsych;
@@ -225,7 +226,7 @@ class RealScreenResolutionHours extends MusicBeatState {
     var explanTexts:Array<String> = ["Alright, so. First things first... Click on the Action Centre icon. It'll be on your taskbar, right next to the clock.", "Now, click All settings.\n(If necessary, click Expand first)", "Once the Settings window opens, click Personalisation.", "On the left, click on Taskbar. If your window is too small, click the 3-line (menu) icon and click Taskbar.", "Where it says Taskbar location on screen, change the value to Top, Left, or Bottom.", "You can also enable the small taskbar buttons, which would give you more screen space.", "Or, you can enable auto-hide of the taskbar in desktop mode, which will bypass the need to move the taskbar at all.", "If you go for this, you can make the option appear again by hovering near the edge where your taskbar is."];
     var inExplanation:Bool = false;
     var explanText:FlxText;
-    var cum:Int = 0
+    var cum:Int = 0;
     function explainTaskbarMovement() {
         trace('gonna get screenshots');
         windowsThing = new FlxSprite(0);
@@ -243,7 +244,9 @@ class RealScreenResolutionHours extends MusicBeatState {
         explanText = new FlxText(0, FlxG.height - 66, FlxG.width - 150, explanTexts[cum], 24);
         explanText.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         add(explanText);
-        yesThisExists = new SnowdriftIcon(FlxG.width - 150, FlxG.height - 150, 'snowcon');
+        yesThisExists = new SnowdriftIcon('snowcon');
+        yesThisExists.x = FlxG.width - 150;
+        yesThisExists.y = FlxG.height - 150;
         add(yesThisExists);
     }
     public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
