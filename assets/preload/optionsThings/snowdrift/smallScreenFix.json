@@ -1,0 +1,60 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "What's up?"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Oh, the Small Screen Fix! I came up with this one."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "If you turn this on, I'll do some things and move some UI elements that would be hidden by the Windows taskbar on smaller screens,"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "usually to the top of the window in menus, or just above the time bar in songs."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "Although... There are a few things I won't move..."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "I won't move the Psych Engine version text in the main menu, nor will I move the health bar."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "You'll have to enable Downscroll in the\\nGameplay settings to move the health bar. So sorry!"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Anyway, I hope you'll find this option useful if you're playing on a smaller screen! Let me know if you have any other questions."
+		}
+	]
+}
