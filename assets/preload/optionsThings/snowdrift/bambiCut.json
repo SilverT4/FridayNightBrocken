@@ -1,0 +1,95 @@
+{
+	"dialogue": [
+		{
+			"expression": "excited",
+			"text": "Hey, welcome ba--",
+			"boxState": "normal",
+			"speed": 0.03,
+			"portrait": "snowdrift"
+		},
+		{
+			"expression": "talk",
+			"text": "THERE YOU ARE!",
+			"boxState": "angry",
+			"speed": 0.03,
+			"portrait": "tinyBlue-left"
+		},
+		{
+			"expression": "shocked",
+			"text": "Shit.",
+			"boxState": "normal",
+			"speed": 0.03,
+			"portrait": "bf"
+		},
+		{
+			"expression": "shocked",
+			"text": "What's going on?!",
+			"boxState": "normal",
+			"speed": 0.03,
+			"portrait": "snowdrift"
+		},
+		{
+			"expression": "talk",
+			"text": "YOU COWARD! FUCK YOU!",
+			"boxState": "normal",
+			"speed": 0.03,
+			"portrait": "bambi"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "Why can't you just leave us alone?!"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "Snowdrift",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "BF. It's fine."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Eh?"
+		},
+		{
+			"expression": "pissed",
+			"text": "Let's just get this over with.",
+			"boxState": "normal",
+			"speed": 0.03,
+			"portrait": "snowdrift"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "That way you don't have to keep dealing with Bambi harassing you."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Snowdrift, he's force disabled ghost tapping! How am I supposed to beat him?!"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Wait what?"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "Well, shit... Either way, let's just do this!"
+		}
+	]
+}
