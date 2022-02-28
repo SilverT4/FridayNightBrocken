@@ -45,12 +45,13 @@ class SnowdriftStuff extends BaseOptionsMenu {
 
     override function update(elapsed:Float) {
         if (FlxG.keys.justPressed.H) {
+            inDialogue = true;
             super.startDialogue(dumb);
         }
 
         if (psychDialogue != null) {
             psychDialogue.update(elapsed);
-        }
+        } //THIS WASNT EVEN NECESSARY LMFAO
 
         super.update(elapsed);
     }
@@ -70,11 +71,15 @@ class SnowdriftIntro extends MusicBeatState {
         bg.setGraphicSize(Std.int(bg.width * 1.1));
         bg.color = 0xFFAACCFF;
         add(bg);
-        dumb = cast Json.parse(Paths.snowdriftChatter('firstIntro'));
+        if (!PlayState.dunFuckedUpNow) { dumb = cast Json.parse(Paths.snowdriftChatter('firstIntro')); }
+        else {
+            dumb = cast Json.parse(Paths.snowdriftChatter('bambiCut'));
+        }
     }
     override function update(elapsed:Float) {
-        if (psychDialogue != null) {
-            psychDialogue.update(elapsed);
+        if (FlxG.sound.music.volume < 1) {
+            FlxG.sound.music.volume = 1;
+            FlxG.sound.playMusic(Paths.modsMusic('mktFriends'));
         }
     }
     override function create() {
