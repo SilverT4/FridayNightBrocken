@@ -1,0 +1,102 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "So I'm just going to explain each field and what it does."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "First up, the profile name field."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Your profile name will appear on the saves menu when you launch the game. It'll also appear in the main menu, below the"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Psych Engine version information. Additionally, I'll use your profile name when you visit me in the Options menu for the first time."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "So please don't set it to anything...\\nInappropriate. I'd rather not be vulgar!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "Anyway!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Next up is the birthday field."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Set your birthday up and you can get a special achievement on your birthday if you open the game!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "Admittedly, that's the only use it's got right now."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Ok, next is the save name field. This is used internally to keep track of your data and keep it separate from other saves on your"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "computer. The game uses 'default' as its default save, so don't try using that, ok?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Last but not least, the comment field. You can set this and have a funny message appear on the save selection screen."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Leave it blank and I'll just set a random one for you when you save."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Alright, I hope that explains everything. I'll leave you to it. Just press the H key if you need to hear this again!"
+		}
+	]
+}

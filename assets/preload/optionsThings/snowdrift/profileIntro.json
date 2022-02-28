@@ -1,0 +1,39 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Hello there! My name is Snowdrift. I'm here to help you set up a new profile."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Profiles work as separate saves to allow multiple people to play the game with their own data, therefore not overwriting high"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "scores and such. Controls are global, though, so you'll have to deal with controls being changed if multiple people play on your"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "PC. Plus, you can also set your birthday and get a special achievement if you play on your birthday!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "So, you ready? Let's get you set up. Press the H key if you need more information on anything."
+		}
+	]
+}
