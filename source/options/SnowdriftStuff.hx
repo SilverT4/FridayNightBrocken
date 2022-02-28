@@ -67,6 +67,7 @@ class SnowdriftIntro extends MusicBeatState {
     var dumb:DialogueFile;
     var dialogueCount:Int = 0;
     var psychDialogue:DialogueBoxPsych;
+    public static var bambiHarassment:Bool = false;
 
     public function new() {
         super();
@@ -109,7 +110,8 @@ class SnowdriftIntro extends MusicBeatState {
                         } else {
                             PlayState.SONG = Song.loadFromJson('cheating', 'cheating');
                             PlayState.SONG.player2 = 'bambi-old';
-                            PlayState.SONG.gfVersion = 'nogflol';
+                            PlayState.SONG.gfVersion = 'gf-but-devin';
+                            bambiHarassment = true;
                             LoadingState.loadAndSwitchState(new PlayState(), true);
                         }
                     }

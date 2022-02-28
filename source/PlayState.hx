@@ -402,7 +402,7 @@ class PlayState extends MusicBeatState
 		{
 			detailsText = "Story Mode: " + WeekData.getCurrentWeek().weekName;
 		}
-		else if (isStoryMode && dunFuckedUpNow && SONG.song.toLowerCase() == 'cheating') {
+		else if (dunFuckedUpNow && SONG.song.toLowerCase() == 'cheating') {
 			detailsText = "CLOWNING!!";
 		} else if (dunFuckedUpNow && SONG.song.toLowerCase() != 'cheating') {
 			detailsText = "Probably debugging? 🤷‍♂️";
@@ -3575,6 +3575,9 @@ class PlayState extends MusicBeatState
 			} else {
 				trace('YOU BEAT IT???');
 				dunFuckedUpNow = false;
+				if (options.SnowdriftStuff.SnowdriftIntro.bambiHarassment) {
+					options.SnowdriftStuff.SnowdriftIntro.bambiHarassment = false;
+				}
 				cancelMusicFadeTween();
 				CustomFadeTransition.nextCamera = camOther;
 				if(FlxTransitionableState.skipNextTransIn) {

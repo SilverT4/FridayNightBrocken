@@ -1,5 +1,8 @@
 package;
 
+import DialogueBoxPsych;
+import haxe.Json;
+import options.SnowdriftStuff.SnowdriftIntro;
 import flixel.math.FlxRandom;
 import flixel.FlxG;
 import flixel.FlxObject;
@@ -26,6 +29,8 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static var deathSoundName:String = 'fnf_loss_sfx';
 	public static var loopSoundName:String = 'gameOver';
 	public static var endSoundName:String = 'gameOverEnd';
+	public static var inDialogue:Bool = false;
+	var holyShit:DialogueFile;
 	static var PeaceChance:Int = Random.int(0, 100);
 	static var debugPeaceTrace:Array<String> = ["Oh, we're doing it this way, eh? Aight.", "C'mon, just let the thing happen naturally.", "You're boring.", "I guess you really need that help."];
 
@@ -44,10 +49,58 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		instance = this;
 		PlayState.instance.callOnLuas('onGameOverStart', []);
+		if (SnowdriftIntro.bambiHarassment) new FlxTimer().start(5, function(tmr:FlxTimer) {
+			inDialogue = true;
+			holyShit = cast Json.parse(Paths.snowdriftChatter('gameOver'));
+			startDialogue(holyShit);
+		});
 
 		super.create();
 	}
+	var psychDialogue:DialogueBoxPsych;
+	public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
+		{
+			// TO DO: Make this more flexible, maybe?
+			if(psychDialogue != null) return;
 	
+			if(dialogueFile.dialogue.length > 0) {
+				if (!inDialogue) inDialogue = true;
+				CoolUtil.precacheSound('dialogue');
+				CoolUtil.precacheSound('dialogueClose');
+				psychDialogue = new DialogueBoxPsych(dialogueFile);
+				psychDialogue.scrollFactor.set();
+				if(SnowdriftIntro.bambiHarassment) {
+					psychDialogue.finishThing = function() {
+						psychDialogue = null;
+						endBullshit();
+					}
+				} else {
+					psychDialogue.finishThing = function() {
+						psychDialogue = null;
+						inDialogue = false;
+						trace('ass');
+					}
+				}
+				psychDialogue.nextDialogueThing = startNextDialogue;
+				psychDialogue.skipDialogueThing = skipDialogue;
+				// psychDialogue.cameras = [camHUD];
+				add(psychDialogue);
+			} else {
+				FlxG.log.warn('Your dialogue file is badly formatted!');
+				if(SnowdriftIntro.bambiHarassment) {
+					trace('wtf');
+				} else {
+					trace('wtf');
+				}
+			}
+		}
+	var dialogueCount:Int = 0;
+	function startNextDialogue() {
+		dialogueCount++;
+	}
+	function skipDialogue() {
+		trace('penis');
+	}
 	public function new(x:Float, y:Float, camX:Float, camY:Float)
 	{
 		super();
@@ -92,8 +145,10 @@ class GameOverSubstate extends MusicBeatSubstate
 			var lerpVal:Float = CoolUtil.boundTo(elapsed * 0.6, 0, 1);
 			camFollowPos.setPosition(FlxMath.lerp(camFollowPos.x, camFollow.x, lerpVal), FlxMath.lerp(camFollowPos.y, camFollow.y, lerpVal));
 		}
-
-		if (controls.ACCEPT)
+		if (psychDialogue != null) {
+			psychDialogue.update(elapsed);
+		}
+		if (controls.ACCEPT && !inDialogue)
 		{
 			endBullshit();
 		}
