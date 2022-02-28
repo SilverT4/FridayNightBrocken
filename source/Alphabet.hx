@@ -1,5 +1,6 @@
 package;
 
+import sys.FileSystem;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.graphics.frames.FlxAtlasFrames;
@@ -211,7 +212,11 @@ class Alphabet extends FlxSpriteGroup
 				timerCheck();
 			}
 			if(dialogueSound != null) dialogueSound.stop();
-			dialogueSound = FlxG.sound.play(Paths.sound('dialogue'));
+			if (!FileSystem.exists(Paths.modsSounds('dialogue'))) {
+			dialogueSound = FlxG.sound.play(Paths.sound('dialogue', 'shared'));
+			} else {
+				dialogueSound = FlxG.sound.play(Paths.sound('dialogue'));
+			}
 		} else {
 			typeTimer = new FlxTimer().start(0.1, function(tmr:FlxTimer) {
 				typeTimer = new FlxTimer().start(speed, function(tmr:FlxTimer) {
@@ -309,7 +314,11 @@ class Alphabet extends FlxSpriteGroup
 
 				if(tmr != null) {
 					if(dialogueSound != null) dialogueSound.stop();
-					dialogueSound = FlxG.sound.play(Paths.sound('dialogue'));
+					if (!FileSystem.exists(Paths.modsSounds('dialogue'))) {
+						dialogueSound = FlxG.sound.play(Paths.sound('dialogue', 'shared'));
+					} else {
+						dialogueSound = FlxG.sound.play(Paths.sound('dialogue'));
+					}
 				}
 
 				add(letter);
