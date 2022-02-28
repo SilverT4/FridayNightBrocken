@@ -144,6 +144,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	var nextAccept:Int = 5;
 	var holdTime:Float = 0;
 	var holdValue:Float = 0;
+	private var inDialogue:Bool = false;
 	override function update(elapsed:Float)
 	{
 		if (controls.UI_UP_P)
@@ -174,7 +175,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 			if(usesCheckbox)
 			{
-				if(controls.ACCEPT)
+				if(controls.ACCEPT && !inDialogue)
 				{
 					FlxG.sound.play(Paths.sound('scrollMenu'));
 					curOption.setValue((curOption.getValue() == true) ? false : true);
@@ -273,9 +274,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				reloadCheckboxes();
 			}
 
-			if (psychDialogue != null) {
+			/* if (psychDialogue != null) {
 				psychDialogue.update(elapsed);
-			}
+			} */
 		}
 
 		if(boyfriend != null && boyfriend.animation.curAnim.finished) {
@@ -295,12 +296,13 @@ class BaseOptionsMenu extends MusicBeatSubstate
     
             if(dialogueFile.dialogue.length > 0) {
                 // inCutscene = true;
-                CoolUtil.precacheSound('dialogue');
-                CoolUtil.precacheSound('dialogueClose');
+                CoolUtil.precacheSound('dialogue', 'shared');
+                CoolUtil.precacheSound('dialogueClose', 'shared');
                 psychDialogue = new DialogueBoxPsych(dialogueFile);
                 psychDialogue.scrollFactor.set();
                     psychDialogue.finishThing = function() {
                         psychDialogue = null;
+						inDialogue = false;
                         // MusicBeatState.switchState(new options.OptionsState());
                     }
                 psychDialogue.nextDialogueThing = startNextDialogue;

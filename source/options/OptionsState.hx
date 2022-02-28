@@ -63,7 +63,7 @@ class OptionsState extends MusicBeatState
 			case 'Reset Save Data':
 				LoadingState.loadAndSwitchState(new options.ResetDataState());
 			case 'Visit Snowdrift':
-				if (!FlxG.save.data.seenSnowdriftIntro) {
+				if (!FlxG.save.data.seenSnowdriftIntro || PlayState.dunFuckedUpNow) {
 					LoadingState.loadAndSwitchState(new options.SnowdriftStuff.SnowdriftIntro());
 				} else {
 					openSubState(new options.SnowdriftStuff());

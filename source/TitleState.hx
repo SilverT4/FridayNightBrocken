@@ -101,6 +101,7 @@ class TitleState extends MusicBeatState
 				
 			}
 		}
+		Application.current.window.focus();
 		#end
 		
 		#if (desktop && MODS_ALLOWED)

@@ -48,6 +48,10 @@ class SnowdriftStuff extends BaseOptionsMenu {
             inDialogue = true;
             super.startDialogue(dumb);
         }
+        if (FlxG.sound.music.volume < 1) {
+            FlxG.sound.music.volume = 1;
+            FlxG.sound.playMusic(Paths.modsMusic('mktFriends'));
+        }
 
         if (psychDialogue != null) {
             psychDialogue.update(elapsed);
@@ -77,9 +81,8 @@ class SnowdriftIntro extends MusicBeatState {
         }
     }
     override function update(elapsed:Float) {
-        if (FlxG.sound.music.volume < 1) {
-            FlxG.sound.music.volume = 1;
-            FlxG.sound.playMusic(Paths.modsMusic('mktFriends'));
+        if (psychDialogue != null) {
+            psychDialogue.update(elapsed);
         }
     }
     override function create() {
@@ -94,14 +97,21 @@ class SnowdriftIntro extends MusicBeatState {
     
             if(dialogueFile.dialogue.length > 0) {
                 // inCutscene = true;
-                CoolUtil.precacheSound('dialogue');
-                CoolUtil.precacheSound('dialogueClose');
+                CoolUtil.precacheSound('dialogue', 'shared');
+                CoolUtil.precacheSound('dialogueClose', 'shared');
                 psychDialogue = new DialogueBoxPsych(dialogueFile);
                 psychDialogue.scrollFactor.set();
                     psychDialogue.finishThing = function() {
                         psychDialogue = null;
                         FlxG.save.data.seenSnowdriftIntro = true;
-                        MusicBeatState.switchState(new options.OptionsState());
+                        if (!PlayState.dunFuckedUpNow) {
+                            MusicBeatState.switchState(new options.OptionsState());
+                        } else {
+                            PlayState.SONG = Song.loadFromJson('cheating', 'cheating');
+                            PlayState.SONG.player2 = 'bambi-old';
+                            PlayState.SONG.gfVersion = 'nogflol';
+                            LoadingState.loadAndSwitchState(new PlayState(), true);
+                        }
                     }
                 psychDialogue.nextDialogueThing = startNextDialogue;
                 psychDialogue.skipDialogueThing = skipDialogue;
