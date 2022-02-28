@@ -1,0 +1,32 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.025,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "dead",
+			"text": "..."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "dead",
+			"text": "BF: Damn it. Looks like I have to take Bambi on now."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "So you know what? Fuck it. It's my turn!"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "Let's do this!"
+		}
+	]
+}
