@@ -34,7 +34,7 @@ using StringTools;
  */
 class OptionsState extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Reset Save Data'];
+	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Visit Snowdrift'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -62,6 +62,12 @@ class OptionsState extends MusicBeatState
 				#end
 			case 'Reset Save Data':
 				LoadingState.loadAndSwitchState(new options.ResetDataState());
+			case 'Visit Snowdrift':
+				if (!FlxG.save.data.seenSnowdriftIntro) {
+					LoadingState.loadAndSwitchState(new options.SnowdriftStuff.SnowdriftIntro());
+				} else {
+					openSubState(new options.SnowdriftStuff());
+				}
 		}
 	}
 

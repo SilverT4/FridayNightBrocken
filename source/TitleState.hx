@@ -117,6 +117,7 @@ class TitleState extends MusicBeatState
 		titleJSON = Json.parse(File.getContent(path));
 		if (FileSystem.exists('mods/fuckyoulmfao')) {
 			fuckinAsshole = true;
+			Application.current.window.title = 'Friday Night Clownin\'';
 		}
 		#else
 		var path = Paths.getPreloadPath("images/gfDanceTitle.json");
@@ -491,7 +492,7 @@ class TitleState extends MusicBeatState
 					} else {
 						#if debug
 						if (FlxG.keys.pressed.SHIFT) {
-							MusicBeatState.switchState(new RealScreenResolutionHours());
+							LoadingState.loadAndSwitchState(new RealScreenResolutionHours());
 						} else {
 							MusicBeatState.switchState(new MainMenuState());
 						}

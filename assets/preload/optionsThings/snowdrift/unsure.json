@@ -1,0 +1,39 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "What's up?"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Ah, gotcha. Lemme see..."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Wait... What?"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Strange..."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "I'm so sorry, I don't know what this option does! This is probably just me being forgetful. Don't worry, I'll try and figure it out! Soon..."
+		}
+	]
+}

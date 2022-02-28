@@ -1,0 +1,39 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Hey there! Welcome to my little area in the Options menu."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Here, you'll find options that either haven't been put into one of the main categories, or just don't fit into any of them."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "If you need to know what an option does, let me know by pressing H. I'll be more than happy to explain!"
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "With all that being said, I'll leave you to it. The menu really just works like other category menus."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "Oh, and uh... I'm gonna have to return you to the main options menu now. Sorry!"
+		}
+	]
+}

@@ -87,7 +87,11 @@ class DialogueCharacter extends FlxSprite
 		}
 	}
 		reloadCharacterJson(character);
-		frames = Paths.getSparrowAtlas('dialogue/' + jsonFile.image);
+		if (!FileSystem.exists(Paths.modsImages('dialogue/' + jsonFile.image))) {
+		frames = Paths.getSparrowAtlas('dialogue/' + jsonFile.image, 'shared');
+		} else {
+			frames = Paths.getSparrowAtlas('dialogue/' + jsonFile.image);
+		}
 		reloadAnimations();
 	}
 
@@ -201,12 +205,12 @@ class DialogueBoxPsych extends FlxSpriteGroup
 		bgFade.visible = true;
 		bgFade.alpha = 0;
 		add(bgFade);
-
+		trace(dialogueList);
 		this.dialogueList = dialogueList;
 		spawnCharacters();
 
 		box = new FlxSprite(70, 370);
-		box.frames = Paths.getSparrowAtlas('speech_bubble');
+		box.frames = Paths.getSparrowAtlas('speech_bubble', 'shared'); //temp fix so i can actually use from preload shit
 		box.scrollFactor.set();
 		box.antialiasing = ClientPrefs.globalAntialiasing;
 		box.animation.addByPrefix('normal', 'speech bubble normal', 24);

@@ -1,5 +1,6 @@
 package;
 
+import flixel.util.FlxTimer;
 import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.util.FlxColor;
 import haxe.Json;
@@ -13,6 +14,8 @@ import flixel.ui.FlxButton;
 import flixel.text.FlxText;
 import HealthIcon as SnowdriftIcon;
 import Paths;
+import sys.io.File;
+import flixel.FlxCamera;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -25,6 +28,8 @@ typedef YourScreen = {
 }
 /* hENLO it is nearly 1am as i commit this, im tired and will work on this tmr*/
 class RealScreenResolutionHours extends MusicBeatState {
+    static inline final ASSETS_DATA_TEMP_JSON = 'assets/data/temp.json';
+
     var yesThisExists:SnowdriftIcon;
     var windowsScreen:FlxSprite;
     var grabbed:YourScreen;
@@ -54,6 +59,9 @@ class RealScreenResolutionHours extends MusicBeatState {
         grabbed.scHeight = Capabilities.screenResolutionY;
         grabbedString = grabbed.scWidth + 'x' + grabbed.scHeight;
         trace(grabbedString);
+        fuckinShit = new FlxCamera();
+        fuckinShit.bgColor.alpha = 0;
+        FlxG.cameras.add(fuckinShit);
         resolutionMessage = '{
             "dialogue": [
                 {
@@ -145,20 +153,30 @@ class RealScreenResolutionHours extends MusicBeatState {
                     "portrait": "snowdrift",
                     "boxState": "normal",
                     "expression": "talk",
-                    "text": "Now then... What do you want to do?"
+                    "text": "Now then... Here\'s that screenshot I mentioned."
                 }
             ]
         }
         ';
-        curDialogue = cast Json.parse(resolutionMessage);
+        writeFileToTemp(resolutionMessage);
+        curDialogue = cast Json.parse(File.getContent(Paths.json('temp')));
+    }
+    function writeFileToTemp(input:String) {
+        File.write(ASSETS_DATA_TEMP_JSON);
+        File.saveContent(ASSETS_DATA_TEMP_JSON, input);
+        trace(File.getContent(ASSETS_DATA_TEMP_JSON));
     }
     override function create() {
         if (!FlxG.sound.music.playing) {
             FlxG.sound.playMusic(Paths.music('desktop'));
         }
         currentStep = 1;
-        startDialogue(curDialogue);
+        new FlxTimer().start(3, function(tmr:FlxTimer) {
+            startDialogue(curDialogue);
+        });
         selectionIndicator = new Alphabet(0, 0, '>', true, false);
+        selectionIndicator.visible = false;
+        selectionIndicator.cameras = [fuckinShit];
         add(selectionIndicator);
     }
     var selectingOption:Bool = false;
@@ -174,12 +192,62 @@ class RealScreenResolutionHours extends MusicBeatState {
             explanText.update(elapsed);
             if (explanText.text != explanTexts[cum]) explanText.text = explanTexts[cum];
         }
+        if (!FlxG.sound.music.playing) {
+            FlxG.sound.playMusic(Paths.music('desktop'));
+        }
+        if (psychDialogue != null) {
+            psychDialogue.update(elapsed);
+        }
         if (selectingOption) {
             if (controls.UI_UP_P) {
                 changeSelection(-1);
             }
             if (controls.UI_DOWN_P) {
                 changeSelection(1);
+            }
+            if (controls.ACCEPT) {
+                setAndDoStepThing();
+            }
+            if (!selectionIndicator.visible) {
+                selectionIndicator.visible = true;
+            }
+            if (FlxG.keys.justPressed.ONE) {
+                if (optionTextArray.contains('Explain taskbar movement')) {
+                    currentStep = 3;
+                    doStepThings(currentStep);
+                } else {
+                    currentStep = 4;
+                    doStepThings(currentStep);
+                }
+            } else if (FlxG.keys.justPressed.TWO) {
+                if (optionTextArray.contains('Explain taskbar movement')) {
+                    currentStep = 4;
+                    doStepThings(currentStep);
+                } else {
+                    exitingMenu = true;
+                    grpOptions.destroy();
+                    curDialogue = cast Json.parse(File.getContent(Paths.json('leaveAlone')));
+                    startDialogue(curDialogue);
+                }
+            } else if (FlxG.keys.justPressed.THREE && optionTextArray.contains('Explain taskbar movement')) {
+                exitingMenu = true;
+                grpOptions.destroy();
+                curDialogue = cast Json.parse(File.getContent(Paths.json('leaveAlone')));
+                startDialogue(curDialogue);
+            }
+        }
+        if (inDialogue && desktopScreenshot != null) {
+            if (controls.ACCEPT) {
+                desktopScreenshot.destroy();
+                seenScreenshot = true;
+                writeFileToTemp('{ "dialogue": [ {"speed": 0.035, "portrait": "snowdrift", "box": "normal", "expression": "talk", "text": "So... What will we do now?" }]}');
+                curDialogue = cast Json.parse(File.getContent(Paths.json('temp')));
+                startDialogue(curDialogue);
+            }
+        }
+        if (grpOptions != null && !exitingMenu) {
+            for (f in 0...grpOptions.length) {
+                grpOptions.members[f].update(elapsed);
             }
         }
         if (inExplanation) {
@@ -199,14 +267,35 @@ class RealScreenResolutionHours extends MusicBeatState {
     }
     var currentSelection:Int = 0;
     var realOptionList:Array<Alphabet> = [];
+    var fuckinShit:FlxCamera;
+    function setAndDoStepThing() {
+        selectingOption = false;
+        for (vagina in grpOptions.members) {
+            if (vagina.alpha == 1) {
+                switch (vagina.text) {
+                    case 'Explain taskbar movement':
+                        currentStep = 3;
+                        doStepThings(currentStep);
+                    case 'Set resolution trick':
+                        currentStep = 4;
+                        doStepThings(currentStep);
+                    case 'I\'m good.':
+                        exitingMenu = true;
+                        curDialogue = cast Json.parse(File.getContent(Paths.json('leaveAlone')));
+                        startDialogue(curDialogue);
+                }
+            }
+        }
+    }
     function changeSelection(change:Int = 0) {
         currentSelection += change;
-        if (currentSelection < 0) currentSelection = realOptionList.length - 1;
-        if (currentSelection >= realOptionList.length) currentSelection = 0;
+        if (currentSelection < 0) currentSelection = grpOptions.length - 1;
+        if (currentSelection >= grpOptions.length) currentSelection = 0;
         var bullSHIT:Int = 0;
         for (vagina in grpOptions.members) {
             vagina.targetY = bullSHIT - currentSelection;
             bullSHIT++;
+            trace(vagina.text);
 
             vagina.alpha = 0.6;
             if (vagina.targetY == 0) {
@@ -229,6 +318,8 @@ class RealScreenResolutionHours extends MusicBeatState {
         } else {
             currentStep = 5;
         }
+        grpOptions = new FlxTypedGroup();
+        selectingOption = true;
         optionBg = new FlxSprite(0).makeGraphic(FlxG.width, 26, FlxColor.fromRGB(0,0,0,175));
         add(optionBg);
         optionDesc = new FlxText(0,4,FlxG.width,'Option description will be displayed here');
@@ -239,12 +330,24 @@ class RealScreenResolutionHours extends MusicBeatState {
                 var optionChoice:Alphabet = new Alphabet(0,0, optionTextArray[e], true, false);
                 optionChoice.screenCenter();
                 optionChoice.y += (100 * (e - (optionTextArray.length / 2))) + 50;
+                optionChoice.cameras = [fuckinShit];
                 grpOptions.add(optionChoice);
             }
-        } //i need to check how options sets it up
+        } else if (currentStep == 5) {
+            for (e in 0...1) {
+                var optionChoice:Alphabet = new Alphabet(0,0, optionTextArray[e], true, false);
+                optionChoice.screenCenter();
+                optionChoice.y += (100 * (e - (optionTextArray.length / 2))) + 50;
+                optionChoice.cameras = [fuckinShit];
+                grpOptions.add(optionChoice);
+            }
+        }
     }
     /**this should be called at the end of every step*/
     function doStepThings(step:Int) {
+        if (grpOptions != null) {
+            grpOptions.destroy();
+        }
         switch(step) {
             case 0: // SET STEP TO 1 FOR INITIAL DIALOGUE
                 trace('bg set');
@@ -273,7 +376,10 @@ class RealScreenResolutionHours extends MusicBeatState {
     }
     var desktopScreenshot:FlxSprite;
     function showScreenshot() {
-        trace('fail prevention');
+        desktopScreenshot = new FlxSprite(0).loadGraphic(Paths.getPreloadPath('images/taskbarExample.png'));
+        desktopScreenshot.setGraphicSize(Std.int(desktopScreenshot.width * 0.87)); // WAS THAT THE WIDTH OF 87?!
+        desktopScreenshot.screenCenter(X);
+        add(desktopScreenshot);
     }
     function setResolutionTrick() {
         trace('i need to set the resolution thing up elsewhere first');
@@ -285,10 +391,16 @@ class RealScreenResolutionHours extends MusicBeatState {
         optionTextArray.push('Explain taskbar movement');
         optionTextArray.push('Set the resolution trick');
         optionTextArray.push('I\'m good.');
+        showOptions();
     }
     /**if player hasn't set the trick from here then give option to set or exit*/
     function generateOptionsFinal() {
-        trace('a');
+        if (optionTextArray != null) {
+            optionTextArray.remove('Explain taskbar movement');
+        } else {
+            optionTextArray.push('Set the resolution trick');
+            optionTextArray.push("I'm good.");
+        }
     }
     var windowsThing:FlxSprite;
     var explanTexts:Array<String> = [
@@ -308,7 +420,7 @@ class RealScreenResolutionHours extends MusicBeatState {
         trace('gonna get screenshots');
         inExplanation = true;
         windowsThing = new FlxSprite(0);
-        windowsThing.frames = Paths.getSparrowAtlas(Paths.image('/windTaskShit'));
+        windowsThing.frames = Paths.getSparrowAtlas('windTaskShit');
         windowsThing.animation.addByPrefix('init', 'desktop', 0);
         windowsThing.animation.addByPrefix('act', 'action', 0);
         windowsThing.animation.addByPrefix('settingsMain', 'setMain', 0);
@@ -338,6 +450,7 @@ class RealScreenResolutionHours extends MusicBeatState {
         yesThisExists.flipX = true;
         add(yesThisExists);
     }
+    var seenScreenshot:Bool = false;
     public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
         {
             // TO DO: Make this more flexible, maybe?
@@ -358,6 +471,7 @@ class RealScreenResolutionHours extends MusicBeatState {
                 } else {
                     psychDialogue.finishThing = function() {
                         if (currentStep != 1) inDialogue = false;
+                        if (currentStep == 1 && seenScreenshot) currentStep += 1;
                         psychDialogue = null;
                         doStepThings(currentStep);
                     }

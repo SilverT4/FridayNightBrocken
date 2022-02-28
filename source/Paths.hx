@@ -73,6 +73,14 @@ class Paths
 		currentLevel = name.toLowerCase();
 	}
 
+	static public function snowdriftChatter(bruh:String) {
+		if (!FileSystem.exists('assets/optionsThings/snowdrift/' + bruh + '.json')) {
+			return sys.io.File.getContent('assets/optionsThings/snowdrift/unsure.json');
+		} else {
+			return sys.io.File.getContent('assets/optionsThings/snowdrift/' + bruh + '.json');
+		}
+	}
+
 	public static function getPath(file:String, type:AssetType, ?library:Null<String> = null)
 	{
 		if (library != null)

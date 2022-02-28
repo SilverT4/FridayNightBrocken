@@ -28,6 +28,9 @@ class ClientPrefs {
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
+	public static var skipCharaSelect:Bool = false;
+	public static var smallScreenFix:Bool = false;
+	public static var preloadStates:Bool = false;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'songspeed' => 1.0,
@@ -116,6 +119,9 @@ class ClientPrefs {
 		FlxG.save.data.safeFrames = safeFrames;
 		FlxG.save.data.gameplaySettings = gameplaySettings;
 		FlxG.save.data.controllerMode = controllerMode;
+		FlxG.save.data.smallScreenFix = smallScreenFix;
+		FlxG.save.data.preloadStates = preloadStates;
+		FlxG.save.data.skipCharaSelect = skipCharaSelect;
 	
 		FlxG.save.flush();
 
@@ -127,6 +133,15 @@ class ClientPrefs {
 	}
 
 	public static function loadPrefs() {
+		if (FlxG.save.data.smallScreenFix != null) {
+			smallScreenFix = FlxG.save.data.smallScreenFix;
+		}
+		if (FlxG.save.data.preloadStates != null) {
+			preloadStates = FlxG.save.data.preloadStates;
+		}
+		if (FlxG.save.data.skipCharaSelect != null) {
+			skipCharaSelect = FlxG.save.data.skipCharaSelect;
+		}
 		if(FlxG.save.data.downScroll != null) {
 			downScroll = FlxG.save.data.downScroll;
 		}

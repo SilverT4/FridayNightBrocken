@@ -24,6 +24,7 @@ import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import Controls;
+import DialogueBoxPsych;
 
 using StringTools;
 
@@ -32,6 +33,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	private var curOption:Option = null;
 	private var curSelected:Int = 0;
 	private var optionsArray:Array<Option>;
+	private var bg:FlxSprite;
 
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
@@ -42,6 +44,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 	private var vore:Int;
 	private var descBox:FlxSprite;
 	private var descText:FlxText;
+	private var inSnowdriftMenu:Bool = false;
+	private var sdOption:String = '';
+	private var psychDialogue:DialogueBoxPsych;
+	private var dumb:DialogueFile;
 
 	public var title:String;
 	public var rpcTitle:String;
@@ -58,8 +64,8 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		#end
 		vore = Random.int(0, (bfRandom.length - 1));
 		
-		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
+		bg = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
+		if (inSnowdriftMenu) bg.color = 0xFFAACCFF else bg.color = 0xFFea71fd;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
@@ -152,6 +158,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		if (controls.BACK) {
 			close();
 			FlxG.sound.play(Paths.sound('cancelMenu'));
+		}
+
+		if (inSnowdriftMenu && FlxG.keys.justPressed.H) {
+			startDialogue(dumb);
 		}
 
 		if(nextAccept <= 0)
@@ -262,6 +272,10 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				FlxG.sound.play(Paths.sound('cancelMenu'));
 				reloadCheckboxes();
 			}
+
+			if (psychDialogue != null) {
+				psychDialogue.update(elapsed);
+			}
 		}
 
 		if(boyfriend != null && boyfriend.animation.curAnim.finished) {
@@ -273,7 +287,39 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		}
 		super.update(elapsed);
 	}
+	var dialogueCount:Int = 0;
+	public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
+        {
+            // TO DO: Make this more flexible, maybe?
+            if(psychDialogue != null) return;
+    
+            if(dialogueFile.dialogue.length > 0) {
+                // inCutscene = true;
+                CoolUtil.precacheSound('dialogue');
+                CoolUtil.precacheSound('dialogueClose');
+                psychDialogue = new DialogueBoxPsych(dialogueFile);
+                psychDialogue.scrollFactor.set();
+                    psychDialogue.finishThing = function() {
+                        psychDialogue = null;
+                        // MusicBeatState.switchState(new options.OptionsState());
+                    }
+                psychDialogue.nextDialogueThing = startNextDialogue;
+                psychDialogue.skipDialogueThing = skipDialogue;
+                // psychDialogue.cameras = [camHUD];
+                add(psychDialogue);
+            } else {
+                FlxG.log.warn('Your dialogue file is badly formatted!');
+            }
+        }
+        //var dialogueCount:Int = 0;
+        function startNextDialogue() {
+            dialogueCount++;
+        }
 
+        function skipDialogue() {
+            //callOnLuas('onSkipDialogue', [dialogueCount]);
+            trace('ass');
+        }
 	function updateTextFrom(option:Option) {
 		var text:String = option.displayFormat;
 		var val:Dynamic = option.getValue();
@@ -301,6 +347,9 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText.text = optionsArray[curSelected].description;
 		descText.screenCenter(Y);
 		descText.y += 270;
+
+		sdOption = optionsArray[curSelected].variable;
+		dumb = cast Json.parse(Paths.snowdriftChatter(sdOption));
 
 		var bullShit:Int = 0;
 

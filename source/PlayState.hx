@@ -1133,6 +1133,7 @@ class PlayState extends MusicBeatState
 		scoreTxt.borderSize = 1.25;
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
+		if (ClientPrefs.smallScreenFix) scoreTxt.y = (0.11 * FlxG.height) + 36;
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1259,6 +1260,9 @@ class PlayState extends MusicBeatState
 				
 				case 'test':
 						dialogueJson = cast Json.parse(sys.io.File.getContent('mods/data/test/dialogue.json'));
+						startDialogue(dialogueJson);
+				case 'cheating':
+						dialogueJson = cast Json.parse(sys.io.File.getContent('mods/data/cheating/dialogue.json'));
 						startDialogue(dialogueJson);
 				default:
 					startCountdown();
