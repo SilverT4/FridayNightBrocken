@@ -49,7 +49,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		instance = this;
 		PlayState.instance.callOnLuas('onGameOverStart', []);
-		if (SnowdriftIntro.bambiHarassment) new FlxTimer().start(5, function(tmr:FlxTimer) {
+		if (SnowdriftIntro.bambiHarassment && SelectChara.bfOverride != 'bf') new FlxTimer().start(5, function(tmr:FlxTimer) {
 			inDialogue = true;
 			holyShit = cast Json.parse(Paths.snowdriftChatter('gameOver'));
 			startDialogue(holyShit);
@@ -72,6 +72,7 @@ class GameOverSubstate extends MusicBeatSubstate
 				if(SnowdriftIntro.bambiHarassment) {
 					psychDialogue.finishThing = function() {
 						psychDialogue = null;
+						SelectChara.bfOverride = 'bf';
 						endBullshit();
 					}
 				} else {

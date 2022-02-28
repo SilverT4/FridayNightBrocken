@@ -1,5 +1,6 @@
 package;
 
+import ProfileThingy.PrelaunchProfileState;
 import flixel.FlxG;
 import flixel.FlxGame;
 import flixel.FlxState;
@@ -39,6 +40,9 @@ class Main extends Sprite
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
+		#if debug
+		initialState = PrelaunchProfileState;
+		#end
 	}
 
 	private function init(?E:Event):Void

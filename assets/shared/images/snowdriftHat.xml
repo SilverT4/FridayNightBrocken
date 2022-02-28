@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="snowdriftHat.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="the hat0000" x="0" y="0" width="172" height="22"/>
+	<SubTexture name="the hat0001" x="0" y="0" width="172" height="22"/>
+</TextureAtlas>

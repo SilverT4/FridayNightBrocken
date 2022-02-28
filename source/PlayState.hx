@@ -87,6 +87,7 @@ class PlayState extends MusicBeatState
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
 	var swagNoteGlitch:FlxGlitchEffect;
 	var areYaHavinFun:FlxSound;
+	public static var snowdriftDiedCheating:Bool = false;
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -247,6 +248,7 @@ class PlayState extends MusicBeatState
 	public var scoreTxt:FlxText;
 	var originalBfX:Float;
 	var originalBfY:Float;
+	var snowdriftHat:BGSprite;
 	var originalBfWidth:Float;
 	var originalBfHeight:Float;
 	var timeTxt:FlxText;
@@ -516,6 +518,10 @@ class PlayState extends MusicBeatState
 					stageCurtains.updateHitbox();
 					add(stageCurtains);
 				}
+			if (snowdriftDiedCheating && (bfOverride != 'snowdrift' && bfOverride != 'snowdrift-car')) {
+				snowdriftHat = new BGSprite('snowdriftHat', BF_X, BF_Y - 100, 1, 1, null, null, 'shared');
+				add(snowdriftHat);
+			}
 
 			case 'spooky': //Week 2
 				if(!ClientPrefs.lowQuality) {
@@ -908,6 +914,11 @@ class PlayState extends MusicBeatState
 		boyfriend = new Boyfriend(0, 0, bfOverride);
 		if (FileSystem.exists(Paths.modsSelectable(bfOverride))) {
 			boyPussy = cast Json.parse(sys.io.File.getContent(Paths.modsSelectable(bfOverride)));
+		}
+		if (snowdriftDiedCheating && (bfOverride != 'snowdrift' && bfOverride != 'snowdrift-car')) {
+			GameOverSubstate.characterName = 'bf';
+			snowdriftHat.x = boyfriend.positionArray[0];
+			snowdriftHat.y = boyfriend.positionArray[1] + 150;
 		}
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
@@ -2924,6 +2935,7 @@ class PlayState extends MusicBeatState
 				// Game Over doesn't get his own variable because it's only used here
 				DiscordClient.changePresence("Game Over - " + detailsText, SONG.song + " (" + storyDifficultyText + ")", iconP2.getCharacter());
 				#end
+				if (bfOverride == 'snowdrift' && dunFuckedUpNow && SONG.song.toLowerCase() == 'cheating') snowdriftDiedCheating = true;
 				isDead = true;
 				return true;
 			}
