@@ -114,11 +114,17 @@ class SnowdriftIntro extends MusicBeatState {
                         FlxG.save.data.seenSnowdriftIntro = true;
                         if (!PlayState.dunFuckedUpNow) {
                             MusicBeatState.switchState(new options.OptionsState());
-                        } else {
+                        } else if (PlayState.dunFuckedUpNow) {
                             PlayState.SONG = Song.loadFromJson('cheating', 'cheating');
                             PlayState.SONG.player2 = 'bambi-old';
                             PlayState.SONG.gfVersion = 'gf-but-devin';
                             bambiHarassment = true;
+                            LoadingState.loadAndSwitchState(new PlayState(), true);
+                        } else if (PlayState.snowdriftDiedCheating) {
+                            PlayState.SONG = Song.loadFromJson('cheating', 'cheating');
+                            PlayState.SONG.player2 = 'bambi-old';
+                            PlayState.SONG.gfVersion = 'nt-with-deddrift';
+                            PlayState.fwys = true;
                             LoadingState.loadAndSwitchState(new PlayState(), true);
                         }
                     }
