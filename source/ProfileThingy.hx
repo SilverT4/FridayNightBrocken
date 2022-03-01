@@ -87,7 +87,13 @@ class PrelaunchProfileState extends FlxState {
         #if debug
         var shitButton = new FlxButton(FlxG.width - 128, FlxG.height - 69, 'DEBUG SKIP', function() {
             FlxG.sound.play(Paths.sound('confirmMenu'));
-            FlxG.switchState(new TitleState());
+            new FlxTimer().start(0.7, function(tmr:FlxTimer)
+                {
+                    FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+                    {
+                        FlxG.switchState(new TitleState());
+                    });
+                });
         });
         shitButton.color = FlxColor.BLUE;
         shitButton.label.color = FlxColor.WHITE;
