@@ -71,13 +71,19 @@ class SnowdriftIntro extends MusicBeatState {
 
     public function new() {
         super();
-        FlxG.sound.playMusic(Paths.modsMusic('DaveDialogue'));
+        if (PlayState.snowdriftDiedCheating) {
+            FlxG.sound.playMusic(Paths.modsMusic('ohMyGodWhat'));
+        } else {
+            FlxG.sound.playMusic(Paths.modsMusic('DaveDialogue'));
+        }
         bg = new FlxSprite(0).loadGraphic(Paths.image('menuDesat'));
         bg.setGraphicSize(Std.int(bg.width * 1.1));
         bg.color = 0xFFAACCFF;
         add(bg);
         if (!PlayState.dunFuckedUpNow) { dumb = cast Json.parse(Paths.snowdriftChatter('firstIntro')); }
-        else {
+        else if (PlayState.snowdriftDiedCheating) {
+            dumb = cast Json.parse(Paths.snowdriftChatter('fwys'));
+        } else {
             dumb = cast Json.parse(Paths.snowdriftChatter('bambiCut'));
         }
         FlxG.console.registerObject('sdrift', this);
