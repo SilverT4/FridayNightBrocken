@@ -214,23 +214,28 @@ class RealScreenResolutionHours extends MusicBeatState {
             if (FlxG.keys.justPressed.ONE) {
                 if (optionTextArray.contains('Explain taskbar movement')) {
                     currentStep = 3;
+                    selectingOption = false;
                     doStepThings(currentStep);
                 } else {
                     currentStep = 4;
+                    selectingOption = false;
                     doStepThings(currentStep);
                 }
             } else if (FlxG.keys.justPressed.TWO) {
                 if (optionTextArray.contains('Explain taskbar movement')) {
                     currentStep = 4;
+                    selectingOption = false;
                     doStepThings(currentStep);
                 } else {
                     exitingMenu = true;
+                    selectingOption = false;
                     grpOptions.destroy();
                     curDialogue = cast Json.parse(File.getContent(Paths.json('leaveAlone')));
                     startDialogue(curDialogue);
                 }
             } else if (FlxG.keys.justPressed.THREE && optionTextArray.contains('Explain taskbar movement')) {
                 exitingMenu = true;
+                selectingOption = !selectingOption;
                 grpOptions.destroy();
                 curDialogue = cast Json.parse(File.getContent(Paths.json('leaveAlone')));
                 startDialogue(curDialogue);
