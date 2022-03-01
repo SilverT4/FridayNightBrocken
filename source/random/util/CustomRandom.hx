@@ -22,18 +22,22 @@ class CustomRandom {
         } */
 
     public static function int(?min:Int = 0, max:Int):Int {
+        random = new FlxRandom();
         return random.int(min, max);
     }
 
     public static function float(?min:Float = 0, max:Float):Float {
+        random = new FlxRandom();
         return random.float(min, max);
     }
 
     public static function bool(?chance:Float = 50) {
+        random = new FlxRandom();
         return random.bool(chance);
     }
 
     public static function colour(?min:FlxColor, max:FlxColor) {
+        random = new FlxRandom();
         return random.color(min, max);
     }
 }

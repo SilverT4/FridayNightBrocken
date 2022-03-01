@@ -1,5 +1,6 @@
 package;
 
+import flixel.math.FlxRandom;
 import sys.FileSystem;
 import haxe.Json;
 import flixel.util.FlxColor;
@@ -40,12 +41,15 @@ class PrelaunchProfileState extends FlxState {
     public function new() {
         super();
         if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
-        if (FlxG.sound.music == null) {
-            FlxG.sound.playMusic(Paths.music('DSClock'), 1);
-        }
+        FlxG.sound.play(Paths.sound('DSBoot'));
     }
 
     override function create() {
+        if (FlxG.sound.music == null) {
+            new FlxTimer().start(5, function(tmr:FlxTimer) {
+                FlxG.sound.playMusic(Paths.music('DSClock'), 1);
+            });
+        }
         bg = new FlxSprite(0).loadGraphic(Paths.image('menuDesat'));
         bg.setGraphicSize(Std.int(bg.width * 1.1));
         bg.color = 0xFF0000FF;
@@ -76,6 +80,7 @@ class PrelaunchProfileState extends FlxState {
         eraseButton = new FlxButton(createButton.x, createButton.y + 50, 'Erase this save', eraseSave);
         eraseButton.color = FlxColor.RED;
         eraseButton.label.color = FlxColor.WHITE;
+        saveList = new FlxUIList();
 
         tab_group.add(loadButton);
         tab_group.add(createButton);
@@ -206,6 +211,7 @@ class ProfileSetupWizard extends FlxState {
             makeSetupUI();
         }
         var dataToSave:String;
+        var randomNumber:Int;
         function makeSetupUI() {
             var tab_group = new FlxUI(null, setupBox);
             tab_group.name = 'SHIT';
@@ -220,9 +226,10 @@ class ProfileSetupWizard extends FlxState {
             var commentInputter:FlxUIInputText = new FlxUIInputText(10, saveNameInputter.y + 30, 150, basicBitch.comment, 8);
 
             var saveButton:FlxButton = new FlxButton(commentInputter.getGraphicMidpoint().x, commentInputter.y + 100, 'Done', function() {
+                randomNumber = CustomRandom.int(0, someFunnyDefaultComments.length - 1);
                 if (commentInputter.text.length >= 1) {
                     dataToSave = '{
-                    "profileName": "' + profileNameInputter.text + ',
+                    "profileName": "' + profileNameInputter.text + '",
                     "playerBirthday":[ 
                         ' + bdayMonthInputter.text + ',
                         ' + bdayDateInputter.text + '
@@ -231,9 +238,8 @@ class ProfileSetupWizard extends FlxState {
                     "comment": "' + commentInputter.text + '"
                 }';
             } else {
-                var randomNumber = CustomRandom.int(0, someFunnyDefaultComments.length - 1);
                 dataToSave = '{
-                    "profileName": "' + profileNameInputter.text + ',
+                    "profileName": "' + profileNameInputter.text + '",
                     "playerBirthday":[ 
                         ' + bdayMonthInputter.text + ',
                         ' + bdayDateInputter.text + '
@@ -242,6 +248,7 @@ class ProfileSetupWizard extends FlxState {
                     "comment": "' + someFunnyDefaultComments[randomNumber] + '"
                 }';
             }
+                trace(dataToSave);
                 saveProfile(dataToSave);
             });
 
@@ -254,6 +261,7 @@ class ProfileSetupWizard extends FlxState {
             tab_group.add(bdayDateInputter);
             tab_group.add(saveNameInputter);
             tab_group.add(commentInputter);
+            tab_group.add(saveButton);
             setupBox.add(tab_group);
         }
         var houston:Bool = false;
@@ -265,9 +273,15 @@ class ProfileSetupWizard extends FlxState {
                 houston = true; //houston, we've got a problem
                 dumb = cast Json.parse(Paths.snowdriftChatter('profileConflict'));
             } else {
-                sys.io.File.write('profiles/' + hhhhhh.profileName);
-                sys.io.File.saveContent('profiles/' + hhhhhh.profileName, profile);
+                sys.io.File.write('profiles/' + hhhhhh.profileName + '.json');
+                sys.io.File.saveContent('profiles/' + hhhhhh.profileName + '.json', profile);
                 newThing = new FlxSave();
+                newThing.bind(hhhhhh.saveName, 'fridayNightBrocken');
+                trace(newThing);
+                newThing.data.profileName = hhhhhh.profileName;
+                newThing.data.playerBirthday = hhhhhh.playerBirthday;
+                newThing.data.saveName = hhhhhh.saveName;
+                newThing.data.comment = hhhhhh.comment;
             }
         }
 }
