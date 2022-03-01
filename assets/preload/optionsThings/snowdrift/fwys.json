@@ -1,0 +1,249 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "investigate",
+			"text": "Hmm..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Nextor?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "Eh?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "You asked for me?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "investigate",
+			"text": "I did?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "OH!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "nod",
+			"text": "Yes, I did."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "What's up?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Snowdrift's in a... Kinda strange state."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "What's going on with them?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Well... They're... Not quite alive but also not quite dead? If that makes any sense?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Not really."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Alright, let me try to clarify..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "Looking at them now..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "investigate",
+			"text": "Hm."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "What is it?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "They're in a state where they can't return to normal, even if someone were to put their hat back on them."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "I don't know very much about how Snow-cons function, so I don't really know very much about how to get them out of this state."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "And?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "It's possible that if a Snow-con dies in a rap battle in a certain scenario, they're unable to come back until someone else"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "finishes that battle in their place. If you two were in that situation, you need to finish what you started."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "Bambi's made it harder to do that."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "How so?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "He disabled ghost tapping. We can't just spam keys."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "investigate",
+			"text": "I see..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Guess we can't bring them back..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "tinyBlue-right",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "*bf turns to leave*"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "angry",
+			"expression": "pissed",
+			"text": "HEY!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "What?!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "We need to finish what you started. C'mon. We can do it together if we have to."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "You sure?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "nod",
+			"text": "Yes. Very sure. Now c'mon, let's do this."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "Aight, bet."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "Let's do this!"
+		}
+	]
+}
