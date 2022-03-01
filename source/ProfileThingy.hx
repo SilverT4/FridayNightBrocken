@@ -41,11 +41,12 @@ class PrelaunchProfileState extends FlxState {
     public function new() {
         super();
         if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
-        FlxG.sound.play(Paths.sound('DSBoot'));
+        if (FlxG.mouse.useSystemCursor) FlxG.mouse.useSystemCursor = false;
     }
 
     override function create() {
         if (FlxG.sound.music == null) {
+            FlxG.sound.play(Paths.sound('DSBoot'));
             new FlxTimer().start(5, function(tmr:FlxTimer) {
                 FlxG.sound.playMusic(Paths.music('DSClock'), 1);
             });
@@ -80,7 +81,7 @@ class PrelaunchProfileState extends FlxState {
         eraseButton = new FlxButton(createButton.x, createButton.y + 50, 'Erase this save', eraseSave);
         eraseButton.color = FlxColor.RED;
         eraseButton.label.color = FlxColor.WHITE;
-        saveList = new FlxUIList();
+        saveList = new FlxUIList(10, 20, null, FlxG.width - 130, FlxG.height - 30, "<X> more saves...", null, 2);
 
         tab_group.add(loadButton);
         tab_group.add(createButton);
@@ -94,7 +95,7 @@ class PrelaunchProfileState extends FlxState {
         FlxG.sound.play(Paths.sound('menuConfirm'));
         new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
-				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+				FlxG.camera.fade(FlxColor.WHITE, 2, false, function()
 				{
 					FlxG.switchState(new ProfileSetupWizard());
 				});
@@ -282,6 +283,14 @@ class ProfileSetupWizard extends FlxState {
                 newThing.data.playerBirthday = hhhhhh.playerBirthday;
                 newThing.data.saveName = hhhhhh.saveName;
                 newThing.data.comment = hhhhhh.comment;
+                trace(newThing.data);
+                new FlxTimer().start(0.7, function(tmr:FlxTimer)
+                    {
+                        FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+                        {
+                            FlxG.switchState(new PrelaunchProfileState());
+                        });
+                    });
             }
         }
 }
