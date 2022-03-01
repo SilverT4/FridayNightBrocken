@@ -73,6 +73,8 @@ class GameOverSubstate extends MusicBeatSubstate
 					psychDialogue.finishThing = function() {
 						psychDialogue = null;
 						SelectChara.bfOverride = 'bf';
+						PlayState.SONG.gfVersion = 'deddrift-gf';
+						inDialogue = false;
 						endBullshit();
 					}
 				} else {

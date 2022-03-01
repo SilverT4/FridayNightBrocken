@@ -80,6 +80,7 @@ class SnowdriftIntro extends MusicBeatState {
         else {
             dumb = cast Json.parse(Paths.snowdriftChatter('bambiCut'));
         }
+        FlxG.console.registerObject('sdrift', this);
     }
     override function update(elapsed:Float) {
         if (psychDialogue != null) {

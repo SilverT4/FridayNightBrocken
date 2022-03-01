@@ -1,0 +1,37 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": true,
+			"name": "dead"
+		}
+	],
+	"no_antialiasing": true,
+	"shitpost": true,
+	"image": "snowdriftDed",
+	"position": [
+		0,
+		0
+	],
+	"chartingButtonLabelTheme": 16448250,
+	"healthicon": "snowcon",
+	"chartingButtonColour": 16448250,
+	"flip_x": false,
+	"healthbar_colors": [
+		170,
+		204,
+		255
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

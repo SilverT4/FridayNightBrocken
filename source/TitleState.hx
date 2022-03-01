@@ -35,6 +35,7 @@ import flixel.util.FlxColor;
 import flixel.util.FlxTimer;
 import lime.app.Application;
 import openfl.Assets;
+import ProfileThingy.ProfileShit;
 
 using StringTools;
 typedef TitleData =
@@ -62,6 +63,7 @@ class TitleState extends MusicBeatState
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 	var ngSpr:FlxSprite;
+	public static var currentProfile:ProfileShit;
 	public static var fuckinAsshole:Bool = false;
 
 	var curWacky:Array<String> = [];
@@ -178,9 +180,13 @@ class TitleState extends MusicBeatState
 
 		swagShader = new ColorSwap();
 		super.create();
-
+		if (currentProfile == null) {
 		FlxG.save.bind('funkin', 'ninjamuffin99');
 		ClientPrefs.loadPrefs();
+		} else {
+			FlxG.save.bind(currentProfile.saveName, 'fridayNightBrocken');
+			ClientPrefs.loadPrefs();
+		}
 
 		Highscore.load();
 

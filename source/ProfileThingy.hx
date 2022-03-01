@@ -1,5 +1,7 @@
 package;
 
+import flixel.addons.ui.FlxUIPopup;
+import flixel.addons.transition.FlxTransitionableState;
 import flixel.math.FlxRandom;
 import sys.FileSystem;
 import haxe.Json;
@@ -82,6 +84,15 @@ class PrelaunchProfileState extends FlxState {
         eraseButton.color = FlxColor.RED;
         eraseButton.label.color = FlxColor.WHITE;
         saveList = new FlxUIList(10, 20, null, FlxG.width - 130, FlxG.height - 30, "<X> more saves...", null, 2);
+        #if debug
+        var shitButton = new FlxButton(FlxG.width - 128, FlxG.height - 69, 'DEBUG SKIP', function() {
+            FlxG.sound.play(Paths.sound('confirmMenu'));
+            FlxG.switchState(new TitleState());
+        });
+        shitButton.color = FlxColor.BLUE;
+        shitButton.label.color = FlxColor.WHITE;
+        tab_group.add(shitButton);
+        #end
 
         tab_group.add(loadButton);
         tab_group.add(createButton);
@@ -183,6 +194,9 @@ class ProfileSetupWizard extends FlxState {
                         if (setupBox == null) {
                             makeTheBox();
                         }
+                        if (houston) {
+                            showConflictUI();
+                        }
                     }
                 psychDialogue.nextDialogueThing = startNextDialogue;
                 psychDialogue.skipDialogueThing = skipDialogue;
@@ -210,6 +224,13 @@ class ProfileSetupWizard extends FlxState {
             setupBox.screenCenter();
             add(setupBox);
             makeSetupUI();
+        }
+        var conflictBox:FlxUIPopup;
+        var conflictedName:String = '';
+        function showConflictUI() {
+            trace('ass');
+            conflictBox = new FlxUIPopup();
+            conflictBox.quickSetup('Profile conflict', 'A profile with the name of ' + conflictedName + ' already exists on this PC. If you continue, ALL data in the existing profile will be overwritten.\nDo you want to continue?', ['Continue', 'Cancel']);
         }
         var dataToSave:String;
         var randomNumber:Int;
@@ -267,11 +288,13 @@ class ProfileSetupWizard extends FlxState {
         }
         var houston:Bool = false;
         var newThing:FlxSave;
+        var ignoringConflict:Bool = false;
         function saveProfile(profile:String) {
             var hhhhhh = cast Json.parse(profile);
-            if (FileSystem.exists('profiles/' + hhhhhh.profileName)) {
+            if (FileSystem.exists('profiles/' + hhhhhh.profileName + '.json') && !ignoringConflict) {
                 trace('MUST ASK IF WE WILL OVERWRITE!');
                 houston = true; //houston, we've got a problem
+                conflictedName = hhhhhh.profileName;
                 dumb = cast Json.parse(Paths.snowdriftChatter('profileConflict'));
             } else {
                 sys.io.File.write('profiles/' + hhhhhh.profileName + '.json');
@@ -279,6 +302,10 @@ class ProfileSetupWizard extends FlxState {
                 newThing = new FlxSave();
                 newThing.bind(hhhhhh.saveName, 'fridayNightBrocken');
                 trace(newThing);
+                if (ignoringConflict) {
+                    newThing.erase();
+                    newThing.bind(hhhhhh.saveName, 'fridayNightBrocken');
+                }
                 newThing.data.profileName = hhhhhh.profileName;
                 newThing.data.playerBirthday = hhhhhh.playerBirthday;
                 newThing.data.saveName = hhhhhh.saveName;
@@ -298,6 +325,8 @@ class ProfileSetupWizard extends FlxState {
 class LoadDEFromProfiles extends MusicBeatState {
     public function new() {
         super();
+        PlayerSettings.init();
+        ClientPrefs.loadPrefs();
     }
 
     override function create() {
