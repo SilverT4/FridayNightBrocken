@@ -49,7 +49,7 @@ class GameOverSubstate extends MusicBeatSubstate
 	{
 		instance = this;
 		PlayState.instance.callOnLuas('onGameOverStart', []);
-		if (SnowdriftIntro.bambiHarassment && SelectChara.bfOverride != 'bf') new FlxTimer().start(5, function(tmr:FlxTimer) {
+		if (SnowdriftIntro.bambiHarassment && !PlayState.snowdriftDiedCheating && SelectChara.bfOverride != 'bf') new FlxTimer().start(5, function(tmr:FlxTimer) {
 			inDialogue = true;
 			holyShit = cast Json.parse(Paths.snowdriftChatter('gameOver'));
 			startDialogue(holyShit);
@@ -69,11 +69,17 @@ class GameOverSubstate extends MusicBeatSubstate
 				CoolUtil.precacheSound('dialogueClose');
 				psychDialogue = new DialogueBoxPsych(dialogueFile);
 				psychDialogue.scrollFactor.set();
-				if(SnowdriftIntro.bambiHarassment) {
+				if(SnowdriftIntro.bambiHarassment && !PlayState.fwys) {
 					psychDialogue.finishThing = function() {
 						psychDialogue = null;
 						SelectChara.bfOverride = 'bf';
 						PlayState.SONG.gfVersion = 'deddrift-gf';
+						inDialogue = false;
+						endBullshit();
+					}
+				} else if (PlayState.fwys) {
+					psychDialogue.finishThing = function() {
+						psychDialogue = null;
 						inDialogue = false;
 						endBullshit();
 					}
@@ -163,7 +169,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		}
 		#end
 
-		if (controls.BACK)
+		if (controls.BACK && !PlayState.fwys)
 		{
 			FlxG.sound.music.stop();
 			PlayState.deathCounter = 0;
@@ -180,6 +186,11 @@ class GameOverSubstate extends MusicBeatSubstate
 				FlxG.sound.playMusic(Paths.music('clownTheme'));
 			}
 			PlayState.instance.callOnLuas('onGameOverConfirm', [false]);
+		}
+
+		if (controls.BACK && PlayState.fwys) {
+			holyShit = cast Json.parse(Paths.snowdriftChatter('ntShout'));
+			startDialogue(holyShit);
 		}
 
 		if (boyfriend.animation.curAnim.name == 'firstDeath')
