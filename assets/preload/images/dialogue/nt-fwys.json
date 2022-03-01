@@ -1,76 +1,89 @@
 {
+	"dialogue_pos": "left",
 	"position": [
 		150,
 		50
 	],
-	"dialogue_pos": "left",
 	"scale": 1.25,
-	"image": "nt_FWYS",
 	"animations": [
 		{
-			"idle_offsets": [
-				0,
-				0
-			],
+			"anim": "talk",
 			"loop_offsets": [
 				0,
 				0
 			],
-			"anim": "talk",
-			"idle_name": "NT0",
-			"loop_name": "NT idle talk"
+			"idle_offsets": [
+				0,
+				0
+			],
+			"loop_name": "NT idle talk",
+			"idle_name": "NT0"
 		},
 		{
-			"idle_offsets": [
+			"loop_offsets": [
 				40,
 				0
 			],
 			"anim": "pissed",
-			"loop_offsets": [
+			"idle_offsets": [
 				40,
 				0
 			],
-			"idle_name": "NT shout0",
-			"loop_name": "NT shout anim"
+			"loop_name": "NT shout anim",
+			"idle_name": "NT shout0"
 		},
 		{
+			"loop_offsets": [
+				0,
+				18
+			],
+			"anim": "shocked",
 			"idle_offsets": [
 				0,
 				0
 			],
-			"anim": "shocked",
-			"loop_offsets": [
-				0,
-				0
-			],
-			"idle_name": "NT shock0",
-			"loop_name": "NT shock ANIM"
+			"loop_name": "NT shock anim",
+			"idle_name": "NT shock0"
 		},
 		{
-			"loop_offsets": [
+			"idle_offsets": [
 				0,
 				0
 			],
 			"anim": "confused",
+			"loop_offsets": [
+				0,
+				0
+			],
+			"idle_name": "NT nerv talk",
+			"loop_name": "NT nerv talk"
+		},
+		{
+			"loop_offsets": [
+				0,
+				52
+			],
+			"anim": "investigate",
+			"idle_offsets": [
+				0,
+				52
+			],
+			"loop_name": "NT investigate0",
+			"idle_name": "NT investigate SPIN"
+		},
+		{
+			"loop_name": "NT nod",
 			"idle_offsets": [
 				0,
 				0
 			],
-			"loop_name": "NT nerv talk",
-			"idle_name": "NT nerv talk"
-		},
-		{
-			"loop_name": "NT investigate0",
-			"idle_offsets": [
-				0,
-				52
-			],
-			"idle_name": "NT investigate SPIN",
-			"anim": "investigate",
+			"idle_name": "NT0",
+			"anim": "nod",
 			"loop_offsets": [
 				0,
-				52
+				0
 			]
 		}
-	]
+	],
+	"image": "nt_FWYS"
 }
