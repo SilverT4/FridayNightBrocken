@@ -30,6 +30,7 @@ typedef ProfileShit = {
     var playerBirthday:Array<Int>;
     var saveName:String;
     var comment:String;
+    var profileIcon:String;
 }
 
 /**This will be shown at launch ig*/
@@ -91,6 +92,7 @@ class PrelaunchProfileState extends FlxState {
                 {
                     FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
                     {
+                        FlxG.sound.music.destroy();
                         FlxG.switchState(new TitleState());
                     });
                 });
@@ -146,7 +148,8 @@ class ProfileSetupWizard extends FlxState {
             1
         ],
         "saveName": "default",
-        "comment": "amogus"
+        "comment": "amogus",
+        "profileIcon": "bf"
     }';
     var basicBitch:ProfileShit;
     var someFunnyDefaultComments:Array<String> = [
@@ -252,7 +255,7 @@ class ProfileSetupWizard extends FlxState {
             var saveNameInputter:FlxUIInputText = new FlxUIInputText(10, bdayDateInputter.y + 30, 150, basicBitch.saveName, 8);
 
             var commentInputter:FlxUIInputText = new FlxUIInputText(10, saveNameInputter.y + 30, 150, basicBitch.comment, 8);
-
+            var profileIconInputter:FlxUIInputText = new FlxUIInputText(10, commentInputter.y + 30, 150, basicBitch.profileIcon, 8);
             var saveButton:FlxButton = new FlxButton(commentInputter.getGraphicMidpoint().x, commentInputter.y + 100, 'Done', function() {
                 randomNumber = CustomRandom.int(0, someFunnyDefaultComments.length - 1);
                 if (commentInputter.text.length >= 1) {
@@ -263,7 +266,8 @@ class ProfileSetupWizard extends FlxState {
                         ' + bdayDateInputter.text + '
                     ],
                     "saveName": "' + saveNameInputter.text + '",
-                    "comment": "' + commentInputter.text + '"
+                    "comment": "' + commentInputter.text + '",
+                    "profileIcon": "' + profileIconInputter.text + '"
                 }';
             } else {
                 dataToSave = '{
@@ -273,7 +277,8 @@ class ProfileSetupWizard extends FlxState {
                         ' + bdayDateInputter.text + '
                     ],
                     "saveName": "' + saveNameInputter.text + '",
-                    "comment": "' + someFunnyDefaultComments[randomNumber] + '"
+                    "comment": "' + someFunnyDefaultComments[randomNumber] + '",
+                    "profileIcon": "' + profileIconInputter.text + '"
                 }';
             }
                 trace(dataToSave);
@@ -284,11 +289,13 @@ class ProfileSetupWizard extends FlxState {
             tab_group.add(new FlxText(10, bdayMonthInputter.y - 18, 0, 'Birthday', 8));
             tab_group.add(new FlxText(10, saveNameInputter.y - 18, 0, 'Save name', 8));
             tab_group.add(new FlxText(10, commentInputter.y - 18, 0, 'Comment', 8));
+            tab_group.add(new FlxText(10, profileIconInputter.y - 18, 0, 'Profile icon', 8));
             tab_group.add(profileNameInputter);
             tab_group.add(bdayMonthInputter);
             tab_group.add(bdayDateInputter);
             tab_group.add(saveNameInputter);
             tab_group.add(commentInputter);
+            tab_group.add(profileIconInputter);
             tab_group.add(saveButton);
             setupBox.add(tab_group);
         }

@@ -72,7 +72,7 @@ class SnowdriftIntro extends MusicBeatState {
     public function new() {
         super();
         if (PlayState.snowdriftDiedCheating) {
-            FlxG.sound.playMusic(Paths.modsMusic('ohMyGodWhat'));
+            FlxG.sound.playMusic(Paths.music('ohMyGodWhat'));
         } else {
             FlxG.sound.playMusic(Paths.modsMusic('DaveDialogue'));
         }
@@ -114,17 +114,18 @@ class SnowdriftIntro extends MusicBeatState {
                         FlxG.save.data.seenSnowdriftIntro = true;
                         if (!PlayState.dunFuckedUpNow) {
                             MusicBeatState.switchState(new options.OptionsState());
-                        } else if (PlayState.dunFuckedUpNow) {
+                        } else if (PlayState.dunFuckedUpNow && !bambiHarassment) {
                             PlayState.SONG = Song.loadFromJson('cheating', 'cheating');
                             PlayState.SONG.player2 = 'bambi-old';
                             PlayState.SONG.gfVersion = 'gf-but-devin';
                             bambiHarassment = true;
                             LoadingState.loadAndSwitchState(new PlayState(), true);
-                        } else if (PlayState.snowdriftDiedCheating) {
-                            PlayState.SONG = Song.loadFromJson('cheating', 'cheating');
+                        } else if (bambiHarassment) {
+                            PlayState.SONG = Song.loadFromJson('cheating-nt', 'cheating');
                             PlayState.SONG.player2 = 'bambi-old';
                             PlayState.SONG.gfVersion = 'nt-with-deddrift';
                             PlayState.fwys = true;
+                            SelectChara.bfOverride = 'bf';
                             LoadingState.loadAndSwitchState(new PlayState(), true);
                         }
                     }

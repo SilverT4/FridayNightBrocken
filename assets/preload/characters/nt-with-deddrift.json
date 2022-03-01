@@ -1,0 +1,92 @@
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				-19
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singLEFT",
+			"loop": false,
+			"name": "nt left"
+		},
+		{
+			"offsets": [
+				0,
+				-20
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singDOWN",
+			"loop": false,
+			"name": "nt down"
+		},
+		{
+			"offsets": [
+				0,
+				4
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singUP",
+			"loop": false,
+			"name": "nt up"
+		},
+		{
+			"offsets": [
+				0,
+				-20
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "singRIGHT",
+			"loop": false,
+			"name": "nt right"
+		},
+		{
+			"offsets": [
+				-2,
+				-21
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "sad",
+			"loop": false,
+			"name": "nt shocked"
+		},
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": false,
+			"name": "nt vibe"
+		}
+	],
+	"no_antialiasing": false,
+	"shitpost": true,
+	"image": "characters/ntWithDedDrift",
+	"position": [
+		50,
+		70
+	],
+	"chartingButtonLabelTheme": 16448250,
+	"healthicon": "nt",
+	"chartingButtonColour": 32767,
+	"flip_x": false,
+	"healthbar_colors": [
+		0,
+		0,
+		127
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1
+}

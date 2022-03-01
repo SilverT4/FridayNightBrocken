@@ -1,0 +1,53 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "I-"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "angry",
+			"expression": "pissed",
+			"text": "AHEM! BF!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "shocked",
+			"text": "Huh?!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "Where do you think you're going?! We gotta finish what you started!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "confused",
+			"text": "You're right."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "bf",
+			"boxState": "normal",
+			"expression": "pissed",
+			"text": "Let's do this!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "nt-fwys",
+			"boxState": "normal",
+			"expression": "talk",
+			"text": "That's the spirit!"
+		}
+	]
+}
