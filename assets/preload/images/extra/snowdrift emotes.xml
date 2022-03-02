@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="snowdrift emotes.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="funny emotes ig0000" x="0" y="0" width="291" height="531" frameX="0" frameY="0" frameWidth="349" frameHeight="531"/>
+	<SubTexture name="funny emotes ig0001" x="296" y="0" width="333" height="515" frameX="-16" frameY="-6" frameWidth="349" frameHeight="531"/>
+</TextureAtlas>

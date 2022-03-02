@@ -1,5 +1,8 @@
 package options;
 
+import flixel.addons.ui.FlxUI;
+import flixel.addons.ui.FlxUITabMenu;
+import lime.app.Application;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -24,6 +27,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
+import flixel.addons.ui.FlxUIPopup;
 import Controls;
 
 using StringTools;
@@ -93,6 +97,8 @@ class ResetDataState extends MusicBeatState {
             confirmButton.update(elapsed);
         }
     }
+
+	public static function destroyState() { FlxG.state.destroy(); }
 }
 
 /**
@@ -107,6 +113,9 @@ class ConfirmResetData extends MusicBeatSubstate {
     var warnText:FlxText;
     var speen:FlxSprite;
     var finishButton:FlxButton;
+    var saveMessage:FlxUIPopup;
+    var wtf:FlxUI;
+    var wtftwo:FlxUITabMenu;
 
     public function new() {
         super();
@@ -114,6 +123,7 @@ class ConfirmResetData extends MusicBeatSubstate {
         warnSound.loadEmbedded(Paths.sound('warning'));
         infoSound = new FlxSound();
         infoSound.loadEmbedded(Paths.sound('information'));
+        FlxG.mouse.visible = true;
         // this was to make sure it worked | warnSound.play()
     }
     override function update(elapsed:Float) {
@@ -136,6 +146,9 @@ class ConfirmResetData extends MusicBeatSubstate {
         if (speen != null && speen.alive) {
             speen.update(elapsed);
         }
+        if (wtftwo != null) {
+            wtftwo.update(elapsed);
+        }
     }
     override function create() {
         var overlays:FlxSprite = new FlxSprite(0);
@@ -146,6 +159,15 @@ class ConfirmResetData extends MusicBeatSubstate {
         warnBG.makeGraphic(1080, 520, FlxColor.WHITE);
         warnBG.screenCenter();
         add(warnBG);
+        var tabs = [
+            { name: 'vore', label: 'bruh' }
+        ]; //yes
+        wtftwo = new FlxUITabMenu(null, tabs);
+        wtftwo.resize(420, 420);
+        wtftwo.screenCenter();
+        wtftwo.color = 0xFFAACCFF;
+        add(wtftwo);
+        makeBullshitThingHappen();
         warnText = new FlxText(0, 150, 800, 'Are you COMPLETELY sure you want to reset your save data? This action is irreversable!', 24);
         warnText.setFormat(Paths.font('vcr.ttf'), 48, FlxColor.RED, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         warnText.screenCenter(X);
@@ -170,9 +192,21 @@ class ConfirmResetData extends MusicBeatSubstate {
             close();
         });
         add(cancelButton);
+        
         finishButton = new FlxButton(800, 450, 'Done', function() {
             trace('exiting');
-            Sys.exit(69);
+            // Sys.exit(69);
+            if (TitleState.currentProfile != null) {
+                FlxG.save.bind('funkin', 'ninjamuffin99');
+                Application.current.window.alert('Your profile data has been erased. Save data has been bound to the default\nto prevent any potential issues.\n\nYou can set your profile up again by choosing it from the launcher.', 'Notice');
+                this.destroy();
+                ResetDataState.destroyState();
+                FlxG.resetGame();
+            } else {
+                Sys.println('SAVE DATA ERASED.');
+                Application.current.window.alert('Save data erased.\nYou must restart the game.', 'Notice');
+                Sys.exit(69);
+            }
         });
         add(finishButton);
         speen = new FlxSprite(Std.int(1080 - 48), Std.int(520 - 48));
@@ -183,5 +217,17 @@ class ConfirmResetData extends MusicBeatSubstate {
         speen.kill();
         finishButton.kill();
         warnSound.play();
+    }
+
+    function makeBullshitThingHappen() {
+        wtf = new FlxUI(null, wtftwo);
+        wtf.name = 'vore';
+        
+        saveMessage = new FlxUIPopup();
+        saveMessage.quickSetup('Notice', 'Your profile data has been reset. As a result, save data will be bound to the default save to prevent any issues. To set up your save data again, just choose it from the launcher.', ['OK']);
+        saveMessage.broadcastToFlxUI = true;
+        saveMessage.draw();
+        saveMessage.add(wtf);
+        wtftwo.add(wtf);
     }
 }

@@ -1,5 +1,6 @@
 package;
 
+import flixel.FlxSubState;
 import flixel.addons.ui.FlxUIPopup;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.math.FlxRandom;
@@ -47,6 +48,8 @@ class PrelaunchProfileState extends FlxState {
         if (FlxG.mouse.useSystemCursor) FlxG.mouse.useSystemCursor = false;
     }
 
+    
+
     override function create() {
         if (FlxG.sound.music == null) {
             FlxG.sound.play(Paths.sound('DSBoot'));
@@ -85,22 +88,16 @@ class PrelaunchProfileState extends FlxState {
         eraseButton.color = FlxColor.RED;
         eraseButton.label.color = FlxColor.WHITE;
         saveList = new FlxUIList(10, 20, null, FlxG.width - 130, FlxG.height - 30, "<X> more saves...", null, 2);
-        #if debug
+        
         var shitButton = new FlxButton(FlxG.width - 128, FlxG.height - 69, 'DEBUG SKIP', function() {
-            FlxG.sound.play(Paths.sound('confirmMenu'));
-            new FlxTimer().start(0.7, function(tmr:FlxTimer)
-                {
-                    FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
-                    {
-                        FlxG.sound.music.destroy();
-                        FlxG.switchState(new TitleState());
-                    });
-                });
+            openSubState(new DebugProfileSubstate());
         });
         shitButton.color = FlxColor.BLUE;
+        #if !debug
+        shitButton.label.text = '??????';
+        #end
         shitButton.label.color = FlxColor.WHITE;
         tab_group.add(shitButton);
-        #end
 
         tab_group.add(loadButton);
         tab_group.add(createButton);
@@ -111,14 +108,7 @@ class PrelaunchProfileState extends FlxState {
         FlxG.switchState(new LoadDEFromProfiles());
     }
     static inline function createSave() {
-        FlxG.sound.play(Paths.sound('menuConfirm'));
-        new FlxTimer().start(0.7, function(tmr:FlxTimer)
-			{
-				FlxG.camera.fade(FlxColor.WHITE, 2, false, function()
-				{
-					FlxG.switchState(new ProfileSetupWizard());
-				});
-			});
+        
     }
     static inline function eraseSave() {
         trace('test');
@@ -133,6 +123,83 @@ class PrelaunchProfileState extends FlxState {
     }
 }
 
+/****DEBUG**
+    Debug options. Includes a "test" profile.*/
+class DebugProfileSubstate extends FlxSubState {
+    var testProfile:String = '{
+        "profileName": "debugBot",
+        "playerBirthday": [
+            11,
+            18
+        ],
+        "saveName": "debugSave",
+        "comment": "How are you seeing this on the save list?!",
+        "profileIcon": "devin"
+    }'; // fun fact: 11/18 is my birthday - devin503
+    var useTestProfile:FlxButton;
+    var skipSaves:FlxButton;
+    var backButton:FlxButton;
+    #if debug
+    public function new() {
+        super();
+        useTestProfile = new FlxButton(0, 0, 'Test Profile', useTest);
+        skipSaves = new FlxButton(0, 0, 'Skip Saves', skipSaveLoad);
+        useTestProfile.screenCenter();
+        useTestProfile.x -= 150;
+        skipSaves.screenCenter();
+        skipSaves.x += 150;
+        backButton = new FlxButton(FlxG.width - 100, FlxG.height - 24, 'Back', function() {
+            close();
+        });
+
+        add(new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(0, 0, 128, 128)));
+        add(useTestProfile);
+        add(skipSaves);
+        add(backButton);
+    }
+
+    override function update(elapsed:Float) {
+        if (useTestProfile != null) {
+            useTestProfile.update(elapsed);
+        }
+        if (skipSaves != null) {
+            skipSaves.update(elapsed);
+        }
+        if (backButton != null) {
+            backButton.update(elapsed);
+        }
+    }
+
+    function useTest() {
+        TitleState.currentProfile = cast Json.parse(testProfile);
+        FlxG.sound.play(Paths.sound('menuConfirm'));
+        new FlxTimer().start(0.7, function(tmr:FlxTimer)
+			{
+				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+				{
+					FlxG.switchState(new TitleState());
+				});
+			});
+    }
+
+    function skipSaveLoad() {
+        FlxG.sound.play(Paths.sound('confirmMenu'));
+            new FlxTimer().start(0.7, function(tmr:FlxTimer)
+                {
+                    FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+                    {
+                        FlxG.sound.music.destroy();
+                        FlxG.switchState(new TitleState());
+                    });
+                });
+    }
+    #else
+    public function new() {
+        super();
+        FlxG.switchState(new shitpost.YouThoughtYouAte());
+    }
+    #end
+}
 /**setup wizard thingy*/
 class ProfileSetupWizard extends FlxState {
     var bg:FlxSprite;
