@@ -20,6 +20,7 @@ using StringTools; //just in case
 
     *I plan to allow for customisation in the future, such as changing the colour of the notification bar and text.*
     
+    *Hoping to make the text scroll across the screen as well.*
     @author devin503*/
 class FNBUINotificationBar extends FlxSprite {
     private var message:String;
@@ -61,5 +62,30 @@ class FNBUINotificationBar extends FlxSprite {
         msgDisplay.text = newText;
         msgDisplay.fieldWidth = newText.length * 2;
         msgDisplay.scrollFactor.set();
+    }
+}
+
+/**Custom FlxText thing to add a tween thing ig*/
+class FNBNotificationText extends FlxText {
+    static var dumbassTweenThing:FlxTween;
+    static var penis:FNBNotificationText;
+    public function new (x:Float, y:Float, input:String) {
+        super(x, y, input.length * 2, input, 24);
+
+        scrollFactor.set();
+        setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.LEFT); // just so it has the right format
+        x = FlxG.width + 500;
+        alpha = 0; // this'll be set to 1 when notification is displayed
+        penis = this;
+    }
+
+    override function update (elapsed:Float) {
+        super.update(elapsed);
+    }
+
+    public static function scrollOnScreen() {
+        dumbassTweenThing = FlxTween.tween(penis, {x: -500}, 10, {onComplete: function(twn:FlxTween) {
+            penis.x = FlxG.width + 500;
+        }});
     }
 }
