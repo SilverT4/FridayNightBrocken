@@ -17,7 +17,8 @@ class WindowsUtils {
         0 => "This is most likely a result of the file requested by the state calling this function NOT existing.",
     ];
     public static function getRemainingBattery(outputPath:String) {
-            new Process("wmic", ["/output:" + outputPath, " path win32_battery get estimatedchargeremaining"]);
+            new Process("wmic", ["path win32_battery get estimatedchargeremaining", " > " + outputPath]);
+            trace("wmic" + ["/output:" + outputPath, " path win32_battery get estimatedchargeremaining"]);
             if (FileSystem.exists(outputPath)) {
                 var penis = File.getContent(outputPath);
                 var semen = penis.split('\r\n');
