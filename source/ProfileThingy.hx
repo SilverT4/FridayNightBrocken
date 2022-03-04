@@ -1,5 +1,7 @@
 package;
 
+import flixel.input.actions.FlxActionInputDigital.FlxActionInputDigitalMouse;
+import flixel.addons.ui.FlxUITooltipManager;
 import flixel.FlxSubState;
 import flixel.addons.ui.FlxUIPopup;
 import flixel.addons.transition.FlxTransitionableState;
@@ -53,7 +55,7 @@ class PrelaunchProfileState extends FlxState {
         super();
         if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
         if (FlxG.mouse.useSystemCursor) FlxG.mouse.useSystemCursor = false;
-        #if (debug && windows)
+        /*#if (debug && windows)
         var fartsauce = bsOutputPath.split('/');
         batteryPath = fartsauce[0];
         trace(batteryPath);
@@ -61,7 +63,7 @@ class PrelaunchProfileState extends FlxState {
         trace(Sys.getCwd());
         //testvar = sys.io.File.getContent('battery.txt');
         //trace(testvar);
-        #end
+        #end */
         DevinsDateStuff.getHour();
     }
 
@@ -168,6 +170,7 @@ class DebugProfileSubstate extends FlxSubState {
     var cum:FlxUITooltip;
     var wmicOut:String;
     var dumbthing:String;
+    var sex:FlxUITooltipManager;
     var penisTest:Bool = false;
     var penis:FNBUINotificationBar;
     #if debug
@@ -197,9 +200,10 @@ class DebugProfileSubstate extends FlxSubState {
         var ass = dumbthing.split('\r\n');
         wmicOut = ass[1]; */
         wmicOut = WindowsUtils.getRemainingBattery("penis.txt");
-        cum = new FlxUITooltip(200, 26);
-        cum.set_title("Battery: " + wmicOut + "%");
-        cum.set_body("This is a battery thing. If your battery is below 20%, you may want to charge.");
+        sex = new FlxUITooltipManager();
+        battery = new FlxText(0, 0, FlxG.width, wmicOut + "%", 24);
+        battery.setFormat("Nintendo DS Bios Regular", 24, FlxColor.WHITE, FlxTextAlign.RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+        sex.add(battery, {title: "Battery: " + wmicOut + "%", body: "This is a battery thing. If your battery is below 20%, you may want to charge."});
         #end
         penis = new FNBUINotificationBar('amogus', 28);
         new FlxTimer().start(3, function(tmr:FlxTimer) {
@@ -210,7 +214,11 @@ class DebugProfileSubstate extends FlxSubState {
         add(new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(0, 0, 128, 128)));
         add(useTestProfile);
         add(clock);
-        add(cum);
+        #if windows
+        add(battery);
+        #end
+        add(penis);
+        add(penis.msgDisplay);
         add(skipSaves);
         add(backButton);
     }
@@ -245,6 +253,7 @@ class DebugProfileSubstate extends FlxSubState {
     function useTest() {
         TitleState.currentProfile = cast Json.parse(testProfile);
         FlxG.sound.play(Paths.sound('menuConfirm'));
+        FlxG.sound.music.destroy();
         new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
