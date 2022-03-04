@@ -24,7 +24,7 @@ using StringTools; //just in case
     @author devin503*/
 class FNBUINotificationBar extends FlxSprite {
     private var message:String;
-    var msgDisplay:FlxText;
+    public var msgDisplay:FNBNotificationText;
     public function new(text:String, y:Float) {
         super(0, y);
 
@@ -33,17 +33,20 @@ class FNBUINotificationBar extends FlxSprite {
         makeGraphic(FlxG.width, 30, FlxColor.fromRGB(0, 128, 128, 235));
         alpha = 0; // BY DEFAULT IT'S 0.
 
-        msgDisplay = new FlxText(0, this.y + 4, text.length * 2, text, 24);
-        msgDisplay.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.LEFT);
-        msgDisplay.visible = false;
+        msgDisplay = new FNBNotificationText(this.x, y + 2, text);
+        //msgDisplay.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.LEFT);
+        //msgDisplay.visible = false;
     }
     var shittyTweenThing:FlxTween;
+    /**Makes the message display on screen.*/
     public function show(duration:Int) {
-        shittyTweenThing = FlxTween.tween(this, {alpha: 1}, 0.95, {onComplete: function(twn:FlxTween) {
-            msgDisplay.visible = true;
+        shittyTweenThing = FlxTween.tween(this, {alpha: 1}, 0.35, {onComplete: function(twn:FlxTween) {
+            msgDisplay.alpha = 1;
+            msgDisplay.scrollOnScreen();
             new FlxTimer().start(duration, function (tmr:FlxTimer) {
                 msgDisplay.visible = false;
-                shittyTweenThing = FlxTween.tween(this, {alpha: 0}, 0.95, {onComplete: function (twn:FlxTween) {
+                msgDisplay.stopTweening();
+                shittyTweenThing = FlxTween.tween(this, {alpha: 0}, 0.35, {onComplete: function (twn:FlxTween) {
                     trace('penis');
                 }});
             });
@@ -83,9 +86,15 @@ class FNBNotificationText extends FlxText {
         super.update(elapsed);
     }
 
-    public static function scrollOnScreen() {
+    public function scrollOnScreen() {
         dumbassTweenThing = FlxTween.tween(penis, {x: -500}, 10, {onComplete: function(twn:FlxTween) {
             penis.x = FlxG.width + 500;
-        }});
+        }, type: FlxTweenType.LOOPING});
+    }
+    public function stopTweening() {
+        dumbassTweenThing.cancel();
+        if (penis.x != FlxG.width + 500) {
+            penis.x = FlxG.width + 500;
+        }
     }
 }
