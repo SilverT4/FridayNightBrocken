@@ -73,11 +73,11 @@ class FNBNotificationText extends FlxText {
     static var dumbassTweenThing:FlxTween;
     static var penis:FNBNotificationText;
     public function new (x:Float, y:Float, input:String) {
-        super(x, y, input.length * 2, input, 24);
+        super(x, y, 0, input, 24);
 
         scrollFactor.set();
-        setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.LEFT); // just so it has the right format
-        x = FlxG.width + 500;
+        setFormat("VCR OSD Mono", 24, FlxColor.WHITE); // just so it has the right format
+        x += FlxG.width;
         alpha = 0; // this'll be set to 1 when notification is displayed
         penis = this;
     }
@@ -87,14 +87,14 @@ class FNBNotificationText extends FlxText {
     }
 
     public function scrollOnScreen() {
-        dumbassTweenThing = FlxTween.tween(penis, {x: -500}, 10, {onComplete: function(twn:FlxTween) {
-            penis.x = FlxG.width + 500;
+        dumbassTweenThing = FlxTween.tween(penis, {x: 0 - (text.length * 20)}, 10, {onComplete: function(twn:FlxTween) {
+            penis.x = FlxG.width;
         }, type: FlxTweenType.LOOPING});
     }
     public function stopTweening() {
         dumbassTweenThing.cancel();
-        if (penis.x != FlxG.width + 500) {
-            penis.x = FlxG.width + 500;
+        if (penis.x != FlxG.width) {
+            penis.x = FlxG.width;
         }
     }
 }
