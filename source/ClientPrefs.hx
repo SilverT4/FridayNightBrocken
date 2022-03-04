@@ -10,6 +10,9 @@ class ClientPrefs {
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var showFPS:Bool = true;
+	#if debug
+	public static var showPCInfoMM:Bool = false;
+	#end
 	public static var flashing:Bool = true;
 	public static var globalAntialiasing:Bool = true;
 	public static var noteSplashes:Bool = true;
@@ -122,6 +125,9 @@ class ClientPrefs {
 		FlxG.save.data.smallScreenFix = smallScreenFix;
 		FlxG.save.data.preloadStates = preloadStates;
 		FlxG.save.data.skipCharaSelect = skipCharaSelect;
+		#if debug
+		FlxG.save.data.showPCInfoMM = showPCInfoMM;
+		#end
 	
 		FlxG.save.flush();
 
@@ -243,6 +249,11 @@ class ClientPrefs {
 				gameplaySettings.set(name, value);
 			}
 		}
+		#if debug
+		if (FlxG.save.data.showPCInfoMM != null) {
+			showPCInfoMM = FlxG.save.data.showPCInfoMM;
+		}
+		#end
 		
 		// flixel automatically saves your volume!
 		if(FlxG.save.data.volume != null)

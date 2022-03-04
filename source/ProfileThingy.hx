@@ -22,6 +22,10 @@ import flixel.FlxSprite;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUIList;
 import flixel.addons.ui.FlxUI;
+import flixel.addons.ui.FlxUITooltip;
+import random.util.DevinsDateStuff;
+import random.helpMe.WindowsUtils;
+import random.dumb.FNBUINotificationBar;
 
 using StringTools;
 
@@ -41,14 +45,25 @@ class PrelaunchProfileState extends FlxState {
     var itemDesc:FlxText;
     var saveListBox:FlxUITabMenu;
     var saveList:FlxUIList;
+    var testvar:String;
+    var bsOutputPath:String = Sys.getCwd();
+    public static var batteryPath:String;
 
     public function new() {
         super();
         if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
         if (FlxG.mouse.useSystemCursor) FlxG.mouse.useSystemCursor = false;
+        #if (debug && windows)
+        var fartsauce = bsOutputPath.split('/');
+        batteryPath = fartsauce[0];
+        trace(batteryPath);
+        Sys.command('wmic', ["/output:" + Sys.getCwd() + "\\battery.txt", "path win32_battery", "get estimatedchargeremaining"]);
+        trace(Sys.getCwd());
+        //testvar = sys.io.File.getContent('battery.txt');
+        //trace(testvar);
+        #end
+        DevinsDateStuff.getHour();
     }
-
-    
 
     override function create() {
         if (FlxG.sound.music == null) {
@@ -108,7 +123,14 @@ class PrelaunchProfileState extends FlxState {
         FlxG.switchState(new LoadDEFromProfiles());
     }
     static inline function createSave() {
-        
+        FlxG.sound.play(Paths.sound('menuConfirm'));
+        new FlxTimer().start(0.7, function(tmr:FlxTimer)
+			{
+				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+				{
+					FlxG.switchState(new ProfileSetupWizard());
+				});
+			});
     }
     static inline function eraseSave() {
         trace('test');
@@ -139,11 +161,24 @@ class DebugProfileSubstate extends FlxSubState {
     var useTestProfile:FlxButton;
     var skipSaves:FlxButton;
     var backButton:FlxButton;
+    var clock:FlxText;
+    var battery:FlxText;
+    var bussy:Date;
+    var shart:String;
+    var cum:FlxUITooltip;
+    var wmicOut:String;
+    var dumbthing:String;
+    var penisTest:Bool = false;
+    var penis:FNBUINotificationBar;
     #if debug
     public function new() {
         super();
         useTestProfile = new FlxButton(0, 0, 'Test Profile', useTest);
         skipSaves = new FlxButton(0, 0, 'Skip Saves', skipSaveLoad);
+        shart = Std.string(Date.now());
+        clock = new FlxText(0, 0, FlxG.width, DevinsDateStuff.dumbClock(), 16);
+        clock.scrollFactor.set();
+        clock.setFormat("Nintendo DS BIOS Regular", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         useTestProfile.screenCenter();
         useTestProfile.x -= 150;
         skipSaves.screenCenter();
@@ -151,9 +186,31 @@ class DebugProfileSubstate extends FlxSubState {
         backButton = new FlxButton(FlxG.width - 100, FlxG.height - 24, 'Back', function() {
             close();
         });
+        #if windows
+        var bullshit:String = Sys.getCwd();
+        var doodoo = bullshit.split('/');
+        /* trace("/output:" + doodoo[0] + "\\battery.txt path win32_battery get estimatedchargeremaining");
+        var benis:Array<String> = ["/output:" + doodoo[0] + "\\battery.txt path win32_battery get estimatedchargeremaining"];
+        trace(benis);
+        Sys.command('wmic', benis);
+        dumbthing = sys.io.File.getContent('battery.txt');
+        var ass = dumbthing.split('\r\n');
+        wmicOut = ass[1]; */
+        wmicOut = WindowsUtils.getRemainingBattery("penis.txt");
+        cum = new FlxUITooltip(200, 26);
+        cum.set_title("Battery: " + wmicOut + "%");
+        cum.set_body("This is a battery thing. If your battery is below 20%, you may want to charge.");
+        #end
+        penis = new FNBUINotificationBar('amogus', 28);
+        new FlxTimer().start(3, function(tmr:FlxTimer) {
+            penisTest = true;
+            FlxG.sound.play(Paths.sound('information'));
+        });
 
         add(new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(0, 0, 128, 128)));
         add(useTestProfile);
+        add(clock);
+        add(cum);
         add(skipSaves);
         add(backButton);
     }
@@ -167,6 +224,21 @@ class DebugProfileSubstate extends FlxSubState {
         }
         if (backButton != null) {
             backButton.update(elapsed);
+        }
+        if (clock != null) {
+            clock.update(elapsed);
+            shart = Std.string(Date.now());
+            var shit = shart.split(' ');
+            clock.text = shit[1];
+        }
+        if (penisTest) {
+            penisTest = false;
+            if (penis != null) {
+                penis.show(15);
+            }
+        }
+        if (penis != null) {
+            penis.update(elapsed);
         }
     }
 

@@ -29,7 +29,8 @@ class MasterEditorMenu extends MusicBeatState
 		'Character Editor',
 		'Chart Editor',
 		'Unlock Editor',
-		'Selectable Character Editor'
+		'Selectable Character Editor',
+		'OC Info Editor'
 	];
 	private var grpTexts:FlxTypedGroup<Alphabet>;
 	private var directories:Array<String> = [null];
@@ -137,6 +138,8 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Selectable Character Editor':
 					//LoadingState.loadAndSwitchState(new SelectChara.SelectableCreatorState('henry'), true);
 					openSubState(new SelectChara.SCThing());
+				case 'OC Info Editor':
+						LoadingState.loadAndSwitchState(new random.oc.DevinsCharacterList.DCLEditorState());
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL
@@ -160,6 +163,24 @@ class MasterEditorMenu extends MusicBeatState
 			}
 		}
 		super.update(elapsed);
+	}
+	function showModDirNotice(source:String) {
+		var msgTxt:String = 'placeholder message, ignore this lmao';
+		var msgBox:FlxSprite = new FlxSprite(0).makeGraphic(FlxG.width - 200, FlxG.height - 200, FlxColor.BLACK);
+		msgBox.screenCenter();
+		add(msgBox);
+		switch (source) {
+			case 'OC':
+				msgTxt = 'The OC Info editor does not require any mod directory as it uses the main assets directory for its contents.\n\nPlease deselect the mod directory and try again.\n\n(this will disappear in 3 seconds)';
+		}
+		var msgDisp:FlxText = new FlxText(0, 0, FlxG.width - 200, msgTxt);
+		msgDisp.scrollFactor.set();
+		msgDisp.setFormat("VCR OSD Mono", 24, FlxColor.WHITE, FlxTextAlign.CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.GREEN);
+		add(msgDisp);
+		new FlxTimer().start(3, function(tmr:FlxTimer) {
+			msgBox.destroy();
+			msgDisp.destroy();
+		});
 	}
 	var noteBg:FlxSprite;
 	var noteBox:FlxSprite;

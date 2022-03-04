@@ -1,5 +1,6 @@
 package;
 
+import random.helpMe.WindowsUtils;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -20,11 +21,18 @@ import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
+import random.util.DevinsDateStuff;
 
 using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
+	static inline final GOOD_MORNING = "Good morning, ";
+
+	static inline final GOOD_AFTERNOON = "Good afternoon, ";
+
+	static inline final GOOD_EVENING = "Good evening, ";
+
 	public static var psychEngineVersion:String = '0.5.1'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -46,6 +54,34 @@ class MainMenuState extends MusicBeatState
 	var camFollow:FlxObject;
 	var camFollowPos:FlxObject;
 	var debugKeys:Array<FlxKey>;
+	var greetingVariations:Map<Int, String> = [
+		0 => GOOD_EVENING,
+		1 => GOOD_EVENING,
+		2 => GOOD_EVENING,
+		3 => GOOD_EVENING,
+		4 => GOOD_EVENING,
+		5 => GOOD_MORNING,
+		6 => GOOD_MORNING,
+		7 => GOOD_MORNING,
+		8 => GOOD_MORNING,
+		9 => GOOD_MORNING,
+		10 => GOOD_MORNING,
+		11 => GOOD_MORNING,
+		12 => GOOD_AFTERNOON,
+		13 => GOOD_AFTERNOON,
+		14 => GOOD_AFTERNOON,
+		15 => GOOD_AFTERNOON, //burger king foot lettuce
+		16 => GOOD_AFTERNOON,
+		17 => GOOD_AFTERNOON,
+		18 => GOOD_EVENING,
+		19 => GOOD_EVENING,
+		20 => GOOD_EVENING,
+		21 => GOOD_EVENING,
+		22 => GOOD_EVENING,
+		23 => GOOD_EVENING,
+		69 => "Fuck you, "
+	];
+	var daHour:Int;
 
 	override function create()
 	{
@@ -77,7 +113,7 @@ class MainMenuState extends MusicBeatState
 		transOut = FlxTransitionableState.defaultTransOut;
 
 		persistentUpdate = persistentDraw = true;
-
+		trace(Date.now());
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
 		var bg:FlxSprite = new FlxSprite(-80).loadGraphic(Paths.image('menuBG'));
 		bg.scrollFactor.set(0, yScroll);
@@ -86,6 +122,12 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+		if (TitleState.fuckinAsshole && TitleState.currentProfile != null) daHour = 69 else {
+			var stupidity:String = DevinsDateStuff.dumbClock();
+			var shart = stupidity.split(':');
+			daHour = Std.parseInt(shart[0]);
+			trace(daHour);
+		};
 
 		camFollow = new FlxObject(0, 0, 1, 1);
 		camFollowPos = new FlxObject(0, 0, 1, 1);
@@ -142,13 +184,24 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		if (TitleState.fuckinAsshole) {
+		if (TitleState.fuckinAsshole && TitleState.currentProfile == null) {
 			var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "You know what you did. Fuck you!", 12);
 			versionShit.scrollFactor.set();
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			add(versionShit);
 			bg.color = 0xFFFF69FF;
+		} else if (TitleState.currentProfile != null) {
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, greetingVariations[daHour] + TitleState.currentProfile.profileName + "!");
+			versionShit.scrollFactor.set();
+			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+			add(versionShit);
 		}
+		#if debug
+		if (ClientPrefs.showPCInfoMM) {
+			doPCInfoThings();
+		}
+		#end
+		
 
 		// NG.core.calls.event.logEvent('swag').send();
 
@@ -170,6 +223,17 @@ class MainMenuState extends MusicBeatState
 		super.create();
 	}
 
+	#if debug
+	/**This function displays information about your PC. Mostly just the hostname, OS version, your username, and RAM.*/
+	function doPCInfoThings() {
+		#if windows
+		var versionShit:FlxText = new FlxText(12, 4, 0, WindowsUtils.getBasics(), 16);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
+		#end
+	}
+	#end
 	#if ACHIEVEMENTS_ALLOWED
 	// Unlocks "Freaky on a Friday Night" achievement
 	function giveAchievement() {

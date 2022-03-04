@@ -72,7 +72,22 @@ class Paths
 	{
 		currentLevel = name.toLowerCase();
 	}
-
+	static public function ocJson(name:String) {
+		if (!FileSystem.exists('assets/OC/' + name + '.json')) {
+			return name;
+		}
+		else {
+			return sys.io.File.getContent('assets/OC/' + name + '.json');
+		}
+	}
+	static public function ocImage(penis:String) {
+		if (!FileSystem.exists('assets/images/myOCs/' + penis + '.png')) {
+			FlxG.log.error('This image does not exist. Is ' + penis + ' the right name for your file?');
+			return 'assets/images/unknownMod.png';
+		} else {
+			return 'assets/images/myOCs/' + penis + '.png';
+		}
+	}
 	static public function snowdriftChatter(bruh:String) {
 		if (!FileSystem.exists('assets/optionsThings/snowdrift/' + bruh + '.json')) {
 			return sys.io.File.getContent('assets/optionsThings/snowdrift/unsure.json');

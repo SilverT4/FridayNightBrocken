@@ -132,6 +132,7 @@
 	<!--<haxelib name="polymod"/> -->
 	<haxelib name="discord_rpc" if="desktop" />
 	<haxelib name="systools" if="sys" />
+	<haxelib name="device-capabilities" if="debug desktop" />
 	
 	<!-- <haxelib name="hxcpp-debug-server" if="desktop"/> -->
 
