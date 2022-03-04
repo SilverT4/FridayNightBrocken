@@ -39,6 +39,14 @@ class SnowdriftStuff extends BaseOptionsMenu {
 			false); //Default value
 		addOption(option);
         sdOption = 'smallScreenFix';
+        #if debug
+        var option:Option = new Option('Show PC Info in Main Menu',
+        'Press H to know more about this!',
+        'showPCInfoMM',
+        'bool',
+        false);
+        addOption(option);
+        #end
         inSnowdriftMenu = true;
         super();
     }
