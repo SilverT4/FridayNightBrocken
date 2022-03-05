@@ -3,6 +3,7 @@ package;
 #if desktop
 import Discord.DiscordClient;
 #end
+import random.util.CheckinMultiple;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -53,6 +54,7 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import SelectChara.CharSelShit as BussyWater;
+import random.util.CustomRandom;
 
 #if sys
 import sys.FileSystem;
@@ -129,7 +131,6 @@ class PlayState extends MusicBeatState
 	public static var storyWeek:Int = 0;
 	public static var storyPlaylist:Array<String> = [];
 	public static var storyDifficulty:Int = 1;
-
 	public var vocals:FlxSound;
 
 	public var dad:Character;
@@ -177,6 +178,10 @@ class PlayState extends MusicBeatState
 	public var goods:Int = 0;
 	public var bads:Int = 0;
 	public var shits:Int = 0;
+	static var ntPowerAffectsHealthRegain:Bool = false;
+	static var ntPowerLevel:Int = 100;
+	static var playerCanRegainHealth:Bool = true;
+	var ntPowerBar:FlxBar;
 	
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -336,6 +341,11 @@ class PlayState extends MusicBeatState
 		if (FlxG.camera.bgColor != FlxColor.BLACK) {
 			trace('RESETTING CAMERA COLOUR');
 			FlxG.camera.bgColor = FlxColor.BLACK;
+		}
+		if (SelectChara.bfOverride != null) {
+			bfOverride = SelectChara.bfOverride;
+		} else {
+			bfOverride = SONG.player1;
 		}
 		vanSound = new FlxSound();
 		vanSound.loadEmbedded(Paths.sound('vannyNoteSound', 'shared'), true, false);
@@ -908,11 +918,6 @@ class PlayState extends MusicBeatState
 		// dadGroup.add(dadGlitch);
 		startCharacterLua(dad.curCharacter);
 		
-		if (SelectChara.bfOverride != null) {
-			bfOverride = SelectChara.bfOverride;
-		} else {
-			bfOverride = SONG.player1;
-		}
 		//boyfriend = new Boyfriend(0, 0, SONG.player1);
 		boyfriend = new Boyfriend(0, 0, bfOverride);
 		if (FileSystem.exists(Paths.modsSelectable(bfOverride))) {
@@ -1000,6 +1005,22 @@ class PlayState extends MusicBeatState
 		timeBarBG.yAdd = -4;
 		add(timeBarBG);
 
+		var ntPowerBG = new AttachedSprite('ntPowerBar');
+		ntPowerBG.x = timeBarBG.x + 300;
+		ntPowerBG.y = timeBarBG.y;
+		ntPowerBG.scrollFactor.set();
+		ntPowerBG.alpha = 0;
+		ntPowerBG.color = FlxColor.BLACK;
+		ntPowerBG.visible = OOTIS.check([SONG.player1, bfOverride], 'nt-stuck');
+		ntPowerBar = new FlxBar(ntPowerBG.x + 4, ntPowerBG.y + 4, LEFT_TO_RIGHT, Std.int(ntPowerBG.width - 8), Std.int(ntPowerBG.height - 8), this, 'ntPowerLevel', 0, 100);
+		ntPowerBar.scrollFactor.set();
+		ntPowerBar.createFilledBar(0xFF000000, FlxColor.fromRGB(0, 0, 127, 255));
+		ntPowerBar.numDivisions = 200;
+		ntPowerBar.alpha = 0;
+		ntPowerBar.visible = OOTIS.check([SONG.player1, bfOverride], 'nt-stuck');
+		ntPowerBG.sprTracker = ntPowerBar;
+		add(ntPowerBG);
+		add(ntPowerBar);
 		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
@@ -1173,6 +1194,8 @@ class PlayState extends MusicBeatState
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
 		doof.cameras = [camHUD];
+		ntPowerBG.cameras = [camHUD];
+		ntPowerBar.cameras = [camHUD];
 		
 
 		// if (SONG.song == 'South')
@@ -1657,6 +1680,28 @@ class PlayState extends MusicBeatState
 	public var countdownReady:FlxSprite;
 	public var countdownSet:FlxSprite;
 	public var countdownGo:FlxSprite;
+	var ntStartSong:Bool = false;
+	var shitty:FlxTween;
+	function doNtHealthShit() {
+		var YourMother:Float = 0;
+		if (ntStartSong && ntPowerLevel < 0) {
+			if (YourMother < 69) {
+				YourMother += 0.5;
+			} else {
+				YourMother = 0;
+			}
+		}
+		if (ntStartSong && ntPowerLevel < 0 && YourMother == 69) {
+			ntPowerLevel -= 2;
+		}
+		if (ntPowerLevel <= 0) {
+			ntPowerLevel = 0;
+			if (playerCanRegainHealth) {
+				trace('HEALTH REGAIN DISABLED!');
+				playerCanRegainHealth = false;
+			}
+		}
+	}
 
 	public function startCountdown():Void
 	{
@@ -1790,6 +1835,7 @@ class PlayState extends MusicBeatState
 							{
 								remove(countdownGo);
 								countdownGo.destroy();
+								if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck')) ntStartSong = true;
 							}
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
@@ -1844,6 +1890,7 @@ class PlayState extends MusicBeatState
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(ntPowerBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		
 		#if desktop
@@ -2016,6 +2063,10 @@ class PlayState extends MusicBeatState
 //	function checkMoreVannyNotes(notes:FlxTypedGroup<Note>) {}
 
 	function checkMoreVannyNotes(notes:FlxTypedGroup<Note>) {}
+
+	// var ntPowerBar:FlxSprite;
+
+	//var ntPowerBar:FlxBar;
 }
 
 	function eventPushed(event:Array<Dynamic>) {
@@ -4034,6 +4085,7 @@ class PlayState extends MusicBeatState
 
 		if (boyfriend.curCharacter == 'decktop-were' && health <= 0.05 * healthLoss) health = 0.05 * healthLoss else health -= daNote.missHealth * healthLoss;
 		trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);
+		if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel < 0) ntPowerLevel -= 5;
 		if(instakillOnMiss)
 		{
 			vocals.volume = 0;
@@ -4074,6 +4126,7 @@ class PlayState extends MusicBeatState
 		{
 			if (boyfriend.curCharacter == 'decktop-were' && health <= 0.05 * healthLoss) health = 0.05 * healthLoss else health -= 0.05 * healthLoss;
 			trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);
+			if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel < 0) ntPowerLevel -= 5;
 			if(instakillOnMiss)
 			{
 				vocals.volume = 0;
@@ -4226,7 +4279,7 @@ class PlayState extends MusicBeatState
 				popUpScore(note);
 				if(combo > 9999) combo = 9999;
 			}
-			health += note.hitHealth * healthGain;
+			if (playerCanRegainHealth) health += note.hitHealth * healthGain;
 			trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);
 
 			if(!note.noAnimation) {
@@ -4559,6 +4612,8 @@ class PlayState extends MusicBeatState
 		{
 			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 		}
+
+		doNtHealthShit();
 	
 		if (SONG.notes[Math.floor(curStep / 16)] != null)
 		{

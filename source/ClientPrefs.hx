@@ -28,6 +28,7 @@ class ClientPrefs {
 	public static var ghostTapping:Bool = true;
 	public static var timeBarType:String = 'Time Left';
 	public static var scoreZoom:Bool = true;
+	public static var ntPowerIsEnabled:Bool = true;
 	public static var noReset:Bool = false;
 	public static var healthBarAlpha:Float = 1;
 	public static var controllerMode:Bool = false;
@@ -107,6 +108,7 @@ class ClientPrefs {
 		FlxG.save.data.arrowHSV = arrowHSV;
 		FlxG.save.data.imagesPersist = imagesPersist;
 		FlxG.save.data.ghostTapping = ghostTapping;
+		FlxG.save.data.ntPowerIsEnabled = ntPowerIsEnabled;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
@@ -206,6 +208,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.ghostTapping != null) {
 			ghostTapping = FlxG.save.data.ghostTapping;
+		}
+		if(FlxG.save.data.ntPowerIsEnabled != null) {
+			ntPowerIsEnabled = FlxG.save.data.ntPowerIsEnabled;
 		}
 		if(FlxG.save.data.timeBarType != null) {
 			timeBarType = FlxG.save.data.timeBarType;

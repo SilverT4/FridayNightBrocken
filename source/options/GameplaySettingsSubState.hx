@@ -135,7 +135,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.maxValue = 10;
 		option.changeValue = 0.1;
 		addOption(option);
-		var option:Option = new Option('Reset Data', 'Reset your save data. WARNING: This cannot be undone!', 'ass', 'bool', false);
+		var option:Option = new Option('Nextor\'s Power Affects You', "If this option is enabled, playing any song with the character 'nt-stuck' will result in your ability to regain health directly being affected by their internal power level. If their power level reaches 0, you can no longer regain health during the song.", 'ntPowerIsEnabled', 'bool', true);
 		addOption(option);
 
 		super();
