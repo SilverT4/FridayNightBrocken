@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="nt-bonk.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="NT0000" x="0" y="0" width="357" height="455"/>
+	<SubTexture name="NT0001" x="0" y="0" width="357" height="455"/>
+	<SubTexture name="NT TALK0000" x="362" y="0" width="361" height="455" frameX="-7" frameY="0" frameWidth="368" frameHeight="455"/>
+	<SubTexture name="NT TALK0001" x="362" y="0" width="361" height="455" frameX="-7" frameY="0" frameWidth="368" frameHeight="455"/>
+	<SubTexture name="NT TALK0002" x="728" y="0" width="367" height="455" frameX="-1" frameY="0" frameWidth="368" frameHeight="455"/>
+	<SubTexture name="NT TALK0003" x="728" y="0" width="367" height="455" frameX="-1" frameY="0" frameWidth="368" frameHeight="455"/>
+	<SubTexture name="NT TALK0004" x="1100" y="0" width="368" height="455"/>
+	<SubTexture name="NT TALK0005" x="1100" y="0" width="368" height="455"/>
+	<SubTexture name="nt bonked0000" x="1473" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonked0001" x="1473" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonked0002" x="1473" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonked0003" x="1473" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonked0004" x="2036" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonked0005" x="2036" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonked0006" x="2036" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonked0007" x="2036" y="0" width="558" height="382"/>
+	<SubTexture name="nt bonks their head0000" x="2599" y="0" width="595" height="393" frameX="0" frameY="-35" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0001" x="2599" y="0" width="595" height="393" frameX="0" frameY="-35" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0002" x="3199" y="0" width="595" height="415" frameX="0" frameY="-13" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0003" x="0" y="460" width="595" height="418" frameX="0" frameY="-10" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0004" x="600" y="460" width="595" height="459" frameX="0" frameY="-7" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0005" x="1200" y="460" width="595" height="463" frameX="0" frameY="-3" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0006" x="1800" y="460" width="595" height="428" frameX="0" frameY="0" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0007" x="2400" y="460" width="595" height="415" frameX="0" frameY="-13" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0008" x="3000" y="460" width="558" height="382" frameX="0" frameY="-46" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt bonks their head0009" x="3000" y="460" width="558" height="382" frameX="0" frameY="-46" frameWidth="595" frameHeight="466"/>
+	<SubTexture name="nt knocked out0000" x="0" y="928" width="534" height="301"/>
+	<SubTexture name="nt knocked out0001" x="0" y="928" width="534" height="301"/>
+</TextureAtlas>
