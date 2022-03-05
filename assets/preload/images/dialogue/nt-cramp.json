@@ -1,0 +1,89 @@
+{
+	"dialogue_pos": "right",
+	"position": [
+		30,
+		130
+	],
+	"scale": 1.25,
+	"animations": [
+		{
+			"anim": "talk",
+			"loop_offsets": [
+				0,
+				40
+			],
+			"idle_offsets": [
+				0,
+				0
+			],
+			"loop_name": "nt bonks their head",
+			"idle_name": "nt bonked"
+		},
+		{
+			"loop_offsets": [
+				5,
+				0
+			],
+			"anim": "excited",
+			"idle_offsets": [
+				4,
+				-8
+			],
+			"loop_name": "BF EXCITED LOOP",
+			"idle_name": "BF EXCITED0"
+		},
+		{
+			"loop_offsets": [
+				0,
+				0
+			],
+			"anim": "pissed",
+			"idle_offsets": [
+				0,
+				0
+			],
+			"loop_name": "BF PISSED LOOP",
+			"idle_name": "BF PISSED0"
+		},
+		{
+			"loop_offsets": [
+				0,
+				40
+			],
+			"anim": "shocked",
+			"idle_offsets": [
+				0,
+				0
+			],
+			"loop_name": "nt bonks their head",
+			"idle_name": "nt bonked"
+		},
+		{
+			"idle_offsets": [
+				-6,
+				-11
+			],
+			"anim": "confused",
+			"loop_offsets": [
+				-3,
+				0
+			],
+			"idle_name": "BF CONFUSED0",
+			"loop_name": "BF CONFUSED LOOP"
+		},
+		{
+			"loop_name": "nt knocked out",
+			"idle_offsets": [
+				0,
+				-120
+			],
+			"idle_name": "nt knocked out",
+			"anim": "ded",
+			"loop_offsets": [
+				0,
+				-120
+			]
+		}
+	],
+	"image": "nt-bonk"
+}
