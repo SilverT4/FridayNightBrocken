@@ -1306,6 +1306,10 @@ class CharacterEditorState extends MusicBeatState
 			} else {
 				textAnim.text = '';
 			}
+
+			if (!FlxG.mouse.useSystemCursor) {
+				FlxG.mouse.cursorContainer.useHandCursor = true;
+			}
 			
 			if (cbpUpdatesConstantly) {
 				if (chartButtonPreviewer != null && chartButtonPreviewer.visible) {

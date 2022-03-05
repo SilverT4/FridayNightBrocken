@@ -179,9 +179,10 @@ class PlayState extends MusicBeatState
 	public var bads:Int = 0;
 	public var shits:Int = 0;
 	static var ntPowerAffectsHealthRegain:Bool = false;
-	static var ntPowerLevel:Int = 100;
+	var ntPowerLevel:Int = 100;
 	static var playerCanRegainHealth:Bool = true;
 	var ntPowerBar:FlxBar;
+	var ntPowerBG:AttachedSprite;
 	
 	private var generatedMusic:Bool = false;
 	public var endingSong:Bool = false;
@@ -1005,22 +1006,27 @@ class PlayState extends MusicBeatState
 		timeBarBG.yAdd = -4;
 		add(timeBarBG);
 
-		var ntPowerBG = new AttachedSprite('ntPowerBar');
-		ntPowerBG.x = timeBarBG.x + 300;
-		ntPowerBG.y = timeBarBG.y;
+		ntPowerBG = new AttachedSprite('ntPowerBar');
+		//ntPowerBG.x = 0;
+		//ntPowerBG.y = 50
+		ntPowerBG.x = 0;
+		ntPowerBG.screenCenter(X);
+		ntPowerBG.y = FlxG.width * 0.78;
 		ntPowerBG.scrollFactor.set();
-		ntPowerBG.alpha = 0;
+		ntPowerBG.alpha = 1;
 		ntPowerBG.color = FlxColor.BLACK;
-		ntPowerBG.visible = OOTIS.check([SONG.player1, bfOverride], 'nt-stuck');
+		ntPowerBG.xAdd = -4;
+		ntPowerBG.yAdd = -4;
+		ntPowerBG.visible = true;
 		ntPowerBar = new FlxBar(ntPowerBG.x + 4, ntPowerBG.y + 4, LEFT_TO_RIGHT, Std.int(ntPowerBG.width - 8), Std.int(ntPowerBG.height - 8), this, 'ntPowerLevel', 0, 100);
 		ntPowerBar.scrollFactor.set();
 		ntPowerBar.createFilledBar(0xFF000000, FlxColor.fromRGB(0, 0, 127, 255));
-		ntPowerBar.numDivisions = 200;
-		ntPowerBar.alpha = 0;
-		ntPowerBar.visible = OOTIS.check([SONG.player1, bfOverride], 'nt-stuck');
-		ntPowerBG.sprTracker = ntPowerBar;
+		ntPowerBar.numDivisions = 400;
+		ntPowerBar.alpha = 1;
+		ntPowerBar.visible = ntPowerBG.visible;
 		add(ntPowerBG);
 		add(ntPowerBar);
+		ntPowerBG.sprTracker = ntPowerBar;
 		timeBar = new FlxBar(timeBarBG.x + 4, timeBarBG.y + 4, LEFT_TO_RIGHT, Std.int(timeBarBG.width - 8), Std.int(timeBarBG.height - 8), this,
 			'songPercent', 0, 1);
 		timeBar.scrollFactor.set();
@@ -1544,6 +1550,9 @@ class PlayState extends MusicBeatState
 				}
  			}
 		}
+		if (boyfriend.animOffsets.exists('firstDeath')) {
+			GameOverSubstate.characterName = boyfriend.curCharacter;
+		}
 	} else {
 		GameOverSubstate.characterName = boyPussy.deathCharacter;
 	}
@@ -1682,17 +1691,26 @@ class PlayState extends MusicBeatState
 	public var countdownGo:FlxSprite;
 	var ntStartSong:Bool = false;
 	var shitty:FlxTween;
+	var YourMother:Float = 0;
 	function doNtHealthShit() {
-		var YourMother:Float = 0;
-		if (ntStartSong && ntPowerLevel < 0) {
-			if (YourMother < 69) {
+		if (ntPowerBG.y != FlxG.height * 0.78) {
+			ntPowerBG.y = FlxG.height * 0.78;
+			ntPowerBG.screenCenter(X);
+			if (ntPowerBG.alpha != 1) {
+				ntPowerBG.alpha = 1;
+			}
+			ntPowerBG.visible = true;
+		}
+		ntPowerBG.visible = true;
+		if (ntStartSong && ntPowerLevel > 0) {
+			if (YourMother < 30) {
 				YourMother += 0.5;
 				trace(YourMother);
 			} else {
 				YourMother = 0;
 			}
 		}
-		if (ntStartSong && ntPowerLevel < 0 && YourMother == 69) {
+		if (ntStartSong && ntPowerLevel > 0 && YourMother == 30) {
 			ntPowerLevel -= 2;
 			trace('NT POWER LEVEL: ' + ntPowerLevel);
 		}
@@ -1892,6 +1910,7 @@ class PlayState extends MusicBeatState
 		// Song duration in a float, useful for the time left feature
 		songLength = FlxG.sound.music.length;
 		FlxTween.tween(timeBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
+		FlxTween.tween(ntPowerBG, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(ntPowerBar, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		FlxTween.tween(timeTxt, {alpha: 1}, 0.5, {ease: FlxEase.circOut});
 		
@@ -2441,6 +2460,10 @@ class PlayState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+
+		if (ntPowerBG != null) {
+			ntPowerBG.update(elapsed);
+		}
 
 		if(ratingName == '?') {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
@@ -4087,7 +4110,7 @@ class PlayState extends MusicBeatState
 
 		if (boyfriend.curCharacter == 'decktop-were' && health <= 0.05 * healthLoss) health = 0.05 * healthLoss else health -= daNote.missHealth * healthLoss;
 		trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);
-		if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel < 0) ntPowerLevel -= 5;
+		if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel > 0) ntPowerLevel -= 5;
 		if(instakillOnMiss)
 		{
 			vocals.volume = 0;
@@ -4128,7 +4151,7 @@ class PlayState extends MusicBeatState
 		{
 			if (boyfriend.curCharacter == 'decktop-were' && health <= 0.05 * healthLoss) health = 0.05 * healthLoss else health -= 0.05 * healthLoss;
 			trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);
-			if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel < 0) ntPowerLevel -= 5;
+			if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel > 0) ntPowerLevel -= 5;
 			if(instakillOnMiss)
 			{
 				vocals.volume = 0;
