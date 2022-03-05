@@ -50,6 +50,9 @@ class PreloadChartEditor extends FlxState {
         } else {
             trace('my bussy has sharted');
         }
+        if (FlxG.save.data.autosave != null) {
+            PlayState.SONG = Song.parseJSONshit(FlxG.save.data.autosave);
+        }
         if (!FlxG.mouse.visible) {
             FlxG.mouse.visible = true;
             FlxG.mouse.useSystemCursor = true;

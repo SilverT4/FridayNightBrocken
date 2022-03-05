@@ -17,13 +17,11 @@ class WindowsUtils {
         0 => "This is most likely a result of the file requested by the state calling this function NOT existing.",
     ];
     public static function getRemainingBattery(outputPath:String) {
-            new Process("cmd", ["/c wmic path win32_battery get estimatedchargeremaining", " > " + outputPath]);
-            trace("cmd /c path win32_battery get estimatedchargeremaining > " + outputPath);
-            trace(outputPath);
-            trace(FileSystem.readDirectory('.'));
+            new Process("cmd", ["/c susBattery.bat"]);
             if (FileSystem.exists(outputPath)) {
                 var penis = File.getContent(outputPath);
-                var semen = penis.split('\r\n');
+                trace(penis);
+                var semen = penis.split('\n');
                 return semen[1];
             } else {
                 throw new Exception('Something went wrong, please check the console.\n\n' + exceptionMessages[0]);

@@ -70,9 +70,7 @@ class PrelaunchProfileState extends FlxState {
     override function create() {
         if (FlxG.sound.music == null) {
             FlxG.sound.play(Paths.sound('DSBoot'));
-            new FlxTimer().start(5, function(tmr:FlxTimer) {
                 FlxG.sound.playMusic(Paths.music('DSClock'), 1);
-            });
         }
         bg = new FlxSprite(0).loadGraphic(Paths.image('menuDesat'));
         bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -253,7 +251,7 @@ class DebugProfileSubstate extends FlxSubState {
     function useTest() {
         TitleState.currentProfile = cast Json.parse(testProfile);
         FlxG.sound.play(Paths.sound('menuConfirm'));
-        FlxG.sound.music.destroy();
+        FlxG.sound.music.stop();
         new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
 				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
@@ -269,7 +267,7 @@ class DebugProfileSubstate extends FlxSubState {
                 {
                     FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
                     {
-                        FlxG.sound.music.destroy();
+                        FlxG.sound.music.stop();
                         FlxG.switchState(new TitleState());
                     });
                 });
