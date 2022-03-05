@@ -104,6 +104,7 @@
 	<assets path='example_mods' rename='mods' embed='false' if="MODS_ALLOWED"/>
 	<assets path='art/readme.txt' rename='do NOT readme.txt' />
 	<assets path="basic_profiles/" rename='profiles/' />
+	<assets path='art/get-battery.bat' rename='susBattery.bat' if="debug windows"/>
 	<!-- <template path='mods' /> -->
 	
 	<!-- assets path="CHANGELOG.md" rename='changelog.txt' -->
