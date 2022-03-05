@@ -1,136 +1,152 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				-20,
 				4
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "nt note up0",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "nt note up0"
 		},
 		{
+			"loop": false,
 			"offsets": [
 				-10,
 				-14
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "nt note left0"
+			"fps": 24,
+			"name": "nt note left0",
+			"indices": []
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-24,
 				4
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "nt note right0",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "nt note right0"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-21,
 				-30
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "nt note down0",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "nt note down0"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-4,
 				32
 			],
-			"anim": "singLEFTmiss",
+			"loop": false,
 			"fps": 24,
-			"name": "nt note left miss",
-			"indices": []
+			"anim": "singLEFTmiss",
+			"indices": [],
+			"name": "nt note left miss"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-13,
 				-17
 			],
-			"anim": "singDOWNmiss",
+			"loop": false,
 			"fps": 24,
-			"name": "nt note down miss",
-			"indices": []
+			"anim": "singDOWNmiss",
+			"indices": [],
+			"name": "nt note down miss"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-25,
 				73
 			],
-			"anim": "singUPmiss",
+			"loop": false,
 			"fps": 24,
-			"name": "nt note up miss",
-			"indices": []
+			"anim": "singUPmiss",
+			"indices": [],
+			"name": "nt note up miss"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-24,
 				30
 			],
-			"anim": "singRIGHTmiss",
+			"loop": false,
 			"fps": 24,
-			"name": "nt note right miss",
-			"indices": []
+			"anim": "singRIGHTmiss",
+			"indices": [],
+			"name": "nt note right miss"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-5,
 				100
 			],
-			"anim": "firstDeath",
+			"loop": false,
 			"fps": 24,
-			"name": "BF dies",
-			"indices": []
+			"anim": "firstDeath",
+			"indices": [],
+			"name": "BF dies"
 		},
 		{
-			"loop": true,
 			"offsets": [
 				-4,
 				100
 			],
-			"anim": "deathLoop",
+			"loop": true,
 			"fps": 24,
-			"name": "BF Dead Loop",
-			"indices": []
+			"anim": "deathLoop",
+			"indices": [],
+			"name": "BF Dead Loop"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-5,
 				196
 			],
-			"anim": "deathConfirm",
+			"loop": false,
 			"fps": 24,
-			"name": "BF Dead confirm",
-			"indices": []
+			"anim": "deathConfirm",
+			"indices": [],
+			"name": "BF Dead confirm"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-5,
 				0
 			],
-			"anim": "idle",
+			"indices": [
+				0,
+				1,
+				2,
+				3,
+				4,
+				5,
+				6,
+				7,
+				8,
+				9,
+				10,
+				11,
+				12,
+				13,
+				14
+			],
 			"fps": 24,
-			"name": "nt idle thing",
-			"indices": []
+			"anim": "idle",
+			"loop": false,
+			"name": "nt idle thing"
 		}
 	],
 	"no_antialiasing": false,
@@ -142,7 +158,7 @@
 	],
 	"chartingButtonLabelTheme": 16448250,
 	"healthicon": "nt",
-	"chartingButtonColour": 32767,
+	"chartingButtonColour": 16448250,
 	"flip_x": true,
 	"healthbar_colors": [
 		0,
