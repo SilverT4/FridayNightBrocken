@@ -1687,12 +1687,14 @@ class PlayState extends MusicBeatState
 		if (ntStartSong && ntPowerLevel < 0) {
 			if (YourMother < 69) {
 				YourMother += 0.5;
+				trace(YourMother);
 			} else {
 				YourMother = 0;
 			}
 		}
 		if (ntStartSong && ntPowerLevel < 0 && YourMother == 69) {
 			ntPowerLevel -= 2;
+			trace('NT POWER LEVEL: ' + ntPowerLevel);
 		}
 		if (ntPowerLevel <= 0) {
 			ntPowerLevel = 0;
