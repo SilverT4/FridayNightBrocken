@@ -7,7 +7,8 @@ import haxe.SysTools;
 import openfl.system.System;
 
 using StringTools;
-/**vussy*/
+/**the funny white woman
+    @since February 2022 or so (Emo Engine 0.1.1)*/
 class Vanessa extends FlxSprite {
     public var readyToCrash:Bool = false;
     public function new(x:Float, y:Float) {
@@ -18,12 +19,13 @@ class Vanessa extends FlxSprite {
         animation.play('idle');
         visible = false;
     }
+    /**do the funny*/
     public function whiteWomanJumpscare() {
         visible = true;
         animation.play('vanny');
         FlxG.sound.play(Paths.sound('jumpedYaMom'), 1);
     }
-
+    /**oooOOOooooOOOOOOOoooo scary crasher 👻👻👻*/
     public function crashGame() {
         System.exit(0);
     }

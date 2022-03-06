@@ -14,7 +14,7 @@ import shitpost.Vanessa;
 using StringTools;
 /**THE GAME JUST SHIT ITSELF.
     CONGRATULATIONS.
-    @since YOU CLOWNED`*/
+    @since YOU CLOWNED*/
 class ShittingAndFarting extends FlxState {
     var whiteWoman:Vanessa;
 
