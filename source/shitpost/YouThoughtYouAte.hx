@@ -13,7 +13,8 @@ import shitpost.Vanessa;
 
 using StringTools;
 /**THE GAME JUST SHIT ITSELF.
-    CONGRATULATIONS.*/
+    CONGRATULATIONS.
+    @since YOU CLOWNED`*/
 class ShittingAndFarting extends FlxState {
     var whiteWoman:Vanessa;
 
@@ -40,7 +41,8 @@ class ShittingAndFarting extends FlxState {
         }
     }
 }
-/**You thought you ate 💀💀💀*/
+/**You thought you ate 💀💀💀
+@since when?!?!?!??!*/
 class YouThoughtYouAte extends MusicBeatState {
     var fuckingIdiots:FlxSprite;
 
