@@ -34,6 +34,8 @@ using StringTools;
  * 
  * @param sussySong A String for a song name. Defaults to `high`.
  * @param sus Boolean. If `true`, sends you to `PlayState`. Otherwise, returns you to `TitleState`. Defaults to `false`. (Optional)
+ * @deprecated Unused. It made loading take longer and didn't really do much with the way PlayState is set up. lmao
+ * @since January 2022 (Emo Engine 0.1.0) at the *earliest*. I dunno, I'm using the Windows properties box.
  */
 class PreloadLargerCharacters extends FlxState {
     /**
