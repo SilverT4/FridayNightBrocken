@@ -131,6 +131,7 @@ class PronounManager extends MusicBeatSubstate {
         reloadTheBussy();
 
         tabussy.add(new FlxText(bussyList.x, bussyList.y - 18, 0, 'Select a pronoun set:'));
+        tabussy.add(bussyList);
         UI_EXIST.addGroup(tabussy);
     }
 
