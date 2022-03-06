@@ -1,5 +1,6 @@
 package random.oc;
 
+import random.util.CheckinMultiple.OOMOTIS;
 import flixel.FlxSubState;
 import flixel.FlxSprite;
 import flixel.FlxG;
@@ -16,13 +17,26 @@ import MusicBeatSubstate;
 import random.oc.Pronouns.Pronoun;
 import flixel.util.FlxColor;
 import haxe.Json;
+import random.oc.CharacterFavourites;
 
 using StringTools;
-
+/**A typedef to help display things on screen. Uses Strings, Ints, and my custom Pronoun type.
+    
+@param dialogueFileName The dialogue json file name. It's *usually* the same as the character's name that you'd select in the chart editor.
+@param characterNames An array of names. You can set their *real* name alongside the name used to select them in the chart editor.
+@param characterPronouns The pronouns your character uses. This is an array to provide more than one set if necessary.
+@param chPronStrings The PERSONAL pronouns of your character's pronouns as an array of strings. Example: he/they/it/techne (he/him, they/them, it/its, tech/techne)
+@param characterBirthday The character's birthday as an int array. Format will be displayed as DD/MM/YYYY.
+@param characterHeight An int array of the character's height in ft. Example: 5'3"
+@param characterFavourites A custom typedef is going to be set up for this. It'll be a bit less... Bulky? I guess? Than the current setup below.
+@param favouriteColours An array of the character's favourite colours. **WILL BE MOVED TO A TYPEDEF** (Ditto for aesthetics, genres, artists, games)
+@param menuBgColor Allows you to set a custom FlxColor when you look at this character from the character list.
+@since March 2022 (Emo Engine 0.1.1)*/
 typedef OCThing = {
     var dialogueFileName:String; // USUALLY JUST THE SAME AS THE CHARACTER NAME.
     var characterNames:Array<String>; // Includes their ACTUAL name and the name used in game to load their json!
     var characterPronouns:Array<Pronoun>; // This is an array to allow for multiple sets of pronouns! If you have more than one set for a character, you can choose to display them all separately or in one set that uses each *personal/subjective* pronoun!
+    var chPronStrings:Array<String>; // THIS IS AUTOMATICALLY UPDATED AS YOU ADD/REMOVE PRONOUNS.
     var characterBirthday:Array<Int>; // Character birthday. Format is DD/MM/YYYY.
     var characterHeight:Array<Int>; // Height in ft.
     var characterSpecies:String; // Are they human, Mini-con, etc.?
@@ -32,7 +46,19 @@ typedef OCThing = {
     var favouriteGames:Array<String>; // Ditto, but for games
     var favouriteMusicGenres:Array<String>; // Ditto, but for genres of music.
     var favouriteArtists:Array<String>; // Ditto, but for artists
+    var characterFavourites:CharFavourites; // THIS IS HERE AS A REPLACEMENT FOR THE ABOVE FAVOURITE VARIABLES. THOSE'LL BE KEPT AROUND TO ALLOW YOU TO MOVE THEM OVER.
     var menuBgColor:FlxColor;
+}
+
+/**This typedef will allow you to convert your character's favourite arrays into a custom typedef variable. It'll be available in the Favourites tab after everything is set up.
+    @deprecated Deprecated by CharFavourites, defined in **[CharacterFavourites](/source/random/oc/CharacterFavourites.hx)**. This is a legacy typedef to allow for converting older JSONs to ones compatible with the new style.
+    @since March 2022 (Emo Engine 0.1.1)*/
+typedef OCThing_Old = {
+    var favouriteColours:Array<String>;
+    var favouriteAesthetics:Array<String>;
+    var favouriteGames:Array<String>;
+    var favouriteMusicGenres:Array<String>;
+    var favouriteArtists:Array<String>;
 }
 
 /**idk just to show my ocs*/
@@ -182,7 +208,8 @@ class DCLEditorState extends MusicBeatState {
         pronounList = new FlxText(10, 25, 410, OC.characterPronouns.toString(), 16);
         pronounEditButton = new FlxButton(240, 480, 'Edit', function() {
             trace('opening substate');
-            openSubState(new PronounEditorSubstate());
+            random.oc.Pronouns.PronounManager.addPrnsToList(OC.characterPronouns);
+            openSubState(new random.oc.Pronouns.PronounManager(OC.characterPronouns));
         });
         
 
@@ -195,16 +222,25 @@ class DCLEditorState extends MusicBeatState {
         var tab_group = new FlxUI(null, characterSetupBox);
         tab_group.name = 'Favourites';
 
-        var favouriteColoursBox = new FlxUIInputText(10, 40, 200, OC.favouriteColours.toString(), 8);
+        /*var favouriteColoursBox = new FlxUIInputText(10, 40, 200, OC.favouriteColours.toString(), 8);
         favouriteBoxes.push(favouriteColoursBox);
 
         tab_group.add(new FlxText(10, favouriteColoursBox.y - 18, 0, 'Favourite colour(s):'));
-        tab_group.add(favouriteColoursBox);
+        tab_group.add(favouriteColoursBox); */
+        if (OC.characterFavourites == null) {
+            OC.characterFavourites = CharaFavouriteManager.convertToNewFormat(OC.favouriteColours, OC.favouriteAesthetics, OC.favouriteGames, OC.favouriteMusicGenres, ['Panic! at the Disco', 'atsuover']);
+        }
+        if (OC != null && OC.characterFavourites != null) {
+            var favouritesList:FlxText = new FlxText(10, 20, 0, 'Favourite colours:\n' + OC.characterFavourites.favouriteColours.toString() + '\n\nFavourite aesthetics:\n' + OC.characterFavourites.favouriteAesthetics.toString() + '\n\nFavourite games:\n' + OC.characterFavourites.favouriteGames.toString() + '\n\nFavourite music genres:\n' + OC.characterFavourites.favouriteMusicGenres.toString() + '\nFavourite artists:\n' + OC.characterFavourites.favouriteArtists.toString(), 8);
+        favouritesList.scrollFactor.set();
+        tab_group.add(favouritesList);
+        }
         characterSetupBox.addGroup(tab_group);
     }
 }
 
-/**separate thing for pronoun editing*/
+/**separate thing for pronoun editing
+@deprecated ...Or, at least, this will be. I'm planning to include this substate in the **Pronouns** hx file.*/
 class PronounEditorSubstate extends FlxSubState {
     var transBg:FlxSprite;
     var existingListBox:FlxUITabMenu;

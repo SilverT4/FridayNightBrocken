@@ -12,7 +12,8 @@ import flixel.util.FlxTimer;
 
 using StringTools;
 
-/**Snowdrift stuff. Has some settings I'm too lazy to add to other things.*/
+/**Snowdrift stuff. Has some settings I'm too lazy to add to other things. (This is an options menu!)
+    @since February 2022 (Emo Engine 0.1.1)*/
 class SnowdriftStuff extends BaseOptionsMenu {
 
     public function new() {

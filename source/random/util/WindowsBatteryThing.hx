@@ -7,7 +7,8 @@ import haxe.SysTools;
 
 using StringTools;
 
-/**something dumb i'm coming up with. lmao*/
+/**something dumb i'm coming up with. lmao
+    @deprecated Superceded by `getRemainingBattery()` in [WindowsUtils](/source/random/helpMe/WindowsUtils.hx).*/
 class WindowsBatteryThing {
     static var batteryCommandArray:Array<String> = [
         "path win32_battery",

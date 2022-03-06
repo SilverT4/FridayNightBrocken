@@ -26,7 +26,8 @@ typedef YourScreen = {
     var scWidth:Float;
     var scHeight:Float;
 }
-/* hENLO it is nearly 1am as i commit this, im tired and will work on this tmr*/
+/** A wild Snowdrift appears with some helpful info!
+@since February 2022 (Emo Engine 0.1.1)*/
 class RealScreenResolutionHours extends MusicBeatState {
     static inline final ASSETS_DATA_TEMP_JSON = 'assets/data/temp.json';
 

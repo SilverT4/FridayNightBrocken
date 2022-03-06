@@ -55,7 +55,8 @@ using StringTools;
     the code is VERY MUCH spaghetti code. i'm not good at organising code or any of that shit, so it's gonna be spaghetti for as long as this repo exists really
     admittedly that may be *forever* lmao
     ANYWAY! if you want to improve this at all feel free to make adjustments and make a pull request.
-    if you want to use this in your own repo, **give me credit** for it. you can leave a link to my github in the readme of your repo and/or just leave [this link](https://github.com/devin503) in this file.*/
+    if you want to use this in your own repo, **give me credit** for it. you can leave a link to my github in the readme of your repo and/or just leave [this link](https://github.com/devin503) in this file.
+    @since I first created this file. Please, give me credit if you want to use this in your own repo!*/
 typedef Amogus = {
     var readthenote:Bruh;
 }
@@ -65,7 +66,8 @@ typedef Amogus = {
     @param characterName The name of your character on the json file. You pick this in the chart editor.
     @param hasHey Does your character have a hey animation?
     @param heyName The name of your character's hey animation.
-    @param deathCharacter If this is a variation, put the normal character here.*/
+    @param deathCharacter If this is a variation, put the normal character here.
+    @since February 2022 (Emo Engine 0.1.1)*/
 typedef CharSelShit = {
     var friendlyName:String;
     var characterName:String;
@@ -75,7 +77,7 @@ typedef CharSelShit = {
 }
 /**
     This is a character selection screen. You can add a character from the editor. BF and his base-game variants are already here!
-    */
+    @since February 2022 (Emo Engine 0.1.1)*/
 class SelectChara extends MusicBeatState {
     /**
         Base game songs will have a background here. I'm planning to add support for custom backgrounds for mod songs.

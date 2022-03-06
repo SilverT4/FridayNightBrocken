@@ -12,6 +12,8 @@ private typedef TimeyWimeyShit = {
     var month:Int;
     var year:Int;
 }
+/**A little class I set up as a means of getting some times.
+    @since March 2022 (Emo Engine 0.1.1)*/
 class DevinsDateStuff {
     static var currentTime:String = Std.string(Date.now());
     var WibblyWobbly:TimeyWimeyShit;
@@ -23,11 +25,17 @@ class DevinsDateStuff {
         trace(bruh);
         return Std.parseInt(bruh[0]);
     }
+    /**Gets the current hour as an int.
+        @since March 2022 (Emo Engine 0.1.1)*/
     public static function getHour():Int {
         var shit = convertToTimeShit();
         trace(shit);
         return shit;
     }
+    /**Allows you to set up a clock. It can either be the time from when the function was called, or constantly updating.
+        
+        @param constantlyUpdating Is it constantly updating?
+        @since March 2022 (Emo Engine 0.1.1)*/
     public static function dumbClock(?constantlyUpdating:Bool = false):String {
         if (constantlyUpdating) {
             currentTime = Std.string(Date.now());
