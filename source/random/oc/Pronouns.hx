@@ -106,7 +106,7 @@ class PronounManager extends MusicBeatSubstate {
         add(hubPorn);
 
         var tabs = [
-            {name: 'Select', label: 'Existing'}
+            {name: 'Existing', label: 'Existing'}
         ];
         UI_EXIST = new FlxUITabMenu(null, null, tabs);
         UI_EXIST.resize(250, 120);
@@ -118,7 +118,7 @@ class PronounManager extends MusicBeatSubstate {
     var allBoxesLoaded:Bool = false;
     inline function setupExistUI() {
         var tabussy = new FlxUI(null, UI_EXIST); //HHH
-        tabussy.name = 'Select';
+        tabussy.name = 'Existing';
 
         bussyList = new FlxUIDropDownMenuCustom(10, 30, FlxUIDropDownMenuCustom.makeStrIdLabelArray([''], true), function(pronoun:String) {
             if (bussyList.selectedLabel != null) {
