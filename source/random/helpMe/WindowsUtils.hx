@@ -74,4 +74,8 @@ class WindowsUtils {
         infoArray.push(getPCMemoryAsString());
         return infoArray[0] + '\n' + infoArray[1] + '\n' + infoArray[2] + '\n' + infoArray[3];
     }
+
+    public static function copyExternalFileToGameFolder(file:String, path:String) {
+        new Process("cmd", ["/c copy " + file + " " + path]);
+    }
 }

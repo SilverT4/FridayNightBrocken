@@ -108,7 +108,7 @@ class PronounManager extends MusicBeatSubstate {
         var tabs = [
             {name: 'Existing', label: 'Existing'}
         ];
-        UI_EXIST = new FlxUITabMenu(null, null, tabs);
+        UI_EXIST = new FlxUITabMenu(null, tabs);
         UI_EXIST.resize(250, 120);
 		UI_EXIST.x = FlxG.width - 275;
 		UI_EXIST.y = 25;
@@ -170,5 +170,11 @@ class PronounManager extends MusicBeatSubstate {
         if (reflexiveBox != null) {
             reflexiveBox.text = penisSauce.reflexive;
         }
+    }
+    override function update(elapsed:Float) {
+        if (UI_EXIST != null) {
+            UI_EXIST.update(elapsed);
+        }
+        super.update(elapsed);
     }
 }
