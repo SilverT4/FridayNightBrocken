@@ -37,6 +37,7 @@ class Note extends FlxSprite
 	public var inEditor:Bool = false;
 	public var gfNote:Bool = false;
 	private var earlyHitMult:Float = 0.5;
+	public var ntRechargeNote:Bool = false;
 
 	public static var swagWidth:Float = 160 * 0.7;
 	public static var PURP_NOTE:Int = 0;
@@ -123,6 +124,12 @@ class Note extends FlxSprite
 					noAnimation = true;
 				case 'GF Sing':
 					gfNote = true;
+				case 'Nextor Power Regain':
+					reloadNote('', 'NT_POWER_NOTE_ASSETS');
+					colorSwap.hue = 0;
+					colorSwap.brightness = 0;
+					colorSwap.saturation = 0;
+					ntRechargeNote = true;
 			}
 			noteType = value;
 		}
