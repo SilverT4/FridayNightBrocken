@@ -130,8 +130,15 @@ class PronounManager extends MusicBeatSubstate {
         bussyList.selectedLabel = penisSauce.personal;
         reloadTheBussy();
 
+        /**this button. this FUCKIN button. will use the example pronouns. @since your mother*/
+        var addSetButton:FlxButton = new FlxButton(140, 20, 'Add new', function() {
+            penisSauce = cast Json.parse(examplePronouns);
+            if (allBoxesLoaded) reloadPronounBoxes();
+        });
+
         tabussy.add(new FlxText(bussyList.x, bussyList.y - 18, 0, 'Select a pronoun set:'));
         tabussy.add(bussyList);
+        tabussy.add(addSetButton);
         UI_EXIST.addGroup(tabussy);
     }
 
