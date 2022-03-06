@@ -25,6 +25,8 @@ import random.util.DevinsDateStuff;
 
 using StringTools;
 
+/**FNF's main menu.
+	@since FNF v0.0.1, if not earlier. This has existed in pretty much EVERY FNF version.*/
 class MainMenuState extends MusicBeatState
 {
 	static inline final GOOD_MORNING = "Good morning, ";
@@ -34,6 +36,7 @@ class MainMenuState extends MusicBeatState
 	static inline final GOOD_EVENING = "Good evening, ";
 
 	public static var psychEngineVersion:String = '0.5.1'; //This is also used for Discord RPC
+	public static var emoEngineVersion:String = '0.1.1'; // This will be displayed above the psych version text in the main menu.
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
@@ -176,7 +179,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollowPos, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Psych Engine v" + psychEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 44, 0, "Based off Psych Engine v" + psychEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
@@ -184,14 +187,18 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Emo Engine v0.1.1", 12);
+		versionShit.scrollFactor.set();
+		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		add(versionShit);
 		if (TitleState.fuckinAsshole && TitleState.currentProfile == null) {
-			var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "You know what you did. Fuck you!", 12);
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 84, 0, "You know what you did. Fuck you!", 12);
 			versionShit.scrollFactor.set();
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			add(versionShit);
 			bg.color = 0xFFFF69FF;
 		} else if (TitleState.currentProfile != null) {
-			var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, greetingVariations[daHour] + TitleState.currentProfile.profileName + "!");
+			var versionShit:FlxText = new FlxText(12, FlxG.height - 84, 0, greetingVariations[daHour] + TitleState.currentProfile.profileName + "!");
 			versionShit.scrollFactor.set();
 			versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			add(versionShit);

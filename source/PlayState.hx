@@ -276,6 +276,11 @@ class PlayState extends MusicBeatState
 
 	public var inCutscene:Bool = false;
 	var songLength:Float = 0;
+	static var ntCharsWithPL:Array<String> = [
+		'nt-stuck',
+		'ralph',
+		'ralph-LowPower'
+	];
 
 	#if desktop
 	// Discord RPC variables
@@ -384,6 +389,8 @@ class PlayState extends MusicBeatState
 		weDoALittleTrollin = ClientPrefs.getGameplaySetting('botplayTroll', false);
 		freeplayCutscenes = ClientPrefs.getGameplaySetting('fpScenes', false);
 		freeplayCutsceneRepeats = ClientPrefs.getGameplaySetting('fpScenesRepeat', false);
+
+		ntPowerAffectsHealthRegain = ClientPrefs.ntPowerIsEnabled;
 
 		// var gameCam:FlxCamera = FlxG.camera;
 		camGame = new FlxCamera();
@@ -1700,11 +1707,13 @@ class PlayState extends MusicBeatState
 				ntPowerBG.alpha = 1;
 			}
 			ntPowerBG.visible = true;
+			ntPowerBG.cameras = [camHUD];
 		}
 		ntPowerBG.visible = true;
 		if (ntStartSong && ntPowerLevel > 0) {
 			if (YourMother < 30) {
 				YourMother += 0.5;
+				trace(ntPowerLevel);
 				trace(YourMother);
 			} else {
 				YourMother = 0;
@@ -1855,7 +1864,7 @@ class PlayState extends MusicBeatState
 							{
 								remove(countdownGo);
 								countdownGo.destroy();
-								if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck')) ntStartSong = true;
+								if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride)) ntStartSong = true;
 							}
 						});
 						FlxG.sound.play(Paths.sound('introGo' + introSoundsSuffix), 0.6);
@@ -2153,6 +2162,9 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
+				if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride)) {
+					babyArrow.texture = Paths.image('NT_NOTE_ASSET');
+				}
 				babyArrow.alpha = targetAlpha;
 			}
 
@@ -2466,9 +2478,17 @@ class PlayState extends MusicBeatState
 		}
 
 		if(ratingName == '?') {
-			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName;
+			if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride) || (boyfriend != null && ntCharsWithPL.contains(boyfriend.curCharacter))) {
+				scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (HIT A NOTE!) | Nextor Power Lv.: ' + ntPowerLevel;
+			} else {
+			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (HIT SOME NOTES%)';
+			}
 		} else {
+			if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride) || (boyfriend != null && ntCharsWithPL.contains(boyfriend.curCharacter))) {
+				scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC + ' | Nextor Power Lv.: ' + ntPowerLevel;
+			} else {
 			scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (' + Highscore.floorDecimal(ratingPercent * 100, 2) + '%)' + ' - ' + ratingFC;//peeps wanted no integer rating
+			}
 		}
 		
 		if(botplayTxt.visible) {
@@ -4110,7 +4130,7 @@ class PlayState extends MusicBeatState
 
 		if (boyfriend.curCharacter == 'decktop-were' && health <= 0.05 * healthLoss) health = 0.05 * healthLoss else health -= daNote.missHealth * healthLoss;
 		trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);
-		if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel > 0) ntPowerLevel -= 5;
+		if (ntCharsWithPL.contains(boyfriend.curCharacter) && ntPowerLevel > 0) ntPowerLevel -= 3;
 		if(instakillOnMiss)
 		{
 			vocals.volume = 0;
@@ -4151,7 +4171,7 @@ class PlayState extends MusicBeatState
 		{
 			if (boyfriend.curCharacter == 'decktop-were' && health <= 0.05 * healthLoss) health = 0.05 * healthLoss else health -= 0.05 * healthLoss;
 			trace('Health VALUE: ' + health + '\nHealth PERCENT: ' + healthBar.percent);
-			if (OOTIS.check([SONG.player1, bfOverride], 'nt-stuck') && ntPowerLevel > 0) ntPowerLevel -= 5;
+			if (ntCharsWithPL.contains(boyfriend.curCharacter) && ntPowerLevel > 0) ntPowerLevel -= 3;
 			if(instakillOnMiss)
 			{
 				vocals.volume = 0;
@@ -4335,6 +4355,10 @@ class PlayState extends MusicBeatState
 						boyfriend.holdTimer = 0;
 					}
 				//}
+				if (note.ntRechargeNote && ntCharsWithPL.contains(boyfriend.curCharacter)) {
+					trace('recharge!');
+					ntPowerLevel += 5;
+				}
 				if(note.noteType == 'Hey!') {
 					if(boyfriend.animOffsets.exists('hey')) {
 						boyfriend.playAnim('hey', true);
