@@ -60,6 +60,7 @@ import flash.media.Sound;
 using StringTools;
 /**
  *  Password menu state. At the moment, the passwords are **hard-coded** into the game, so you'll have to do that too. Read the [README](source/README.md) to learn more about how to create a hard-coded unlockable.
+ * @deprecated Unused. I may rework this later. - devin503
  */
 class PasswordState extends MusicBeatState
 {
