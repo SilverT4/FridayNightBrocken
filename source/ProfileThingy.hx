@@ -109,7 +109,7 @@ class PrelaunchProfileState extends FlxState {
         });
         shitButton.color = FlxColor.BLUE;
         #if !debug
-        shitButton.label.text = '??????';
+        shitButton.label.text = 'Strange Button';
         #end
         shitButton.label.color = FlxColor.WHITE;
         tab_group.add(shitButton);
@@ -117,7 +117,7 @@ class PrelaunchProfileState extends FlxState {
         tab_group.add(loadButton);
         tab_group.add(createButton);
         tab_group.add(eraseButton);
-        saveListBox.add(tab_group);
+        saveListBox.addGroup(tab_group);
     }
     static inline function loadSave() {
         FlxG.switchState(new LoadDEFromProfiles());
