@@ -1,5 +1,6 @@
 package;
 
+import random.util.DumbUtil;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -55,6 +56,7 @@ import FunkinLua;
 import DialogueBoxPsych;
 import SelectChara.CharSelShit as BussyWater;
 import random.util.CustomRandom;
+import random.dumb.Bonk;
 
 #if sys
 import sys.FileSystem;
@@ -89,6 +91,7 @@ class PlayState extends MusicBeatState
 	public var modchartTexts:Map<String, ModchartText> = new Map<String, ModchartText>();
 	var swagNoteGlitch:FlxGlitchEffect;
 	var areYaHavinFun:FlxSound;
+	var coconut:Coconut;
 	public static var snowdriftDiedCheating:Bool = false;
 
 	//event variables
@@ -943,6 +946,11 @@ class PlayState extends MusicBeatState
 		originalBfWidth = boyfriend.width;
 		originalBfHeight = boyfriend.height;
 		startCharacterLua(boyfriend.curCharacter);
+
+		coconut = new Coconut(0, -500, boyfriend.curCharacter);
+		coconut.visible = false;
+		coconut.cameras = [camOther];
+		add(coconut);
 		
 		var camPos:FlxPoint = new FlxPoint(gf.getGraphicMidpoint().x, gf.getGraphicMidpoint().y);
 		camPos.x += gf.cameraPosition[0];
@@ -1308,6 +1316,9 @@ class PlayState extends MusicBeatState
 					if(daSong == 'roses') FlxG.sound.play(Paths.sound('ANGRY'));
 					schoolIntro(doof);
 				
+				case 'starcrossed':
+					dialogueJson = cast Json.parse(sys.io.File.getContent('mods/data/starcrossed/dialogue.json'));
+					startDialogue(dialogueJson);
 				case 'test':
 						dialogueJson = cast Json.parse(sys.io.File.getContent('mods/data/test/dialogue.json'));
 						startDialogue(dialogueJson);
@@ -1566,7 +1577,7 @@ class PlayState extends MusicBeatState
 	}
 	public var psychDialogue:DialogueBoxPsych;
 	//You don't have to add a song, just saying. You can just do "startDialogue(dialogueJson);" and it should work
-	public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
+	public function startDialogue(dialogueFile:DialogueFile):Void
 	{
 		// TO DO: Make this more flexible, maybe?
 		if(psychDialogue != null) return;
@@ -1575,7 +1586,7 @@ class PlayState extends MusicBeatState
 			inCutscene = true;
 			CoolUtil.precacheSound('dialogue');
 			CoolUtil.precacheSound('dialogueClose');
-			psychDialogue = new DialogueBoxPsych(dialogueFile, song);
+			psychDialogue = new DialogueBoxPsych(dialogueFile);
 			psychDialogue.scrollFactor.set();
 			if(endingSong) {
 				psychDialogue.finishThing = function() {
@@ -3066,7 +3077,8 @@ class PlayState extends MusicBeatState
 		//trace('Control result: ' + pressed);
 		return pressed;
 	}
-
+	var eventDadStuf:Array<String> = ['dad', 'Dad', 'DAD', 'daddy'];
+	var eventGfStuf:Array<String> = ['girlfriend', 'gf', 'GF', 'Girlfriend', 'Gf', 'GIRLFRIEND'];
 	public function triggerEventNote(eventName:String, value1:String, value2:String) {
 		switch(eventName) {
 			case 'Hey!':
@@ -3102,7 +3114,29 @@ class PlayState extends MusicBeatState
 					boyfriend.specialAnim = true;
 					boyfriend.heyTimer = time;
 				}
-
+			case 'Bonk':
+				coconut.visible = true;
+				if (eventDadStuf.contains(value1)) {
+					coconut.x = dad.getGraphicMidpoint().x;
+					coconut.y = dad.getGraphicMidpoint().y + 1000;
+					coconut.targetY = dad.getGraphicMidpoint().y;
+					coconut.target = 'Dad';
+				} else if (eventGfStuf.contains(value1)) {
+					coconut.x = gf.getGraphicMidpoint().x;
+					coconut.y = gf.getGraphicMidpoint().y + 1000;
+					coconut.targetY = gf.getGraphicMidpoint().y;
+					coconut.target = 'GF';
+				} else {
+					coconut.x = boyfriend.getGraphicMidpoint().x;
+					coconut.y = boyfriend.getGraphicMidpoint().y + 1000;
+					coconut.targetY = boyfriend.getGraphicMidpoint().y;
+					coconut.target = 'BF';
+				}
+				if (value2.length >= 1 && coconut.target == 'BF') {
+					doCoconuttyThings(Std.parseFloat(value2));
+				} else {
+					doCoconuttyThings();
+				}
 			case 'White Woman Jumpscare':
 				vussy.setGraphicSize(1280, 720);
 				vussy.cameras = [camOther];
@@ -4776,6 +4810,42 @@ class PlayState extends MusicBeatState
 
 	}
 
+	function doCoconuttyThings(?DamageToDeal:Float) {
+		coconut.visible = true;
+		coconut.dealThis = DamageToDeal;
+		coconut.fall();
+	}
+
+	public function doBonkShit(target:String, ?DamageToDeal:Float) {
+		switch (target) {
+			case 'BF':
+				if (DumbUtil.getBfAnim('hurt')) {
+					boyfriend.playAnim('hurt');
+				} else {
+					if (DumbUtil.getBfAnim('scared')) {
+						boyfriend.playAnim('scared');
+					}
+				}
+			case 'Dad':
+				if (DumbUtil.getDaddyAnim('hurt')) {
+					dad.playAnim('hurt'); // IF CHARACTER IS EITHER A BF CHARACTER OR THEY HAVE A HURT ANIM!
+				} else {
+					dad.playAnim('singDOWN');
+				}
+			case 'GF':
+				if (DumbUtil.getGfAnim('hurt')) {
+					gf.playAnim('hurt'); // SAME AS FOR DAD CASE!
+				} else if (DumbUtil.getGfAnim('scared')) {
+					gf.playAnim('scared');
+				} else if (DumbUtil.getGfAnim('sad')) {
+					gf.playAnim('sad');
+				} else {
+					trace('penis'); // idk
+				}
+		}
+		if (DamageToDeal != null) health -= DamageToDeal;
+		FlxG.sound.play(Paths.sound('bonk'));
+	}
 	public var closeLuas:Array<FunkinLua> = [];
 	public function callOnLuas(event:String, args:Array<Dynamic>):Dynamic {
 		var returnVal:Dynamic = FunkinLua.Function_Continue;
