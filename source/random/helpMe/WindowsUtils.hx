@@ -1,5 +1,6 @@
 package random.helpMe;
 
+import flixel.util.FlxTimer;
 import sys.io.Process;
 import haxe.Exception;
 import Sys;
@@ -16,16 +17,20 @@ class WindowsUtils {
     private static var exceptionMessages:Map<Int, String> = [
         0 => "This is most likely a result of the file requested by the state calling this function NOT existing.",
     ];
-    public static function getRemainingBattery(outputPath:String) {
-            new Process("cmd", ["/c susBattery.bat"]);
-            if (FileSystem.exists(outputPath)) {
-                var penis = File.getContent(outputPath);
-                trace(penis);
-                var semen = penis.split('\n');
-                return semen[1];
-            } else {
-                throw new Exception('Something went wrong, please check the console.\n\n' + exceptionMessages[0]);
-            }
+    public static function getRemainingBattery() {
+        var intThing:Int;
+        new Process("powershell", ["-command", "(Get-WmiObject Win32_Battery).EstimatedChargeRemaining", "> .\\battery.txt"]);
+                if (FileSystem.exists("./battery.txt")) {
+                    var penis = File.getContent("./battery.txt");
+                    trace(penis);
+                    //var semen = penis.split(' ');
+                    intThing = Std.parseInt(penis);
+                    trace(intThing);
+                } else {
+                    trace('*crashes cutely*');
+                    throw new Exception('Something went wrong, please check the console.\n\n' + exceptionMessages[0]);
+                }
+        return intThing;
     }
     public static function getCurrentUser():String {
         new Process("whoami", ["> user.txt"]);
@@ -55,13 +60,13 @@ class WindowsUtils {
         }
     }
     public static function getPCMemoryAsString():String {
-        new Process("wmic", ["/output:mem.txt memorychip get capacity"]);
+        new Process("powershell", ["-command", "(Get-WmiObject Win32_PhysicalMemory).Capacity", "> mem.txt"]);
         if (FileSystem.exists('mem.txt')) {
             var initial = File.getContent('mem.txt');
-            var cum = initial.split('\r\n');
-            var capacityFromWmic:Int = Std.parseInt(cum[1]);
+            //var cum = initial.split('\r\n');
+            var capacityFromWmic:Int = Std.parseInt(initial);
             Sys.command("cmd", ['/c del mem.txt']); // don't need to keep the mem.txt once we're done with it!
-            return Math.round(Std.parseFloat(Std.string(capacityFromWmic)) / 1073741824) + "GB (approx.)";
+            return Math.round(capacityFromWmic / 1073741824) + "GB (approx.)";
         } else {
             throw new Exception("Something went wrong, please check the console.\n\n" + exceptionMessages[0]);
         }

@@ -11,6 +11,7 @@ import flixel.addons.ui.FlxUITooltipManager;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIInputText;
+import flixel.util.FlxColor;
 
 /**This typedef contains the same vars as the original favourite vars in OCThing. Just a bit cleaner. I hope.
 @param favouriteColours A list of favourite colours.
@@ -27,60 +28,60 @@ typedef CharFavourites = {
     var favouriteArtists:Array<String>; // Ditto, but for artists
 }
 
-/**A substate that allows you to modify the current values of your character's favourites. Utilizes as many of the imports above as possible.
-    @since March 2022 (Emo Engine 0.1.1)*/
-class CharaFavouriteManager extends MusicBeatSubstate {
-    public static var daFaves:CharFavourites; // maybe static might allow the value to *stay* after exit? idk
-    static final exampleFaves:String = '{
+class CharacterFavouritesSubstate extends MusicBeatSubstate {
+    var nowListenUp:String = '{
         "favouriteColours": [
-            "blue",
-            "yellow"
+            "green",
+            "blue"
         ],
         "favouriteAesthetics": [
-            "neon",
-            "pastel"
+            "grunge",
+            "neon"
         ],
         "favouriteGames": [
             "Animal Crossing",
-            "Mario"
+            "Mario Kart"
         ],
         "favouriteMusicGenres": [
-            "Rock",
-            "Metal",
-            "Pop"
+            "rock",
+            "lofi"
         ],
         "favouriteArtists": [
-            "Weezer",
-            "CupcakKe"
+            "CupcakKe",
+            "Fall Out Boy"
         ]
-    }'; // PLACEHOLDER, USED FOR THE CONVERT FUNCTION!!
-    var colourBox:FlxUIInputText;
-    var boxAesthetic:FlxUIInputText; //box aesthetic uwu
-    var gamerBox:FlxUIInputText;
-    var genreBox:FlxUIInputText;
-    var artistBox:FlxUIInputText;
-    var transparentBlackColour:Int = 0x6900000;
+    }';
+    var heresDaStory:CharFavourites;
+    var aboutALittleGuy:FlxUITabMenu;
+    var thatLivesInABlueWorld:FlxUI;
+    var andAllDayAndAllNight:Array<FlxUIInputText> = [];
+    var andEverythingHeSees:Array<String> = []; // GAMES
+    var isJustBlue:Array<String> = []; // COLOURS
+    var likeHim:Array<String> = []; // ARTISTS
+    var insideAndOutside:Array<String> = []; // AESTHETICS
+    var blueHisHouse:Array<String> = []; // MUSIC GENRES
+    var withABlueLittleWindow:FlxUI; // I NEED TO MAKE SEVERAL TABS FOR THIS EDITOR. LMAO (COLOURS)
+    var andABlueCorvette:FlxUI; // MUSIC GENRES
+    var andEverythingIsBlue:FlxUI; // AESTHETICS
+    var forHim:FlxUI; // GAMES
+    var andHimself:FlxUI; // ARTISTS
+    var andEverybodyAround:FlxSprite; // BG
 
-    public function new(curFaves:CharFavourites) {
+    public function new (?curFaves:CharFavourites) {
         super();
-        daFaves = curFaves;
-        var bg:FlxSprite = new FlxSprite(0).makeGraphic(FlxG.width, FlxG.height, transparentBlackColour);
-        bg.screenCenter();
-        bg.scrollFactor.set();
-        add(bg);
+        if (curFaves != null) {
+            heresDaStory = curFaves;
+            trace(heresDaStory);
+        } else {
+            heresDaStory = cast Json.parse(nowListenUp);
+            trace(heresDaStory);
+            trace('Quick note', 'You either had no favourites, or you just haven\'t converted them.\nYou\'re starting fresh here.');
+        }
     }
 
-    /**This allows you to convert your current variables to the typedef.*/
-    public static function convertToNewFormat(col:Array<String>, aes:Array<String>, gam:Array<String>, mus:Array<String>, art:Array<String>):CharFavourites {
-        var bean:CharFavourites;
-        bean = cast Json.parse(exampleFaves); // JUST TO HAVE A PLACEHOLDER!
-        bean.favouriteColours = col;
-        bean.favouriteAesthetics = aes;
-        bean.favouriteGames = gam;
-        bean.favouriteMusicGenres = mus;
-        bean.favouriteArtists = art;
-        trace(bean);
-        return bean;
+    override function create() {
+        trace('penis');
+        andEverybodyAround = new FlxSprite().makeGraphic(FlxG.width, FlxG.height, FlxColor.fromRGB(0, 0, 255, 195));
+        add(andEverybodyAround);
     }
-
 }

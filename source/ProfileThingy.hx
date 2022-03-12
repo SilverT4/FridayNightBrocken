@@ -166,7 +166,7 @@ class DebugProfileSubstate extends FlxSubState {
     var bussy:Date;
     var shart:String;
     var cum:FlxUITooltip;
-    var wmicOut:String;
+    var wmicOut:Int;
     var dumbthing:String;
     var sex:FlxUITooltipManager;
     var penisTest:Bool = false;
@@ -197,7 +197,7 @@ class DebugProfileSubstate extends FlxSubState {
         dumbthing = sys.io.File.getContent('battery.txt');
         var ass = dumbthing.split('\r\n');
         wmicOut = ass[1]; */
-        wmicOut = WindowsUtils.getRemainingBattery("penis.txt");
+        wmicOut = WindowsUtils.getRemainingBattery();
         sex = new FlxUITooltipManager();
         battery = new FlxText(0, 0, FlxG.width, wmicOut + "%", 24);
         battery.setFormat("Nintendo DS Bios Regular", 24, FlxColor.WHITE, FlxTextAlign.RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
