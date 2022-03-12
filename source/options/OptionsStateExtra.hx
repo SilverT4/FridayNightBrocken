@@ -30,31 +30,29 @@ import Controls;
 
 using StringTools;
 /**
- *  The Options menu of FNF. There's no real arguments.
+ *  An extra options menu so I can have all my shit and not have things go off screen.
+ *  This is literally a clone of the OptionsState file.
+ *  @since March 2022 (Emo Engine 0.1.2)
  */
-class OptionsState extends MusicBeatState
+class OptionsStateExtra extends MusicBeatState
 {
-	var options:Array<String> = ['Note Colors', 'Controls', 'Adjust Delay and Combo', 'Graphics', 'Visuals and UI', 'Gameplay', 'Extras'];
+	var options:Array<String> = ['Visit Snowdrift', 'Test Dialogue', 'Reset Save Data'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
-			case 'Note Colors':
-				openSubState(new options.NotesSubState());
-			case 'Controls':
-				openSubState(new options.ControlsSubState());
-			case 'Graphics':
-				openSubState(new options.GraphicsSettingsSubState());
-			case 'Visuals and UI':
-				openSubState(new options.VisualsUISubState());
-			case 'Gameplay':
-				openSubState(new options.GameplaySettingsSubState());
-			case 'Adjust Delay and Combo':
-				LoadingState.loadAndSwitchState(new options.NoteOffsetState());
-			case 'Extras':
-				FlxG.switchState(new options.OptionsStateExtra());
+			case 'Reset Save Data':
+				LoadingState.loadAndSwitchState(new options.ResetDataState());
+			case 'Visit Snowdrift':
+				if (!FlxG.save.data.seenSnowdriftIntro || PlayState.dunFuckedUpNow) {
+					LoadingState.loadAndSwitchState(new options.SnowdriftStuff.SnowdriftIntro());
+				} else {
+					openSubState(new options.SnowdriftStuff());
+				}
+            case 'Test Dialogue':
+                LoadingState.loadAndSwitchState(new random.dumb.DialogueTestingState());
 		}
 	}
 
@@ -65,20 +63,9 @@ class OptionsState extends MusicBeatState
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
-		trace(FlxG.sound.music);
-	if(FlxG.sound.music == null) {
-		FlxG.sound.playMusic(Paths.music('desktop'), 0);
-
-		FlxG.sound.music.fadeIn(4, 0, 0.7);
-	} else if (FlxG.sound.music.playing) {
-		FlxG.sound.music.stop();
-		FlxG.sound.playMusic(Paths.music('desktop'), 0);
-
-		FlxG.sound.music.fadeIn(4, 0, 0.7);
-	} // bob and bosip content is gitignored for the most part. replace this with freakyMenu just to prevent any errors
 
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
-		bg.color = 0xFFea71fd;
+		bg.color = 0xFFa6d388;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
 		bg.updateHitbox();
 		bg.screenCenter();
@@ -128,7 +115,7 @@ class OptionsState extends MusicBeatState
 			FlxG.sound.playMusic(Paths.music('freakyMenu'), 0); */ //dont need it
 
 		FlxG.sound.music.fadeIn(4, 0, 0.7);
-			MusicBeatState.switchState(new MainMenuState());
+			FlxG.switchState(new OptionsState());
 		}
 
 		if (controls.ACCEPT) {

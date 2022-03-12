@@ -28,7 +28,9 @@ class CustomRandom {
         @since February 2022 (Emo Engine 0.1.1)*/
     public static function int(?min:Int = 0, max:Int):Int {
         random = new FlxRandom();
-        return random.int(min, max);
+        var here:Int = random.int(min, max);
+        trace(here);
+        return here;
     }
     /**Generate a random float between two different values.
         
@@ -37,7 +39,9 @@ class CustomRandom {
     @since February 2022 (Emo Engine 0.1.1)*/
     public static function float(?min:Float = 0, max:Float):Float {
         random = new FlxRandom();
-        return random.float(min, max);
+        var here:Float = random.float(min, max);
+        trace(here);
+        return here;
     }
     /**Play a game of chance to determine the value of your bool.
         
@@ -45,7 +49,9 @@ class CustomRandom {
     @since February 2022 (Emo Engine 0.1.1)*/
     public static function bool(?chance:Float = 50) {
         random = new FlxRandom();
-        return random.bool(chance);
+        var didYouWin:Bool = random.bool(chance);
+        trace(didYouWin);
+        return didYouWin;
     }
     /**Generate a random FlxColor. Recommended to use hex codes.
         
@@ -54,6 +60,8 @@ class CustomRandom {
     @since February 2022 (Emo Engine 0.1.1)*/
     public static function colour(?min:FlxColor, max:FlxColor) {
         random = new FlxRandom();
-        return random.color(min, max);
+        var paint:FlxColor = random.color(min, max);
+        trace(paint);
+        return paint;
     }
 }
