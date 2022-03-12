@@ -102,4 +102,6 @@ assets/shared/images/characters/MEDABF.xml
 assets/shared/images/dialogue/MBF_Dialogue.png
 assets/shared/images/dialogue/MBF_Dialogue.xml
 assets/preload/images/dialogue/meta.json
+assets/preload/characters/meta.json
+assets/preload/images/icons/icon-meta.png
 Thumbs.db
