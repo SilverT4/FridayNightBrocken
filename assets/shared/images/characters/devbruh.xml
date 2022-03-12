@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="devbruh.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="BF bruh0000" x="0" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0001" x="389" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0002" x="0" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0003" x="389" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0004" x="0" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0005" x="389" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0006" x="0" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0007" x="389" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0008" x="0" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0009" x="389" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0010" x="0" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0011" x="389" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0012" x="0" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0013" x="389" y="0" width="385" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0014" x="778" y="0" width="385" height="398" frameX="-2" frameY="-1" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0015" x="1167" y="0" width="373" height="399" frameX="-2" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0016" x="1544" y="0" width="372" height="399" frameX="-1" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0017" x="0" y="403" width="372" height="399" frameX="-1" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0018" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0019" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0020" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0021" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0022" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0023" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0024" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0025" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0026" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0027" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0028" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0029" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0030" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0031" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0032" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0033" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0034" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0035" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0036" x="376" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0037" x="751" y="403" width="371" height="399" frameX="0" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0038" x="1544" y="0" width="372" height="399" frameX="-1" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0039" x="0" y="403" width="372" height="399" frameX="-1" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0040" x="1167" y="0" width="373" height="399" frameX="-2" frameY="0" frameWidth="387" frameHeight="399"/>
+	<SubTexture name="BF bruh0041" x="778" y="0" width="385" height="398" frameX="-2" frameY="-1" frameWidth="387" frameHeight="399"/>
+</TextureAtlas>
