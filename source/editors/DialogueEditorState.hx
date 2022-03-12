@@ -60,7 +60,8 @@ class DialogueEditorState extends MusicBeatState
 		dialogueFile = {
 			dialogue: [
 				copyDefaultLine()
-			]
+			],
+			dialogueMusic: 'assets/shared/music/breakfast'
 		};
 		
 		character = new DialogueCharacter();
@@ -100,11 +101,12 @@ class DialogueEditorState extends MusicBeatState
 		changeText();
 		super.create();
 	}
-
+	var curMusic:String = '';
 	var UI_box:FlxUITabMenu;
 	function addEditorBox() {
 		var tabs = [
 			{name: 'Dialogue Line', label: 'Dialogue Line'},
+			{name: 'Dialogue Music', label: 'Dialogue Music'},
 		];
 		UI_box = new FlxUITabMenu(null, tabs, true);
 		UI_box.resize(250, 190);
@@ -113,6 +115,7 @@ class DialogueEditorState extends MusicBeatState
 		UI_box.scrollFactor.set();
 		UI_box.alpha = 0.8;
 		addDialogueLineUI();
+		addMusicUI();
 		add(UI_box);
 	}
 
@@ -157,6 +160,33 @@ class DialogueEditorState extends MusicBeatState
 		tab_group.add(loadButton);
 		tab_group.add(saveButton);
 		UI_box.addGroup(tab_group);
+	}
+	var musicInputBox:FlxUIInputText;
+	var DEFAULT_MUSIC:String = 'assets/shared/music/breakfast.ogg';
+	function addMusicUI() {
+		var tab_group = new FlxUI(null, UI_box);
+		tab_group.name = 'Dialogue Music';
+
+		musicInputBox = new FlxUIInputText(10, 20, 200, DEFAULT_MUSIC, 8);
+		blockPressWhileTypingOn.push(musicInputBox);
+
+		var previewMusButton:FlxButton = new FlxButton(20, musicInputBox.y + 30, 'Toggle Music', toggleMusic);
+		var browseMusButton:FlxButton = new FlxButton(previewMusButton.x + 120, previewMusButton.y, 'Browse for music', loadMusic);
+		tab_group.add(new FlxText(musicInputBox.x, musicInputBox.y - 18, 0, 'Dialogue music:'));
+		tab_group.add(musicInputBox);
+		tab_group.add(browseMusButton);
+		tab_group.add(previewMusButton);
+		UI_box.addGroup(tab_group);
+	}
+
+	function toggleMusic() {
+		if (FlxG.sound.music.playing) {
+			wePlayinDaMusic = false;
+			FlxG.sound.music.stop();
+		} else {
+			wePlayinDaMusic = true;
+			FlxG.sound.music.play(true, 0); // JUST IN CASE THE MUSIC HAS BEEN CHANGED!
+		}
 	}
 
 	function copyDefaultLine():DialogueLine {
@@ -221,6 +251,7 @@ class DialogueEditorState extends MusicBeatState
 	private static var DEFAULT_TEXT:String = "coolswag";
 	private static var DEFAULT_SPEED:Float = 0.05;
 	private static var DEFAULT_BUBBLETYPE:String = "normal";
+	var wePlayinDaMusic:Bool = false;
 	function reloadText(speed:Float = 0.05) {
 		if(daText != null) {
 			daText.killTheTimer();
@@ -287,6 +318,7 @@ class DialogueEditorState extends MusicBeatState
 	var curAnim:Int = 0;
 	var blockPressWhileTypingOn:Array<FlxUIInputText> = [];
 	var transitioning:Bool = false;
+	var curMusicUpdatedJustNow:Bool = false;
 	override function update(elapsed:Float) {
 		if(transitioning) {
 			super.update(elapsed);
@@ -302,7 +334,10 @@ class DialogueEditorState extends MusicBeatState
 				character.animation.curAnim.restart();
 			}
 		}
-
+		if (curMusicUpdatedJustNow) {
+			curMusicUpdatedJustNow = false;
+			FlxG.sound.music.loadEmbedded(curMusic);
+		}
 		var blockInput:Bool = false;
 		for (inputText in blockPressWhileTypingOn) {
 			if(inputText.hasFocus) {
@@ -320,6 +355,10 @@ class DialogueEditorState extends MusicBeatState
 					if(inputText == lineInputText) {
 						inputText.text += '\\n';
 						inputText.caretIndex += 2;
+					} else if (inputText == musicInputBox) {
+						inputText.hasFocus = false;
+						curMusic = inputText.text;
+						curMusicUpdatedJustNow = true;
 					} else {
 						inputText.hasFocus = false;
 					}
@@ -444,6 +483,38 @@ class DialogueEditorState extends MusicBeatState
 		_file.browse([jsonFilter]);
 	}
 
+	function loadMusic() {
+		var musFilter:FileFilter = new FileFilter('Music file', #if web 'mp3' #else 'ogg' #end);
+		_file = new FileReference();
+		_file.addEventListener(Event.CANCEL, onLoadCancel);
+		_file.addEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+		_file.addEventListener(Event.SELECT, onMLoadComplete);
+		_file.browse([musFilter]);
+	}
+
+	function onMLoadComplete(_):Void {
+		_file.removeEventListener(Event.SELECT, onMLoadComplete);
+		_file.removeEventListener(Event.CANCEL, onLoadCancel);
+		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
+
+		#if sys
+		var fullPath:String = null;
+		@:privateAccess
+		if(_file.__path != null) fullPath = _file.__path;
+
+		if (fullPath != null) {
+			if (musicInputBox != null) musicInputBox.text = fullPath;
+			FlxG.sound.music.loadEmbedded(fullPath);
+			trace('amogus');
+			_file = null;
+			return;
+		}
+		_file = null;
+		#else
+		trace('haha dumb bitch not on desktop');
+		#end
+	}
+
 	function onLoadComplete(_):Void
 	{
 		_file.removeEventListener(Event.SELECT, onLoadComplete);
@@ -464,6 +535,9 @@ class DialogueEditorState extends MusicBeatState
 					var cutName:String = _file.name.substr(0, _file.name.length - 5);
 					trace("Successfully loaded file: " + cutName);
 					dialogueFile = loadedDialog;
+					if (loadedDialog.dialogueMusic != null) {
+						FlxG.sound.music.loadEmbedded(loadedDialog.dialogueMusic);
+					}
 					changeText();
 					_file = null;
 					return;

@@ -41,6 +41,7 @@ typedef DialogueAnimArray = {
 // love u Shubs no homo :flushedh4:
 typedef DialogueFile = {
 	var dialogue:Array<DialogueLine>;
+	var dialogueMusic:String; // for custom music in dialogues lmao - devin503
 }
 
 typedef DialogueLine = {
@@ -66,6 +67,8 @@ class DialogueCharacter extends FlxSprite
 	public var dialogueAnimations:Map<String, DialogueAnimArray> = new Map<String, DialogueAnimArray>();
 	#end
 
+	private var forRef:DialogueFile;
+
 	public var startingPos:Float = 0; //For center characters, it works as the starting Y, for everything else it works as starting X
 	public var isGhost:Bool = false; //For the editor
 	public var curCharacter:String = 'bf';
@@ -77,15 +80,6 @@ class DialogueCharacter extends FlxSprite
 
 		if(character == null) character = DEFAULT_CHARACTER;
 		this.curCharacter = character;
-		if (PlayState.SONG != null) {
-			switch (PlayState.SONG.song.toLowerCase()) {
-			case 'test':
-				if (FileSystem.exists(Paths.modsMusic('DaveDialogue'))) {
-					FlxG.sound.playMusic(Paths.modsMusic('DaveDialogue'), 0);
-					FlxG.sound.music.fadeIn(1, 0, 0.8);
-				}
-		}
-	}
 		reloadCharacterJson(character);
 		if (!FileSystem.exists(Paths.modsImages('dialogue/' + jsonFile.image))) {
 		frames = Paths.getSparrowAtlas('dialogue/' + jsonFile.image, 'shared');
@@ -191,13 +185,15 @@ class DialogueBoxPsych extends FlxSpriteGroup
 	var textBoxTypes:Array<String> = ['normal', 'angry'];
 	//var charPositionList:Array<String> = ['left', 'center', 'right'];
 
-	public function new(dialogueList:DialogueFile, ?song:String = null)
+	public function new(dialogueList:DialogueFile)
 	{
 		super();
 
-		if(song != null && song != '') {
-			FlxG.sound.playMusic(Paths.music(song), 0);
-			FlxG.sound.music.fadeIn(2, 0, 1);
+		if (dialogueList.dialogueMusic != null) {
+			if (FileSystem.exists(dialogueList.dialogueMusic)) {
+					FlxG.sound.playMusic(dialogueList.dialogueMusic, 0);
+					FlxG.sound.music.fadeIn(1, 0, 0.8);
+			}
 		}
 		
 		bgFade = new FlxSprite(-500, -500).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);

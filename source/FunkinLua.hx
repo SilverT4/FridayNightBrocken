@@ -1148,7 +1148,7 @@ class FunkinLua {
 			if(FileSystem.exists(path)) {
 				var shit:DialogueFile = DialogueBoxPsych.parseDialogue(path);
 				if(shit.dialogue.length > 0) {
-					PlayState.instance.startDialogue(shit, music);
+					PlayState.instance.startDialogue(shit);
 					luaTrace('Successfully loaded dialogue');
 				} else {
 					luaTrace('Your dialogue file is badly formatted!');
