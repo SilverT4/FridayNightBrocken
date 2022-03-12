@@ -36,7 +36,9 @@ class MainMenuState extends MusicBeatState
 	static inline final GOOD_EVENING = "Good evening, ";
 
 	public static var psychEngineVersion:String = '0.5.1'; //This is also used for Discord RPC
-	public static var emoEngineVersion:String = '0.1.1'; // This will be displayed above the psych version text in the main menu.
+	/**The version of Emo Engine. I hadn't added this until 0.1.1
+		@since March 2022 (Emo Engine 0.1.1)*/
+	public static var emoEngineVersion:String = '0.1.2'; // This will be displayed above the psych version text in the main menu.
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
