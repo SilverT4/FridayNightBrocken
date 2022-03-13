@@ -54,6 +54,7 @@ class DialogueTestingState extends MusicBeatState {
     }
     var diaBrowse:FileReference;
     function loadDialogue() {
+        browseMsg.kill();
         var jsonFilter = new FileFilter('Dialogue Json', 'json');
         diaBrowse = new FileReference();
         diaBrowse.addEventListener(Event.SELECT, onLoadComplete);
@@ -87,6 +88,7 @@ class DialogueTestingState extends MusicBeatState {
 					}
 					//changeText();
 					diaBrowse = null;
+                    startDialogue(dialogueFile);
 					return;
 				}
 			}

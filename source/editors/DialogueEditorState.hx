@@ -503,8 +503,26 @@ class DialogueEditorState extends MusicBeatState
 		if(_file.__path != null) fullPath = _file.__path;
 
 		if (fullPath != null) {
-			if (musicInputBox != null) musicInputBox.text = fullPath;
-			FlxG.sound.music.loadEmbedded(fullPath);
+			//if (musicInputBox != null) musicInputBox.text = fullPath;
+			var bussy = fullPath.split(#if windows '\\' #else '/' #end);
+			var nope:Array<String> = [];
+			for (i in 0...bussy.length) {
+				if (bussy[i].contains('assets') || bussy[i].contains('mods')) {
+					for (e in i...bussy.length) {
+						nope.push(bussy[e]);
+					}
+					break;
+				} else {
+					trace('continuing, ' + bussy[i] + ' is not assets or mods.');
+					continue;
+				}
+			}
+			var bean = nope.toString();
+			var bean2 = bean.replace(',', '/');
+			var bean3 = bean2.replace('[', '');
+			var bean4 = bean3.replace(']', '');
+			musicInputBox.text = bean4;
+			FlxG.sound.music.loadEmbedded(bean4);
 			trace('amogus');
 			_file = null;
 			return;

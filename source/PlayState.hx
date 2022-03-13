@@ -66,6 +66,28 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
+	static final BASE_SONG_LIST:Array<String> = [
+		'tutorial',
+		'bopeebo',
+		'fresh',
+		'dad-battle',
+		'eggnog',
+		'fresh',
+		'high',
+		'blammed',
+		'cocoa',
+		'milf',
+		'monster',
+		'philly-nice',
+		'pico',
+		'roses',
+		'senpai',
+		'satin-panties',
+		'south',
+		'spookeez',
+		'thorns',
+		'winter-horrorland' // TEST IS LEFT OUT AS I HAVE A MOD DIALOGUE FOR IT. LOL
+	];
 	static inline final WEEK4 = 'week4';
 
 	public static var STRUM_X = 42;
@@ -337,6 +359,28 @@ class PlayState extends MusicBeatState
 				if (swagNoteGlitch.active) swagNoteGlitch.active = false;
 			}
 		});
+	}
+
+	function checkForDialogue(SongName:String) {
+		if (FileSystem.exists('assets/data/' + SongName + '/dialogue.json')) {
+			dialogueJson = parseDiaJson('assets/data/' + SongName + '/dialogue.json');
+			startDialogue(dialogueJson);
+		} else if (FileSystem.exists('mods/data/' + SongName + '/dialogue.json')) {
+			dialogueJson = parseDiaJson('mods/data/' + SongName + '/dialogue.json');
+			startDialogue(dialogueJson);
+		} else if (FileSystem.exists('mods/' + Paths.currentModDirectory + '/data/' + SongName + '/dialogue.json')) {
+			dialogueJson = parseDiaJson('mods/' + Paths.currentModDirectory + '/data/' + SongName + '/dialogue.json');
+			startDialogue(dialogueJson);
+		} else {
+			trace('no dialogue for ' + SongName + ' oh well');
+			startCountdown();
+		}
+	}
+
+	function parseDiaJson(input:String):DialogueFile {
+		var bussy = cast Json.parse(sys.io.File.getContent(input));
+		trace(bussy);
+		return bussy;
 	}
 
 	override public function create()
@@ -949,7 +993,6 @@ class PlayState extends MusicBeatState
 
 		coconut = new Coconut(0, -500, boyfriend.curCharacter);
 		coconut.visible = false;
-		coconut.cameras = [camOther];
 		add(coconut);
 		
 		var camPos:FlxPoint = new FlxPoint(gf.getGraphicMidpoint().x, gf.getGraphicMidpoint().y);
@@ -1326,7 +1369,7 @@ class PlayState extends MusicBeatState
 						dialogueJson = cast Json.parse(sys.io.File.getContent('mods/data/cheating/dialogue.json'));
 						startDialogue(dialogueJson);
 				default:
-					startCountdown();
+					checkForDialogue(PlayState.SONG.song.toLowerCase());
 			}
 			seenCutscene = true;
 		} else {
@@ -3118,17 +3161,17 @@ class PlayState extends MusicBeatState
 				coconut.visible = true;
 				if (eventDadStuf.contains(value1)) {
 					coconut.x = dad.getGraphicMidpoint().x;
-					coconut.y = dad.getGraphicMidpoint().y + 1000;
+					coconut.y = dad.getGraphicMidpoint().y - 1000;
 					coconut.targetY = dad.getGraphicMidpoint().y;
 					coconut.target = 'Dad';
 				} else if (eventGfStuf.contains(value1)) {
 					coconut.x = gf.getGraphicMidpoint().x;
-					coconut.y = gf.getGraphicMidpoint().y + 1000;
+					coconut.y = gf.getGraphicMidpoint().y - 1000;
 					coconut.targetY = gf.getGraphicMidpoint().y;
 					coconut.target = 'GF';
 				} else {
 					coconut.x = boyfriend.getGraphicMidpoint().x;
-					coconut.y = boyfriend.getGraphicMidpoint().y + 1000;
+					coconut.y = boyfriend.getGraphicMidpoint().y - 1000;
 					coconut.targetY = boyfriend.getGraphicMidpoint().y;
 					coconut.target = 'BF';
 				}

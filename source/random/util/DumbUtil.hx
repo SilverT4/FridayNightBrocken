@@ -13,12 +13,13 @@ using StringTools;
     @since Emo Engine 0.1.2 (March 2022)*/
 class DumbUtil {
     // var PlayStation:PlayState;
-    static var BitchOne:Boyfriend;
-    static var BitchTwo:Character;
+    // static var BitchOne:Boyfriend;
+    // static var BitchTwo:Character;
 
     public static function getBfAnim(AnimName:String):Bool {
         var PlayStation:PlayState = PlayState.instance;
-        BitchOne = PlayStation.boyfriend;
+        var BitchOne:Boyfriend = PlayStation.boyfriend;
+        trace(BitchOne.animation.getByName(AnimName));
         if (BitchOne.animation.getByName(AnimName) != null) {
             return true;
         } else return false;
@@ -26,7 +27,8 @@ class DumbUtil {
 
     public static function getGfAnim(AnimName:String):Bool {
         var PlayStation:PlayState = PlayState.instance;
-        BitchTwo = PlayStation.gf;
+        var BitchTwo:Character = PlayStation.gf;
+        trace(BitchTwo.animation.getByName(AnimName));
         if (BitchTwo.animation.getByName(AnimName) != null) {
             return true;
         } else return false;
@@ -34,7 +36,8 @@ class DumbUtil {
 
     public static function getDaddyAnim(AnimName:String):Bool {
         var PlayStation:PlayState = PlayState.instance;
-        BitchTwo = PlayStation.dad;
+        var BitchTwo:Character = PlayStation.dad;
+        trace(BitchTwo.animation.getByName(AnimName));
         if (BitchTwo.animation.getByName(AnimName) != null) {
             return true;
         } else return false;

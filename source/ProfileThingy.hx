@@ -65,6 +65,7 @@ class PrelaunchProfileState extends FlxState {
         //trace(testvar);
         #end */
         DevinsDateStuff.getHour();
+        //trace(Sys.environment());
     }
 
     override function create() {
@@ -197,6 +198,7 @@ class DebugProfileSubstate extends FlxSubState {
         dumbthing = sys.io.File.getContent('battery.txt');
         var ass = dumbthing.split('\r\n');
         wmicOut = ass[1]; */
+        trace(WindowsUtils.getCurrentWinNTVersion());
         wmicOut = WindowsUtils.getRemainingBattery();
         sex = new FlxUITooltipManager();
         battery = new FlxText(0, 0, FlxG.width, wmicOut + "%", 24);
@@ -219,6 +221,7 @@ class DebugProfileSubstate extends FlxSubState {
         add(penis.msgDisplay);
         add(skipSaves);
         add(backButton);
+        FlxG.sound.playMusic('mods/music/dooDooFeces.ogg');
     }
 
     override function update(elapsed:Float) {
@@ -251,6 +254,7 @@ class DebugProfileSubstate extends FlxSubState {
     function useTest() {
         TitleState.currentProfile = cast Json.parse(testProfile);
         FlxG.sound.play(Paths.sound('menuConfirm'));
+        FlxG.sound.music.stop();
         FlxG.sound.music = null;
         new FlxTimer().start(0.7, function(tmr:FlxTimer)
 			{
@@ -268,6 +272,7 @@ class DebugProfileSubstate extends FlxSubState {
                     FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
                     {
                         FlxG.sound.music.stop();
+                        FlxG.sound.music = null;
                         FlxG.switchState(new TitleState());
                     });
                 });
