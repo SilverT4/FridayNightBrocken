@@ -96,7 +96,7 @@ class WindowsUtils {
         infoArray.push(getCurrentUser());
         infoArray.push(getPCMemoryAsString());
         trace(infoArray[0] + '\n' + infoArray[1] + '\n' + infoArray[2] + '\n' + infoArray[3]);
-        return infoArray[0] + '\n' + infoArray[1] + '\n' + infoArray[2] + '\n' + infoArray[3];
+        return infoArray.join('\n');
     }
 
     public static function copyExternalFileToGameFolder(file:String, path:String) {
