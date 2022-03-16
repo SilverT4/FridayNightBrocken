@@ -61,7 +61,7 @@ class DialogueEditorState extends MusicBeatState
 			dialogue: [
 				copyDefaultLine()
 			],
-			dialogueMusic: 'assets/shared/music/breakfast'
+			dialogueMusic: 'assets/shared/music/breakfast.ogg'
 		};
 		
 		character = new DialogueCharacter();
@@ -304,6 +304,9 @@ class DialogueEditorState extends MusicBeatState
 			} else if(sender == lineInputText) {
 				reloadText(0);
 				dialogueFile.dialogue[curSelected].text = lineInputText.text;
+			} else if(sender == musicInputBox) {
+				trace('bussy');
+				dialogueFile.dialogueMusic = musicInputBox.text;
 			}
 		} else if(id == FlxUINumericStepper.CHANGE_EVENT && (sender == speedStepper)) {
 			reloadText(speedStepper.value);
@@ -517,12 +520,10 @@ class DialogueEditorState extends MusicBeatState
 					continue;
 				}
 			}
-			var bean = nope.toString();
-			var bean2 = bean.replace(',', '/');
-			var bean3 = bean2.replace('[', '');
-			var bean4 = bean3.replace(']', '');
-			musicInputBox.text = bean4;
-			FlxG.sound.music.loadEmbedded(bean4);
+			var bean = nope.toString().replace(',', '/').replace('[', '').replace(']', '');
+			musicInputBox.text = bean;
+			FlxG.sound.music.loadEmbedded(bean);
+			FlxG.sound.music.looped = true; // for some reason loading a new asset resets loop variable
 			trace('amogus');
 			_file = null;
 			return;
@@ -555,6 +556,7 @@ class DialogueEditorState extends MusicBeatState
 					dialogueFile = loadedDialog;
 					if (loadedDialog.dialogueMusic != null) {
 						FlxG.sound.music.loadEmbedded(loadedDialog.dialogueMusic);
+						FlxG.sound.music.looped = true;
 					}
 					changeText();
 					_file = null;

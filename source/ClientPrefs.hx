@@ -50,6 +50,8 @@ class ClientPrefs {
 		'fpScenesRepeat' => false
 	];
 
+	public static var loadChartAutosave:Bool = false;
+
 	public static var comboOffset:Array<Int> = [0, 0, 0, 0];
 	public static var keSustains:Bool = false; //i was bored, okay?
 	
@@ -127,6 +129,7 @@ class ClientPrefs {
 		FlxG.save.data.smallScreenFix = smallScreenFix;
 		FlxG.save.data.preloadStates = preloadStates;
 		FlxG.save.data.skipCharaSelect = skipCharaSelect;
+		FlxG.save.data.loadChartAutosave = loadChartAutosave;
 		#if debug
 		FlxG.save.data.showPCInfoMM = showPCInfoMM;
 		#end
@@ -259,7 +262,9 @@ class ClientPrefs {
 			showPCInfoMM = FlxG.save.data.showPCInfoMM;
 		}
 		#end
-		
+		if (FlxG.save.data.loadChartAutosave != null) {
+			loadChartAutosave = FlxG.save.data.loadChartAutosave;
+		}
 		// flixel automatically saves your volume!
 		if(FlxG.save.data.volume != null)
 		{

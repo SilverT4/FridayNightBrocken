@@ -351,7 +351,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 		descText.y += 270;
 
 		sdOption = optionsArray[curSelected].variable;
-		dumb = cast Json.parse(Paths.snowdriftChatter(sdOption));
+		dumb = cast Json.parse(Paths.snowdriftChatter(sdOption)); // EACH JSON SHOULD BE NAMED AS THE VARIABLE IS!!
 
 		var bullShit:Int = 0;
 

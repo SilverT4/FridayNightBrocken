@@ -14,23 +14,30 @@ using StringTools;
 
 /**a few utilities for Windows*/
 class WindowsUtils {
+    static inline final POWERSHELL = "powershell";
+
+    static inline final SETX_CMD = "setx";
+
+    static inline final WMI_BATTERY = "$(Get-WmiObject Win32_Battery).EstimatedChargeRemaining";
+
     private static var exceptionMessages:Map<Int, String> = [
         0 => "This is most likely a result of the file requested by the state calling this function NOT existing.",
     ];
     public static function getRemainingBattery() {
-        var intThing:Int;
-        new Process("powershell", ["-command", "(Get-WmiObject Win32_Battery).EstimatedChargeRemaining", "> .\\battery.txt"]);
-                if (FileSystem.exists("./battery.txt")) {
-                    var penis = File.getContent("./battery.txt");
+        // var penis:String = '';
+        new Process(POWERSHELL, ["-command '", SETX_CMD, WMI_BATTERY, "'"]);
+                /*if (FileSystem.exists("./battery.txt")) {
+                    penis = File.getContent("./battery.txt");
                     trace(penis);
                     //var semen = penis.split(' ');
-                    intThing = Std.parseInt(penis);
-                    trace(intThing);
+                    //intThing = Std.parseInt(penis);
+                    //trace(intThing);
                 } else {
                     trace('*crashes cutely*');
                     throw new Exception('Something went wrong, please check the console.\n\n' + exceptionMessages[0]);
-                }
-        return intThing;
+                } */
+                trace("-command '", SETX_CMD, WMI_BATTERY, "'");
+        return Sys.getEnv("CURBATTERY");
     }
     public static function getCurrentUser():String {
         /*new Process("whoami", ["> user.txt"]);
@@ -52,7 +59,7 @@ class WindowsUtils {
     public static function getCurrentWinNTVersion() {
         // new Process("powershell", ["-command", "(Get-WmiObject -class Win32_OperatingSystem).Version", ">" + Sys.getCwd() + "ver.txt"]);
         // new Process("powershell", ["-command", "(Get-WmiObject -class Win32_OperatingSystem)"]);
-        new Process("powershell", ["-command", "systeminfo /fo CSV | ConvertFrom-Csv | select \"OS Version\", \"OS Name\" | Format-List > ver.txt"]);
+        /*new Process("powershell", ["-command", "systeminfo /fo CSV | ConvertFrom-Csv | select \"OS Version\", \"OS Name\" | Format-List > ver.txt"]);
         if (FileSystem.exists('./ver.txt')) {
             var banana = File.getContent('ver.txt');
             trace(banana);
@@ -64,10 +71,11 @@ class WindowsUtils {
             // return jesus.toString();
         } else {
             throw new Exception('Something went wrong, please check the console.');
-        }
+        } */
+        return knownWindowsNTVersions[Sys.getEnv("NT_VERSION")];// TO SEE THIS WORK, CREATE A *SYSTEM ENVIRONMENT VARIABLE* ON YOUR COMPUTER NAMED "NT_VERSION" AND USE ANY VALUE ON THE LEFT SIDE OF THE MAP ABOVE
     }
     public static function getPCMemoryAsString():String {
-        new Process("powershell", ["-command", "(Get-WmiObject Win32_PhysicalMemory).Capacity", "> mem.txt"]);
+        /*new Process("powershell", ["-command", "(Get-WmiObject Win32_PhysicalMemory).Capacity", "> mem.txt"]);
         if (FileSystem.exists('./mem.txt')) {
             var initial = File.getContent('./mem.txt');
             //var cum = initial.split('\r\n');
@@ -76,7 +84,10 @@ class WindowsUtils {
             return Math.round(capacityFromWmic / 1073741824) + "GB (approx.)";
         } else {
             throw new Exception("Something went wrong, please check the console.\n\n" + exceptionMessages[0]);
-        }
+        } */
+        var cum:Float = Std.parseFloat(Sys.getEnv("SYSMEMORY"));
+        if (Math.round(cum / 1073741824) < 1) return Math.round(cum / 1048576) + "MB (approx.)\nHOW TF ARE YOU RUNNING THIS??";
+        else return Math.round(cum / 1073741824) + "GB (approx.)"; // TO SEE THIS WORK, CREATE A *LOCAL ENVIRONMENT VARIABLE* ON YOUR PC NAMED "SYSMEMORY" AND USE THIS COMMAND IN POWERSHELL TO GET ITS VALUE: (Get-WmiObject Win32_PhysicalMemory).Capacity
     }
     public static function getBasics():String {
         var infoArray:Array<String> = [];
@@ -90,5 +101,14 @@ class WindowsUtils {
 
     public static function copyExternalFileToGameFolder(file:String, path:String) {
         new Process("cmd", ["/c copy " + file + " " + path]);
+    }
+
+    public static function elevateProgram(Command:String, Args:Array<String>) {
+        trace('ATTEMPTING TO RUN ' + Command + ' AS ADMIN!!');
+        var RunArgs = Args;
+        RunArgs.insert(0, '-command start -verb runas -file ' + Command);
+        RunArgs.insert(1, '-args');
+        new Process(POWERSHELL, RunArgs);
+        trace('I AM NOT RESPONSIBLE IF YOUR COMPUTER HAS AN ANTIVIRUS THAT QUARANTINES THE GAME AFTER THIS FUNCTION IS RUN!!');
     }
 }

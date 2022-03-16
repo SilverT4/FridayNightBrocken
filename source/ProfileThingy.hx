@@ -167,7 +167,7 @@ class DebugProfileSubstate extends FlxSubState {
     var bussy:Date;
     var shart:String;
     var cum:FlxUITooltip;
-    var wmicOut:Int;
+    var wmicOut:String = '';
     var dumbthing:String;
     var sex:FlxUITooltipManager;
     var penisTest:Bool = false;

@@ -1460,27 +1460,8 @@ class PlayState extends MusicBeatState
 					boyfriendGroup.add(newBoyfriend);
 					startCharacterPos(newBoyfriend);
 					newBoyfriend.alpha = 0.00001;
-						switch (newCharacter) {
-							case 'bf-car':
-								GameOverSubstate.characterName = 'bf';
-							case 'henry-car':
-								GameOverSubstate.characterName = 'henry';
-							case 'blitz-car':
-								GameOverSubstate.characterName = 'blitz';
-							case 'bf-pixel', 'nt-pixel': 
-								GameOverSubstate.characterName = 'bf-pixel-dead';
-							#if FARTLOG
-							case 'bf-holiday-car', 'bf-plum': // again, holiday mod is gitignored. uncomment this if you add it back in after git cloning
-								GameOverSubstate.characterName = 'bf-holiday';
-							#end
-							case 'steelwolf':
-									GameOverSubstate.endSoundName = 'gameOverEnd-burger';
-									GameOverSubstate.loopSoundName = 'gameOver-burger';
-									GameOverSubstate.characterName = newCharacter;
-							default:
-								trace('lmao');
-								GameOverSubstate.characterName = newCharacter;
-						}
+					bfOverride = newCharacter;
+					setGameOverShit();
 					startCharacterLua(newBoyfriend.curCharacter);
 				}
 
@@ -1645,6 +1626,10 @@ class PlayState extends MusicBeatState
 			psychDialogue.nextDialogueThing = startNextDialogue;
 			psychDialogue.skipDialogueThing = skipDialogue;
 			psychDialogue.cameras = [camHUD];
+			if (dialogueFile.dialogueMusic != null) {
+				FlxG.sound.playMusic(dialogueFile.dialogueMusic, 0);
+				FlxG.sound.music.fadeIn(1, 0, 0.8);
+			}
 			add(psychDialogue);
 		} else {
 			FlxG.log.warn('Your dialogue file is badly formatted!');
@@ -2216,14 +2201,18 @@ class PlayState extends MusicBeatState
 			}
 			else
 			{
-				if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride)) {
-					babyArrow.texture = Paths.image('NT_NOTE_ASSET');
-				}
 				babyArrow.alpha = targetAlpha;
 			}
 
 			if (player == 1)
 			{
+				if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride)) {
+					@:privateAccess
+					babyArrow.set_texture('NT_NOTE_ASSETS');
+				} else if (OOTIS.check([SONG.player1, bfOverride], 'meta') || OOTIS.check([SONG.player1, bfOverride], 'bf')) {
+					@:privateAccess
+					babyArrow.set_texture('OC_NOTES_1');
+				}
 				playerStrums.add(babyArrow);
 			}
 			else
@@ -2571,7 +2560,7 @@ class PlayState extends MusicBeatState
 					FlxG.sound.music.pause();
 					vocals.pause();
 				}
-				openSubState(new FunnySandwich(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				openSubState(new random.dumb.TheNewSandwich(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 				//}
 		
 				#if desktop
@@ -2856,6 +2845,11 @@ class PlayState extends MusicBeatState
 					strumY = playerStrums.members[daNote.noteData].y;
 					strumAngle = playerStrums.members[daNote.noteData].angle;
 					strumAlpha = playerStrums.members[daNote.noteData].alpha;
+					if (OOTIS.check([SONG.player1, bfOverride], 'meta') || OOTIS.check([SONG.player1, bfOverride], 'bf')) {
+						@:privateAccess daNote.reloadNote('', 'OC_NOTES_1');
+					} else if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride)) {
+						@:privateAccess daNote.reloadNote('', 'NT_NOTE_ASSETS');
+					}
 				} else {
 					strumX = opponentStrums.members[daNote.noteData].x;
 					strumY = opponentStrums.members[daNote.noteData].y;
@@ -3043,13 +3037,13 @@ class PlayState extends MusicBeatState
 		DiscordClient.changePresence("Fucked Up... BAD", null, null, true);
 		#end
 	}
-	function openChartEditor()
+	public function openChartEditor()
 	{
 		persistentUpdate = false;
 		paused = true;
 		cancelMusicFadeTween();
 		CustomFadeTransition.nextCamera = camOther;
-		MusicBeatState.switchState(new PreloadChartEditor());
+		MusicBeatState.switchState(new editors.ChartingState());
 		chartingMode = true;
 
 		#if desktop
@@ -4525,7 +4519,7 @@ class PlayState extends MusicBeatState
 	function fastCarDrive()
 	{
 		//trace('Car drive');
-		FlxG.sound.play(Paths.soundRandom('carPass', 0, 1), 0.7);
+		FlxG.sound.play(Paths.soundRandom('carPass', 0, 1, WEEK4), 0.7);
 
 		fastCar.velocity.x = (FlxG.random.int(170, 220) / FlxG.elapsed) * 3;
 		fastCarCanDrive = false;

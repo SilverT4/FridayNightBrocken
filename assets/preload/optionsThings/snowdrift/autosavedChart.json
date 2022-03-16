@@ -1,0 +1,54 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Hey there!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "So sorry to interrupt!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "I noticed you had a chart autosaved. I dunno what happened before, whether your game had been closed, your battery had died,"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "or what, but that's none of my concern... Anyway, I've gone ahead and loaded that autosave for you."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Hope that helps you get back to what you were doing!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "And hey. If you want me to no longer do this in the future, come let me know in the Options menu."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Anyway, I'll get out of your way now!"
+		}
+	],
+	"dialogueMusic": ""
+}

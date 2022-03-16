@@ -36,7 +36,7 @@ using StringTools;
  */
 class OptionsStateExtra extends MusicBeatState
 {
-	var options:Array<String> = ['Visit Snowdrift', 'Test Dialogue', 'Bonk Test', 'Reset Save Data'];
+	var options:Array<String> = ['Visit Snowdrift', 'Test Dialogue', 'Bonk Test', 'Hide Characters', 'Reset Save Data'];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -55,6 +55,8 @@ class OptionsStateExtra extends MusicBeatState
                 LoadingState.loadAndSwitchState(new random.dumb.DialogueTestingState());
 			case 'Bonk Test':
 				LoadingState.loadAndSwitchState(new random.dumb.BonkTest());
+			case 'Hide Characters':
+				openSubState(new options.HiddenCharactersSubstate());
 		}
 	}
 

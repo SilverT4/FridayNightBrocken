@@ -48,6 +48,12 @@ class SnowdriftStuff extends BaseOptionsMenu {
         false);
         addOption(option);
         #end
+        var option:Option = new Option('Autoload chart autosave',
+        'Press H to know more about this!',
+        'loadChartAutosave',
+        'bool',
+        true);
+        addOption(option);
         inSnowdriftMenu = true;
         super();
     }
@@ -57,8 +63,8 @@ class SnowdriftStuff extends BaseOptionsMenu {
             inDialogue = true;
             super.startDialogue(dumb);
         }
-        if (FlxG.sound.music.volume < 1) {
-            FlxG.sound.music.volume = 1;
+        if (FlxG.sound.music.volume < 0.8) {
+            FlxG.sound.music.volume = 0.8;
             FlxG.sound.playMusic(Paths.modsMusic('mktFriends'));
         }
 

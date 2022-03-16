@@ -1,0 +1,89 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "What's up?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "You're wondering what the chart autosave option is for?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "I'll explain to the best of my abilities."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "By default, Psych Engine saves your work when you press ENTER, ESCAPE, or BACK-\\nSPACE in the chart editor. This autosave"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "is stored in your game save data, which means if you click the Load Autosave button in the chart editor, your previous work gets"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "loaded and you can resume from where you left off."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "If you have this option enabled, though, I'll do some magic to get your autosave loaded when you open the chart editor from the"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Editors menu, as long as you haven't played a song before then."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "If you play a song before opening the Editors menu, this option will be ignored regardless and your last played song will be loaded"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "in the editor. A similar thing also applies if you have no autosaved chart and you're opening the chart editor for the first time."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Anyway, I hope this option may come in handy if you use the chart editor a lot!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Let me know if you have any other questions."
+		}
+	],
+	"dialogueMusic": ""
+}
