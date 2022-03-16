@@ -522,6 +522,7 @@ class DialogueEditorState extends MusicBeatState
 			}
 			var bean = nope.toString().replace(',', '/').replace('[', '').replace(']', '');
 			musicInputBox.text = bean;
+			dialogueFile.dialogueMusic = bean;
 			FlxG.sound.music.loadEmbedded(bean);
 			FlxG.sound.music.looped = true; // for some reason loading a new asset resets loop variable
 			trace('amogus');
