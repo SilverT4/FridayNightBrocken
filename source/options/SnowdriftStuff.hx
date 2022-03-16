@@ -27,12 +27,12 @@ class SnowdriftStuff extends BaseOptionsMenu {
 			'bool', //Variable type
 			false); //Default value
 		addOption(option);
-        var option:Option = new Option('Preload certain states', //Name
+        /*var option:Option = new Option('Preload certain states', //Name
 			'Press H to know more about this!', //Description
 			'preloadStates', //Save data variable name
 			'bool', //Variable type
 			false); //Default value
-		addOption(option);
+		addOption(option); */
         var option:Option = new Option('Skip Character Select', //Name
 			'Press H to know more about this!', //Description
 			'skipCharaSelect', //Save data variable name

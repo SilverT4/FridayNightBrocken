@@ -34,6 +34,20 @@
 			"boxState": "normal",
 			"expression": "awkward",
 			"text": "I'm so sorry, I don't know what this option does! This is probably just me being forgetful. Don't worry, I'll try and figure it out! Soon..."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "Although..."
+		},
+		{
+			"speed": 0.03,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "If you check the GitHub Wiki, you may find some info on this option. I usually try to read it myself from time to time!"
 		}
 	]
 }
