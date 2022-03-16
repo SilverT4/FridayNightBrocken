@@ -631,6 +631,7 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
+				case 'chart': key = PlayState.instance.getControl('debug_1');
 				case 'space': key = FlxG.keys.justPressed.SPACE;//an extra key for convinience
 			}
 			return key;
@@ -691,6 +692,22 @@ class FunkinLua {
 			PlayState.instance.persistentUpdate = false;
 			PauseSubState.restartSong(skipTransition);
 		});
+
+		Lua_helper.add_callback(lua, "switchSong", function(songName:String, ?difficulty:String) {
+			if (difficulty != null) {
+				PlayState.SONG = Song.loadFromJson(songName + '-' + difficulty, songName);
+			} else {
+				PlayState.SONG = Song.loadFromJson(songName, songName);
+			}
+			PauseSubState.restartSong(false);
+		});
+
+		Lua_helper.add_callback(lua, "changeDifficulty", function(difficulty:String) {
+			var bean = PlayState.SONG.song.toLowerCase();
+			PlayState.SONG = Song.loadFromJson(bean + '-' + difficulty, bean);
+			PauseSubState.restartSong(false);
+		});
+		
 		Lua_helper.add_callback(lua, "exitSong", function(skipTransition:Bool) {
 			if(skipTransition)
 			{

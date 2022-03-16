@@ -129,8 +129,9 @@ class MasterEditorMenu extends MusicBeatState
 				case 'Dialogue Editor':
 					LoadingState.loadAndSwitchState(new DialogueEditorState(), false);
 				case 'Chart Editor'://felt it would be cool maybe
-					if (FlxG.save.data.autosave != null && PlayState.SONG == null) {
+					if (ClientPrefs.loadChartAutosave && FlxG.save.data.autosave != null && PlayState.SONG == null) {
 						PlayState.SONG = Song.parseJSONshit(FlxG.save.data.autosave);
+						//ChartingState.loadedAutoSaveFromMEM = true;
 					}
 					LoadingState.loadAndSwitchState(new ChartingState());
 				case 'Unlock Editor'://just puttin this here for the future

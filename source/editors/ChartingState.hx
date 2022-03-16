@@ -676,11 +676,11 @@ class ChartingState extends MusicBeatState
 		tab_group_song.add(new FlxText(noteSkinInputText.x, noteSkinInputText.y - 15, 0, 'Note Texture:'));
 		tab_group_song.add(new FlxText(noteSplashesInputText.x, noteSplashesInputText.y - 15, 0, 'Note Splashes Texture:'));
 		tab_group_song.add(player2DropDown);
-		tab_group_song.add(player2Button);
+		//tab_group_song.add(player2Button);
 		tab_group_song.add(player3DropDown);
-		tab_group_song.add(player3Button);
+		//tab_group_song.add(player3Button);
 		tab_group_song.add(player1DropDown);
-		tab_group_song.add(player1Button);
+		//tab_group_song.add(player1Button);
 		tab_group_song.add(stageDropDown);
 
 		UI_box.addGroup(tab_group_song);
@@ -694,7 +694,23 @@ class ChartingState extends MusicBeatState
 	var check_changeBPM:FlxUICheckBox;
 	var stepperSectionBPM:FlxUINumericStepper;
 	var check_altAnim:FlxUICheckBox;
-
+	/**DEBUG CONSOLE SHIT**/
+	public function resetCharacters(boyfriend:String, girlfriend:String, dad:String) {
+		_song.player1 = boyfriend;
+		_song.player3 = girlfriend;
+		_song.player2 = dad;
+		_song.gfVersion = girlfriend;
+		MusicBeatState.resetState();
+	}
+	/**DEBUG CONSOLE SHIT**/
+	public function resetSong(songName:String, ?difficulty:String) {
+		if (difficulty != null) {
+			PlayState.SONG = Song.loadFromJson(songName, songName);
+		} else {
+			PlayState.SONG = Song.loadFromJson(songName + '-' + difficulty, songName);
+		}
+		MusicBeatState.resetState();
+	}
 	var sectionToCopy:Int = 0;
 	var notesCopied:Array<Dynamic>;
 
@@ -1595,19 +1611,21 @@ class ChartingState extends MusicBeatState
 			}
 		}
 
-		if (inDialogue) {
+		if (loadedAutoSaveFromMEM) {
+			if (inDialogue) {
 			for (asset in blockWhileInDialogue) {
 				if (asset != null && asset.active) {
 					asset.active = false;
 				}
 			}
-		} else {
-			for (asset in blockWhileInDialogue) {
-				if (asset != null && !asset.active) {
-					asset.active = true;
+		 } else {
+				for (asset in blockWhileInDialogue) {
+					if (asset != null && !asset.active) {
+						asset.active = true;
+					}
 				}
 			}
-		}
+		} 
 
 		if(!blockInput) {
 			for (stepper in blockPressWhileTypingOnStepper) {

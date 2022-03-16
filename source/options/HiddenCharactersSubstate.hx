@@ -27,7 +27,7 @@ class HiddenCharactersSubstate extends MusicBeatSubstate {
     public function new() {
         if (FlxG.save.data.hideCharList != null) {
             trace('found existing list!');
-            hiddenCharList = FlxG.save.data.hideCharList;
+            hiddenCharList = FlxG.save.data.hideCharList; // makes it easier to modify after first time
         }
         if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
         super();
