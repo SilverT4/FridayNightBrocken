@@ -1,5 +1,6 @@
 package;
 
+import random.dumb.FNBUINotificationBar;
 import random.util.DumbUtil;
 #if desktop
 import Discord.DiscordClient;
@@ -115,6 +116,8 @@ class PlayState extends MusicBeatState
 	var areYaHavinFun:FlxSound;
 	var coconut:Coconut;
 	public static var snowdriftDiedCheating:Bool = false;
+	public var weHaveNotifications:Bool = false;
+	public var modchartNotifications:Map<String, ModchartNotification> = new Map<String, ModchartNotification>();
 
 	//event variables
 	private var isCameraOnForcedPos:Bool = false;
@@ -307,6 +310,8 @@ class PlayState extends MusicBeatState
 		'ralph-LowPower'
 	];
 
+	var notifBarLua:FNBUINotificationBar;
+
 	#if desktop
 	// Discord RPC variables
 	var storyDifficultyText:String = "";
@@ -360,7 +365,20 @@ class PlayState extends MusicBeatState
 			}
 		});
 	}
+	public function showLuaNotification(name:String, length:Int) {
+		if (notifBarLua != null) {
+			notifBarLua.changeMsg(modchartNotifications[name].notifText);
+			notifBarLua.show(length);
+		}
+	}
 
+	public function makeNotifBar(yPos:Float) {
+		if (notifBarLua == null) {
+			notifBarLua = new FNBUINotificationBar('PLACEHOLDER!!', yPos);
+			notifBarLua.cameras = [camOther];
+			add(notifBarLua);
+		}
+	}
 	function checkForDialogue(SongName:String) {
 		if (FileSystem.exists('assets/data/' + SongName + '/dialogue.json')) {
 			dialogueJson = parseDiaJson('assets/data/' + SongName + '/dialogue.json');

@@ -1,3 +1,4 @@
+import random.dumb.FNBUINotificationBar;
 #if LUA_ALLOWED
 import llua.Lua;
 import llua.LuaL;
@@ -707,7 +708,7 @@ class FunkinLua {
 			PlayState.SONG = Song.loadFromJson(bean + '-' + difficulty, bean);
 			PauseSubState.restartSong(false);
 		});
-		
+
 		Lua_helper.add_callback(lua, "exitSong", function(skipTransition:Bool) {
 			if(skipTransition)
 			{
@@ -843,6 +844,26 @@ class FunkinLua {
 			leSprite.antialiasing = ClientPrefs.globalAntialiasing;
 			PlayState.instance.modchartSprites.set(tag, leSprite);
 			leSprite.active = true;
+		});
+
+		Lua_helper.add_callback(lua, "makeNotificationBar", function(y:Float) {
+			PlayState.instance.weHaveNotifications = true;
+			PlayState.instance.makeNotifBar(y);
+		});
+
+		Lua_helper.add_callback(lua, "addNotification", function(tag:String, msgText:String) {
+			var leNotif:ModchartNotification = new ModchartNotification(msgText);
+			PlayState.instance.modchartNotifications.set(tag, leNotif);
+		});
+
+		Lua_helper.add_callback(lua, "removeNotification", function(tag:String) {
+			if (PlayState.instance.modchartNotifications[tag] != null) {
+				PlayState.instance.modchartNotifications.remove(tag);
+			}
+		});
+
+		Lua_helper.add_callback(lua, "showNotification", function(tag:String, notificationLength:Int) {
+			PlayState.instance.showLuaNotification(tag, notificationLength);
 		});
 		Lua_helper.add_callback(lua, "makeAnimatedLuaSprite", function(tag:String, image:String, x:Float, y:Float) {
 			tag = tag.replace('.', '');
@@ -1844,6 +1865,14 @@ class ModchartSprite extends FlxSprite
 	//public var isInFront:Bool = false;
 }
 
+class ModchartNotification {
+	public var hasBeenUsed:Bool = false;
+	public var notifText:String = '';
+
+	public function new(text:String) {
+		notifText = text;
+	}
+}
 class ModchartText extends FlxText
 {
 	public var wasAdded:Bool = false;
