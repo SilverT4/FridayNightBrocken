@@ -85,17 +85,18 @@ class WindowsUtils {
         } else {
             throw new Exception("Something went wrong, please check the console.\n\n" + exceptionMessages[0]);
         } */
-        var cum:Float = Std.parseFloat(Sys.getEnv("SYSMEMORY"));
-        if (Math.round(cum / 1073741824) < 1) return Math.round(cum / 1048576) + "MB (approx.)\nHOW TF ARE YOU RUNNING THIS??";
-        else return Math.round(cum / 1073741824) + "GB (approx.)"; // TO SEE THIS WORK, CREATE A *LOCAL ENVIRONMENT VARIABLE* ON YOUR PC NAMED "SYSMEMORY" AND USE THIS COMMAND IN POWERSHELL TO GET ITS VALUE: (Get-WmiObject Win32_PhysicalMemory).Capacity
+        //var cum:Float = Std.parseFloat(Sys.getEnv("SYSMEMORY"));
+        if (Math.round(Std.parseFloat(Sys.getEnv("SYSMEMORY")) / 1073741824) < 1) return Math.round(Std.parseFloat(Sys.getEnv("SYSMEMORY")) / 1048576) + "MB (approx.)\nHOW TF ARE YOU RUNNING THIS??";
+        else return Math.round(Std.parseFloat(Sys.getEnv("SYSMEMORY")) / 1073741824) + "GB (approx.)"; // TO SEE THIS WORK, CREATE A *LOCAL ENVIRONMENT VARIABLE* ON YOUR PC NAMED "SYSMEMORY" AND USE THIS COMMAND IN POWERSHELL TO GET ITS VALUE: (Get-WmiObject Win32_PhysicalMemory).Capacity
     }
     public static function getBasics():String {
         var infoArray:Array<String> = [];
         infoArray.push(getCurrentWinNTVersion());
+        infoArray.push("Windows NT Version " + Sys.getEnv("NT_VERSION"));
         infoArray.push(Sys.getEnv("USERDOMAIN"));
         infoArray.push(getCurrentUser());
         infoArray.push(getPCMemoryAsString());
-        trace(infoArray[0] + '\n' + infoArray[1] + '\n' + infoArray[2] + '\n' + infoArray[3]);
+        trace(infoArray.join('\n'));
         return infoArray.join('\n');
     }
 

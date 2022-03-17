@@ -172,9 +172,28 @@ class DebugProfileSubstate extends FlxSubState {
     var sex:FlxUITooltipManager;
     var penisTest:Bool = false;
     var penis:FNBUINotificationBar;
+    /**GIRL YES!!
+    This is just an array of the weirdest GIRL YES!! comments I've ever seen on TikTok or Discord.*/
+    var girlYes:Array<String> = [
+        'GIRL YES!!! i love smelling my cousins dirty underwear, sometimes when im lucky they even have a stain of cvm on them, they turn me on',
+        'GIRLLL YESSS!!! I LOVE FINDING SPIDER EGGS AND PUTTING THEM IN MY VGYNA!! WHEN THEY HATCH THEY ALWAYS SCRATCH THE PLACES I CANT REACH!!',
+        'GIRL YES !!!! I LOVE MIXING MY CVM WITH MY SISTERS PERIOD BLOOD!!!! LOOKS LIKE A STRAWBERRY SMOOTHIE!!',
+        'GIRL YES!! I LOVE IT WHEN I FART AND IT SMELLS SO BAD THAT FLOWERS WILT AND EVERYONE AROUND ME ALMOST DIES!',
+        'GIRL YESS!!!! MY UNCLE WAS CLIPPING HIS TOENAILS AND HE LEFT THEM ALL ON THE FLOOR AND I SUCKED THEM UP THRU MY PÜŠŠŸ LIKE A VACUUM',
+        'GIRLL YESSS MY STEPBRO CAME IN THE BATHROOM AND HE STARTED “HELPING” ME WITH THE LAUNDRY I CAN STILL FEEL HIS WHITE DETERGENT ON ME',
+        'GIRL YES!! YOU\'RE INVITED TO JIAFEI\'S HAUNTED CVM HOUSE! BRING YOUR FAMILY, YOUR OCS, HELL, JUST BRING THE ENTIRE WORLD!!',
+        'GIRL YESS!!!!! I LOVE IT WHEN MR KRABS SHOVES HIS SECRET FORMULA IN MY SAFE WHERE HE CAN RELEASE THE SECRET RECIPE',
+        'Girl yes!! My stepdad takes the huggest sh!ts and before he flushed I go and drink his diarrhea!!!',
+        'Girl YESSS!!! I LOVE USING MY GRANDMAS USED PADS AS A FACE MASK IN CLASS!! EVERYONE WANTS A SNIFF!',
+        'GIRL YES! I love smelling your dad\'s used pads, they smell like heaven. I look forward to drinking the leftover period blood every month!',
+        'Girl YESS! When I saw a huge boner on my teacher I will go secretly take his boxers and smell it like a perfume!',
+        'GIRL YESSS!!! The lunch lady kidnapped me and used a scooper and shove it on me and I cvmmed and she used my cvm for a new milk for lunch!!',
+        'GIRL YESS I LIKE WHEN GRANDPA SUCK ON MY BEEF PATTY AND THEN THE DUST GETS IN AND I LICK IT UP'
+    ];
     #if debug
     public function new() {
         super();
+        trace(girlYes.length + ' girl yes comments. what am i doing in my life.');
         useTestProfile = new FlxButton(0, 0, 'Test Profile', useTest);
         skipSaves = new FlxButton(0, 0, 'Skip Saves', skipSaveLoad);
         shart = Std.string(Date.now());
@@ -205,7 +224,7 @@ class DebugProfileSubstate extends FlxSubState {
         battery.setFormat("Nintendo DS Bios Regular", 24, FlxColor.WHITE, FlxTextAlign.RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         sex.add(battery, {title: "Battery: " + wmicOut + "%", body: "This is a battery thing. If your battery is below 20%, you may want to charge."});
         #end
-        penis = new FNBUINotificationBar('amogus', 28);
+        penis = new FNBUINotificationBar(girlYes[CustomRandom.int(0, girlYes.length)], 28);
         new FlxTimer().start(3, function(tmr:FlxTimer) {
             penisTest = true;
             FlxG.sound.play(Paths.sound('information'));

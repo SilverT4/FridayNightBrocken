@@ -10,7 +10,7 @@ import Sys;
 using StringTools; //linux is a bitch idk if stringtools will work here
 
 /**a few utilities for linux*/
-class LinixUtils {
+class LinuxUtils {
     public static function getCurrentUser():String {
         return Std.string(Sys.command("whoami"));
     }
@@ -19,7 +19,7 @@ class LinixUtils {
         var bussy = File.getContent("mem.txt");
         Sys.command("rm", ["-v mem.txt"]); // we don't need mem.txt
         var shart = bussy.split('MemTotal: ');
-        var teslaCvm = shart[1].split(' ');
+        var teslaCvm = bussy.split(' ');
         switch (as) {
             case 'KB':
                 return teslaCvm[0] + "KB";
