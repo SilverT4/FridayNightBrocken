@@ -269,7 +269,7 @@ class FontColorSetter extends CvmFormatManager {
 
 /**Allows the use of Paths.*/
 class FontPathing extends CvmFormatManager {
-    var fontNameList = FileSystem.readDirectory('assets/fonts');
+    var fontNameList:Array<String> = FileSystem.readDirectory('assets/fonts');
     var modFonts = FileSystem.readDirectory('mods/' + Paths.currentModDirectory + '/fonts');
     var fontUI:FlxUITabMenu;
     var fontass:FlxUI;
@@ -277,11 +277,15 @@ class FontPathing extends CvmFormatManager {
     var fontinput:FlxUIInputText;
     public function new () {
         super();
-        if (modFonts != null && modFonts.length > 0) {
-            for (i in 0...modFonts.length) {
+        trace(fontNameList);
+        trace(modFonts);
+        fontNameList.concat(modFonts);
+        trace(fontNameList);
+        /*if (modFonts != null) {
+            if (modFonts.length > 0) for (i in 0...modFonts.length) {
                 fontNameList.push(modFonts[i]);
             }
-        }
+        } */
     }
 
     override function create() {

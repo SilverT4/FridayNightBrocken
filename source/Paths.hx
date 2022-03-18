@@ -355,6 +355,10 @@ class Paths
 		return 'assets/fonts/$key';
 	}
 
+	inline static public function fontList():Array<String> {
+		return FileSystem.readDirectory('assets/fonts');
+	}
+
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
 	{
 		#if MODS_ALLOWED
