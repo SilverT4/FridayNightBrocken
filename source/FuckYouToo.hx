@@ -10,6 +10,7 @@ import lime.app.Application;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
+import random.util.CustomRandom;
 
 class FuckYouToo extends MusicBeatSubstate {
     var fuckYouText:FlxText;
@@ -36,7 +37,11 @@ class FuckYouToo extends MusicBeatSubstate {
         PlayState.SONG.player3 = 'nogflol';
         PlayState.isStoryMode = true;
         new FlxTimer().start(3, function pussy(tmr:FlxTimer) {
-            MusicBeatState.switchState(new SelectChara());
+            if (!ClientPrefs.skipCharaSelect) MusicBeatState.switchState(new SelectChara());
+            else {
+                if (FlxG.save.data.favouriteCharacters != null && FlxG.save.data.favouriteCharacters.length >= 1) PlayState.SONG.player1 = CustomRandom.fromArray(FlxG.save.data.favouriteCharacters);
+                LoadingState.loadAndSwitchState(new PlayState());
+            }
         });
     }
 

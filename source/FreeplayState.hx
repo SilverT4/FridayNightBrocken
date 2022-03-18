@@ -349,7 +349,8 @@ class FreeplayState extends MusicBeatState
 				PlayState.SONG.player1 = 'snowcon';
 				LoadingState.loadAndSwitchState(new PlayState());
 			}else{
-				LoadingState.loadAndSwitchState(new SelectChara());
+				if (!ClientPrefs.skipCharaSelect) LoadingState.loadAndSwitchState(new SelectChara());
+				else LoadingState.loadAndSwitchState(new PlayState()); // FINALLY IMPLEMENTING THIS. LMAO
 				// LoadingState.loadAndSwitchState(new PreloadLargerCharacters(songLowercase, true));
 			}
 

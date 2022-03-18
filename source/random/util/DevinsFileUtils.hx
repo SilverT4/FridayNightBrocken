@@ -111,4 +111,8 @@ class DevinsFileUtils {
         bruh = jussyParse(commonPaths[pronSet] + PronounSet);
         return bruh;
     }
+
+    public static function parseJsonString(JSON:String):Dynamic {
+        return cast Json.parse(JSON);
+    }
 }

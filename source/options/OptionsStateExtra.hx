@@ -27,6 +27,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import lime.app.Application;
 import Controls;
+import random.util.HintMessageAsset;
 
 using StringTools;
 /**
@@ -36,10 +37,16 @@ using StringTools;
  */
 class OptionsStateExtra extends MusicBeatState
 {
-	var options:Array<String> = ['Visit Snowdrift', 'Test Dialogue', 'Bonk Test', 'Hide Characters', 'Reset Save Data'];
+	var options:Array<String> = ['Visit Snowdrift', 'Test Dialogue', 'Bonk Test', 'Hide Characters', #if debug 'Cvm Format Manager', #end 'Favourite Characters', 'Reset Save Data'];
+	var optionsOnPage:Array<String> = []; // this contains the options on the current page. lmao
+	static var startFrom:Int = 0; // FOR MULTIPLE PAGES!
+	static var endAt:Int = 5;
+	static var curPage:Int = 1;
+	var maxPages:Int = 0;
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
+	var pageHint:HintMessageAsset;
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
@@ -51,12 +58,19 @@ class OptionsStateExtra extends MusicBeatState
 				} else {
 					openSubState(new options.SnowdriftStuff());
 				}
+				// doSnowdriftSaveChecks(); // THIS'LL COME IN LATER!!
             case 'Test Dialogue':
                 LoadingState.loadAndSwitchState(new random.dumb.DialogueTestingState());
 			case 'Bonk Test':
 				LoadingState.loadAndSwitchState(new random.dumb.BonkTest());
 			case 'Hide Characters':
 				openSubState(new options.HiddenCharactersSubstate());
+			#if debug
+			case 'Cvm Format Manager':
+				openSubState(new options.CvmFormatManager());
+			#end
+			case 'Favourite Characters':
+				LoadingState.loadAndSwitchState(new options.FavouriteCharas());
 		}
 	}
 
@@ -67,7 +81,7 @@ class OptionsStateExtra extends MusicBeatState
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
-
+		if (maxPages == 0) doMaxPages();
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFa6d388;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -75,15 +89,27 @@ class OptionsStateExtra extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
+		if (options.length >= 6) {
+			trace('penis');
+			#if debug
+			FlxG.log.warn('I LOVE LEAN!!!!!');
+			#end
+			pageHint = new HintMessageAsset('Page ' + curPage + ' of ' + maxPages, 24, ClientPrefs.smallScreenFix);
+			add(pageHint);
+			add(pageHint.ADD_ME);
+		}
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
-
-		for (i in 0...options.length)
+		for (i in startFrom...endAt) {
+			optionsOnPage.push(options[i]);
+		}
+		for (i in startFrom...endAt)
 		{
 			var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
+			trace(optionText.text);
 			optionText.screenCenter();
-			optionText.y += (100 * (i - (options.length / 2))) + 50;
+			optionText.y += (100 * (i - (optionsOnPage.length / 2))) + 50;
 			grpOptions.add(optionText);
 		}
 
@@ -102,7 +128,21 @@ class OptionsStateExtra extends MusicBeatState
 		super.closeSubState();
 		ClientPrefs.saveSettings();
 	}
-
+	function doMaxPages() {
+		var curOpts:Int = 1;
+		var optsPerPage:Int = 6;
+		var optsInGroup:Int = 0;
+		var pageCount:Int = 1;
+		for (i in 0...options.length) {
+			if (i > 0) curOpts++;
+			optsInGroup++;
+			if (optsInGroup == optsPerPage) {
+				pageCount += 1;
+				optsInGroup = 0;
+			}
+		}
+		maxPages = pageCount;
+	}
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
@@ -111,6 +151,14 @@ class OptionsStateExtra extends MusicBeatState
 		}
 		if (controls.UI_DOWN_P) {
 			changeSelection(1);
+		}
+
+		if (controls.UI_RIGHT_P) {
+			doPageChecks(1);
+		}
+
+		if (controls.UI_LEFT_P) {
+			doPageChecks(-1);
 		}
 
 		if (controls.BACK) {
@@ -130,8 +178,8 @@ class OptionsStateExtra extends MusicBeatState
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)
-			curSelected = options.length - 1;
-		if (curSelected >= options.length)
+			curSelected = optionsOnPage.length - 1;
+		if (curSelected >= optionsOnPage.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
@@ -150,5 +198,48 @@ class OptionsStateExtra extends MusicBeatState
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
+	}
+
+	function doPageChecks(PageChange:Int = 0) {
+		if (options.length >= 6) {
+			switch(PageChange) {
+				case 1:
+					trace('next page');
+					startFrom += 6;
+					endAt += 6; // SHOULD BE STARTFROM = 6, ENDAT = 11 FOR SECOND PAGE.
+					if (startFrom > options.length - 6) {
+						startFrom = 0;
+						endAt = 5; // RESETS
+					}
+					if (startFrom < options.length - 6 && endAt > options.length) {
+						endAt = options.length;
+					}
+					curPage += 1;
+				case -1:
+					trace('prev page');
+					startFrom -= 6;
+					endAt -= 6;
+					if (startFrom < options.length) {
+						startFrom = options.length - 6;
+						endAt = options.length; // RESETS TO LAST PAGE.
+					}
+					if (curPage < 1) {
+						curPage = maxPages;
+					}
+			}
+			MusicBeatState.resetState(); // TO RESET STATE!
+		}
+	}
+
+	function doSnowdriftSaveChecks() {
+		trace('have we unlocked anything new??');
+		switch(FlxG.save.data.snowdriftVisitCount) {
+			case 0:
+				trace('gotta do intro!');
+				LoadingState.loadAndSwitchState(new options.SnowdriftStuff.SnowdriftIntro());
+			case 10:
+				trace('ok lets unlock the guide thingy');
+				LoadingState.loadAndSwitchState(new random.SnowdriftUnlockState());
+		}
 	}
 }

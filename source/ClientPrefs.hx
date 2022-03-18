@@ -49,6 +49,9 @@ class ClientPrefs {
 		'fpScenes' => false,
 		'fpScenesRepeat' => false
 	];
+	/**This array contains a list of characters hidden from the dropdown menus in the Chart and Character Editors, as well as anywhere else that a character list is generated
+	@since Emo Engine 0.1.2 (March 2022)*/
+	public static var hideCharList:Array<String> = [];
 
 	public static var loadChartAutosave:Bool = false;
 
@@ -130,6 +133,7 @@ class ClientPrefs {
 		FlxG.save.data.preloadStates = preloadStates;
 		FlxG.save.data.skipCharaSelect = skipCharaSelect;
 		FlxG.save.data.loadChartAutosave = loadChartAutosave;
+		FlxG.save.data.hideCharList = hideCharList;
 		#if debug
 		FlxG.save.data.showPCInfoMM = showPCInfoMM;
 		#end
@@ -164,6 +168,9 @@ class ClientPrefs {
 			if(Main.fpsVar != null) {
 				Main.fpsVar.visible = showFPS;
 			}
+		}
+		if (FlxG.save.data.hideCharList != null) {
+			hideCharList = FlxG.save.data.hideCharList;
 		}
 		if(FlxG.save.data.flashing != null) {
 			flashing = FlxG.save.data.flashing;

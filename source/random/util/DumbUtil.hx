@@ -45,7 +45,12 @@ class DumbUtil {
             return true;
         } else return false;
     }
-
+    /**Returns a list of characters available in game, both base and mod.
+        
+    @returns An array of strings.
+    
+    (Example: `['bf', 'gf', 'dad', 'pico', 'mom', 'pico-player', 'mom-car', 'gf-car', 'gf-christmas', 'parents-christmas', 'bf-christmas', 'bf-car', 'cyan', 'meta', 'spooky', 'senpai', 'senpai-angry', 'spirit', 'monster', 'monster-christmas'])`
+    */
     public static function getAllChars():Array<String> {
         var charList:Array<String> = [];
         var baseGameChars = FileSystem.readDirectory('assets/characters');
@@ -66,7 +71,11 @@ class DumbUtil {
         #end
         return charList;
     }
-
+    /**
+    Gets the extension of a file.
+    
+    @param FileName The file
+    @returns Its extension (or "no ext found" if no extension is found)*/
     public static function getExt(FileName:String):String {
         if (!FileName.contains('.')) {
             return 'no ext found';
@@ -75,7 +84,10 @@ class DumbUtil {
             return benis[1];
         }
     }
-
+    /**Easily parse Snowdrift Chatter files.
+    
+    @param Chatter The file to parse.
+    @returns A DialogueFile variable with the chatter stuff*/
     public static function parseSnowdriftChatter(Chatter:String):DialogueFile {
         return cast Json.parse(Chatter);
     }
