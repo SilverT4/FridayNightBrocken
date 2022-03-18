@@ -79,6 +79,16 @@ class CreditsState extends MusicBeatState
 		#end
 
 		var pisspoop:Array<Array<String>> = [ //Name - Icon name - Description - Link - BG Color
+			['Emo Engine'],
+			['Devin', 'devin', 'The Bullshitter of Emo Engine', 'https://twitter.com/deggvin503', 'A6D388'],
+			[''],
+			['The OCs'],
+			['Mini Optimus', 'miniop', 'The Mini-con Prime', 'https://devinpoggers.carrd.co', '477500'],
+			['Ralph Nextor', 'nt', 'Mini-con Bartender', 'https://devinpoggers.carrd.co', '00007F'],
+			['Snowdrift', 'snowdrift', 'Snow-con of the Options Menu', 'https://devinpoggers.carrd.co', 'AACCFF'], // OCS USE MY CARRD IF I DON'T HAVE A DEDICATED TWITTER!
+			['Decktop', 'decktop', 'The Ocean Lover', 'https://devinpoggers.carrd.co', 'FF5200'],
+			['Alphagolem', 'cyan', 'A Cyandog OC', 'https://devinpoggers.carrd.co', '142587'],
+			[''],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',						'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'riveroaken',		'Main Artist/Animator of Psych Engine',					'https://twitter.com/river_oaken',		'C30085'],
@@ -155,6 +165,9 @@ class CreditsState extends MusicBeatState
 			FlxG.sound.music.volume += 0.5 * FlxG.elapsed;
 		}
 
+		if (FlxG.keys.justPressed.E && FlxG.keys.pressed.G) {
+			FlxG.sound.play(Paths.sound('daFunniWell'));
+		}
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 
