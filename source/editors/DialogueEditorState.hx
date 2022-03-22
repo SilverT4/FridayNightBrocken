@@ -61,7 +61,8 @@ class DialogueEditorState extends MusicBeatState
 			dialogue: [
 				copyDefaultLine()
 			],
-			dialogueMusic: 'assets/shared/music/breakfast.ogg'
+			dialogueMusic: 'assets/shared/music/breakfast.ogg',
+			musicFadeOut: false
 		};
 		
 		character = new DialogueCharacter();
@@ -172,6 +173,11 @@ class DialogueEditorState extends MusicBeatState
 
 		var previewMusButton:FlxButton = new FlxButton(20, musicInputBox.y + 30, 'Toggle Music', toggleMusic);
 		var browseMusButton:FlxButton = new FlxButton(previewMusButton.x + 120, previewMusButton.y, 'Browse for music', loadMusic);
+		var fadeChecker:FlxUICheckBox = new FlxUICheckBox(20, previewMusButton.y + 30, null, null, 'Music fades after dialogue end?', 150, null, function() {
+			dialogueFile.musicFadeOut = !dialogueFile.musicFadeOut;
+		});
+		fadeChecker.checked = dialogueFile.musicFadeOut;
+		tab_group.add(fadeChecker);
 		tab_group.add(new FlxText(musicInputBox.x, musicInputBox.y - 18, 0, 'Dialogue music:'));
 		tab_group.add(musicInputBox);
 		tab_group.add(browseMusButton);
