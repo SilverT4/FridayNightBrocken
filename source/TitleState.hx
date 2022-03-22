@@ -186,6 +186,7 @@ class TitleState extends MusicBeatState
 		} else {
 			FlxG.save.bind(currentProfile.saveName, 'fridayNightBrocken');
 			ClientPrefs.loadPrefs();
+			Achievements.achievementsStuff.push(["Happy Birthday!",				"Happy birthday, " + currentProfile.profileName + "!\nCheck the options menu for a surprise.",  'birthday',	true]);
 		}
 
 		Highscore.load();
