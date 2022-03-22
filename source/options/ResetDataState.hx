@@ -29,7 +29,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import flixel.addons.ui.FlxUIPopup;
 import Controls;
-
+import Prompt; // gonna test that
 using StringTools;
 /**
     This state is a **dangerous state** if you do not know what you are doing!! All of your Friday Night Brocken save data will be erased if you go through with this!
@@ -70,7 +70,13 @@ class ResetDataState extends MusicBeatState {
 
         confirmButton = new FlxButton(0, 500, 'Reset', function() {
             trace('this is a test');
-            openSubState(new ConfirmResetData());
+            //openSubState(new ConfirmResetData());
+            openSubState(new Prompt("Are you sure you want to reset your data? This is irreversible!!", 1, function() {
+                FlxG.save.erase();
+                new FlxTimer().start(3, function(t:FlxTimer) {
+                    Sys.exit(0);
+                });
+            }, null, false, 'ERASE', 'CANCEL', 'warning'));
         });
         confirmButton.screenCenter(X);
         add(confirmButton);
