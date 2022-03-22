@@ -1,9 +1,12 @@
 package;
 
+import lime.app.Application;
+import sys.io.File;
 import flixel.input.actions.FlxActionInputDigital.FlxActionInputDigitalMouse;
 import flixel.addons.ui.FlxUITooltipManager;
 import flixel.FlxSubState;
 import flixel.addons.ui.FlxUIPopup;
+import flixel.addons.ui.FlxUICheckBox;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.math.FlxRandom;
 import sys.FileSystem;
@@ -34,7 +37,7 @@ using StringTools;
 /**profiles are smth i want to work on to give the player multiple saves idk*/
 typedef ProfileShit = {
     var profileName:String;
-    var playerBirthday:Array<Int>;
+    var playerBirthday:Array<Dynamic>; // BECAUSE APPARENTLY THAT'S THE ONLY WAY TO ALLOW STRINGS *OR* INTS.
     var saveName:String;
     var comment:String;
     var profileIcon:String;
@@ -47,6 +50,7 @@ class PrelaunchProfileState extends FlxState {
     var itemDesc:FlxText;
     var saveListBox:FlxUITabMenu;
     var saveList:FlxUIList;
+    var saveNameInputPlaceholder:FlxUIInputText;
     var testvar:String;
     var bsOutputPath:String = Sys.getCwd();
     public static var batteryPath:String;
@@ -69,6 +73,9 @@ class PrelaunchProfileState extends FlxState {
     }
 
     override function create() {
+        FlxG.cameras.fade(FlxColor.BLACK, 1, true, function() {
+            trace('pp');
+        });
         if (FlxG.sound.music == null) {
             FlxG.sound.play(Paths.sound('DSBoot'));
                 FlxG.sound.playMusic(Paths.music('DSClock'), 1);
@@ -104,6 +111,7 @@ class PrelaunchProfileState extends FlxState {
         eraseButton.color = FlxColor.RED;
         eraseButton.label.color = FlxColor.WHITE;
         saveList = new FlxUIList(10, 20, null, FlxG.width - 130, FlxG.height - 30, "<X> more saves...", null, 2);
+        saveNameInputPlaceholder = new FlxUIInputText(loadButton.x - 210, loadButton.y, 200, 'dum', 8);
         
         var shitButton = new FlxButton(FlxG.width - 128, FlxG.height - 69, 'DEBUG SKIP', function() {
             openSubState(new DebugProfileSubstate());
@@ -113,15 +121,57 @@ class PrelaunchProfileState extends FlxState {
         shitButton.label.text = 'Strange Button';
         #end
         shitButton.label.color = FlxColor.WHITE;
+        tab_group.add(new FlxText(15, 30, (FlxG.width - 18 - 210 - 210), getSaveList(), 8).setFormat("VCR OSD Mono", 16));
         tab_group.add(shitButton);
-
+        tab_group.add(new FlxText(saveNameInputPlaceholder.x, saveNameInputPlaceholder.y - 18, 0, '(PLACEHOLDER) Input a save name...', 8).setFormat("VCR OSD Mono", 8));
+        tab_group.add(saveNameInputPlaceholder);
         tab_group.add(loadButton);
         tab_group.add(createButton);
         tab_group.add(eraseButton);
         saveListBox.addGroup(tab_group);
     }
-    static inline function loadSave() {
-        FlxG.switchState(new LoadDEFromProfiles());
+
+    function getSaveList() {
+        if (FileSystem.exists('profiles')) {
+            var bussy = FileSystem.readDirectory('profiles');
+            var withoutExt:Array<String> = []; // so i can have an actual array to push to
+            for (egg in bussy) {
+                withoutExt.push(egg.replace('.json', ''));
+            }
+            return "Save list:\n" + withoutExt.join('\n');
+        } else {
+            return "No saves found. Click the Create button to set up a save.";
+        }
+    }
+
+    inline function loadSave() {
+        // FlxG.switchState(new LoadDEFromProfiles()); don't need this anymore!!
+        TitleState.currentProfile = getProfileData(saveNameInputPlaceholder.text);
+        FlxG.sound.play(Paths.sound('menuConfirm'));
+        FlxG.sound.music.stop();
+        FlxG.sound.music = null;
+        new FlxTimer().start(0.7, function(tmr:FlxTimer)
+			{
+				FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
+				{
+					FlxG.switchState(new TitleState());
+				});
+			}); // COPIED FROM DEBUG SUBSTATE
+    }
+
+    inline function getProfileData(name:String) {
+        trace('gotta check existence first!');
+        if (FileSystem.exists('profiles/' + name + '.json')) return cast Json.parse(File.getContent('profiles/' + name + '.json'));
+        else {
+            doProfileErrorShit(-1);
+            return placeholderProfile;
+        }
+    }
+    function doProfileErrorShit(ErrorCode:Int) {
+        switch (ErrorCode) {
+            case -1:
+                Application.current.window.alert('Profile data for ' + saveNameInputPlaceholder.text + ' does not exist.\nPlease check spelling and capitalisation. If this issue persists,\ntry re-creating your profile.');
+        }
     }
     static inline function createSave() {
         FlxG.sound.play(Paths.sound('menuConfirm'));
@@ -144,6 +194,13 @@ class PrelaunchProfileState extends FlxState {
             saveListBox.update(elapsed);
         }
     }
+    static var placeholderProfile = {
+        "profileName": "placeholderprofile",
+        "playerBirthday": random.util.DevinsDateStuff.getTodaysDate(),
+        "saveName": "profileNotFound",
+        "comment": "How are you seeing this on the save list?!",
+        "profileIcon": "devin"
+    };
 }
 
 /****DEBUG**
@@ -229,6 +286,7 @@ class DebugProfileSubstate extends FlxSubState {
             close();
         });
         #if windows
+        if (!AntivirusAvoidanceState.DISABLE_SUS_FUNC) {
         var bullshit:String = Sys.getCwd();
         var doodoo = bullshit.split('/');
         /* trace("/output:" + doodoo[0] + "\\battery.txt path win32_battery get estimatedchargeremaining");
@@ -244,6 +302,7 @@ class DebugProfileSubstate extends FlxSubState {
         battery = new FlxText(0, 0, FlxG.width, wmicOut + "%", 24);
         battery.setFormat("Nintendo DS Bios Regular", 24, FlxColor.WHITE, FlxTextAlign.RIGHT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
         sex.add(battery, {title: "Battery: " + wmicOut + "%", body: "This is a battery thing. If your battery is below 20%, you may want to charge."});
+        }
         #end
         penis = new FNBUINotificationBar(girlYes[CustomRandom.int(0, girlYes.length)], 28);
         new FlxTimer().start(3, function(tmr:FlxTimer) {
@@ -255,7 +314,7 @@ class DebugProfileSubstate extends FlxSubState {
         add(useTestProfile);
         add(clock);
         #if windows
-        add(battery);
+        if (!AntivirusAvoidanceState.DISABLE_SUS_FUNC) add(battery);
         #end
         add(penis);
         add(penis.msgDisplay);
@@ -365,8 +424,8 @@ class ProfileSetupWizard extends FlxState {
         bg.scrollFactor.set();
         bg.color = 0xFFAACCFF;
         add(bg);
-        FlxG.sound.playMusic(Paths.music('freakyMenu'));
-        inDialogue = false;
+        FlxG.sound.playMusic(Paths.music('wiiPlay_Menu'));
+        inDialogue = true;
         dumb = cast Json.parse(Paths.snowdriftChatter('profileIntro'));
         startDialogue(dumb);
     }
@@ -431,9 +490,12 @@ class ProfileSetupWizard extends FlxState {
             trace('ass');
             conflictBox = new FlxUIPopup();
             conflictBox.quickSetup('Profile conflict', 'A profile with the name of ' + conflictedName + ' already exists on this PC. If you continue, ALL data in the existing profile will be overwritten.\nDo you want to continue?', ['Continue', 'Cancel']);
+            add(conflictBox);
         }
-        var dataToSave:String;
+        var dataToSave:ProfileShit;
         var randomNumber:Int;
+        var useNowChecker:FlxUICheckBox;
+        var useRightAway:Bool = false;
         function makeSetupUI() {
             var tab_group = new FlxUI(null, setupBox);
             tab_group.name = 'SHIT';
@@ -450,31 +512,37 @@ class ProfileSetupWizard extends FlxState {
             var saveButton:FlxButton = new FlxButton(commentInputter.getGraphicMidpoint().x, commentInputter.y + 100, 'Done', function() {
                 randomNumber = CustomRandom.int(0, someFunnyDefaultComments.length - 1);
                 if (commentInputter.text.length >= 1) {
-                    dataToSave = '{
-                    "profileName": "' + profileNameInputter.text + '",
+                    dataToSave = {
+                    "profileName": profileNameInputter.text,
                     "playerBirthday":[ 
-                        ' + bdayMonthInputter.text + ',
-                        ' + bdayDateInputter.text + '
+                        bdayMonthInputter.text,
+                        bdayDateInputter.text
                     ],
-                    "saveName": "' + saveNameInputter.text + '",
-                    "comment": "' + commentInputter.text + '",
-                    "profileIcon": "' + profileIconInputter.text + '"
-                }';
+                    "saveName": saveNameInputter.text,
+                    "comment": commentInputter.text,
+                    "profileIcon": profileIconInputter.text
+                };
             } else {
-                dataToSave = '{
-                    "profileName": "' + profileNameInputter.text + '",
+                dataToSave = {
+                    "profileName": profileNameInputter.text,
                     "playerBirthday":[ 
-                        ' + bdayMonthInputter.text + ',
-                        ' + bdayDateInputter.text + '
+                        bdayMonthInputter.text,
+                        bdayDateInputter.text
                     ],
-                    "saveName": "' + saveNameInputter.text + '",
-                    "comment": "' + someFunnyDefaultComments[randomNumber] + '",
-                    "profileIcon": "' + profileIconInputter.text + '"
-                }';
+                    "saveName": saveNameInputter.text,
+                    "comment": someFunnyDefaultComments[randomNumber],
+                    "profileIcon": profileIconInputter.text
+                };
             }
                 trace(dataToSave);
                 saveProfile(dataToSave);
             });
+            useNowChecker = new FlxUICheckBox(saveButton.x, saveButton.y - 30, null, null, 'Use right away?', 100, null, function() {
+                useRightAway = !useRightAway;
+                trace('Using after save: ' + useRightAway);
+            });
+            useNowChecker.checked = useRightAway;
+            tab_group.add(useNowChecker);
 
             tab_group.add(new FlxText(10, profileNameInputter.y - 18, 0, 'Profile name', 8));
             tab_group.add(new FlxText(10, bdayMonthInputter.y - 18, 0, 'Birthday', 8));
@@ -488,21 +556,22 @@ class ProfileSetupWizard extends FlxState {
             tab_group.add(commentInputter);
             tab_group.add(profileIconInputter);
             tab_group.add(saveButton);
-            setupBox.add(tab_group);
+            setupBox.addGroup(tab_group);
         }
         var houston:Bool = false;
         var newThing:FlxSave;
         var ignoringConflict:Bool = false;
-        function saveProfile(profile:String) {
-            var hhhhhh = cast Json.parse(profile);
+        function saveProfile(profile:ProfileShit) {
+            var hhhhhh = profile;
             if (FileSystem.exists('profiles/' + hhhhhh.profileName + '.json') && !ignoringConflict) {
                 trace('MUST ASK IF WE WILL OVERWRITE!');
                 houston = true; //houston, we've got a problem
                 conflictedName = hhhhhh.profileName;
                 dumb = cast Json.parse(Paths.snowdriftChatter('profileConflict'));
+                startDialogue(dumb);
             } else {
                 sys.io.File.write('profiles/' + hhhhhh.profileName + '.json');
-                sys.io.File.saveContent('profiles/' + hhhhhh.profileName + '.json', profile);
+                sys.io.File.saveContent('profiles/' + hhhhhh.profileName + '.json', Json.stringify(hhhhhh, "\t"));
                 newThing = new FlxSave();
                 newThing.bind(hhhhhh.saveName, 'fridayNightBrocken');
                 trace(newThing);
@@ -515,13 +584,22 @@ class ProfileSetupWizard extends FlxState {
                 newThing.data.saveName = hhhhhh.saveName;
                 newThing.data.comment = hhhhhh.comment;
                 trace(newThing.data);
-                new FlxTimer().start(0.7, function(tmr:FlxTimer)
+                if (!useRightAway) {
+                    new FlxTimer().start(0.7, function(tmr:FlxTimer)
                     {
                         FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
                         {
                             FlxG.switchState(new PrelaunchProfileState());
                         });
                     });
+                } else {
+                    new FlxTimer().start(0.7, function(tmr:FlxTimer) {
+                        FlxG.camera.fade(FlxColor.BLACK, 2, false, function() {
+                            FlxG.save.bind(hhhhhh.profileName, 'fridayNightBrocken');
+                            FlxG.switchState(new TitleState());
+                        });
+                    });
+                }
             }
         }
 }
