@@ -43,6 +43,7 @@ typedef DialogueAnimArray = {
 typedef DialogueFile = {
 	var dialogue:Array<DialogueLine>;
 	var dialogueMusic:String; // for custom music in dialogues lmao - devin503
+	var musicFadeOut:Bool; // control whether the music fades after dialogue ends
 }
 
 typedef DialogueLine = {
@@ -179,7 +180,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 	var textToType:String = '';
 
 	var arrayCharacters:Array<DialogueCharacter> = [];
-
+	var fadeMusicOut:Bool = true;
 	var currentText:Int = 0;
 	var offsetPos:Float = -600;
 
@@ -195,6 +196,9 @@ class DialogueBoxPsych extends FlxSpriteGroup
 					FlxG.sound.playMusic(dialogueList.dialogueMusic, 0);
 					FlxG.sound.music.fadeIn(1, 0, 0.8);
 			}
+		}
+		if (!dialogueList.musicFadeOut) {
+			fadeMusicOut = false;
 		}
 		
 		bgFade = new FlxSprite(-500, -500).makeGraphic(FlxG.width * 2, FlxG.height * 2, FlxColor.WHITE);
@@ -332,7 +336,7 @@ class DialogueBoxPsych extends FlxSpriteGroup
 					daText.destroy();
 					daText = null;
 					updateBoxOffsets(box);
-					FlxG.sound.music.fadeOut(1, 0);
+					if (fadeMusicOut) FlxG.sound.music.fadeOut(1, 0);
 				} else {
 					startNextDialog();
 				}
