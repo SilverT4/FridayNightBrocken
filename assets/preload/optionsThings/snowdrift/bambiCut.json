@@ -91,5 +91,6 @@
 			"expression": "awkward",
 			"text": "Well, shit... Either way, let's just do this!"
 		}
-	]
+	],
+	"musicFadeOut": true
 }
