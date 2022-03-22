@@ -46,4 +46,12 @@ class DevinsDateStuff {
             return fart[1];
         }
     }
+
+    /**Gives you the month and date. This is used in the placeholder profile.
+        @return Today's date.
+        @since March 2022 (Emo Engine 0.1.2)*/
+    public static function getTodaysDate() {
+        var heh = currentTime.split('-');
+        return [heh[1], heh[2].substr(0, heh[2].length - 8)];
+    }
 }
