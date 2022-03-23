@@ -2,8 +2,8 @@ package;
 
 import flixel.util.FlxColor;
 import ProfileThingy; // for the profile shit.
-import random.util.HintMessageAsset;
-import random.dumb.FunkyBackground;
+import randomShit.util.HintMessageAsset;
+import randomShit.dumb.FunkyBackground;
 import flixel.FlxG;
 import flixel.FlxState;
 import flixel.FlxSprite;
@@ -178,7 +178,7 @@ class TestProfileState extends FlxState {
 class TestProfileSubstate extends flixel.FlxSubState {
     var guestProfile:ProfileShit = {
         "profileName": "Guest",
-        "playerBirthday": random.util.DevinsDateStuff.getTodaysDate(),
+        "playerBirthday": randomShit.util.DevinsDateStuff.getTodaysDate(),
         "saveName": "guestProfile",
         "comment": "You're a little rascal.",
         "profileIcon": "bf"

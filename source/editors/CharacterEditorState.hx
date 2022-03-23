@@ -11,7 +11,7 @@ import openfl.display.BitmapData;
 import openfl.display.PNGEncoderOptions;
 import openfl.utils.ByteArray;
 import lime.ui.FileDialog;
-import random.util.ColorUtil;
+import randomShit.util.ColorUtil;
 import editors.TestPlayState.ConfirmYourContent;
 import flixel.system.FlxSound;
 import flixel.graphics.frames.FlxAtlasFrames;

@@ -143,7 +143,7 @@ class MasterEditorMenu extends MusicBeatState
 					//LoadingState.loadAndSwitchState(new SelectChara.SelectableCreatorState('henry'), true);
 					openSubState(new SelectChara.SCThing());
 				case 'OC Info Editor':
-						LoadingState.loadAndSwitchState(new random.oc.OCEditorState());
+						LoadingState.loadAndSwitchState(new randomShit.oc.OCEditorState());
 			}
 			FlxG.sound.music.volume = 0;
 			#if PRELOAD_ALL

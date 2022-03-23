@@ -10,7 +10,7 @@ import lime.app.Application;
 import flixel.addons.transition.FlxTransitionableState;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
-import random.util.CustomRandom;
+import randomShit.util.CustomRandom;
 
 class FuckYouToo extends MusicBeatSubstate {
     var fuckYouText:FlxText;

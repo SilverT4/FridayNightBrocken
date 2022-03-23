@@ -27,7 +27,7 @@ import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
 import lime.app.Application;
 import Controls;
-import random.util.HintMessageAsset;
+import randomShit.util.HintMessageAsset;
 
 using StringTools;
 /**
@@ -60,9 +60,9 @@ class OptionsStateExtra extends MusicBeatState
 				}
 				// doSnowdriftSaveChecks(); // THIS'LL COME IN LATER!!
             case 'Test Dialogue':
-                LoadingState.loadAndSwitchState(new random.dumb.DialogueTestingState());
+                LoadingState.loadAndSwitchState(new randomShit.dumb.DialogueTestingState());
 			case 'Bonk Test':
-				LoadingState.loadAndSwitchState(new random.dumb.BonkTest());
+				LoadingState.loadAndSwitchState(new randomShit.dumb.BonkTest());
 			case 'Hide Characters':
 				openSubState(new options.HiddenCharactersSubstate());
 			#if debug
@@ -239,7 +239,7 @@ class OptionsStateExtra extends MusicBeatState
 				LoadingState.loadAndSwitchState(new options.SnowdriftStuff.SnowdriftIntro());
 			case 10:
 				trace('ok lets unlock the guide thingy');
-				LoadingState.loadAndSwitchState(new random.SnowdriftUnlockState());
+				LoadingState.loadAndSwitchState(new randomShit.SnowdriftUnlockState());
 		}
 	}
 }

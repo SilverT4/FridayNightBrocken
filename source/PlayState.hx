@@ -1,11 +1,11 @@
 package;
 
-import random.dumb.FNBUINotificationBar;
-import random.util.DumbUtil;
+import randomShit.dumb.FNBUINotificationBar;
+import randomShit.util.DumbUtil;
 #if desktop
 import Discord.DiscordClient;
 #end
-import random.util.CheckinMultiple;
+import randomShit.util.CheckinMultiple;
 import Section.SwagSection;
 import Song.SwagSong;
 import WiggleEffect.WiggleEffectType;
@@ -56,8 +56,8 @@ import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
 import SelectChara.CharSelShit as BussyWater;
-import random.util.CustomRandom;
-import random.dumb.Bonk;
+import randomShit.util.CustomRandom;
+import randomShit.dumb.Bonk;
 
 #if sys
 import sys.FileSystem;
@@ -2578,7 +2578,7 @@ class PlayState extends MusicBeatState
 					FlxG.sound.music.pause();
 					vocals.pause();
 				}
-				openSubState(new random.dumb.TheNewSandwich(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				openSubState(new randomShit.dumb.TheNewSandwich(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
 				//}
 		
 				#if desktop

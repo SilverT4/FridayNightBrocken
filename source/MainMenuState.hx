@@ -1,6 +1,6 @@
 package;
 
-import random.helpMe.WindowsUtils;
+import randomShit.helpMe.WindowsUtils;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -21,7 +21,7 @@ import lime.app.Application;
 import Achievements;
 import editors.MasterEditorMenu;
 import flixel.input.keyboard.FlxKey;
-import random.util.DevinsDateStuff;
+import randomShit.util.DevinsDateStuff;
 
 using StringTools;
 
@@ -84,7 +84,8 @@ class MainMenuState extends MusicBeatState
 		21 => GOOD_EVENING,
 		22 => GOOD_EVENING,
 		23 => GOOD_EVENING,
-		69 => "Fuck you, "
+		69 => "Fuck you, ",
+		75 => "Happy birthday, "
 	];
 	var daHour:Int;
 
@@ -94,7 +95,7 @@ class MainMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
-
+		var susDate = DevinsDateStuff.getTodaysDate();
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		if(FlxG.sound.music == null) {
 			if (!TitleState.fuckinAsshole) {
@@ -127,7 +128,10 @@ class MainMenuState extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-		if (TitleState.fuckinAsshole && TitleState.currentProfile != null) daHour = 69 else {
+		if (TitleState.fuckinAsshole && TitleState.currentProfile != null) daHour = 69 else if (TitleState.currentProfile != null && susDate == TitleState.currentProfile.playerBirthday) {
+			daHour = 75;
+			trace('AYO.');
+		} else {
 			var stupidity:String = DevinsDateStuff.dumbClock();
 			var shart = stupidity.split(':');
 			daHour = Std.parseInt(shart[0]);
@@ -207,7 +211,7 @@ class MainMenuState extends MusicBeatState
 		}
 		#if debug
 		if (ClientPrefs.showPCInfoMM) {
-			doPCInfoThings();
+			if (!AntivirusAvoidanceState.DISABLE_SUS_FUNC) doPCInfoThings();
 		}
 		#end
 		
@@ -215,6 +219,7 @@ class MainMenuState extends MusicBeatState
 		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
+
 
 		#if ACHIEVEMENTS_ALLOWED
 		Achievements.loadAchievements();
@@ -225,6 +230,17 @@ class MainMenuState extends MusicBeatState
 				Achievements.achievementsMap.set(Achievements.achievementsStuff[achieveID][2], true);
 				giveAchievement();
 				ClientPrefs.saveSettings();
+			}
+		}
+		if (TitleState.currentProfile != null) {
+			if (susDate == TitleState.currentProfile.playerBirthday) {
+				trace('HAPPY BIRTHDAY!!');
+				var achieveID:Int = Achievements.getAchievementIndex('birthday');
+				if (!Achievements.isAchievementUnlocked(Achievements.achievementsStuff[achieveID][2])) {
+					Achievements.achievementsMap.set(Achievements.achievementsStuff[achieveID][2], true);
+					giveBirthdayAchieve();
+					ClientPrefs.saveSettings();
+				}
 			}
 		}
 		#end
@@ -249,6 +265,12 @@ class MainMenuState extends MusicBeatState
 		add(new AchievementObject('friday_night_play', camAchievement));
 		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
 		trace('Giving achievement "friday_night_play"');
+	}
+	// if today's player birthday we do this lol
+	function giveBirthdayAchieve() {
+		add(new AchievementObject('birthday', camAchievement));
+		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
+		trace('Giving achievement "birthday"');
 	}
 	#end
 

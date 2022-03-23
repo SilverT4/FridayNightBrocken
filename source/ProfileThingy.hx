@@ -21,16 +21,16 @@ import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUIBar;
 import Paths;
-import random.util.CustomRandom;
+import randomShit.util.CustomRandom;
 import DialogueBoxPsych;
 import flixel.FlxSprite;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUIList;
 import flixel.addons.ui.FlxUI;
 import flixel.addons.ui.FlxUITooltip;
-import random.util.DevinsDateStuff;
-import random.helpMe.WindowsUtils;
-import random.dumb.FNBUINotificationBar;
+import randomShit.util.DevinsDateStuff;
+import randomShit.helpMe.WindowsUtils;
+import randomShit.dumb.FNBUINotificationBar;
 
 using StringTools;
 
@@ -196,7 +196,7 @@ class PrelaunchProfileState extends FlxState {
     }
     static var placeholderProfile = {
         "profileName": "placeholderprofile",
-        "playerBirthday": random.util.DevinsDateStuff.getTodaysDate(),
+        "playerBirthday": randomShit.util.DevinsDateStuff.getTodaysDate(),
         "saveName": "profileNotFound",
         "comment": "How are you seeing this on the save list?!",
         "profileIcon": "devin"

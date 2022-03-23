@@ -1,6 +1,6 @@
 package editors;
 
-import random.util.DumbUtil;
+import randomShit.util.DumbUtil;
 import Character.CharacterFile;
 import flixel.addons.display.FlxExtendedSprite;
 #if desktop

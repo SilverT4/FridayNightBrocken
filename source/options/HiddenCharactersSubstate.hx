@@ -8,12 +8,12 @@ import flixel.addons.ui.FlxUIInputText;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.addons.ui.FlxUI;
 import flixel.ui.FlxButton;
-import random.util.CheckinMultiple;
+import randomShit.util.CheckinMultiple;
 import options.OptionsState;
 import options.OptionsStateExtra;
 import options.BaseOptionsMenu;
 import options.Option;
-import random.dumb.Cvm;
+import randomShit.dumb.Cvm;
 
 using StringTools;
 

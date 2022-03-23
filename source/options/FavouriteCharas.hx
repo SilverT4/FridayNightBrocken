@@ -9,7 +9,7 @@ import flixel.FlxG;
 import flixel.ui.FlxBar;
 import flixel.text.FlxText;
 import MusicBeatState;
-import random.util.HintMessageAsset;
+import randomShit.util.HintMessageAsset;
 import Paths;
 import AttachedSprite;
 import HealthIcon;
