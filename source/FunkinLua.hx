@@ -1,4 +1,4 @@
-import random.dumb.FNBUINotificationBar;
+import randomShit.dumb.FNBUINotificationBar;
 #if LUA_ALLOWED
 import llua.Lua;
 import llua.LuaL;
