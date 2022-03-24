@@ -1,0 +1,48 @@
+{
+	"dialogue": [
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "Woah, hold on a second there!!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "You have no profiles, buddy! How do you expect\\nto play with your own save data if you don't\\neven have any to begin with?"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "Let's fix that, though. I have a couple options\\nfor you."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "You can either play as a guest, meaning you\\ndon't have to make a profile right away, or..."
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "excited",
+			"text": "I can help you set up your profile right now!"
+		},
+		{
+			"speed": 0.05,
+			"portrait": "snowdrift",
+			"boxState": "normal",
+			"expression": "awkward",
+			"text": "So, what do you want to do?"
+		}
+	],
+	"dialogueMusic": "mods/music/DaveDialogue.ogg",
+	"musicFadeOut": false
+}
