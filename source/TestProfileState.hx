@@ -120,7 +120,11 @@ class TestProfileState extends FlxState {
         }
 
         if (FlxG.keys.checkStatus(AcceptKey, flixel.input.FlxInput.FlxInputState.JUST_PRESSED)) {
-            loadSelectedProfile();
+            if (saveList.length >= 1 && saveList[0] != 'No profiles') {
+                loadSelectedProfile();
+            } else {
+                FlxG.switchState(new MusicBeatLauncher(new NoProfileState())); // MusicBeatLauncher is a class that loads musicbeatstates from flxstates
+            }
         }
         
         super.update(elapsed);
