@@ -329,10 +329,10 @@ class TitleState extends MusicBeatState
 		
 		gfDance.frames = Paths.getSparrowAtlas('gfDanceTitle');
 		#end
-			/*gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
-			gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false); */
-			gfDance.animation.addByPrefix('danceLeft', 'gfDance', 24, false);
-			gfDance.animation.addByPrefix('danceRight', 'gfDance', 24, false);
+			gfDance.animation.addByIndices('danceLeft', 'gfDance', [30, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], "", 24, false);
+			gfDance.animation.addByIndices('danceRight', 'gfDance', [15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29], "", 24, false);
+			//gfDance.animation.addByPrefix('danceLeft', 'gfDance', 24, false);
+			//gfDance.animation.addByPrefix('danceRight', 'gfDance', 24, false);
 	
 		gfDance.antialiasing = ClientPrefs.globalAntialiasing;
 		add(gfDance);
@@ -440,7 +440,7 @@ class TitleState extends MusicBeatState
 
 		if (FlxG.keys.justReleased.B) {
 			trace('hamburger');
-			FlxG.switchState(new PreloadLargerCharacters(''));
+			//FlxG.switchState(new PreloadLargerCharacters(''));
 			// FlxG.switchState(new DebugQuickLaunch()); // DebugQuickLaunch is gitignored
 		}
 
