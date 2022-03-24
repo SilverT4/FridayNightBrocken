@@ -30,6 +30,7 @@ class Prompt extends MusicBeatSubstate
 	var cornerSize:Int = 10;
 	public function new(promptText:String='', defaultSelected:Int = 0, okCallback:Void->Void, cancelCallback:Void->Void,acceptOnDefault:Bool=false,option1:String=null,option2:String=null,?soundEffect:String) 
 	{
+		if (!FlxG.mouse.visible) FlxG.mouse.visible = true;
 		selected = defaultSelected;
 		okc = okCallback;
 		cancelc = cancelCallback;
@@ -47,6 +48,11 @@ class Prompt extends MusicBeatSubstate
 		close();});
 		super();	
 		if (soundEffect != null) FlxG.sound.play(Paths.sound(soundEffect));
+	}
+
+	override function close() {
+		FlxG.mouse.visible = false;
+		super.close();
 	}
 	
 	override public function create():Void 
