@@ -38,7 +38,7 @@ using StringTools;
  */
 class OptionsStateExtra extends MusicBeatState
 {
-	var options:Array<String> = ['Visit Snowdrift', 'Profile Management', 'Test Dialogue', 'Bonk Test', 'Hide Characters', #if debug 'Cvm Format Manager', #end 'Favourite Characters', 'Reset Save Data'];
+	var options:Array<String> = ['Visit Snowdrift', 'Profile Management', 'Test Dialogue', 'Character List', 'Bonk Test', 'Hide Characters', #if debug 'Cvm Format Manager', #end 'Favourite Characters', 'Reset Save Data'];
 	var optionsOnPage:Array<String> = []; // this contains the options on the current page. lmao
 	static var startFrom:Int = 0; // FOR MULTIPLE PAGES!
 	static var endAt:Int = 5;
@@ -74,6 +74,8 @@ class OptionsStateExtra extends MusicBeatState
 				LoadingState.loadAndSwitchState(new options.FavouriteCharas());
 			case 'Profile Management':
 				LoadingState.loadAndSwitchState(new options.profileManagement.ProfileManagementState());
+			case 'Character List':
+				LoadingState.loadAndSwitchState(new options.charas.CharacterList());
 		}
 	}
 
@@ -107,9 +109,9 @@ class OptionsStateExtra extends MusicBeatState
 		for (i in startFrom...endAt) {
 			optionsOnPage.push(options[i]);
 		}
-		for (i in startFrom...endAt)
+		for (i in 0...optionsOnPage.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 0, options[i], true, false);
+			var optionText:Alphabet = new Alphabet(0, 0, optionsOnPage[i], true, false);
 			trace(optionText.text);
 			optionText.screenCenter();
 			optionText.y += (100 * (i - (optionsOnPage.length / 2))) + 50;

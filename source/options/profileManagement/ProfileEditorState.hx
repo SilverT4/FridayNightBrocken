@@ -62,7 +62,7 @@ class ProfileEditorState extends MusicBeatState {
 
         var commentInputter:FlxUIInputText = new FlxUIInputText(10, saveNameInputter.y + 30, 150, theProfile.comment, 8);
         var profileIconInputter:FlxUIInputText = new FlxUIInputText(10, commentInputter.y + 30, 150, theProfile.profileIcon, 8);
-        var saveButton:FlxButton = new FlxButton(commentInputter.getGraphicMidpoint().x, commentInputter.y + 100, 'updateProfile', function() {
+        var saveButton:FlxButton = new FlxButton(commentInputter.getGraphicMidpoint().x, commentInputter.y + 100, 'Update', function() {
             randomComment = getRandomComment();
             if (commentInputter.text.length >= 1) {
                 dataToSave = {
@@ -121,6 +121,9 @@ class ProfileEditorState extends MusicBeatState {
 
     function updateProfile(PORN:ProfileShit) {
         ProfileUtil.updateExistingSave(PORN.profileName, PORN);
+        FlxG.sound.play(Paths.sound('confirmMenu'), 1, false, null, true, function() {
+            LoadingState.loadAndSwitchState(new options.profileManagement.ProfileManagementState());
+        });
     }
 
 	var randomNumber:Int;

@@ -19,19 +19,15 @@ class ProfileManagementState extends MusicBeatState {
     var options:FlxTypedGroup<Alphabet>;
     var removeIfAnon:String = 'Edit your profile';
     var removeIfNoProfiles:String = 'Edit a profile';
-    
+    var pList:Array<String> = ProfileUtil.getProfileList();
     public function new() {
         super();
         doOptionChecks();
     }
 
     function doOptionChecks() {
-        if (ProfileUtil.getProfileList().length >= 1 && ProfileUtil.getProfileList()[0] != 'no profiles') {
-            if (TitleState.currentProfile == null) {
-                optionList.remove(removeIfAnon);
-            } else if (TitleState.currentProfile != null) {
-                return;
-            }
+        if (pList.length >= 1) {
+            asLongAsYouAreNamed();
         } else {
             optionList.remove(removeIfAnon);
             optionList.remove(removeIfNoProfiles);
@@ -118,12 +114,32 @@ class ProfileManagementState extends MusicBeatState {
             case 'Create new profile':
                 LoadingState.loadAndSwitchState(new ProfileSetupWizard());
             case 'Edit your profile':
-                // wip
+                LoadingState.loadAndSwitchState(new ProfileEditorState(TitleState.currentProfile));
             case 'Edit a profile':
-                // wip
+                LoadingState.loadAndSwitchState(new ProfileSelectionState(0));
             case 'Delete a profile':
-                // wip
+                LoadingState.loadAndSwitchState(new ProfileSelectionState(1));
         }
+    }
+
+    function asLongAsYouAreNamed() {
+        if (TitleState.currentProfile != null) {
+            switch (TitleState.currentProfile.profileName) {
+                case 'debugBot' | 'Guest' | 'placeholderprofile':
+                    // this is the same as being anonymous!!
+                    doAnonRemove();
+                default:
+                    return;
+            }
+            if (pList.length >= 1 && pList[0] == 'no profiles') {
+                optionList.remove(removeIfNoProfiles);
+            }
+        } else doAnonRemove();
+    }
+
+    function doAnonRemove() {
+        optionList.remove('Switch Profile');
+        optionList.remove(removeIfAnon);
     }
 
     function restartGame() {
