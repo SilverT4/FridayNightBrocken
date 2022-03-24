@@ -1,6 +1,6 @@
 package;
 
-import ProfileThingy.ProfileSetupWizard;
+import ProfileSetupWizard;
 import flixel.FlxG;
 import flixel.ui.FlxButton;
 import DialogueBoxPsych;
@@ -19,16 +19,18 @@ class NoProfileState extends MusicBeatState {
     override function create() {
         add(new FunkyBackground().setColor(0xFFAACCFF, false));
         dialogueJson = SnowdriftUtil.loadChatter('guest');
-        var eje = new PlayState();
-        eje.startDialogue(dialogueJson);
+        //var eje = new PlayState();
+        startDialogue(dialogueJson);
         contAsGuest = new FlxButton(0, 0, 'Continue as Guest', setupGuest);
         contAsGuest.screenCenter();
         contAsGuest.y -= 60;
         add(contAsGuest);
+        contAsGuest.kill();
         setupProfile = new FlxButton(0, 0, 'Set Up Profile', goToProfState);
         setupProfile.screenCenter();
         setupProfile.y += 60;
         add(setupProfile);
+        setupProfile.kill();
     }
 
     function setupGuest() {
@@ -45,4 +47,40 @@ class NoProfileState extends MusicBeatState {
     function goToProfState() {
         FlxG.switchState(new ProfileSetupWizard());
     }
+    var inDialogue:Bool = false;
+    public function startDialogue(dialogueFile:DialogueFile):Void
+        {
+            // TO DO: Make this more flexible, maybe?
+            if(psychDialogue != null) return;
+    
+            if(dialogueFile.dialogue.length > 0) {
+                // inCutscene = true;
+                CoolUtil.precacheSound('dialogue', 'shared');
+                CoolUtil.precacheSound('dialogueClose', 'shared');
+                psychDialogue = new DialogueBoxPsych(dialogueFile);
+                psychDialogue.scrollFactor.set();
+                    psychDialogue.finishThing = function() {
+                        psychDialogue = null;
+						inDialogue = false;
+                        contAsGuest.revive();
+                        setupProfile.revive();
+                        // MusicBeatState.switchState(new options.OptionsState());
+                    }
+                psychDialogue.nextDialogueThing = startNextDialogue;
+                psychDialogue.skipDialogueThing = skipDialogue;
+                // psychDialogue.cameras = [camHUD];
+                add(psychDialogue);
+            } else {
+                FlxG.log.warn('Your dialogue file is badly formatted!');
+            }
+        }
+        var dialogueCount:Int = 0;
+        function startNextDialogue() {
+            dialogueCount++;
+        }
+
+        function skipDialogue() {
+            //callOnLuas('onSkipDialogue', [dialogueCount]);
+            trace('ass');
+        }
 }
