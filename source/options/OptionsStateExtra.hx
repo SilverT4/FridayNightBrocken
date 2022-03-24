@@ -1,5 +1,6 @@
 package options;
 
+import options.profileManagement.ProfileManagementState;
 import lime.system.System;
 import editors.TestPlayState.ConfirmYourContent;
 #if desktop
@@ -37,7 +38,7 @@ using StringTools;
  */
 class OptionsStateExtra extends MusicBeatState
 {
-	var options:Array<String> = ['Visit Snowdrift', 'Test Dialogue', 'Bonk Test', 'Hide Characters', #if debug 'Cvm Format Manager', #end 'Favourite Characters', 'Reset Save Data'];
+	var options:Array<String> = ['Visit Snowdrift', 'Profile Management', 'Test Dialogue', 'Bonk Test', 'Hide Characters', #if debug 'Cvm Format Manager', #end 'Favourite Characters', 'Reset Save Data'];
 	var optionsOnPage:Array<String> = []; // this contains the options on the current page. lmao
 	static var startFrom:Int = 0; // FOR MULTIPLE PAGES!
 	static var endAt:Int = 5;
@@ -71,6 +72,8 @@ class OptionsStateExtra extends MusicBeatState
 			#end
 			case 'Favourite Characters':
 				LoadingState.loadAndSwitchState(new options.FavouriteCharas());
+			case 'Profile Management':
+				LoadingState.loadAndSwitchState(new options.profileManagement.ProfileManagementState());
 		}
 	}
 
