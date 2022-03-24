@@ -1,5 +1,6 @@
 package;
 
+import randomShit.util.SnowdriftUtil;
 import flixel.util.FlxColor;
 import ProfileThingy.PrelaunchProfileState;
 import flixel.util.FlxTimer;
@@ -72,6 +73,10 @@ class ProfileSetupWizard extends MusicBeatState {
         }
         if (setupBox != null) {
             setupBox.update(elapsed);
+        }
+        if (FlxG.keys.justPressed.H) {
+            dumb = SnowdriftUtil.loadChatter('profileExplan');
+            startDialogue(dumb);
         }
     }
     public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
