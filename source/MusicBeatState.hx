@@ -1,5 +1,6 @@
 package;
 
+import editors.HealthIconFromGrid;
 import editors.CharacterEditorState;
 import lime.app.Application;
 import Conductor.BPMChangeEvent;
