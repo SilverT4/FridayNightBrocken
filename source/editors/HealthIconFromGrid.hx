@@ -435,9 +435,10 @@ class HealthIconFromGrid extends MusicBeatSubstate {
 	function convertToLocalFile(file:String) {
 		trace(file);
 		#if windows
+		var haha:Array<String>;
         if (!file.contains('/'))
-		var haha = file.split('\\');
-        else var haha = file.split('/');
+		haha = file.split('\\');
+        else haha = file.split('/');
 		#else
 		var haha = file.split('/');
 		#end
