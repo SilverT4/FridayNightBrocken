@@ -23,7 +23,7 @@ class ProfileUtil {
 
     static inline final PROFILES = 'profiles/';
 
-    static var ProfileDir_Exists:Bool = SusSystem.exists('profiles');
+    static var ProfileDir_Exists:Bool = SusSystem.exists('./profiles');
     static var theProfile:ProfileShit;
     public static function getProfileData(ProfileName:String) {
         if (ProfileDir_Exists) {
@@ -73,6 +73,18 @@ class ProfileUtil {
         } else {
             flixel.FlxG.log.error('PROFILE DOES NOT EXIST??????');
         }
+    }
+
+    public static function removeProfile(saveName:String) {
+        #if macos
+        new sys.io.Process('/bin/zsh', ['rm -v ', Sys.getCwd() + '/profiles/' + saveName + JSON]);
+        #elseif windows
+        new sys.io.Process('cmd', ['/c del profiles\\', saveName + JSON]);
+        #elseif linux
+        new sys.io.Process('/bin/sh', ['rm -v ', Sys.getCwd() + '/profiles/' + saveName + JSON]); // COULD PROBABLY JUST DO "MACOS OR LINUX"
+        #elseif web
+        trace('wtf');
+        #end
     }
     static var beb:FileReference;
     public static function saveNewProfile(SaveInfo:ProfileShit, ProfileName:String) {
