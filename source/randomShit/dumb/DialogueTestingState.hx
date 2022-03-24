@@ -55,7 +55,7 @@ class DialogueTestingState extends MusicBeatState {
     var diaBrowse:FileReference;
     function loadDialogue() {
         browseMsg.kill();
-        var jsonFilter = new FileFilter('Dialogue Json', 'json');
+        var jsonFilter = new FileFilter('Dialogue Json', 'json', 'JSON');
         diaBrowse = new FileReference();
         diaBrowse.addEventListener(Event.SELECT, onLoadComplete);
         diaBrowse.addEventListener(Event.CANCEL, onLoadCancel);
