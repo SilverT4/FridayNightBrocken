@@ -115,4 +115,8 @@ class DevinsFileUtils {
     public static function parseJsonString(JSON:String):Dynamic {
         return cast Json.parse(JSON);
     }
+
+    public static function fixWinPath(Path:String) {
+        return Path.split('\\').join('/').replace(':', '');
+    }
 }
