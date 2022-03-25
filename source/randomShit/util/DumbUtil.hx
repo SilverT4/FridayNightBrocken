@@ -1,5 +1,7 @@
 package randomShit.util;
 
+import profile.FavUtil;
+import profile.FavUtil.ProfileFavourite;
 import flixel.util.FlxColor;
 import haxe.Exception;
 import PlayState;
@@ -87,6 +89,111 @@ class DumbUtil {
         }
     }
 
+    /**Grabs the song list.
+        @returns A list of songs
+        @since March 2022 (Emo Engine 0.1.2)*/
+    public static function getSongList() {
+        var songReturn:Array<String> = [];
+        for (i in 0...WeekData.weeksList.length) {
+			var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
+			for (j in 0...leWeek.songs.length)
+			{
+				songReturn.push(leWeek.songs[j][0]);
+			}
+		}
+        return songReturn;
+    }
+
+    public static function getSongIcons() {
+        var iconReturn:Array<String> = [];
+        for (i in 0...WeekData.weeksList.length) {
+			var leWeek:WeekData = WeekData.weeksLoaded.get(WeekData.weeksList[i]);
+			for (j in 0...leWeek.songs.length)
+			{
+				iconReturn.push(leWeek.songs[j][1]);
+			}
+		}
+        return iconReturn;
+    }
+
+    /**Returns *only* the songs set in the favourite list.
+        @returns Favourite songs list.
+        @since March 2022 (Emo Engine 0.1.2)*/
+    public static function getFavSongList() {
+        var slist:Array<Dynamic> = [];
+        var sjk:ProfileFavourite = FavUtil.getFavs();
+        for (song in sjk.favouriteSongs) {
+            slist.push([song, getIconFromWeek(song), getColourFromWeek(song)]);
+        }
+    }
+
+    public static function getCharList() {
+        var clist:Array<String> = [];
+        var sfjd = FileSystem.readDirectory('assets/characters');
+        for (ke in sfjd) {
+            if (getExt(ke) == 'json') clist.push(snipName(ke));
+        }
+        #if MODS_ALLOWED
+        if (Paths.currentModDirectory != '') {
+            var ddeh = FileSystem.readDirectory('mods/' + Paths.currentModDirectory + '/characters');
+            for (ef in ddeh) {
+                if (getExt(ef) == 'json') clist.push(snipName(ef));
+            }
+        }
+        var ehehef = FileSystem.readDirectory('mods/characters');
+        for (sh in ehehef) {
+            if (getExt(sh) == 'json') clist.push(snipName(sh));
+        }
+        #end
+        return clist;
+    }
+
+    public static function getHealthIcons() {
+        var eief:Array<String> = [];
+        var ehe = getCharList();
+        for (char in ehe) {
+            var scoolbus:Dynamic = '';
+            if (getExt(char) == 'json') scoolbus = cast Json.parse(getRawFile(Paths.characterJson(char)));
+            eief.push(scoolbus.healthicon);
+        }
+        return eief;
+    }
+
+    static function getIconFromWeek(songName:String) {
+        var kefj = WeekData.weeksList;
+        for (week in kefj) {
+            if (WeekData.weeksLoaded.exists(week)) {
+                var jeje:WeekData = WeekData.weeksLoaded.get(week);
+                if (jeje.songs.contains(songName)) {
+                    for (eief in jeje.songs) {
+                        if (eief[0] == songName) {
+                            return eief[1];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    static function getColourFromWeek(songName:String) {
+        var kefj = WeekData.weeksList;
+        for (week in kefj) {
+            if (WeekData.weeksLoaded.exists(week)) {
+                var jeje:WeekData = WeekData.weeksLoaded.get(week);
+                if (jeje.songs.contains(songName)) {
+                    for (eief in jeje.songs) {
+                        if (eief[0] == songName) {
+                            return eief[2];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
     /**Parse the JSON of a character without loading its sprites.
         
     @param JsonName the character json name
@@ -94,7 +201,7 @@ class DumbUtil {
     @throws Exception if no JSON is found
     @since March 2022 (Emo engine 0.1.2)*/
     public static function getCharFile(JsonName:String):Character.CharacterFile {
-        if (Paths.fileExists(Paths.characterJson(JsonName), openfl.utils.AssetType.TEXT, false)) return cast Json.parse(getRawFile(Paths.characterJson(JsonName)));
+        if (actuallyExists(Paths.characterJson(JsonName))) return cast Json.parse(getRawFile(Paths.characterJson(JsonName)));
         else throw new haxe.Exception('no file found');
     }
 
@@ -113,6 +220,10 @@ class DumbUtil {
         return sys.io.File.getContent(FilePath);
     }
 
+    public static function actuallyExists(FilePath:String) {
+        if (FileSystem.exists(FilePath)) return true
+            else return false;
+    }
     /**Gets the name of a file without its extension.
         
     @param FileName The file
