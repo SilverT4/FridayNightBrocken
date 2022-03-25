@@ -1,5 +1,9 @@
 package options;
 
+import randomShit.util.DumbUtil;
+import randomShit.util.ProfileUtil;
+import randomShit.util.DevinsDateStuff;
+//import ranodmShit.util.ProfileUtil;
 import options.profileManagement.ProfileManagementState;
 import lime.system.System;
 import editors.TestPlayState.ConfirmYourContent;
@@ -210,23 +214,23 @@ class OptionsStateExtra extends MusicBeatState
 			switch(PageChange) {
 				case 1:
 					trace('next page');
-					startFrom += 6;
-					endAt += 6; // SHOULD BE STARTFROM = 6, ENDAT = 11 FOR SECOND PAGE.
-					if (startFrom > options.length - 6) {
-						startFrom = 0;
-						endAt = 5; // RESETS
+					OptionsStateExtra.startFrom += 6;
+					OptionsStateExtra.endAt += 6; // SHOULD BE STARTFROM = 6, ENDAT = 11 FOR SECOND PAGE.
+					if (OptionsStateExtra.startFrom > options.length - 6) {
+						OptionsStateExtra.startFrom = 0;
+						OptionsStateExtra.endAt = 5; // RESETS
 					}
-					if (startFrom < options.length - 6 && endAt > options.length) {
-						endAt = options.length;
+					if (OptionsStateExtra.startFrom < options.length - 6 && OptionsStateExtra.endAt > options.length) {
+						OptionsStateExtra.endAt = options.length;
 					}
 					curPage += 1;
 				case -1:
 					trace('prev page');
-					startFrom -= 6;
-					endAt -= 6;
-					if (startFrom < options.length) {
-						startFrom = options.length - 6;
-						endAt = options.length; // RESETS TO LAST PAGE.
+					OptionsStateExtra.startFrom -= 6;
+					OptionsStateExtra.endAt -= 6;
+					if (OptionsStateExtra.startFrom < options.length) {
+						OptionsStateExtra.startFrom = options.length - 6;
+						OptionsStateExtra.endAt = options.length; // RESETS TO LAST PAGE.
 					}
 					if (curPage < 1) {
 						curPage = maxPages;
@@ -238,13 +242,18 @@ class OptionsStateExtra extends MusicBeatState
 
 	function doSnowdriftSaveChecks() {
 		trace('have we unlocked anything new??');
-		switch(FlxG.save.data.snowdriftVisitCount) {
-			case 0:
-				trace('gotta do intro!');
-				LoadingState.loadAndSwitchState(new options.SnowdriftStuff.SnowdriftIntro());
-			case 10:
-				trace('ok lets unlock the guide thingy');
-				LoadingState.loadAndSwitchState(new randomShit.SnowdriftUnlockState());
+		if (!DumbUtil.doBirthdayCheck()) {
+			switch(FlxG.save.data.snowdriftVisitCount) {
+				case 0:
+					trace('gotta do intro!');
+					LoadingState.loadAndSwitchState(new options.SnowdriftStuff.SnowdriftIntro());
+				case 10 | 50 | 100:
+					trace('ok lets unlock the thingy');
+					LoadingState.loadAndSwitchState(new randomShit.SnowdriftUnlockState(false));
+			}
+		} else {
+			trace('OH WAIT! HAPPY BIRTHDAY!!');
+			LoadingState.loadAndSwitchState(new randomShit.SnowdriftUnlockState(true));
 		}
 	}
 }
