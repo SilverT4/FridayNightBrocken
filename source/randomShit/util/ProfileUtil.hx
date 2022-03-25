@@ -23,8 +23,15 @@ class ProfileUtil {
 
     static inline final PROFILES = 'profiles/';
 
-    static var ProfileDir_Exists:Bool = SusSystem.exists('./profiles');
+    static var ProfileDir_Exists:Bool = SusSystem.exists('profiles');
     static var theProfile:ProfileShit;
+
+    /*public static function checkBirthday() {
+        if (TitleState.currentProfile != null) {
+            theProfile = TitleState.currentProfile;
+        }
+        if ()
+    } */
     public static function getProfileData(ProfileName:String) {
         if (ProfileDir_Exists) {
             if (getStatusOfJson(ProfileName).doesExist) {
