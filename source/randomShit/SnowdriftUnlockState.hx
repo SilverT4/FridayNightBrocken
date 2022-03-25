@@ -10,7 +10,7 @@ import options.SnowdriftStuff;
 import options.OptionsStateExtra;
 import DialogueBoxPsych;
 import LoadingState;
-
+using StringTools;
 /**For the Snowdrift menu. I want to make it so if you visit them a certain number amount of times, you unlock something new.*/
 class SnowdriftUnlockState extends MusicBeatState {
     var unlockedStuff:Array<String> = [];
@@ -35,7 +35,7 @@ class SnowdriftUnlockState extends MusicBeatState {
 
     function loadAndReplaceInBDayDia() {
         var bdayDialogue:DialogueFile = DumbUtil.parseSnowdriftChatter(Paths.snowdriftChatter('birthday'));
-
+        bdayDialogue.dialogue[2].text = bdayDialogue.dialogue[2].text.replace('player', TitleState.currentProfile.profileName);
     }
 
     function loadBdayDiaFromHardcode() {
