@@ -28,12 +28,12 @@ class FunkyBackground extends FlxSprite {
         @since March 2022 (Emo Engine 0.1.2)*/
     public function setColor(newColor:FlxColor, tweens:Bool, ?dur:Float):FunkyBackground {
         if (tweens && dur != null) {
-            funkyTween = FlxTween.tween(this, {"color": newColor}, dur, { onComplete: function(twn:FlxTween) {
+            funkyTween = FlxTween.color(this, dur, color, newColor, { onComplete: function(t:FlxTween) {
                 trace('pp');
             }});
         } else if (tweens && dur == null) {
             trace('default tween dur');
-            funkyTween = FlxTween.tween(this, {"color": newColor}, DEFAULT_DURATION, { onComplete: function(twn:FlxTween) {
+            FlxTween.color(this, DEFAULT_DURATION, color, newColor, { onComplete: function(t:FlxTween) {
                 trace('pp');
             }});
         } else {
