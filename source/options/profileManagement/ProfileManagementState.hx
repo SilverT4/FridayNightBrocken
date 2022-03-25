@@ -15,7 +15,7 @@ using StringTools;
 /**Profile management state. Coming soon:tm:
     @since March 2022 (Emo Engine 0.1.2)*/
 class ProfileManagementState extends MusicBeatState {
-    var optionList:Array<String> = ['Switch profile', 'Create new profile', 'Edit a profile', 'Edit your profile', 'Delete a profile'];
+    var optionList:Array<String> = ['Switch profile', 'Create new profile', 'Edit a profile', 'Edit your profile', 'Favourites manager', 'Delete a profile'];
     var options:FlxTypedGroup<Alphabet>;
     var removeIfAnon:String = 'Edit your profile';
     var removeIfNoProfiles:String = 'Edit a profile';
@@ -119,6 +119,8 @@ class ProfileManagementState extends MusicBeatState {
                 LoadingState.loadAndSwitchState(new ProfileSelectionState(0));
             case 'Delete a profile':
                 LoadingState.loadAndSwitchState(new ProfileSelectionState(1));
+            case 'Favourites manager':
+                LoadingState.loadAndSwitchState(new profile.ProfileFavouriteMenu());
         }
     }
 
@@ -140,6 +142,7 @@ class ProfileManagementState extends MusicBeatState {
     function doAnonRemove() {
         optionList.remove('Switch Profile');
         optionList.remove(removeIfAnon);
+        optionList.remove('Favourites manager');
     }
 
     function restartGame() {
