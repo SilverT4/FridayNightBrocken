@@ -129,7 +129,7 @@ class SelectChara extends MusicBeatState {
     /**idk if thisll work*/
     var bfInfos:Array<CharSelShit> = [];
     /**This contains a list of base game songs. With each new **base game** week, I'll update it.*/
-    var baseSongs:Array<String> = [
+    static public var baseSongs:Array<String> = [
         'tutorial',
         'bopeebo',
         'fresh',
