@@ -16,7 +16,8 @@ import HealthIcon;
 
 using StringTools;
 /**Gather your material gworls
-@since Emo Engine 0.1.2 (March 2022)*/
+@since Emo Engine 0.1.2 (March 2022)
+@deprecated This class is being replaced by FavCharState. Go gather your material gworls there!*/
 class FavouriteCharas extends MusicBeatState {
     public function new() {
         // if (!BussySave.seenFavCharExp) openSubState(new FavouriteCharExplanation());
