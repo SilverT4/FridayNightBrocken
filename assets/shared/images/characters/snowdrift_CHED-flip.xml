@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="snowdrift_CHED-flip.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="SD FLIP Sing_Left0000" x="0" y="0" width="368" height="519" frameX="-8" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0001" x="0" y="0" width="368" height="519" frameX="-8" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0002" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0003" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0004" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0005" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0006" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0007" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0008" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0009" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0010" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0011" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0012" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0013" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0014" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP Sing_Left0015" x="372" y="0" width="371" height="519" frameX="0" frameY="0" frameWidth="376" frameHeight="519"/>
+	<SubTexture name="SD FLIP idle0000" x="747" y="0" width="320" height="515" frameX="0" frameY="-15" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0001" x="747" y="0" width="320" height="515" frameX="0" frameY="-15" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0002" x="1071" y="0" width="316" height="519" frameX="-3" frameY="-13" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0003" x="1071" y="0" width="316" height="519" frameX="-3" frameY="-13" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0004" x="1391" y="0" width="314" height="522" frameX="-11" frameY="-10" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0005" x="1391" y="0" width="314" height="522" frameX="-11" frameY="-10" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0006" x="1709" y="0" width="316" height="532" frameX="-19" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0007" x="1709" y="0" width="316" height="532" frameX="-19" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0008" x="0" y="536" width="316" height="532" frameX="-17" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0009" x="0" y="536" width="316" height="532" frameX="-17" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0010" x="0" y="536" width="316" height="532" frameX="-17" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0011" x="0" y="536" width="316" height="532" frameX="-17" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0012" x="0" y="536" width="316" height="532" frameX="-17" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD FLIP idle0013" x="0" y="536" width="316" height="532" frameX="-17" frameY="0" frameWidth="335" frameHeight="532"/>
+	<SubTexture name="SD Sing_Down0000" x="320" y="536" width="374" height="468" frameX="0" frameY="-3" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0001" x="320" y="536" width="374" height="468" frameX="0" frameY="-3" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0002" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0003" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0004" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0005" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0006" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0007" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0008" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0009" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0010" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0011" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0012" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0013" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0014" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0015" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0016" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0017" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0018" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0019" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0020" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0021" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0022" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0023" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0024" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0025" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0026" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0027" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0028" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Down0029" x="698" y="536" width="366" height="473" frameX="-2" frameY="0" frameWidth="374" frameHeight="473"/>
+	<SubTexture name="SD Sing_Right0000" x="1068" y="536" width="293" height="530" frameX="0" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0001" x="1068" y="536" width="293" height="530" frameX="0" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0002" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0003" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0004" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0005" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0006" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0007" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0008" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0009" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0010" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0011" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0012" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0013" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0014" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0015" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0016" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0017" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0018" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0019" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0020" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0021" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0022" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0023" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0024" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0025" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0026" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0027" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0028" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0029" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0030" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0031" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0032" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0033" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0034" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0035" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0036" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0037" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0038" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0039" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0040" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0041" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0042" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0043" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0044" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0045" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0046" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0047" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0048" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0049" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0050" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0051" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0052" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0053" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0054" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0055" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0056" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0057" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0058" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0059" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0060" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Right0061" x="1365" y="536" width="291" height="530" frameX="-4" frameY="0" frameWidth="295" frameHeight="530"/>
+	<SubTexture name="SD Sing_Up0000" x="0" y="1072" width="416" height="521"/>
+	<SubTexture name="SD Sing_Up0001" x="0" y="1072" width="416" height="521"/>
+	<SubTexture name="SD Sing_Up0002" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0003" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0004" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0005" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0006" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0007" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0008" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0009" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0010" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0011" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0012" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0013" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD Sing_Up0014" x="420" y="1072" width="410" height="513" frameX="0" frameY="-5" frameWidth="416" frameHeight="521"/>
+	<SubTexture name="SD eduardo react0000" x="834" y="1072" width="316" height="532"/>
+	<SubTexture name="SD eduardo react0001" x="1154" y="1072" width="316" height="532"/>
+	<SubTexture name="SD eduardo react0002" x="1154" y="1072" width="316" height="532"/>
+	<SubTexture name="SD eduardo react0003" x="1154" y="1072" width="316" height="532"/>
+	<SubTexture name="SD eduardo react0004" x="1154" y="1072" width="316" height="532"/>
+	<SubTexture name="SD eduardo react0005" x="1154" y="1072" width="316" height="532"/>
+</TextureAtlas>

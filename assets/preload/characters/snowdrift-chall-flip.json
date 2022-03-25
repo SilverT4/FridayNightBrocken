@@ -1,0 +1,92 @@
+{
+	"animations": [
+		{
+			"loop": false,
+			"offsets": [
+				10,
+				-14
+			],
+			"anim": "singUP",
+			"fps": 24,
+			"name": "SD Sing_Up",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-74,
+				-60
+			],
+			"anim": "singDOWN",
+			"fps": 24,
+			"name": "SD Sing_Down",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-5,
+				0
+			],
+			"anim": "idle",
+			"fps": 24,
+			"name": "SD FLIP idle",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				50,
+				-13
+			],
+			"anim": "singLEFT",
+			"fps": 24,
+			"name": "SD FLIP Sing_Left",
+			"indices": []
+		},
+		{
+			"loop": false,
+			"offsets": [
+				-71,
+				-3
+			],
+			"anim": "singRIGHT",
+			"fps": 24,
+			"name": "SD Sing_Right",
+			"indices": []
+		},
+		{
+			"offsets": [
+				-22,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "what",
+			"loop": false,
+			"name": "SD eduardo"
+		}
+	],
+	"no_antialiasing": false,
+	"shitpost": true,
+	"image": "characters/snowdrift_CHED-flip",
+	"position": [
+		50,
+		160
+	],
+	"chartingButtonLabelTheme": 16448250,
+	"healthicon": "snowponent",
+	"chartingButtonColour": 16448250,
+	"flip_x": false,
+	"healthbar_colors": [
+		170,
+		204,
+		255
+	],
+	"camera_position": [
+		-230,
+		-40
+	],
+	"sing_duration": 4,
+	"scale": 1
+}
