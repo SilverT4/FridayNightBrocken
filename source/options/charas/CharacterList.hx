@@ -60,7 +60,7 @@ class CharacterList extends MusicBeatState {
                 colorArray.push(menuColor);
         }
 
-        bg.setColor(colorArray[0], true, 1.2);
+        bg.setColor(colorArray[0], true, 5);
 
         hint = new HintMessageAsset("Select a character!", 24, ClientPrefs.smallScreenFix);
         add(hint);
@@ -77,13 +77,15 @@ class CharacterList extends MusicBeatState {
         }
 
         if (controls.ACCEPT) {
-            trace('wip');
+            LoadingState.loadAndSwitchState(new CharacterTester(charList[curSelected]));
         }
 
         if (controls.BACK) {
             FlxG.sound.play(Paths.sound('cancelMenu'));
             LoadingState.loadAndSwitchState(new options.OptionsStateExtra());
         }
+
+        super.update(elapsed);
     }
     var curSelected:Int = 0;
     function changeSelection(change:Int = 0) {
@@ -117,5 +119,6 @@ class CharacterList extends MusicBeatState {
                         // item.setGraphicSize(Std.int(item.width));
                     }
                 }
+            bg.setColor(colorArray[curSelected], true, 1.2);
     }
 }
