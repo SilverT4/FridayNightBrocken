@@ -18,6 +18,8 @@ import lime.utils.Assets;
 import flixel.system.FlxSound;
 import openfl.utils.Assets as OpenFlAssets;
 import WeekData;
+import profile.FavUtil;
+import randomShit.util.SnowdriftUtil;
 #if MODS_ALLOWED
 import sys.FileSystem;
 #end
@@ -32,7 +34,7 @@ class FreeplayState extends MusicBeatState
 	private static var curSelected:Int = 0;
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
-
+	public static var usingFavsOnly:Bool = false;
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
 	var diffText:FlxText;
@@ -40,6 +42,8 @@ class FreeplayState extends MusicBeatState
 	var lerpRating:Float = 0;
 	var intendedScore:Int = 0;
 	var intendedRating:Float = 0;
+	var yourFavs:ProfileFavourite;
+	var yourSongs:Array<String> = [];
 
 	private var grpSongs:FlxTypedGroup<Alphabet>;
 	private var curPlaying:Bool = false;
@@ -55,6 +59,10 @@ class FreeplayState extends MusicBeatState
 		#if MODS_ALLOWED
 		Paths.destroyLoadedImages();
 		#end
+		if (TitleState.currentProfile != null) {
+			yourFavs = FavUtil.getFavs();
+			yourSongs = yourFavs.favouriteSongs;
+		}
 		
 		PlayState.isStoryMode = false;
 		WeekData.reloadWeekFiles(false);
@@ -82,7 +90,7 @@ class FreeplayState extends MusicBeatState
 				{
 					colors = [146, 113, 253];
 				}
-				addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
+				if (!usingFavsOnly || (usingFavsOnly && yourSongs.contains(song[0]))) addSong(song[0], i, song[1], FlxColor.fromRGB(colors[0], colors[1], colors[2]));
 			}
 		}
 		WeekData.setDirectoryFromWeek();
@@ -253,6 +261,7 @@ class FreeplayState extends MusicBeatState
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
+		var favToggler = FlxG.keys.justPressed.F;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 
@@ -266,6 +275,11 @@ class FreeplayState extends MusicBeatState
 		if (downP)
 		{
 			changeSelection(shiftMult);
+		}
+
+		if (favToggler) {
+			FreeplayState.usingFavsOnly = !FreeplayState.usingFavsOnly;
+			MusicBeatState.resetState();
 		}
 
 		if (controls.UI_LEFT_P)
@@ -342,11 +356,15 @@ class FreeplayState extends MusicBeatState
 			if(colorTween != null) {
 				colorTween.cancel();
 			}
+
+			if (SnowdriftUtil.birthdayOverride) {
+				PlayState.SONG.player2 = 'snowdrift-opponent';
+			}
 			
 			if (FlxG.keys.pressed.SHIFT){
 				LoadingState.loadAndSwitchState(new ChartingState());
 			} else if (FlxG.keys.pressed.ALT) {
-				PlayState.SONG.player1 = 'snowcon';
+				PlayState.SONG.player1 = 'snowdrift';
 				LoadingState.loadAndSwitchState(new PlayState());
 			}else{
 				if (!ClientPrefs.skipCharaSelect) LoadingState.loadAndSwitchState(new SelectChara());
