@@ -26,6 +26,11 @@ class HintMessageAsset extends FlxSprite {
         txt = new HintMessageText(0, this.y + 2, message, msgFontSize);
         ADD_ME = txt;
     }
+
+    public function setText(newText:String) {
+        txt.text = newText;
+        txt.fieldWidth = 0;
+    }
 }
 
 class HintMessageText extends FlxText {
