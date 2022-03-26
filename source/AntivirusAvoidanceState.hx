@@ -1,5 +1,6 @@
 package;
 
+import randomShit.util.SussyUtilities;
 import flixel.util.FlxTimer;
 import ProfileThingy.PrelaunchProfileState;
 import flixel.FlxG;
@@ -129,8 +130,17 @@ class AntivirusAvoidanceState extends FlxState {
             messageText.screenCenter();
             FlxG.sound.play(Paths.sound('balance-Done'), 1, false, null, true, function() {
                 DISABLE_SUS_FUNC = true;
+                SussyUtilities.FUNCTIONS_CEASED = true;
                 finishButton.revive();
             });
         });
+    }
+
+    override function update(elapsed:Float) {
+        //not keeping this
+        super.update(elapsed);
+        if (FlxG.keys.justPressed.SEVEN) {
+            FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackMenu()));
+        }
     }
 }
