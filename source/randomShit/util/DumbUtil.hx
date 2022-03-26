@@ -159,6 +159,28 @@ class DumbUtil {
         return eief;
     }
 
+    public static function getIcons(CharArray:Array<String>) {
+        var cjej:Dynamic = '';
+        var jjj:Array<String> = [];
+        for (char in CharArray) {
+            cjej = cast Json.parse(getRawFile(Paths.characterJson(char)));
+            jjj.push(cjej.healthicon);
+        }
+        return jjj;
+    }
+
+    public static function getBgRgbColor_Sub(Color:Array<Int>) {
+        return randomShit.util.ColorUtil.rgbaToHex(Color[0], Color[1], Color[2], 105);
+    }
+
+    public static function parseChars(CharNames:Array<String>):Array<CharacterFile> {
+        var lmao:Array<CharacterFile> = [];
+        for (char in CharNames) {
+            lmao.push(cast Json.parse(getRawFile(Paths.characterJson(char))));
+        }
+        return lmao;
+    }
+
     static function getIconFromWeek(songName:String) {
         var kefj = WeekData.weeksList;
         for (week in kefj) {
