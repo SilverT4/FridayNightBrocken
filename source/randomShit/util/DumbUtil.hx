@@ -168,9 +168,17 @@ class DumbUtil {
         }
         return jjj;
     }
-
+    /**convert RGB to a basic 0x69RRGGBB colour, likely useful for substates
+        @returns A hex color (ie 0x69420911)
+        @since March 2022 (Emo Engine 0.1.2)*/
     public static function getBgRgbColor_Sub(Color:Array<Int>) {
         return randomShit.util.ColorUtil.rgbaToHex(Color[0], Color[1], Color[2], 105);
+    }
+    /**Convert RGB to a hex colour for funkybg or anything else really
+        @returns A hex color (ie 0xFF696969)
+        @since March 2022 (Emo Engine 0.1.2)*/
+    public static function getBgRgbColor(Color:Array<Int>) {
+        return randomShit.util.ColorUtil.rgbaToHex(Color[0], Color[1], Color[2], 255);
     }
 
     public static function parseChars(CharNames:Array<String>):Array<CharacterFile> {
