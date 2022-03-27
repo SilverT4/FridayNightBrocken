@@ -1,5 +1,6 @@
 package randomShit.util;
 
+import flixel.FlxState;
 import openfl.events.IOErrorEvent;
 import openfl.events.Event;
 import openfl.net.FileReference;
@@ -25,6 +26,10 @@ class ProfileUtil {
 
     static var ProfileDir_Exists:Bool = SusSystem.exists('profiles');
     static var theProfile:ProfileShit;
+    static var validSetters:Array<Class<FlxState>> = [
+        TestProfileState,
+        ProfileSetupWizard
+    ];
 
     /*public static function checkBirthday() {
         if (TitleState.currentProfile != null) {
@@ -32,6 +37,14 @@ class ProfileUtil {
         }
         if ()
     } */
+
+    /**
+        **This function is called automatically by the Profile Selection and Setup Wizard states! There is no valid reason to call this function!**
+        @throws ProfileException If called by a state OTHER than the Profile Selection or Setup Wizard states.
+        @since March 2022 (Emo Engine 0.1.2)*/
+    public static function setUtilData(Profile:ProfileShit) {
+        theProfile = Profile;
+    }
     public static function getProfileData(ProfileName:String) {
         if (ProfileDir_Exists) {
             if (getStatusOfJson(ProfileName).doesExist) {
@@ -60,6 +73,10 @@ class ProfileUtil {
                 jsonPath: ''
             };
         }
+    }
+
+    public static function getPlayerName() {
+        return theProfile.profileName;
     }
 
     public static function getProfileList() {
