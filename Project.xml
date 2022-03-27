@@ -14,6 +14,18 @@
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
 	<!-- <app preloader="Preloader" resizable="true" /> -->
 	<app preloader="flixel.system.FlxPreloader" />
+	
+	<!-- ____________________________ iOS Bullshit _______________________________ -->
+	<section if="ios">
+		<architecture name="armv7" /> <!-- I mostly included this for my own iPad. I'd strongly recommend changing this to the architecture of your own iOS device. -->
+		<meta title="Emo Engine" /> <!-- I doubt "Friday Night Brocken: Emo Engine" would appear as it should on an iOS device. -->
+		<dependency name="Metal.framework" /> <!-- Xcode needs this for... SOME fucking reason. In order to compile properly. -->
+	</section>
+
+	<!-- __________________________ Android Bullshit _____________________________ -->
+	<section if="android">
+		<!-- this will be updated as i need to -->
+	</section>
 
 	<!--Minimum without FLX_NO_GAMEPAD: 11.8, without FLX_NO_NATIVE_CURSOR: 11.2-->
 	<set name="SWF_VERSION" value="11.8" />
@@ -50,7 +62,7 @@
 	<define name="MODS_ALLOWED" if="desktop" />
 	<define name="LUA_ALLOWED" if="desktop" />
 	<define name="ACHIEVEMENTS_ALLOWED" />
-	<define name="HAS_SYS_ENV_USER" if="sys" unless="mobile" />
+	<define name="HAS_SYS_ENV_USER" if="desktop" />
 	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
 	<define name="FARTLOG" if="desktop sussyBaka" /> <!-- i want to make code that only runs if i have it set. lmao-->
 	<define name="PSYCH_WATERMARKS"/> <!-- DELETE THIS TO REMOVE WATERMARKS ON TITLE SCREEN -->
@@ -181,8 +193,9 @@
 
 	<!--Place custom nodes like icons here (higher priority to override the HaxeFlixel icon)-->
 	
-	<icon path="art/icon16.png" size='16'/>
-	<icon path="art/icon32.png" size='32'/>
-	<icon path="art/icon64.png" size='64'/>
-	<icon path="art/iconOG.png" />
+	<icon path="art/icon16.png" size='16' unless="debug"/>
+	<icon path="art/icon32.png" size='32' unless="debug"/>
+	<icon path="art/icon64.png" size='64' unless="debug"/>
+	<icon path="art/iconOG.png" unless="debug"/>
+	<icon path="assets/preload/images/credits/decktop.png" if="debug" />
 </project>
