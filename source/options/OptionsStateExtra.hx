@@ -42,12 +42,12 @@ using StringTools;
  */
 class OptionsStateExtra extends MusicBeatState
 {
-	var options:Array<String> = ['Visit Snowdrift', 'Profile Management', 'Test Dialogue', 'Character List', 'Bonk Test', 'Hide Characters', #if debug 'Cvm Format Manager', #end 'Favourite Characters', 'Reset Save Data'];
-	var optionsOnPage:Array<String> = []; // this contains the options on the current page. lmao
+	var options:Array<String> = ['Visit Snowdrift', 'Profile Management', 'Test Dialogue', 'Character List', 'Bonk Test', 'Hide Characters', #if debug 'Cvm Format Manager', #end 'Listen to OST', 'Soundtrack Editor', 'Reset Save Data'];
+	/*var optionsOnPage:Array<String> = []; // this contains the options on the current page. lmao
 	static var startFrom:Int = 0; // FOR MULTIPLE PAGES!
 	static var endAt:Int = 5;
 	static var curPage:Int = 1;
-	var maxPages:Int = 0;
+	var maxPages:Int = 0; */
 	private var grpOptions:FlxTypedGroup<Alphabet>;
 	private static var curSelected:Int = 0;
 	public static var menuBG:FlxSprite;
@@ -74,8 +74,10 @@ class OptionsStateExtra extends MusicBeatState
 			case 'Cvm Format Manager':
 				openSubState(new options.CvmFormatManager());
 			#end
-			case 'Favourite Characters':
-				LoadingState.loadAndSwitchState(new options.FavouriteCharas());
+			case 'Listen to OST':
+				LoadingState.loadAndSwitchState(new randomShit.dumb.SoundtrackMenu());
+			case 'Soundtrack Editor':
+				LoadingState.loadAndSwitchState(new editors.soundtrack.BaseSoundtrackMenu());
 			case 'Profile Management':
 				LoadingState.loadAndSwitchState(new options.profileManagement.ProfileManagementState());
 			case 'Character List':
@@ -83,14 +85,14 @@ class OptionsStateExtra extends MusicBeatState
 		}
 	}
 
-	var selectorLeft:Alphabet;
-	var selectorRight:Alphabet;
+	//var selectorLeft:Alphabet;
+	//var selectorRight:Alphabet;
 
 	override function create() {
 		#if desktop
 		DiscordClient.changePresence("Options Menu", null);
 		#end
-		if (maxPages == 0) doMaxPages();
+		//if (maxPages == 0) doMaxPages();
 		var bg:FlxSprite = new FlxSprite().loadGraphic(Paths.image('menuDesat'));
 		bg.color = 0xFFa6d388;
 		bg.setGraphicSize(Std.int(bg.width * 1.1));
@@ -98,7 +100,7 @@ class OptionsStateExtra extends MusicBeatState
 		bg.screenCenter();
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
 		add(bg);
-		if (options.length >= 6) {
+		/*if (options.length >= 6) {
 			trace('penis');
 			#if debug
 			FlxG.log.warn('I LOVE LEAN!!!!!');
@@ -106,26 +108,23 @@ class OptionsStateExtra extends MusicBeatState
 			pageHint = new HintMessageAsset('Page ' + curPage + ' of ' + maxPages, 24, ClientPrefs.smallScreenFix);
 			add(pageHint);
 			add(pageHint.ADD_ME);
-		}
+		} */
 
 		grpOptions = new FlxTypedGroup<Alphabet>();
 		add(grpOptions);
-		for (i in startFrom...endAt) {
-			optionsOnPage.push(options[i]);
-		}
-		for (i in 0...optionsOnPage.length)
+		for (i in 0...options.length)
 		{
-			var optionText:Alphabet = new Alphabet(0, 0, optionsOnPage[i], true, false);
+			var optionText:Alphabet = new Alphabet(0, (70 * i), options[i], true, false);
 			trace(optionText.text);
-			optionText.screenCenter();
-			optionText.y += (100 * (i - (optionsOnPage.length / 2))) + 50;
+			optionText.isMenuItem = true;
+			optionText.targetY = i;
 			grpOptions.add(optionText);
 		}
 
-		selectorLeft = new Alphabet(0, 0, '>', true, false);
+		/*selectorLeft = new Alphabet(0, 0, '>', true, false);
 		add(selectorLeft);
 		selectorRight = new Alphabet(0, 0, '<', true, false);
-		add(selectorRight);
+		add(selectorRight); */
 
 		changeSelection();
 		ClientPrefs.saveSettings();
@@ -137,7 +136,7 @@ class OptionsStateExtra extends MusicBeatState
 		super.closeSubState();
 		ClientPrefs.saveSettings();
 	}
-	function doMaxPages() {
+	/*function doMaxPages() {
 		var curOpts:Int = 1;
 		var optsPerPage:Int = 6;
 		var optsInGroup:Int = 0;
@@ -151,7 +150,7 @@ class OptionsStateExtra extends MusicBeatState
 			}
 		}
 		maxPages = pageCount;
-	}
+	} */
 	override function update(elapsed:Float) {
 		super.update(elapsed);
 
@@ -162,13 +161,13 @@ class OptionsStateExtra extends MusicBeatState
 			changeSelection(1);
 		}
 
-		if (controls.UI_RIGHT_P) {
+		/*if (controls.UI_RIGHT_P) {
 			doPageChecks(1);
 		}
 
 		if (controls.UI_LEFT_P) {
 			doPageChecks(-1);
-		}
+		} */
 
 		if (controls.BACK) {
 			FlxG.sound.play(Paths.sound('cancelMenu'));
@@ -187,8 +186,8 @@ class OptionsStateExtra extends MusicBeatState
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)
-			curSelected = optionsOnPage.length - 1;
-		if (curSelected >= optionsOnPage.length)
+			curSelected = options.length - 1;
+		if (curSelected >= options.length)
 			curSelected = 0;
 
 		var bullShit:Int = 0;
@@ -200,16 +199,16 @@ class OptionsStateExtra extends MusicBeatState
 			item.alpha = 0.6;
 			if (item.targetY == 0) {
 				item.alpha = 1;
-				selectorLeft.x = item.x - 63;
+				/*selectorLeft.x = item.x - 63;
 				selectorLeft.y = item.y;
 				selectorRight.x = item.x + item.width + 15;
-				selectorRight.y = item.y;
+				selectorRight.y = item.y; */
 			}
 		}
 		FlxG.sound.play(Paths.sound('scrollMenu'));
 	}
 
-	function doPageChecks(PageChange:Int = 0) {
+	/*function doPageChecks(PageChange:Int = 0) {
 		if (options.length >= 6) {
 			switch(PageChange) {
 				case 1:
@@ -238,7 +237,7 @@ class OptionsStateExtra extends MusicBeatState
 			}
 			MusicBeatState.resetState(); // TO RESET STATE!
 		}
-	}
+	} */
 
 	function doSnowdriftSaveChecks() {
 		trace('have we unlocked anything new??');
