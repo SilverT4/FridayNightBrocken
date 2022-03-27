@@ -1,5 +1,8 @@
 package;
 
+import randomShit.util.SussyUtilities;
+import randomShit.dumb.InteractionThing.InteractionDialogues;
+import randomShit.util.ProfileUtil;
 import flixel.util.FlxColor;
 import ProfileThingy; // for the profile shit.
 import randomShit.util.HintMessageAsset;
@@ -47,6 +50,7 @@ class TestProfileState extends FlxState {
     public function new() {
         super();
         createSaveList();
+        if (!SussyUtilities.FUNCTIONS_CEASED) SussyUtilities.setupTheVars();
     }
 
     function createSaveList() {
@@ -127,11 +131,17 @@ class TestProfileState extends FlxState {
             }
         }
         
+        #if debug
+        if (FlxG.keys.justPressed.SEVEN) {
+            FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackMenu()));
+        }
+        #end
         super.update(elapsed);
     }
 
     function loadSelectedProfile() {
         TitleState.currentProfile = PARSED_LIST[curSelected];
+        ProfileUtil.setUtilData(PARSED_LIST[curSelected]);
         FlxG.sound.play(Paths.sound('confirmMenu'));
         new FlxTimer().start(0.7, function(j:FlxTimer) {
             trace('the j');

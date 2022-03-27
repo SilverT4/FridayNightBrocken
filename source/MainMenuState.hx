@@ -38,7 +38,7 @@ class MainMenuState extends MusicBeatState
 	public static var psychEngineVersion:String = '0.5.1'; //This is also used for Discord RPC
 	/**The version of Emo Engine. I hadn't added this until 0.1.1
 		@since March 2022 (Emo Engine 0.1.1)*/
-	public static var emoEngineVersion:String = '0.1.2'; // This will be displayed above the psych version text in the main menu.
+	public static var emoEngineVersion:String = '0.2.0'; // This will be displayed above the psych version text in the main menu.
 	public static var curSelected:Int = 0;
 
 	var menuItems:FlxTypedGroup<FlxSprite>;
