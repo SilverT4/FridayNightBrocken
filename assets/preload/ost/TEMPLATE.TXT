@@ -1,0 +1,11 @@
+{
+    "songName": "test",
+    "defaultOpponent": "bf-pixel",
+    "defaultBf": "bf",
+    "songColor": [
+        0,
+        0,
+        255
+    ],
+    "hasVoices": true
+}
