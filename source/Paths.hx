@@ -46,7 +46,8 @@ class Paths
 		'fonts',
 		'scripts',
 		'unlockable',
-		'selectable'
+		'selectable',
+		'ost'
 	];
 	#end
 

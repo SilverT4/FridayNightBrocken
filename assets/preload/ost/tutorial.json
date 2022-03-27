@@ -1,0 +1,11 @@
+{
+    "songName": "tutorial",
+    "defaultOpponent": "gf",
+    "defaultBf": "bf",
+    "songColor": [
+        165,
+		0,
+		77
+    ],
+    "hasVoices": true
+}
