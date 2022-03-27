@@ -40,6 +40,8 @@ class FavCharState extends MusicBeatState {
         add(grpOpts);
         for (i in 0...options.length) {
             var opt:Alphabet = new Alphabet(0, (70 * i), options[i], true, false);
+            opt.isMenuItem = true;
+            opt.targetY = i;
             grpOpts.add(opt);
         }
     }
@@ -67,11 +69,11 @@ class FavCharState extends MusicBeatState {
             case 'Any':
                 openSubState(new profile.subStates.FCAny());
             case 'BF':
-                trace('wip');
+                openSubState(new profile.subStates.FavBFChar());
             case 'GF':
-                trace('wip');
+                openSubState(new profile.subStates.FavGFChar());
             case 'Opponent':
-                trace('wip');
+                openSubState(new profile.subStates.FavOpponChar());
             case 'Reset':
                 trace('wip');
             case 'Done':
