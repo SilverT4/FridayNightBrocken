@@ -184,9 +184,18 @@ class DumbUtil {
     public static function parseChars(CharNames:Array<String>):Array<CharacterFile> {
         var lmao:Array<CharacterFile> = [];
         for (char in CharNames) {
-            lmao.push(cast Json.parse(getRawFile(Paths.characterJson(char))));
+            if (actuallyExists(Paths.characterJson(char))) {
+                lmao.push(cast Json.parse(getRawFile(Paths.characterJson(char))));
+            } else {
+                lmao.push(cast Json.parse(getRawFile(Paths.characterJson('cyan'))));
+            }
         }
         return lmao;
+    }
+
+    public static function getBarColor(CharName:String) {
+        var emm = parseChars([CharName])[0];
+        return randomShit.util.ColorUtil.rgbToHex(emm.healthbar_colors[0], emm.healthbar_colors[1], emm.healthbar_colors[2]);
     }
 
     static function getIconFromWeek(songName:String) {
