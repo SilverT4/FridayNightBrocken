@@ -167,7 +167,7 @@ class SoundtrackMenu extends MusicBeatState {
         songBar.createFilledBar(0xFF696969, 0xFFA6D388);
         add(songBar);
         songBar.kill();
-        bfIcon = new HealthIcon(playerIcons_Bf[0]);
+        bfIcon = new HealthIcon(playerIcons_Bf[0], true);
         bfIcon.y = songBar.y - (bfIcon.height / 2);
         add(bfIcon);
         bfIcon.kill();
@@ -210,6 +210,7 @@ class SoundtrackMenu extends MusicBeatState {
         dadIcon.changeIcon(playerIcons_Dad[curSelected]);
         bfIcon.changeIcon(playerIcons_Bf[curSelected]);
         songBar.createFilledBar(DumbUtil.getBarColor(songList_Full[curSelected].defaultOpponent), DumbUtil.getBarColor(songList_Full[curSelected].defaultBf));
+        songBar.updateBar();
     }
 
     function doStopThings() {
@@ -305,7 +306,7 @@ class SoundtrackMenu extends MusicBeatState {
         }
 
         if (playingSong) {
-            songPos = 1 - (instrumentals[curSelected].time / instrumentals[curSelected].length);
+            songPos = (instrumentals[curSelected].time / instrumentals[curSelected].length);
             if (controls.UI_LEFT_P) {
                 seekInSong(-5000);
             }
