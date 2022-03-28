@@ -33,14 +33,20 @@ typedef OSTData = {
     var songName:String;
     /**The default opponent of your song.*/
     var defaultOpponent:String;
+    /**What icon should the song show for the opponent while it's playing?*/
+    var dadIcon:String;
     /**The default bf of your song.*/
     var defaultBf:String;
+    /**What icon should the song show for bf while it's playing?*/
+    var bfIcon:String;
     /**The background colour of your song in RGB format.*/
     var songColor:Array<Int>;
     /**Whether the song has a vocal track.*/
     var hasVoices:Bool;
 }
 /**A menu for a list of your soundtracks. Also includes the base game songs.
+
+@see SoundtrackUtil, located in `randomShit.util` (Provides utilities for this class)
 @since March 2022 (Emo Engine 0.1.2)*/
 class SoundtrackMenu extends MusicBeatState {
     var songList_Full:Array<OSTData> = [];
@@ -50,7 +56,7 @@ class SoundtrackMenu extends MusicBeatState {
     var bgColorList:Array<FlxColor> = [];
     var playerIcons_Dad:Array<String> = [];
     var playerIcons_Bf:Array<String> = [];
-    var songBarBg:FlxSprite;
+    var songBarBg:AttachedSprite;
     var songBar:FlxBar;
     var bg:FunkyBackground;
     var dadIcon:HealthIcon;
@@ -65,6 +71,9 @@ class SoundtrackMenu extends MusicBeatState {
     var songPos:Float = 0;
     var timeHint:HintMessageAsset;
     var curSong:String = '';
+    var enteringMusic:FlxSound;
+    var opponentColors:Map<String, Array<Int>> = new Map();
+    var bfColors:Map<String, Array<Int>> = new Map();
     public function new() {
         /*baseSongInfos = [
             ["Tutorial", "gf", "bf", getIconColorFromFile('gf')],
@@ -93,6 +102,7 @@ class SoundtrackMenu extends MusicBeatState {
         /*for (i in 0...18) {
             songHasVoices.push(true);
         } */
+        enteringMusic = FlxG.sound.music;
         songList_Full = SoundtrackUtil.getSoundtrackList();
         for (song in songList_Full) {
             #if debug
@@ -135,7 +145,7 @@ class SoundtrackMenu extends MusicBeatState {
             trace('Adding song ' + song + ' of ' + songList_Full.length + ': ' + songList_Full[song].songName);
             FlxG.log.notice('Adding song ' + song + ' of ' + songList_Full.length + ': ' + songList_Full[song].songName);
 
-            var icon:HealthIcon = new HealthIcon(songList_Full[song].defaultOpponent);
+            var icon:HealthIcon = new HealthIcon(songList_Full[song].dadIcon);
             icon.sprTracker = jej;
             add(icon);
             iconArray.push(icon);
@@ -143,22 +153,31 @@ class SoundtrackMenu extends MusicBeatState {
             var meena:FlxColor = DumbUtil.getBgRgbColor(songList_Full[song].songColor);
             bgColorList.push(meena);
 
-            var player2_Icon:String = DumbUtil.parseChars([songList_Full[song].defaultOpponent])[0].healthicon;
-            var player1_Icon:String = DumbUtil.parseChars([songList_Full[song].defaultBf])[0].healthicon;
+            var player2_Icon:String = songList_Full[song].dadIcon;
+            opponentColors.set(songList_Full[song].defaultOpponent, DumbUtil.parseChars([songList_Full[song].defaultOpponent])[0].healthbar_colors);
+            var player1_Icon:String = songList_Full[song].bfIcon;
+            bfColors.set(songList_Full[song].defaultBf, DumbUtil.parseChars([songList_Full[song].defaultBf])[0].healthbar_colors);
 
             playerIcons_Dad.push(player2_Icon);
             playerIcons_Bf.push(player1_Icon);
             var instrumentalTrack:FlxSound = new FlxSound();
             instrumentalTrack.loadEmbedded(Paths.inst(Paths.formatToSongPath(songList_Full[song].songName)));
+            instrumentalTrack.play();
+            instrumentalTrack.pause(); // idk if thisll do much lmao
             instrumentals.push(instrumentalTrack);
+            FlxG.sound.list.add(instrumentalTrack);
             var vocalTrack:FlxSound = new FlxSound();
             trace(Paths.inst(songList_Full[song].songName.toLowerCase()));
             if (songHasVoices[song]) vocalTrack.loadEmbedded(Paths.voices(Paths.formatToSongPath(songList_Full[song].songName))) else vocalTrack.loadEmbedded(Paths.sound("introGo"));
+            vocalTrack.play();
+            vocalTrack.pause();
             vocalTracks.push(vocalTrack);
+            FlxG.sound.list.add(vocalTrack);
         }
         eduardoIcon = new HealthIcon("eduardo");
-        songBarBg = new FlxSprite(0, 50).loadGraphic(Paths.image("healthBar"));
+        songBarBg = new AttachedSprite("healthBar");
         songBarBg.screenCenter(X);
+        songBarBg.y = FlxG.height - 50;
         songBarBg.scrollFactor.set();
         add(songBarBg);
         songBarBg.kill();
@@ -166,6 +185,7 @@ class SoundtrackMenu extends MusicBeatState {
         songBar.scrollFactor.set();
         songBar.createFilledBar(0xFF696969, 0xFFA6D388);
         add(songBar);
+        songBarBg.sprTracker = songBar;
         songBar.kill();
         bfIcon = new HealthIcon(playerIcons_Bf[0], true);
         bfIcon.y = songBar.y - (bfIcon.height / 2);
@@ -174,6 +194,7 @@ class SoundtrackMenu extends MusicBeatState {
 
         dadIcon = new HealthIcon(playerIcons_Dad[0]);
         dadIcon.y = songBar.y - (dadIcon.height / 2);
+        dadIcon.animation.curAnim.curFrame = 1;
         add(dadIcon);
         eduardoIcon.y = dadIcon.y;
         add(eduardoIcon);
@@ -197,19 +218,23 @@ class SoundtrackMenu extends MusicBeatState {
         dadIcon.revive();
         bfIcon.revive();
         reloadIcons();
-        playingSong = true;
+        bg.setColor(DumbUtil.getBgRgbColor(SongData.songColor), true, 0.7);
         FlxG.sound.music.fadeOut(0.7, 0, { function(h:FlxTween) {
-            instrumentals[curSelected].play(false, 0, 0);
-            instrumentals[curSelected].onComplete = doStopThings;
-            vocalTracks[curSelected].play(false, 0, 0);
+            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].time = 0;
+            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].resume();
+            curLength = FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].length;
+            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].onComplete = doStopThings;
+            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].time = 0;
+            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].resume();
             FlxG.sound.music.pause();
+            playingSong = true;
         }});
     }
 
     function reloadIcons() {
         dadIcon.changeIcon(playerIcons_Dad[curSelected]);
         bfIcon.changeIcon(playerIcons_Bf[curSelected]);
-        songBar.createFilledBar(DumbUtil.getBarColor(songList_Full[curSelected].defaultOpponent), DumbUtil.getBarColor(songList_Full[curSelected].defaultBf));
+        songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[dadIcon.getCharacter()]), DumbUtil.makeColorFromRGB(bfColors[bfIcon.getCharacter()]));
         songBar.updateBar();
     }
 
@@ -229,16 +254,24 @@ class SoundtrackMenu extends MusicBeatState {
         songBar.kill();
         dadIcon.kill();
         bfIcon.kill();
+        curTime = 0;
+        curLength = 0;
+        bg.setColor(DumbUtil.getBgRgbColor(songList_Full[0].songColor), true, 0.7);
         playingSong = false;
     }
+    var curTime:Float = 0;
+    var curLength:Float = 0;
     /**This just switches icon to eduardo and back. lmao*/
     function doIconEgg() {
         if (bfIcon.getCharacter() == 'eduardo') {
             bfIcon.changeIcon(playerIcons_Bf[curSelected]);
-            songBar.createFilledBar(DumbUtil.getBarColor(songList_Full[curSelected].defaultOpponent), DumbUtil.getBarColor(songList_Full[curSelected].defaultBf));
+            songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[dadIcon.getCharacter()]), DumbUtil.makeColorFromRGB(bfColors[bfIcon.getCharacter()]));
         } else {
             bfIcon.changeIcon('eduardo');
-            songBar.createFilledBar(DumbUtil.getBarColor(songList_Full[curSelected].defaultOpponent), DumbUtil.getBarColor("eduardo"));
+            var eduardoColors:Array<Int> = [17,
+                113,
+                43];
+            songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[dadIcon.getCharacter()]), DumbUtil.makeColorFromRGB(eduardoColors));
         }
     }
     function seekInSong(seek:Int) {
@@ -247,19 +280,19 @@ class SoundtrackMenu extends MusicBeatState {
     }
 
     function doIconStuff() {
-        if (songBar.percent >= 80) {
-            if (dadIcon.sprTracker == null) dadIcon.animation.curAnim.curFrame = 1;
+        if (songPos >= 0.8) {
+            if (dadIcon.x == songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01)) - (dadIcon.width - 26)) dadIcon.animation.curAnim.curFrame = 1;
             if (eduardoIcon.alive) eduardoIcon.animation.curAnim.curFrame = 1;
         } else {
-            if (dadIcon.sprTracker == null) dadIcon.animation.curAnim.curFrame = 0;
+            if (dadIcon.x == songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01)) - (dadIcon.width - 26)) dadIcon.animation.curAnim.curFrame = 0;
             if (eduardoIcon.alive) eduardoIcon.animation.curAnim.curFrame = 0;
         }
-        if (songBar.percent <= 20) {
+        if (songPos <= 0.2) {
             bfIcon.animation.curAnim.curFrame = 1;
             if (dadIcon.sprTracker == bfIcon) dadIcon.animation.curAnim.curFrame = 1;
         } else {
             bfIcon.animation.curAnim.curFrame = 0;
-            if (dadIcon.sprTracker == bfIcon) dadIcon.animation.curAnim.curFrame = 1;
+            if (dadIcon.sprTracker == bfIcon) dadIcon.animation.curAnim.curFrame = 0;
         }
     }
 
@@ -306,12 +339,18 @@ class SoundtrackMenu extends MusicBeatState {
         }
 
         if (playingSong) {
-            songPos = (instrumentals[curSelected].time / instrumentals[curSelected].length);
+            doIconStuff();
+            curTime = FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].time;
+            songPos = (curTime / curLength);
             if (controls.UI_LEFT_P) {
                 seekInSong(-5000);
             }
             if (controls.UI_RIGHT_P) {
                 seekInSong(5000);
+            }
+            if (controls.ACCEPT) {
+                if (!FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].playing) FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].resume();
+                else FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].pause();
             }
             if (controls.BACK) {
                 doStopThings();
@@ -324,7 +363,7 @@ class SoundtrackMenu extends MusicBeatState {
 		    if (dadIcon.sprTracker == null) dadIcon.x = songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01)) - (dadIcon.width - 26);
             updateTimeHint();
             if (curSong.toLowerCase() == 'challeng-edd') {
-                if (FlxStringUtil.formatTime(instrumentals[curSelected].time / 1000) == "1:15") {
+                if (FlxStringUtil.formatTime(curTime / 1000) == "1:15") {
                     eduardoIcon.revive();
                     dadIcon.sprTracker = bfIcon;
                     dadIcon.setGraphicSize(Std.int(dadIcon.width * 0.7));
@@ -338,8 +377,8 @@ class SoundtrackMenu extends MusicBeatState {
     }
 
     function updateTimeHint() {
-        var curTimeFormat = FlxStringUtil.formatTime(instrumentals[curSelected].time / 1000);
-        var lengthFormat = FlxStringUtil.formatTime(instrumentals[curSelected].length / 1000);
-        timeHint.setText("Currently playing: " + songList_Full[curSelected].songName + " | " + curTimeFormat + " / " + lengthFormat);
+        var curTimeFormat = FlxStringUtil.formatTime(curTime / 1000);
+        var lengthFormat = FlxStringUtil.formatTime(curLength / 1000);
+        timeHint.setText("Currently playing: " + songList_Full[curSelected].songName + " | " + curTimeFormat + " / " + lengthFormat #if debug + ' | ' + songPos + '(' + curTime + ')' #end);
     }
 }
