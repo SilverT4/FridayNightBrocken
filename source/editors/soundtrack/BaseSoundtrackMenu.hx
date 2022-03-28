@@ -34,7 +34,7 @@ class BaseSoundtrackMenu extends MusicBeatState {
             optionText.isMenuItem = true;
             optionText.targetY = opt;
             #if debug
-            FlxG.log.notice("Adding option " + opt + " of " + options.length + ": " + options[opt]);
+            FlxG.log.notice("Adding option " + (opt + 1) + " of " + options.length + ": " + options[opt]);
             #end
             grpOptions.add(optionText);
         }
@@ -61,8 +61,7 @@ class BaseSoundtrackMenu extends MusicBeatState {
     function openSelectedMenu() {
         switch (options[curSelected]) {
             case "Setup New OST Data":
-                FlxG.sound.play(Paths.sound('errorOops'));
-                FlxG.log.warn("This state isn't ready yet. What are you doing, " + Sys.getEnv(#if windows "USERNAME" #else "USER" #end) + "?");
+                LoadingState.loadAndSwitchState(new editors.soundtrack.NewSoundtrackState());
             case "Modify Existing OST Data":
                 FlxG.sound.play(Paths.sound('errorOops'));
                 FlxG.log.warn("This state isn't ready yet. What are you doing, " + Sys.getEnv(#if windows "USERNAME" #else "USER" #end) + "?");

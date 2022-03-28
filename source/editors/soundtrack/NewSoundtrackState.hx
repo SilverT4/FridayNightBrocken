@@ -22,7 +22,11 @@ class NewSoundtrackState extends MusicBeatState {
         "Song name",
         "Default opponent",
         "Default bf",
+        "Opponent icon",
+        "Bf icon",
         "Background color",
+        "Toggle vocal track",
+        "Modify icon changes",
         "Exit"
     ];
     var templateData:OSTData = {
@@ -33,6 +37,16 @@ class NewSoundtrackState extends MusicBeatState {
             69,
             69,
             69
+        ],
+        hasVoices: false,
+        bfIcon: "bf",
+        dadIcon: "gf",
+        iconChanges: [
+            {
+                time_ms: 690,
+                changeTarget: "dad",
+                newIcon: "coldfront"
+            }
         ]
     };
     public static var currentData:OSTData;
@@ -107,8 +121,13 @@ class NewSoundtrackState extends MusicBeatState {
             case "Background color":
                 FlxG.sound.play(Paths.sound('errorOops'));
                 #if debug FlxG.log.warn("What are you doing, " + Sys.getEnv(#if windows "USERNAME" #else "USER" #end)); #end
+            case "Toggle vocal track":
+                currentData.hasVoices = !currentData.hasVoices;
             case "Exit":
                 doExitConfirmation();
+            default:
+                FlxG.sound.play(Paths.sound('errorOops'));
+                #if debug FlxG.log.warn("What are you doing, " + Sys.getEnv(#if windows "USERNAME" #else "USER" #end)); #end
         }
     }
 
