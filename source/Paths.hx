@@ -67,13 +67,26 @@ class Paths
 		#end
 	}
 
+	public static function icon(key:String) {
+		#if MODS_ALLOWED
+		if (fileExists('images/icons/$key.png', IMAGE, false)) {
+			return modsImages('icons/$key');
+		}
+		else {
+			return getPreloadPath('images/icons/$key');
+		}
+		#else
+		return image('icons/$key', "preload"); // PRELOAD BECAUSE THAT'S WHERE ICONS ARE STORED!!
+		#end
+	}
+
 	static public var currentModDirectory:String = '';
 	static var currentLevel:String;
 	static public function setCurrentLevel(name:String)
 	{
 		currentLevel = name.toLowerCase();
 	}
-	static public function ocJson(name:String) {
+	static public function ocJson(name:String) { // TODO: Rework the OC shit!!
 		if (!FileSystem.exists('assets/OC/' + name + '.json')) {
 			return name;
 		}
@@ -154,13 +167,23 @@ class Paths
 		return getPath('data/$key.json', TEXT, library);
 	}
 
-	inline static public function characterJson(key:String, ?library:String) {
-		if (!FileSystem.exists(modFolders('characters/$key.json'))) {
-			return getPath('characters/$key.json', TEXT, library);
-		} else {
-			return modFolders('characters/$key.json');
+	static public function characterJson(key:String, ?library:String) {
+		var PRELOAD_CHAR_DIR:String = 'assets/characters/';
+		var BASE_MOD_CHAR_DIR:String = 'mods/characters/';
+		var CUR_DIR_MOD_CHAR_DIR:String = 'mods/$currentModDirectory/characters/';
+		var THE_SHIT:String = '';
+		#if MODS_ALLOWED
+		if (currentModDirectory.length >= 1 && FileSystem.exists(CUR_DIR_MOD_CHAR_DIR + key + '.json')) {
+			THE_SHIT = CUR_DIR_MOD_CHAR_DIR + key + '.json';
+		} else if (FileSystem.exists(BASE_MOD_CHAR_DIR + key + '.json')) {
+			THE_SHIT = BASE_MOD_CHAR_DIR + key + '.json';
 		}
-
+		else #end if (FileSystem.exists(PRELOAD_CHAR_DIR + key + '.json')) {
+			THE_SHIT = PRELOAD_CHAR_DIR + key + '.json';
+		} else {
+			THE_SHIT = getPath('characters/bf.json', TEXT);
+		}
+		return THE_SHIT;
 	}
 
 	inline static public function modsCharacterJson(key:String, ?library:String) {
@@ -465,6 +488,10 @@ class Paths
 
 	inline static public function modsTxt(key:String) {
 		return modFolders('images/' + key + '.txt');
+	}
+
+	inline static public function modsCharFile(key:String) {
+		if (fileExists('characters/$key.json', TEXT, "preload")) return getPreloadPath('characters/$key.json') else return modFolders('characters/' + key + '.json');
 	}
 
 	static public function modFolders(key:String) {
