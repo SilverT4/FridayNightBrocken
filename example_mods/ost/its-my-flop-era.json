@@ -1,0 +1,11 @@
+{
+    "songName": "Its My Flop Era",
+    "defaultOpponent": "cyan",
+    "defaultBf": "cupcakke",
+    "songColor": [
+        20,
+		37,
+		135
+    ],
+    "hasVoices": true
+}
