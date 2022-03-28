@@ -43,6 +43,14 @@ typedef OSTData = {
     var songColor:Array<Int>;
     /**Whether the song has a vocal track.*/
     var hasVoices:Bool;
+    /**Change the icons at certain points in the song. Leave this null if you want to keep the icons as is throughout.*/
+    var iconChanges:Array<IconChange>;
+}
+
+typedef IconChange = {
+    var time_ms:Int;
+    var changeTarget:String; // DAD OR BF
+    var newIcon:String;
 }
 /**A menu for a list of your soundtracks. Also includes the base game songs.
 
@@ -74,6 +82,9 @@ class SoundtrackMenu extends MusicBeatState {
     var enteringMusic:FlxSound;
     var opponentColors:Map<String, Array<Int>> = new Map();
     var bfColors:Map<String, Array<Int>> = new Map();
+    var msTimes:Array<Float> = [];
+    var chTargets:Array<String> = [];
+    var newIcons:Array<String> = [];
     public function new() {
         /*baseSongInfos = [
             ["Tutorial", "gf", "bf", getIconColorFromFile('gf')],
@@ -121,14 +132,14 @@ class SoundtrackMenu extends MusicBeatState {
         var penis = ej.getColorInfo();
         //splitToRgb(penis);
         return splitToRgb(penis);
-    }
+    } */
 
     function splitToRgb(ColorInfo:String) {
         var eheh = ColorInfo.split('\n');
         var meme = eheh[1].split(': ');
         trace(meme);
         return [Std.parseInt(meme[2].replace(' Green', '')), Std.parseInt(meme[3].replace(' Blue', '')), Std.parseInt(meme[4])];
-    }*/
+    }
 
     override function create() {
         bg = new FunkyBackground();
@@ -154,9 +165,9 @@ class SoundtrackMenu extends MusicBeatState {
             bgColorList.push(meena);
 
             var player2_Icon:String = songList_Full[song].dadIcon;
-            opponentColors.set(songList_Full[song].defaultOpponent, DumbUtil.parseChars([songList_Full[song].defaultOpponent])[0].healthbar_colors);
+            opponentColors.set(player2_Icon, DumbUtil.parseChars([player2_Icon])[0].healthbar_colors);
             var player1_Icon:String = songList_Full[song].bfIcon;
-            bfColors.set(songList_Full[song].defaultBf, DumbUtil.parseChars([songList_Full[song].defaultBf])[0].healthbar_colors);
+            bfColors.set(player1_Icon, DumbUtil.parseChars([player1_Icon])[0].healthbar_colors);
 
             playerIcons_Dad.push(player2_Icon);
             playerIcons_Bf.push(player1_Icon);
@@ -174,6 +185,8 @@ class SoundtrackMenu extends MusicBeatState {
             vocalTracks.push(vocalTrack);
             FlxG.sound.list.add(vocalTrack);
         }
+        trace(opponentColors);
+        trace(bfColors);
         eduardoIcon = new HealthIcon("eduardo");
         songBarBg = new AttachedSprite("healthBar");
         songBarBg.screenCenter(X);
@@ -218,6 +231,20 @@ class SoundtrackMenu extends MusicBeatState {
         dadIcon.revive();
         bfIcon.revive();
         reloadIcons();
+        if (SongData.iconChanges != null) {
+            for (iconChange in SongData.iconChanges) {
+                msTimes.push(iconChange.time_ms);
+                chTargets.push(iconChange.changeTarget);
+                newIcons.push(iconChange.newIcon);
+                var ej:FlxColor = CoolUtil.dominantColor(new HealthIcon(iconChange.newIcon));
+                var penis = ej.getColorInfo();
+                if (iconChange.changeTarget == 'dad') {
+                    opponentColors.set(iconChange.newIcon, splitToRgb(penis));
+                } else {
+                    bfColors.set(iconChange.newIcon, splitToRgb(penis));
+                }
+            }
+        }
         bg.setColor(DumbUtil.getBgRgbColor(SongData.songColor), true, 0.7);
         FlxG.sound.music.fadeOut(0.7, 0, { function(h:FlxTween) {
             FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].time = 0;
@@ -234,7 +261,9 @@ class SoundtrackMenu extends MusicBeatState {
     function reloadIcons() {
         dadIcon.changeIcon(playerIcons_Dad[curSelected]);
         bfIcon.changeIcon(playerIcons_Bf[curSelected]);
-        songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[dadIcon.getCharacter()]), DumbUtil.makeColorFromRGB(bfColors[bfIcon.getCharacter()]));
+        trace(dadIcon.getCharacter());
+        trace(bfIcon.getCharacter());
+        songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[playerIcons_Dad[curSelected]]), DumbUtil.makeColorFromRGB(bfColors[playerIcons_Bf[curSelected]]));
         songBar.updateBar();
     }
 
@@ -258,6 +287,18 @@ class SoundtrackMenu extends MusicBeatState {
         curLength = 0;
         bg.setColor(DumbUtil.getBgRgbColor(songList_Full[0].songColor), true, 0.7);
         playingSong = false;
+        if (msTimes.length >= 1) {
+            msTimes = null;
+            msTimes = [];
+        }
+        if (chTargets.length >= 1) {
+            chTargets = null;
+            chTargets = [];
+        }
+        if (newIcons.length >= 1) {
+            newIcons = null;
+            newIcons = [];
+        }
     }
     var curTime:Float = 0;
     var curLength:Float = 0;
@@ -294,6 +335,42 @@ class SoundtrackMenu extends MusicBeatState {
             bfIcon.animation.curAnim.curFrame = 0;
             if (dadIcon.sprTracker == bfIcon) dadIcon.animation.curAnim.curFrame = 0;
         }
+        if (msTimes.length >= 1) {
+            if (curTime >= msTimes[0]) {
+                changeNewIcons(chTargets[0], newIcons[0]);
+                msTimes.remove(curTime);
+                chTargets.remove(chTargets[0]);
+                newIcons.remove(newIcons[0]);
+            }
+        }
+    }
+
+    function changeNewIcons(Target:String, Icon:String) {
+        if (Target == 'dad') {
+            dadIcon.changeIcon(Icon);
+            reloadBarColors();
+        }
+        if (Target == 'bf') {
+            bfIcon.changeIcon(Icon);
+            reloadBarColors();
+        }
+    }
+
+    function reloadBarColors() {
+        var newColor_Dad:FlxColor = 0xFF909090;
+        var newColor_Bf:FlxColor = 0xFF696969;
+        if (dadIcon.getCharacter() == playerIcons_Dad[curSelected]) {
+            newColor_Dad = DumbUtil.makeColorFromRGB(opponentColors[dadIcon.getCharacter()]);
+        } else {
+            newColor_Dad = CoolUtil.dominantColor(dadIcon);
+        }
+        if (bfIcon.getCharacter() == playerIcons_Bf[curSelected]) {
+            newColor_Bf = DumbUtil.makeColorFromRGB(opponentColors[bfIcon.getCharacter()]);
+        } else {
+            newColor_Bf = CoolUtil.dominantColor(bfIcon);
+        }
+        songBar.createFilledBar(newColor_Dad, newColor_Bf);
+        songBar.updateBar();
     }
 
     function changeSelection(change:Int = 0) {
