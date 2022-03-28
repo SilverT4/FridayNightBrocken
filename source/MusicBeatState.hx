@@ -142,6 +142,7 @@ class MusicBeatState extends FlxUIState
 		if (HealthIconFromGrid.instance != null && HealthIconFromGrid.instance.loadin) {
 			HealthIconFromGrid.instance.loadin = false;
 		}
+		if (FocusLostScreen.isOpen) FocusLostScreen.weGotFocus();
 	}
 
 	function onWindowFocusOut():Void {
@@ -149,5 +150,6 @@ class MusicBeatState extends FlxUIState
 			trace('ewwwww save dialog');
 			// openSubState(new SavingYourBullshit('blitz'));
 		}
+		openSubState(new FocusLostScreen());
 	}
 }
