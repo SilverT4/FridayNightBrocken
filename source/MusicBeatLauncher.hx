@@ -13,7 +13,7 @@ class MusicBeatLauncher extends MusicBeatState {
         super();
         if (PlayerSettings.player1 == null) {
             PlayerSettings.init(); // JUST IN CASE!!
-            #if debug flixel.FlxG.log.warn('HEY!! Just a very quick heads up: You forgot to initalise the player settings! The launcher you called has done it for you, but please be careful in the future!'); #end
+            #if debug flixel.FlxG.log.add('HEY!! Just a very quick heads up: You forgot to initalise the player settings! The launcher you called has done it for you, but please be careful in the future!'); #end
         }
         NewState = Newstate;
     }
