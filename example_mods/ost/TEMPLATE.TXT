@@ -1,0 +1,11 @@
+{
+    "songName": "AppleCore",
+    "defaultOpponent": "bandu",
+    "defaultBf": "meta",
+    "songColor": [
+        24,
+		175,
+		11
+    ],
+    "hasVoices": true
+}
