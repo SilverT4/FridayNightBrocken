@@ -165,17 +165,41 @@ class DumbUtil {
         var cjej:Dynamic = '';
         var jjj:Array<String> = [];
         for (char in CharArray) {
-            var charFilePath = Paths.characterJson(char);
-            cjej = cast Json.parse(getRawFile(charFilePath));
-            if (char == 'senpai') {
-                jjj.push('senpai-pixel');
-            } else if (char == 'spirit') {
-                jjj.push('spirit-pixel');
-            } else {
-                jjj.push(cjej.healthicon);
-            }
+            jjj.push(checkIcon(char));
         }
         return jjj;
+    }
+
+    static function checkIcon(Icon:String) {
+        var BASE_CHAR_LIST = FileSystem.readDirectory('assets/characters');
+        var MOD_CHAR_LIST = FileSystem.readDirectory('mods/characters');
+        var CD_MOD_CHAR_LIST = FileSystem.readDirectory('mods/' + Paths.currentModDirectory + '/characters');
+        var GAYASS_ICONS:Map<String, String> = new Map();
+        var GAYASS_COLORS:Array<Array<Int>> = [];
+        for (char in BASE_CHAR_LIST) {
+            var gay:CharacterFile = cast Json.parse(getRawFile('assets/characters/$char'));
+            GAYASS_ICONS.set(snipName(char), gay.healthicon);
+            //GAYASS_COLORS.push(gay.healthbar_colors);
+        }
+        for (char in MOD_CHAR_LIST) {
+            if (!char.contains('txt')) {
+                var gay:CharacterFile = cast Json.parse(getRawFile('mods/characters/$char'));
+                GAYASS_ICONS.set(snipName(char), gay.healthicon);
+                //GAYASS_COLORS.push(gay.healthbar_colors);
+            }
+        }
+        if (Paths.currentModDirectory.length >= 1) {
+            for (char in CD_MOD_CHAR_LIST) {
+                if (!char.contains('txt')) {
+                    var gay:CharacterFile = cast Json.parse(getRawFile('mods/' + Paths.currentModDirectory + '/characters/$char'));
+                    GAYASS_ICONS.set(snipName(char), gay.healthicon);
+                    //GAYASS_COLORS.push(gay.healthbar_colors);
+                }
+            }
+        }
+        if (GAYASS_ICONS.exists(Icon)) {
+            return Icon;
+        } else return "cyan";
     }
     /**convert RGB to a basic 0x69RRGGBB colour, likely useful for substates
         @returns A hex color (ie 0x69420911)
