@@ -73,7 +73,7 @@ class SoundtrackUtil {
             if (file != "TEMPLATE.TXT") fileList.push(SoundtrackPath + file);
         }
         #if MODS_ALLOWED
-        if (Paths.currentModDirectory != '') {
+        if (Paths.currentModDirectory.length >= 1) {
             var metalBeetle = readPath('mods/' + Paths.currentModDirectory + '/ost');
             if (metalBeetle[0] != "NO_FILES") {
                 for (file in metalBeetle) {
@@ -84,7 +84,7 @@ class SoundtrackUtil {
         var KEKEKEKE = readPath(ModSoundtrackPath);
         if (KEKEKEKE[0] != "NO_FILES") {
             for (file in KEKEKEKE) {
-                fileList.push(ModSoundtrackPath + file);
+                if (!file.contains('TXT')) fileList.push(ModSoundtrackPath + file);
             }
         }
         #end
@@ -95,9 +95,14 @@ class SoundtrackUtil {
     }
 
     static function readPath(DirectoryPath:String) {
-        if (FileSystem.exists(DirectoryPath)) return FileSystem.readDirectory(DirectoryPath);
-        else if (!FileSystem.exists(DirectoryPath) && DirectoryPath == SoundtrackPath) throw new haxe.exceptions.ArgumentException(DirectoryPath, "Directory not found. If this the path below matches the path above, please make sure it exists in the game folders!\n" + SoundtrackPath);
-        else return ["NO_FILES"];
+        //if (FileSystem.exists(DirectoryPath)) return FileSystem.readDirectory(DirectoryPath);
+        if (!FileSystem.exists(DirectoryPath) && DirectoryPath == SoundtrackPath) throw new haxe.exceptions.ArgumentException(DirectoryPath, "Directory not found. If this the path below matches the path above, please make sure it exists in the game folders!\n" + SoundtrackPath);
+        else try {
+            return FileSystem.readDirectory(DirectoryPath);
+        }
+        catch (e:haxe.Exception) {
+            return ["NO_FILES"];
+        }
     }
 
     static function doFileParse(FilePath:String) {
