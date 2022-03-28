@@ -37,8 +37,12 @@ class SoundtrackUtil {
                     defaultOpponent: getOpponent(pepperCat),
                     defaultBf: pepperCat.player1,
                     songColor: null,
-                    hasVoices: pepperCat.needsVoices
+                    hasVoices: pepperCat.needsVoices,
+                    bfIcon: pepperCat.player1,
+                    dadIcon: null,
+                    iconChanges: null
                 };
+                totalDramaIsland.dadIcon = totalDramaIsland.defaultOpponent;
                 totalDramaIsland.songColor = DumbUtil.parseChars([totalDramaIsland.defaultOpponent])[0].healthbar_colors;
                 DEFAULTS_TO_CREATE.push(totalDramaIsland);
                 trace(totalDramaIsland);
@@ -77,6 +81,7 @@ class SoundtrackUtil {
             var metalBeetle = readPath('mods/' + Paths.currentModDirectory + '/ost');
             if (metalBeetle[0] != "NO_FILES") {
                 for (file in metalBeetle) {
+                    trace(file);
                     fileList.push('mods/' + Paths.currentModDirectory + '/ost/' + file);
                 }
             }
@@ -84,11 +89,13 @@ class SoundtrackUtil {
         var KEKEKEKE = readPath(ModSoundtrackPath);
         if (KEKEKEKE[0] != "NO_FILES") {
             for (file in KEKEKEKE) {
+                trace(file);
                 if (!file.contains('TXT')) fileList.push(ModSoundtrackPath + file);
             }
         }
         #end
         for (file in fileList) {
+            trace(file);
             ReturnThese.push(doFileParse(file));
         }
         return ReturnThese;
