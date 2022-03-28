@@ -23,6 +23,8 @@ class DumbUtil {
     // static var BitchOne:Boyfriend;
     // static var BitchTwo:Character;
 
+    static var baseCharShit:Array<String> = [];
+
     public static function getBfAnim(AnimName:String):Bool {
         var PlayStation:PlayState = PlayState.instance;
         var BitchOne:Boyfriend = PlayStation.boyfriend;
@@ -163,8 +165,15 @@ class DumbUtil {
         var cjej:Dynamic = '';
         var jjj:Array<String> = [];
         for (char in CharArray) {
-            cjej = cast Json.parse(getRawFile(Paths.characterJson(char)));
-            jjj.push(cjej.healthicon);
+            var charFilePath = Paths.characterJson(char);
+            cjej = cast Json.parse(getRawFile(charFilePath));
+            if (char == 'senpai') {
+                jjj.push('senpai-pixel');
+            } else if (char == 'spirit') {
+                jjj.push('spirit-pixel');
+            } else {
+                jjj.push(cjej.healthicon);
+            }
         }
         return jjj;
     }
@@ -182,15 +191,25 @@ class DumbUtil {
     }
 
     public static function parseChars(CharNames:Array<String>):Array<CharacterFile> {
+        var jej = FileSystem.readDirectory("assets/characters");
+        for (name in jej) {
+            baseCharShit.push(snipName(name));
+        }
         var lmao:Array<CharacterFile> = [];
         for (char in CharNames) {
             if (actuallyExists(Paths.characterJson(char))) {
                 lmao.push(cast Json.parse(getRawFile(Paths.characterJson(char))));
+            } else if (baseCharShit.contains(char)) {
+                lmao.push(cast Json.parse(getRawFile('assets/characters/$char.json')));
             } else {
                 lmao.push(cast Json.parse(getRawFile(Paths.characterJson('cyan'))));
             }
         }
         return lmao;
+    }
+
+    public static function makeColorFromRGB(Color:Array<Int>) {
+        return FlxColor.fromRGB(Color[0], Color[1], Color[2]);
     }
 
     public static function getBarColor(CharName:String) {
