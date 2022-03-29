@@ -51,6 +51,7 @@ class TestProfileState extends FlxState {
         super();
         createSaveList();
         if (!SussyUtilities.FUNCTIONS_CEASED) SussyUtilities.setupTheVars();
+        randomShit.util.SoundtrackUtil.SETUP_DEFAULTS();
     }
 
     function createSaveList() {
@@ -133,6 +134,8 @@ class TestProfileState extends FlxState {
         
         #if debug
         if (FlxG.keys.justPressed.SEVEN) {
+            TitleState.currentProfile = PARSED_LIST[1];
+            Paths.currentModDirectory = 'Challenge Edd';
             FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackMenu()));
         }
         #end
