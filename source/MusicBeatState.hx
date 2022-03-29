@@ -41,7 +41,7 @@ class MusicBeatState extends FlxUIState
 		FlxTransitionableState.skipNextTransOut = false;
 	}
 	
-	#if (VIDEOS_ALLOWED && windows)
+	#if (VIDEOS_ALLOWED && windows && !debug)
 	override public function onFocus():Void
 	{
 		FlxVideo.onFocus();
@@ -51,6 +51,19 @@ class MusicBeatState extends FlxUIState
 	override public function onFocusLost():Void
 	{
 		FlxVideo.onFocusLost();
+		super.onFocusLost();
+	}
+	#end
+	#if debug
+	override public function onFocus():Void
+		{
+			#if (VIDEOS_ALLOWED && windows) FlxVideo.onFocus(); #end
+			FocusLostScreen.weGotFocus();
+			super.onFocus();
+		}
+	override public function onFocusLost():Void {
+		#if (VIDEOS_ALLOWED && windows) FlxVideo.onFocusLost(); #end
+		openSubState(new FocusLostScreen());
 		super.onFocusLost();
 	}
 	#end
@@ -142,7 +155,7 @@ class MusicBeatState extends FlxUIState
 		if (HealthIconFromGrid.instance != null && HealthIconFromGrid.instance.loadin) {
 			HealthIconFromGrid.instance.loadin = false;
 		}
-		if (FocusLostScreen.isOpen) FocusLostScreen.weGotFocus();
+		//if (FocusLostScreen.isOpen) FocusLostScreen.weGotFocus();
 	}
 
 	function onWindowFocusOut():Void {
@@ -150,6 +163,6 @@ class MusicBeatState extends FlxUIState
 			trace('ewwwww save dialog');
 			// openSubState(new SavingYourBullshit('blitz'));
 		}
-		openSubState(new FocusLostScreen());
+		//openSubState(new FocusLostScreen());
 	}
 }
