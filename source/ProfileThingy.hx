@@ -259,15 +259,15 @@ class DebugProfileSubstate extends FlxSubState {
         '*target moaned as Walmart thrusted into target* Walmart: shhhhhh we can’t let Amazon hear or you will be in bigger trouble~~~~… *as target cried*',
         'Sonic held Mario as he continuously moaned. Sonic grinned and whispered “my sweet Mario..”',
         'YouTube grunted pounding into tiktok, TikTok smiled “wow YouTube W for you”',
-        'that’s not how you do it! “ dominos said as Pizza Hut thrusted into her. “ Pizza Hut stop~! “ dominos moaned helplessly',
+        'that\'s not how you do it! " dominos said as Pizza Hut thrusted into her. " Pizza Hut stop~! " dominos moaned helplessly',
         'Ohhh gooooon “sticks squidwards nose out” that power is so strong and good i wanna crush you “ gon look at hisoka up and down and runs” ohhhhhhh gon',
         '"s-shadow please be gentle~" said the smaller blue hedgehog to the bigger alpha male dominate "heh, well see ~" said the bigger black hedgehog smirkin',
         'Amazon starts going inside ebay very slowly but surely,Amazon groans and eBay moans,Amazon starts going crazy and eBay twerks Amazon creams everywhere',
         'KFC puts it in deeper into McDonald\'s while mdonalds moans softly, KFC goes harder then McDonald\'s moans loudly and starts cvmming in kfc',
         '"Ah~" said roblox as fortnite thrusts deeper "want to go slower?~" said fortnite "n-no d-daddy" says roblox as he squirts',
         '*Roblox moans* “AHH~ MINECRAFT~ HARDER~ *minecraft goes harder* “Is that better baby?😏” “OH YES~ DADDY~ OH~ MMMM~ THIS FEELS SO GOOD~” “Roblox moans”',
-        'ahh!~ It’s too big!~ said pillow chan as blanket san put his big juicy long blanketussy in him. Shh~ Mattress san will hear us!~ Blanket san told her.',
-        'mcdonald’s moans “a-ahh!~” burger king shushes him “sshh~.. dont want the others too hear~” burger king goes deeper, mcdonald’s moans loudly.'
+        'ahh!~ It\'s too big!~ said pillow chan as blanket san put his big juicy long blanketussy in him. Shh~ Mattress san will hear us!~ Blanket san told her.',
+        'mcdonald\'s moans “a-ahh!~” burger king shushes him “sshh~.. dont want the others too hear~” burger king goes deeper, mcdonald\'s moans loudly.'
     ];
     #if debug
     public function new() {
