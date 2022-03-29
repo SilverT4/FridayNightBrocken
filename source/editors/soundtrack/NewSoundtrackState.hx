@@ -1,10 +1,13 @@
 package editors.soundtrack;
 
+import flixel.util.FlxColor;
 import randomShit.dumb.SoundtrackMenu.OSTData;
 import flixel.FlxG;
 import MusicBeatState;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup.FlxTypedGroup;
+import flixel.ui.FlxBar;
+import AttachedSprite;
 import Alphabet;
 import HealthIcon;
 import randomShit.util.HintMessageAsset;
@@ -18,6 +21,8 @@ using StringTools;
 class NewSoundtrackState extends MusicBeatState {
     var bg:FunkyBackground;
     public static var justUpdatedColor:Bool = false;
+    var songBar:FlxBar;
+    var songBarBg:AttachedSprite;
     var options:Array<String> = [
         "Song name",
         "Default opponent",
@@ -27,27 +32,22 @@ class NewSoundtrackState extends MusicBeatState {
         "Background color",
         "Toggle vocal track",
         "Modify icon changes",
+        "Preview",
         "Exit"
     ];
     var templateData:OSTData = {
         songName: "Tutorial",
         defaultOpponent: "gf",
         defaultBf: "bf",
-        songColor: [
-            69,
-            69,
-            69
-        ],
+        songColorInfo: {
+            red: 69,
+            green: 69,
+            blue: 69
+        },
         hasVoices: false,
         bfIcon: "bf",
         dadIcon: "gf",
-        iconChanges: [
-            {
-                time_ms: 690,
-                changeTarget: "dad",
-                newIcon: "coldfront"
-            }
-        ]
+        iconChanges: null
     };
     public static var currentData:OSTData;
     var grpOptions:FlxTypedGroup<Alphabet>;
@@ -60,7 +60,7 @@ class NewSoundtrackState extends MusicBeatState {
 
     override function create() {
         bg = new FunkyBackground();
-        bg.setColor(DumbUtil.getBgRgbColor(currentData.songColor), false);
+        bg.setColor(FlxColor.fromRGB(currentData.songColorInfo.red, currentData.songColorInfo.green, currentData.songColorInfo.blue), false);
         add(bg);
         grpOptions = new FlxTypedGroup<Alphabet>();
         add(grpOptions);
@@ -89,8 +89,9 @@ class NewSoundtrackState extends MusicBeatState {
         }
         if (justUpdatedColor) {
             justUpdatedColor = false;
-            bg.setColor(DumbUtil.getBgRgbColor(currentData.songColor), true, 0.7);
+            bg.setColor(FlxColor.fromRGB(currentData.songColorInfo.red, currentData.songColorInfo.green, currentData.songColorInfo.blue), true, 0.7);
         }
+        super.update(elapsed);
     }
 
     function changeSelection(change:Int = 0) {
@@ -119,8 +120,7 @@ class NewSoundtrackState extends MusicBeatState {
                 FlxG.sound.play(Paths.sound('errorOops'));
                 #if debug FlxG.log.warn("What are you doing, " + Sys.getEnv(#if windows "USERNAME" #else "USER" #end)); #end
             case "Background color":
-                FlxG.sound.play(Paths.sound('errorOops'));
-                #if debug FlxG.log.warn("What are you doing, " + Sys.getEnv(#if windows "USERNAME" #else "USER" #end)); #end
+                openSubState(new editors.soundtrack.colour.MainColourSubstate(currentData.songColorInfo));
             case "Toggle vocal track":
                 currentData.hasVoices = !currentData.hasVoices;
             case "Exit":

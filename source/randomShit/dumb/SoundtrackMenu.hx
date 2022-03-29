@@ -31,6 +31,8 @@ using StringTools;
 typedef OSTData = {
     /**The song's name.*/
     var songName:String;
+    /**Optionally set a different display name while playing the song.*/
+    @:optional var displayName:String;
     /**The default opponent of your song.*/
     var defaultOpponent:String;
     /**What icon should the song show for the opponent while it's playing?*/
@@ -39,18 +41,29 @@ typedef OSTData = {
     var defaultBf:String;
     /**What icon should the song show for bf while it's playing?*/
     var bfIcon:String;
-    /**The background colour of your song in RGB format.*/
-    var songColor:Array<Int>;
+    /**The background colour of your song in RGB format, in a neat little thing. Set to null if you use the Int array in your json.*/
+    @:optional var songColorInfo:SongColorInfo;
+    /**Song colour in RGB. Leave this null if you use the songColorInfo*/
+    @:optional var songColor:Array<Int>;
     /**Whether the song has a vocal track.*/
     var hasVoices:Bool;
     /**Change the icons at certain points in the song. Leave this null if you want to keep the icons as is throughout.*/
-    var iconChanges:Array<IconChange>;
+    @:optional var iconChanges:Array<IconChange>;
 }
 
 typedef IconChange = {
     var time_ms:Int;
     var changeTarget:String; // DAD OR BF
     var newIcon:String;
+}
+
+typedef SongColorInfo = {
+    /**The Red value of your colour.*/
+    var red:Int;
+    /**The Green value of your colour.*/
+    var green:Int;
+    /**The blue value of your colour.*/
+    var blue:Int;
 }
 /**A menu for a list of your soundtracks. Also includes the base game songs.
 
@@ -64,7 +77,7 @@ class SoundtrackMenu extends MusicBeatState {
     var bgColorList:Array<FlxColor> = [];
     var playerIcons_Dad:Array<String> = [];
     var playerIcons_Bf:Array<String> = [];
-    var songBarBg:AttachedSprite;
+    var songBarBg:FlxSprite;
     var songBar:FlxBar;
     var bg:FunkyBackground;
     var dadIcon:HealthIcon;
@@ -80,8 +93,9 @@ class SoundtrackMenu extends MusicBeatState {
     var timeHint:HintMessageAsset;
     var curSong:String = '';
     var enteringMusic:FlxSound;
-    var opponentColors:Map<String, Array<Int>> = new Map();
-    var bfColors:Map<String, Array<Int>> = new Map();
+    var opponentColors:Map<String, FlxColor> = new Map();
+    var bfColors:Map<String, FlxColor> = new Map();
+    var displayNames:Map<String, String> = new Map();
     var msTimes:Array<Float> = [];
     var chTargets:Array<String> = [];
     var newIcons:Array<String> = [];
@@ -148,11 +162,20 @@ class SoundtrackMenu extends MusicBeatState {
         grpSongs = new FlxTypedGroup<Alphabet>();
         add(grpSongs);
         for (song in 0...songList_Full.length) {
-            var jej:Alphabet = new Alphabet(0, (70 * song), songList_Full[song].songName, true, false);
+            var textToDisplay:String = '';
+            if (songList_Full[song].displayName != null) {
+                textToDisplay = songList_Full[song].displayName;
+            } else {
+                textToDisplay = songList_Full[song].songName;
+            }
+            var jej:Alphabet = new Alphabet(0, (70 * song), textToDisplay, true, false);
             jej.isMenuItem = true;
             jej.targetY = song;
             //add(jej); **DUMBASS**
             grpSongs.add(jej);
+            if (songList_Full[song].displayName != null) {
+                displayNames.set(songList_Full[song].songName, songList_Full[song].displayName);
+            }
             trace('Adding song ' + song + ' of ' + songList_Full.length + ': ' + songList_Full[song].songName);
             FlxG.log.notice('Adding song ' + song + ' of ' + songList_Full.length + ': ' + songList_Full[song].songName);
 
@@ -161,13 +184,19 @@ class SoundtrackMenu extends MusicBeatState {
             add(icon);
             iconArray.push(icon);
 
-            var meena:FlxColor = DumbUtil.getBgRgbColor(songList_Full[song].songColor);
-            bgColorList.push(meena);
+            if (songList_Full[song].songColor != null) {
+                var meena:FlxColor = DumbUtil.makeColorFromRGB(songList_Full[song].songColor);
+                bgColorList.push(meena);
+            } else {
+                var penis:SongColorInfo = songList_Full[song].songColorInfo;
+                var meena:FlxColor = FlxColor.fromRGB(penis.red, penis.green, penis.blue, 255);
+                bgColorList.push(meena);
+            }
 
             var player2_Icon:String = songList_Full[song].dadIcon;
-            opponentColors.set(player2_Icon, DumbUtil.parseChars([player2_Icon])[0].healthbar_colors);
+            opponentColors.set(player2_Icon, DumbUtil.iconColor(player2_Icon));
             var player1_Icon:String = songList_Full[song].bfIcon;
-            bfColors.set(player1_Icon, DumbUtil.parseChars([player1_Icon])[0].healthbar_colors);
+            bfColors.set(player1_Icon, DumbUtil.iconColor(player1_Icon));
 
             playerIcons_Dad.push(player2_Icon);
             playerIcons_Bf.push(player1_Icon);
@@ -188,9 +217,9 @@ class SoundtrackMenu extends MusicBeatState {
         trace(opponentColors);
         trace(bfColors);
         eduardoIcon = new HealthIcon("eduardo");
-        songBarBg = new AttachedSprite("healthBar");
+        songBarBg = new FlxSprite(0, 0).loadGraphic(Paths.image("healthBar"));
         songBarBg.screenCenter(X);
-        songBarBg.y = FlxG.height - 50;
+        songBarBg.y = FlxG.height * 0.89;
         songBarBg.scrollFactor.set();
         add(songBarBg);
         songBarBg.kill();
@@ -198,7 +227,7 @@ class SoundtrackMenu extends MusicBeatState {
         songBar.scrollFactor.set();
         songBar.createFilledBar(0xFF696969, 0xFFA6D388);
         add(songBar);
-        songBarBg.sprTracker = songBar;
+        //songBarBg.sprTracker = songBar;
         songBar.kill();
         bfIcon = new HealthIcon(playerIcons_Bf[0], true);
         bfIcon.y = songBar.y - (bfIcon.height / 2);
@@ -218,10 +247,10 @@ class SoundtrackMenu extends MusicBeatState {
         add(timeHint);
         add(timeHint.ADD_ME);
     }
-
+    var displayThis:String = '';
     function playSong(SongData:OSTData) {
         grpSongs.forEach(function (alp:Alphabet) {
-            if (alp.text != SongData.songName) {
+            if (alp.text != SongData.songName || (SongData.displayName != null && alp.text != SongData.displayName)) {
                 alp.kill();
                 iconArray[grpSongs.members.indexOf(alp)].kill();
             }
@@ -239,14 +268,20 @@ class SoundtrackMenu extends MusicBeatState {
                 var ej:FlxColor = CoolUtil.dominantColor(new HealthIcon(iconChange.newIcon));
                 var penis = ej.getColorInfo();
                 if (iconChange.changeTarget == 'dad') {
-                    opponentColors.set(iconChange.newIcon, splitToRgb(penis));
+                    opponentColors.set(iconChange.newIcon, ej);
                 } else {
-                    bfColors.set(iconChange.newIcon, splitToRgb(penis));
+                    bfColors.set(iconChange.newIcon, ej);
                 }
             }
         }
-        bg.setColor(DumbUtil.getBgRgbColor(SongData.songColor), true, 0.7);
+        if (SongData.songColor != null) {
+            bg.setColor(DumbUtil.getBgRgbColor(SongData.songColor), true, 0.7);
+        } else {
+            var fatBitchAss = SongData.songColorInfo;
+            bg.setColor(FlxColor.fromRGB(fatBitchAss.red, fatBitchAss.green, fatBitchAss.blue, 255), true, 0.7);
+        }
         FlxG.sound.music.fadeOut(0.7, 0, { function(h:FlxTween) {
+            if (displayNames.exists(SongData.songName)) displayThis = displayNames[SongData.songName] else displayThis = SongData.songName;
             FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].time = 0;
             FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].resume();
             curLength = FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].length;
@@ -265,16 +300,16 @@ class SoundtrackMenu extends MusicBeatState {
         bfIcon.changeIcon(playerIcons_Bf[curSelected]);
         trace(dadIcon.getCharacter());
         trace(bfIcon.getCharacter());
-        curDadColor = DumbUtil.makeColorFromRGB(opponentColors[playerIcons_Dad[curSelected]]);
-        curBfColor = DumbUtil.makeColorFromRGB(bfColors[playerIcons_Bf[curSelected]]);
-        songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[playerIcons_Dad[curSelected]]), DumbUtil.makeColorFromRGB(bfColors[playerIcons_Bf[curSelected]]));
+        curDadColor = opponentColors[playerIcons_Dad[curSelected]];
+        curBfColor = bfColors[playerIcons_Bf[curSelected]];
+        songBar.createFilledBar(opponentColors[playerIcons_Dad[curSelected]], bfColors[playerIcons_Bf[curSelected]]);
         songBar.updateBar();
     }
 
     function doStopThings() {
         curSong = songList_Full[curSelected].songName;
-        instrumentals[curSelected].stop();
-        vocalTracks[curSelected].stop();
+        instrumentals[curSelected].pause();
+        vocalTracks[curSelected].pause();
         FlxG.sound.music.fadeIn(0.7, 0, 0.7, { function(j:FlxTween) {
             trace('the j');
             FlxG.sound.music.resume();
@@ -289,7 +324,7 @@ class SoundtrackMenu extends MusicBeatState {
         bfIcon.kill();
         curTime = 0;
         curLength = 0;
-        bg.setColor(DumbUtil.getBgRgbColor(songList_Full[0].songColor), true, 0.7);
+        bg.setColor(DumbUtil.makeColorFromRGB(songList_Full[0].songColor), true, 0.7);
         playingSong = false;
         if (msTimes.length >= 1) {
             msTimes = null;
@@ -303,6 +338,7 @@ class SoundtrackMenu extends MusicBeatState {
             newIcons = null;
             newIcons = [];
         }
+        nextChangeID = 0;
     }
     var curTime:Float = 0;
     var curLength:Float = 0;
@@ -310,15 +346,15 @@ class SoundtrackMenu extends MusicBeatState {
     function doIconEgg() {
         if (bfIcon.getCharacter() == 'eduardo') {
             bfIcon.changeIcon(playerIcons_Bf[curSelected]);
-            curBfColor = DumbUtil.makeColorFromRGB(bfColors[bfIcon.getCharacter()]);
-            songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[dadIcon.getCharacter()]), DumbUtil.makeColorFromRGB(bfColors[bfIcon.getCharacter()]));
+            curBfColor = bfColors[bfIcon.getCharacter()];
+            songBar.createFilledBar(opponentColors[dadIcon.getCharacter()], bfColors[bfIcon.getCharacter()]);
         } else {
             bfIcon.changeIcon('eduardo');
             var eduardoColors:Array<Int> = [17,
                 113,
                 43];
             curBfColor = DumbUtil.makeColorFromRGB(eduardoColors);
-            songBar.createFilledBar(DumbUtil.makeColorFromRGB(opponentColors[dadIcon.getCharacter()]), DumbUtil.makeColorFromRGB(eduardoColors));
+            songBar.createFilledBar(opponentColors[dadIcon.getCharacter()], DumbUtil.makeColorFromRGB(eduardoColors));
         }
     }
     function seekInSong(seek:Int) {
@@ -328,10 +364,10 @@ class SoundtrackMenu extends MusicBeatState {
 
     function doIconStuff() {
         if (songPos >= 0.8) {
-            if (dadIcon.x == songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01)) - (dadIcon.width - 26)) dadIcon.animation.curAnim.curFrame = 1;
+            if (dadIcon.sprTracker == null) dadIcon.animation.curAnim.curFrame = 1;
             if (eduardoIcon.alive) eduardoIcon.animation.curAnim.curFrame = 1;
         } else {
-            if (dadIcon.x == songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01)) - (dadIcon.width - 26)) dadIcon.animation.curAnim.curFrame = 0;
+            if (dadIcon.sprTracker == null) dadIcon.animation.curAnim.curFrame = 0;
             if (eduardoIcon.alive) eduardoIcon.animation.curAnim.curFrame = 0;
         }
         if (songPos <= 0.2) {
@@ -357,11 +393,11 @@ class SoundtrackMenu extends MusicBeatState {
             JustChangedIcons = false;
             if (Target == 'dad') {
                 dadIcon.changeIcon(Icon);
-                reloadBarColors(DumbUtil.makeColorFromRGB(opponentColors[Icon]));
+                reloadBarColors(opponentColors[Icon]);
             }
             if (Target == 'bf') {
                 bfIcon.changeIcon(Icon);
-                reloadBarColors(null, DumbUtil.makeColorFromRGB(bfColors[Icon]));
+                reloadBarColors(null, bfColors[Icon]);
             }
         } else {
             trace("OOPS!!");
@@ -448,7 +484,7 @@ class SoundtrackMenu extends MusicBeatState {
         if (playingSong) {
             doIconStuff();
             curTime = FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].time;
-            songPos = (curTime / curLength);
+            songPos = 1 - (curTime / curLength);
             if (controls.UI_LEFT_P) {
                 seekInSong(-5000);
             }
@@ -458,6 +494,10 @@ class SoundtrackMenu extends MusicBeatState {
             if (controls.ACCEPT) {
                 if (!FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].playing) FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].resume();
                 else FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].pause();
+                if (songHasVoices[curSelected]) {
+                    if (!FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].playing) FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].resume();
+                    else FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].pause();
+                }
             }
             if (controls.BACK) {
                 doStopThings();
@@ -467,7 +507,7 @@ class SoundtrackMenu extends MusicBeatState {
             }
 
             bfIcon.x = songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01) - 26);
-		    if (dadIcon.sprTracker == null) dadIcon.x = songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01)) - (dadIcon.width - 26);
+		    if (dadIcon.sprTracker == null) dadIcon.x = songBar.x + (songBar.width * (FlxMath.remapToRange(songBar.percent, 0, 100, 100, 0) * 0.01) - (dadIcon.width - 26));
             updateTimeHint();
             if (curSong.toLowerCase() == 'challeng-edd') {
                 if (FlxStringUtil.formatTime(curTime / 1000) == "1:15") {
@@ -486,6 +526,6 @@ class SoundtrackMenu extends MusicBeatState {
     function updateTimeHint() {
         var curTimeFormat = FlxStringUtil.formatTime(curTime / 1000);
         var lengthFormat = FlxStringUtil.formatTime(curLength / 1000);
-        timeHint.setText("Currently playing: " + songList_Full[curSelected].songName + " | " + curTimeFormat + " / " + lengthFormat #if debug + ' | ' + songPos + '(' + curTime + ')' #end);
+        timeHint.setText("Currently playing: " + displayThis + " | " + curTimeFormat + " / " + lengthFormat);
     }
 }

@@ -87,6 +87,7 @@ class ProfileSelectionState extends MusicBeatState {
         if (lis.length >= 1) {
             var pee:Int = 0;
             for (file in lis) {
+                trace(file);
                 var jesusSavesMyVagina:FlxSave = new FlxSave();
                 jesusSavesMyVagina.bind(DumbUtil.snipName(file), 'fridayNightBrocken');
                 if (Paths.fileExists('profiles/' + jesusSavesMyVagina.data.profileName + '.json', TEXT)) {
@@ -102,7 +103,7 @@ class ProfileSelectionState extends MusicBeatState {
                 }
                 pee++;
                 if (pee > lis.length) {
-                    hint.setText("Done, resetting state...");
+                    hint.setText("Restored $pee saves, resetting state...");
                     if (action == 'edit')
                     MusicBeatState.switchState(new ProfileSelectionState(0));
                     else
@@ -170,7 +171,9 @@ class ProfileSelectionState extends MusicBeatState {
                             else doSelfWarn();
                     }
             }
-
+            if (FlxG.keys.justPressed.H) {
+                getMissingSaves();
+            }
             if (controls.BACK) {
                 LoadingState.loadAndSwitchState(new options.profileManagement.ProfileManagementState());
             }
