@@ -32,7 +32,49 @@ The jsons folder contains a few json files with examples of (almost) every type 
     },
 ```
 
+Example JSON:
+```json
+{
+	"animations": [
+		{
+			"offsets": [
+				0,
+				0
+			],
+			"indices": [],
+			"fps": 24,
+			"anim": "idle",
+			"loop": true,
+			"name": "idle like my cat"
+		}
+	],
+	"no_antialiasing": true,
+	"shitpost": true,
+	"image": "myBussySharted",
+	"position": [
+		0,
+		0
+	],
+	"healthicon": "face",
+	"flip_x": false,
+	"healthbar_colors": [
+		255,
+		255,
+		255
+	],
+	"camera_position": [
+		0,
+		0
+	],
+	"sing_duration": 4,
+	"scale": 1,
+    "noteOverride": "OC_NOTES_1"
+}
+```
+
 **It is important to include the comma after the `}`, unless the animation is at the end of the `animations` array!**
+
+*The `noteOverride` field is optional, you can leave it out and nothing will be affected.*
 
 ## OST JSON
 
