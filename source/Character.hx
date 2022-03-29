@@ -30,10 +30,10 @@ typedef CharacterFile = {
 	var flip_x:Bool;
 	var no_antialiasing:Bool;
 	var healthbar_colors:Array<Int>;
-	var chartingButtonColour:Int;
-	var chartingButtonRGB:Array<Int>;
-	var labelRGB:Array<Int>;
-	var chartingButtonLabelTheme:Int;
+	@:optional var chartingButtonColour:Int;
+	@:optional var chartingButtonRGB:Array<Int>;
+	@:optional var labelRGB:Array<Int>;
+	@:optional var chartingButtonLabelTheme:Int;
 }
 
 typedef AnimArray = {
