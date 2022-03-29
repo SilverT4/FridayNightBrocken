@@ -1,102 +1,141 @@
 {
+	"dialogue_pos": "right",
 	"position": [
 		0,
 		50
 	],
-	"dialogue_pos": "right",
 	"scale": 1.25,
-	"image": "snowdrift",
 	"animations": [
 		{
-			"idle_offsets": [
-				0,
-				0
-			],
+			"anim": "talk",
 			"loop_offsets": [
 				0,
 				0
 			],
-			"anim": "talk",
-			"idle_name": "idle talk69",
-			"loop_name": "idle talk loop"
+			"idle_offsets": [
+				0,
+				0
+			],
+			"loop_name": "idle talk loop",
+			"idle_name": "idle talk69"
 		},
 		{
-			"idle_offsets": [
+			"loop_offsets": [
 				56,
 				-2
 			],
 			"anim": "excited",
-			"loop_offsets": [
+			"idle_offsets": [
 				56,
 				-2
 			],
-			"idle_name": "excite talk 42",
-			"loop_name": "excite talk loop"
+			"loop_name": "excite talk loop",
+			"idle_name": "excite talk 42"
 		},
 		{
-			"idle_offsets": [
+			"loop_offsets": [
 				40,
 				0
 			],
 			"anim": "pissed",
-			"loop_offsets": [
+			"idle_offsets": [
 				40,
 				0
 			],
-			"idle_name": "angey idle",
-			"loop_name": "angey talk loop"
+			"loop_name": "angey talk loop",
+			"idle_name": "angey idle"
 		},
 		{
-			"idle_offsets": [
+			"loop_offsets": [
 				-4,
 				0
 			],
 			"anim": "shocked",
-			"loop_offsets": [
+			"idle_offsets": [
 				-4,
 				0
 			],
-			"idle_name": "shaky talk 1",
-			"loop_name": "shaky talk loop"
+			"loop_name": "shaky talk loop",
+			"idle_name": "shaky talk 1"
 		},
 		{
-			"loop_offsets": [
+			"idle_offsets": [
 				0,
 				0
 			],
 			"anim": "confused",
-			"idle_offsets": [
+			"loop_offsets": [
 				0,
 				0
 			],
-			"loop_name": "confuse loop",
-			"idle_name": "confuse0"
+			"idle_name": "confuse0",
+			"loop_name": "confuse loop"
 		},
 		{
-			"loop_offsets": [
+			"idle_offsets": [
 				9,
 				-4
 			],
 			"anim": "awkward",
-			"idle_offsets": [
+			"loop_offsets": [
 				9,
 				-4
 			],
-			"loop_name": "awkward talk loop",
-			"idle_name": "awkward talk0"
+			"idle_name": "awkward talk0",
+			"loop_name": "awkward talk loop"
 		},
 		{
-			"loop_name": "dead with devin loop",
-			"idle_offsets": [
-				371,
-				-90
-			],
-			"idle_name": "dead with devin0",
-			"anim": "dead",
 			"loop_offsets": [
-				371,
-				-90
+				0,
+				-80
+			],
+			"anim": "dead",
+			"idle_offsets": [
+				0,
+				-80
+			],
+			"loop_name": "snowman0",
+			"idle_name": "snowman loop"
+		},
+		{
+			"loop_name": "sus loop talk",
+			"idle_offsets": [
+				0,
+				-4
+			],
+			"idle_name": "sus talk",
+			"anim": "sus",
+			"loop_offsets": [
+				0,
+				-4
+			]
+		},
+		{
+			"loop_name": "lmao talk",
+			"idle_offsets": [
+				0,
+				-4
+			],
+			"idle_name": "lmao loop talk",
+			"anim": "LOLJK",
+			"loop_offsets": [
+				0,
+				-4
+			]
+		},
+		{
+			"loop_name": "folder browse",
+			"idle_offsets": [
+				0,
+				-4
+			],
+			"idle_name": "folder idle",
+			"anim": "filestuff",
+			"loop_offsets": [
+				0,
+				-4
 			]
 		}
-	]
+	],
+	"image": "snowdrift"
 }
