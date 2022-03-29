@@ -197,7 +197,7 @@
 	<icon path="art/icon32.png" size='32' unless="debug"/>
 	<icon path="art/icon64.png" size='64' unless="debug"/>
 	<icon path="art/iconOG.png" unless="debug"/>
-	<icon path="assets/preload/images/credits/decktop.png" if="debug linux" />
-	<icon path="assets/preload/images/credits/cyan.png" if="debug windows" />
-	<icon path="assets/preload/images/credits/snowdrift.png" if="debug macos" />
+	<!--<icon path="assets/preload/images/credits/decktop.png" if="linux" unless="release" />-->
+	<icon path="assets/preload/images/credits/cyan.png" if="debug" />
+	<!--<icon path="assets/preload/images/credits/snowdrift.png" if="macos" unless="release" />-->
 </project>
