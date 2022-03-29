@@ -2879,12 +2879,17 @@ class PlayState extends MusicBeatState
 						@:privateAccess daNote.reloadNote('', 'OC_NOTES_1');
 					} else if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride)) {
 						@:privateAccess daNote.reloadNote('', 'NT_NOTE_ASSETS');
+					} else if (boyfriend.notesOverride != null) {
+						@:privateAccess daNote.reloadNote('', boyfriend.notesOverride);
 					}
 				} else {
 					strumX = opponentStrums.members[daNote.noteData].x;
 					strumY = opponentStrums.members[daNote.noteData].y;
 					strumAngle = opponentStrums.members[daNote.noteData].angle;
 					strumAlpha = opponentStrums.members[daNote.noteData].alpha;
+					if (dad.notesOverride != null) {
+						@:privateAccess daNote.reloadNote('', dad.notesOverride);
+					}
 				}
 
 				strumX += daNote.offsetX;
