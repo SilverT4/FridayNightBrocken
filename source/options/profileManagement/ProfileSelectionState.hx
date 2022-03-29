@@ -1,5 +1,7 @@
 package options.profileManagement;
 
+import randomShit.util.DumbUtil;
+import flixel.util.FlxSave;
 import haxe.Exception;
 import flixel.text.FlxText;
 import randomShit.util.ProfileUtil;
@@ -75,6 +77,37 @@ class ProfileSelectionState extends MusicBeatState {
                 saveList.push(sf.profileName);
                 PARSED_LIST.push(sf);
                 commentArray.push(sf.comment);
+            }
+        }
+    }
+
+    function getMissingSaves() {
+        hint.setText("Checking your Windows save data directory...");
+        var lis = SusFS.readDirectory(Sys.getEnv("APPDATA"));
+        if (lis.length >= 1) {
+            var pee:Int = 0;
+            for (file in lis) {
+                var jesusSavesMyVagina:FlxSave = new FlxSave();
+                jesusSavesMyVagina.bind(DumbUtil.snipName(file), 'fridayNightBrocken');
+                if (Paths.fileExists('profiles/' + jesusSavesMyVagina.data.profileName + '.json', TEXT)) {
+                    continue;
+                } else {
+                    ProfileUtil.saveNewProfile({
+                        "profileName": jesusSavesMyVagina.data.profileName,
+                        "playerBirthday": jesusSavesMyVagina.data.playerBirthday,
+                        "comment": jesusSavesMyVagina.data.comment,
+                        "profileIcon": jesusSavesMyVagina.data.profileIcon,
+                        "saveName": jesusSavesMyVagina.data.saveName
+                    }, jesusSavesMyVagina.data.profileName);
+                }
+                pee++;
+                if (pee > lis.length) {
+                    hint.setText("Done, resetting state...");
+                    if (action == 'edit')
+                    MusicBeatState.switchState(new ProfileSelectionState(0));
+                    else
+                    MusicBeatState.switchState(new ProfileSelectionState(1));
+                }
             }
         }
     }
