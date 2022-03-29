@@ -23,6 +23,7 @@ typedef CharacterFile = {
 	var scale:Float;
 	var sing_duration:Float;
 	var healthicon:String;
+	@:optional var noteOverride:String; // FOR CUSTOM SKINS FOR A CHARACTER
 
 	var position:Array<Float>;
 	var camera_position:Array<Float>;
@@ -57,6 +58,7 @@ class Character extends FlxSprite
 	public var holdTimer:Float = 0;
 	public var heyTimer:Float = 0;
 	public var specialAnim:Bool = false;
+	public var notesOverride:String;
 	public var animationNotes:Array<Dynamic> = [];
 	public var stunned:Bool = false;
 	public var singDuration:Float = 4; //Multiplier of how long a character holds the sing pose
@@ -154,6 +156,10 @@ class Character extends FlxSprite
 				if(json.no_antialiasing) {
 					antialiasing = false;
 					noAntialiasing = true;
+				}
+
+				if (json.noteOverride != null) {
+					notesOverride = json.noteOverride;
 				}
 
 				if(json.healthbar_colors != null && json.healthbar_colors.length > 2)

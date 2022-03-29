@@ -131,6 +131,8 @@ class PlayState extends MusicBeatState
 	public var gfMap:Map<String, Character> = new Map<String, Character>();
 	#end
 
+	//public var noteOverrideMap:Map<String, String> = new Map();
+
 	var bfOverride:String;
 	/**if you trigger the FuckYouToo message this gets set to true for the song that plays after it exits.*/
 	public static var dunFuckedUpNow:Bool = false;
@@ -2230,6 +2232,8 @@ class PlayState extends MusicBeatState
 				} else if (OOTIS.check([SONG.player1, bfOverride], 'meta') || OOTIS.check([SONG.player1, bfOverride], 'bf')) {
 					@:privateAccess
 					babyArrow.set_texture('OC_NOTES_1');
+				} else if (boyfriend.notesOverride != null) {
+					@:privateAccess babyArrow.set_texture(boyfriend.notesOverride);
 				}
 				playerStrums.add(babyArrow);
 			}
@@ -2241,6 +2245,9 @@ class PlayState extends MusicBeatState
 					if(i > 1) { //Up and Right
 						babyArrow.x += FlxG.width / 2 + 25;
 					}
+				}
+				if (dad.notesOverride != null) {
+					@:privateAccess babyArrow.set_texture(dad.notesOverride);
 				}
 				opponentStrums.add(babyArrow);
 			}
