@@ -40,10 +40,6 @@ class FocusLostScreen extends MusicBeatSubstate {
         }
     }
 
-    override function close() {
-        super.close();
-    }
-
     public static function weGotFocus() {
         justFocused = true;
     }
