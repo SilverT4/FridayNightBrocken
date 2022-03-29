@@ -74,11 +74,49 @@ class ProfileSetupWizard extends MusicBeatState {
         if (setupBox != null) {
             setupBox.update(elapsed);
         }
-        if (FlxG.keys.justPressed.H) {
+        if (FlxG.keys.justPressed.H && !blockInput) {
             dumb = SnowdriftUtil.loadChatter('profileExplan');
             startDialogue(dumb);
         }
+        if (blockInputWhileTypingOn.length >= 1) {
+            for (inputter in blockInputWhileTypingOn) {
+                if (inputter.hasFocus) {
+                    blockInput = true;
+                    FlxG.sound.muteKeys = null;
+                    FlxG.sound.volumeDownKeys = null;
+                    FlxG.sound.volumeUpKeys = null;
+                    break;
+                }
+                else if (curBlocker != null) {
+                    if (!curBlocker.hasFocus) {
+                        curBlocker = null;
+                        blockInput = false;
+                    }
+                }
+            }
+        }
+
+        if (blockInput) {
+            if (FlxG.keys.justPressed.ENTER) {
+                curBlocker.hasFocus = false;
+            }
+        }
+        if (!blockInput) {
+            if (FlxG.sound.muteKeys == null) {
+                FlxG.sound.muteKeys = TitleState.muteKeys;
+            }
+            if (FlxG.sound.volumeDownKeys == null) {
+                FlxG.sound.volumeDownKeys = TitleState.volumeDownKeys;
+            }
+            if (FlxG.sound.volumeUpKeys == null) {
+                FlxG.sound.volumeUpKeys = TitleState.volumeUpKeys;
+            }
+        }
+        super.update(elapsed);
     }
+    /**This variable controls whether or not to block the H key from bringing up Snowdrift dialogue and disable volume keys.*/
+    var blockInput:Bool = false;
+    var curBlocker:FlxUIInputText; // placeholder var, this gets set when an inputtext has focus!
     public function startDialogue(dialogueFile:DialogueFile, ?song:String = null):Void
         {
             // TO DO: Make this more flexible, maybe?
@@ -144,19 +182,24 @@ class ProfileSetupWizard extends MusicBeatState {
         var randomNumber:Int;
         var useNowChecker:FlxUICheckBox;
         var useRightAway:Bool = false;
+        var blockInputWhileTypingOn:Array<FlxUIInputText> = [];
         function makeSetupUI() {
             var tab_group = new FlxUI(null, setupBox);
             tab_group.name = 'SHIT';
 
             var profileNameInputter:FlxUIInputText = new FlxUIInputText(10, 50, 150, basicBitch.profileName, 8);
+            blockInputWhileTypingOn.push(profileNameInputter);
 
             var bdayMonthInputter:FlxUIInputText = new FlxUIInputText(10, profileNameInputter.y + 30, 50, Std.string(basicBitch.playerBirthday[0]), 8);
             var bdayDateInputter:FlxUIInputText = new FlxUIInputText(bdayMonthInputter.x + 100, bdayMonthInputter.y, 50, Std.string(basicBitch.playerBirthday[1]), 8);
 
             var saveNameInputter:FlxUIInputText = new FlxUIInputText(10, bdayDateInputter.y + 30, 150, basicBitch.saveName, 8);
+            blockInputWhileTypingOn.push(saveNameInputter);
 
             var commentInputter:FlxUIInputText = new FlxUIInputText(10, saveNameInputter.y + 30, 150, basicBitch.comment, 8);
+            blockInputWhileTypingOn.push(commentInputter);
             var profileIconInputter:FlxUIInputText = new FlxUIInputText(10, commentInputter.y + 30, 150, basicBitch.profileIcon, 8);
+            blockInputWhileTypingOn.push(profileIconInputter);
             var saveButton:FlxButton = new FlxButton(commentInputter.getGraphicMidpoint().x, commentInputter.y + 100, 'Done', function() {
                 randomNumber = CustomRandom.int(0, someFunnyDefaultComments.length - 1);
                 if (commentInputter.text.length >= 1) {
@@ -238,7 +281,7 @@ class ProfileSetupWizard extends MusicBeatState {
                     {
                         FlxG.camera.fade(FlxColor.BLACK, 2, false, function()
                         {
-                            FlxG.switchState(new PrelaunchProfileState());
+                            FlxG.switchState(new TestProfileState());
                         });
                     });
                 } else {
