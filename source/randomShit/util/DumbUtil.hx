@@ -201,6 +201,11 @@ class DumbUtil {
             return Icon;
         } else return "cyan";
     }
+
+    public static function iconColor(Icon:String) {
+        var susIcon = new HealthIcon(Icon);
+        return CoolUtil.dominantColor(susIcon);
+    }
     /**convert RGB to a basic 0x69RRGGBB colour, likely useful for substates
         @returns A hex color (ie 0x69420911)
         @since March 2022 (Emo Engine 0.1.2)*/
