@@ -2578,7 +2578,11 @@ class PlayState extends MusicBeatState
 					FlxG.sound.music.pause();
 					vocals.pause();
 				}
+				#if debug
 				openSubState(new randomShit.dumb.TheNewSandwich(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				#else
+				openSubState(new PauseSubState(boyfriend.getScreenPosition().x, boyfriend.getScreenPosition().y));
+				#end
 				//}
 		
 				#if desktop
@@ -2593,7 +2597,7 @@ class PlayState extends MusicBeatState
 		} else if (FlxG.keys.anyJustPressed(debugKeysChart) && !endingSong && !inCutscene && dunFuckedUpNow) {
 			crashGame();
 		}
-
+		#if debug
 		if (FlxG.keys.justPressed.BACKSPACE && startedCountdown && canPause) {
 			var ret:Dynamic = callOnLuas('onPause', []);
 			if(ret != FunkinLua.Function_Stop) {
@@ -2621,6 +2625,7 @@ class PlayState extends MusicBeatState
 
 			}
 		}
+		#end
 
 		// FlxG.watch.addQuick('VOL', vocals.amplitudeLeft);
 		// FlxG.watch.addQuick('VOLRight', vocals.amplitudeRight);

@@ -13,18 +13,27 @@ import flixel.tweens.FlxEase;
 import flixel.tweens.FlxTween;
 import flixel.util.FlxColor;
 import flixel.FlxCamera;
+import randomShit.util.HintMessageAsset;
 
 class PauseSubState extends MusicBeatSubstate
 {
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
+	var menuItemDescs:Array<String> = [];
 	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Exit to menu'];
+	var menuItemDescsOG:Array<String> = [
+		"Resume the song.",
+		"Restarts the song from the beginning.",
+		"Change the difficulty. (Pussy!!)",
+		"Quit out of the song."
+	];
 	var difficultyChoices = [];
 	var curSelected:Int = 0;
 
 	var pauseMusic:FlxSound;
 	var practiceText:FlxText;
+	var hintMsg:HintMessageAsset;
 	//var botplayText:FlxText;
 
 	public static var transCamera:FlxCamera;
@@ -37,14 +46,21 @@ class PauseSubState extends MusicBeatSubstate
 		if(PlayState.chartingMode)
 		{
 			menuItemsOG.insert(2, 'Toggle Practice Mode');
+			menuItemDescsOG.insert(2, "Toggles practice mode. You won't die while this is enabled, unless you turn it off and your health is at or below 0.");
 			menuItemsOG.insert(3, 'Toggle Botplay');
+			menuItemDescsOG.insert(3, 'Toggle botplay.');
 			menuItemsOG.insert(4, 'Toggle Trollin');
+			menuItemDescsOG.insert(4, "Are we doin' a little trollin'?");
 		} else if (PlayState.dunFuckedUpNow) {
 			menuItemsOG.remove('Restart Song');
+			menuItemDescsOG.remove("Restarts the song from the beginning.");
 			menuItemsOG.remove('Exit to menu');
+			menuItemDescsOG.remove("Quit out of the song.");
 			menuItemsOG.insert(1, 'There is no escape');
+			menuItemDescsOG.insert(1, "Why even bother?");
 		}
 		if (!sus) menuItems = menuItemsOG;
+		if (!sus) menuItemDescs = menuItemDescsOG;
 
 		for (i in 0...CoolUtil.difficulties.length) {
 			var diff:String = '' + CoolUtil.difficulties[i];
@@ -125,6 +141,10 @@ class PauseSubState extends MusicBeatSubstate
 			songText.targetY = i;
 			grpMenuShit.add(songText);
 		}
+
+		hintMsg = new HintMessageAsset(menuItemDescs[0], 16, ClientPrefs.smallScreenFix);
+		add(hintMsg);
+		add(hintMsg.ADD_ME);
 
 		changeSelection();
 
@@ -269,6 +289,7 @@ class PauseSubState extends MusicBeatSubstate
 				// item.setGraphicSize(Std.int(item.width));
 			}
 		}
+		hintMsg.setText(menuItemDescs[curSelected]);
 	}
 
 	function regenMenu():Void {
