@@ -1,0 +1,13 @@
+{
+    "songName": "No Phones",
+    "defaultOpponent": "bandu",
+    "defaultBf": "dave",
+    "dadIcon": "bandu",
+    "bfIcon": "dave",
+    "hasVoices": true,
+    "songColorInfo": {
+        "red": 0,
+        "green": 255,
+        "blue": 0
+    }
+}

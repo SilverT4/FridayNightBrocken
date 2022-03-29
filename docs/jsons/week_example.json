@@ -1,0 +1,32 @@
+{
+    "weekName": "replace_me",
+    "storyName": "Replace me with your week name!",
+    "weekBackground": "stage",
+    "weekCharacters": [
+        "dad",
+        "bf",
+        "gf"
+    ],
+    "difficulties": "",
+    "weekBefore": "tutorial",
+    "startUnlocked": true,
+    "hideStoryMode": true,
+    "hideFreeplay": false,
+    "freeplayColor": [
+        69,
+        69,
+        69
+    ],
+    "songs": [
+        [
+            "Just My Badussy",
+            "cupcakke",
+            [
+                216,
+				85,
+				142
+            ]
+        ]
+    ],
+    "REMOVE_THIS_BEFORE_YOU_SAVE": "Leave difficulties *blank* for the defaults!"
+}
