@@ -71,11 +71,7 @@ class AntivirusAvoidanceState extends FlxState {
                     FlxG.sound.music.fadeOut(0.5, 0, function(twn:flixel.tweens.FlxTween) {
                         FlxG.sound.music.stop();
                         FlxG.sound.music = null;
-                        #if debug
                         FlxG.switchState(new TestProfileState());
-                        #else
-                        FlxG.switchState(new PrelaunchProfileState());
-                        #end
                     });
                 });
             });
