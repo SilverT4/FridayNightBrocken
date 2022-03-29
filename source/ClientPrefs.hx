@@ -27,6 +27,7 @@ class ClientPrefs {
 	public static var imagesPersist:Bool = false;
 	public static var ghostTapping:Bool = true;
 	public static var timeBarType:String = 'Time Left';
+	public static var focusLoseSound:String = 'FNF Original';
 	public static var scoreZoom:Bool = true;
 	public static var ntPowerIsEnabled:Bool = true;
 	public static var noReset:Bool = false;
@@ -134,6 +135,7 @@ class ClientPrefs {
 		FlxG.save.data.skipCharaSelect = skipCharaSelect;
 		FlxG.save.data.loadChartAutosave = loadChartAutosave;
 		FlxG.save.data.hideCharList = hideCharList;
+		FlxG.save.data.focusLoseSound = focusLoseSound;
 		#if debug
 		FlxG.save.data.showPCInfoMM = showPCInfoMM;
 		#end
@@ -183,6 +185,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.lowQuality != null) {
 			lowQuality = FlxG.save.data.lowQuality;
+		}
+		if(FlxG.save.data.focusLoseSound != null) {
+			focusLoseSound = FlxG.save.data.focusLoseSound;
 		}
 		if(FlxG.save.data.framerate != null) {
 			framerate = FlxG.save.data.framerate;

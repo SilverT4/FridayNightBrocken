@@ -70,6 +70,16 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		#if desktop
+		var option:Option = new Option('Focus Lost Sound:',
+		"Change the sound played when your game window loses focus for any reason, such as pressing " + #if !macos "ALT+TAB" #else "Command+Tab" #end + " or another window grabbing focus.",
+		'focusLoseSound',
+		'string',
+		'FNF Original',
+		['FNF Original', 'Jiafei Scream']);
+		addOption(option);
+		#end
+
 		/*var option:Option = new Option('Note Delay',
 			'Changes how late a note is spawned.\nUseful for preventing audio lag from wireless earphones.',
 			'noteOffset',
