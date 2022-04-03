@@ -697,3 +697,7 @@ example_mods/exclude_these/data/swing/swing.json
 example_mods/exclude_these/data/swing-ex/swing-ex.json
 example_mods/exclude_these/songs/you-cant-run/Inst.ogg
 example_mods/exclude_these/songs/you-cant-run/Voices.ogg
+example_mods/selectable/bf-worriedbob.json
+example_mods/selectable/dave3.json
+example_mods/selectable/bf-bob-george.json
+example_mods/selectable/picoafter.json
