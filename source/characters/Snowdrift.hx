@@ -11,7 +11,7 @@ using StringTools;
 /**A custom FlxSprite class so I can attempt to use Snowdrift's dialogue portraits outside of dialogue boxes.
     @since March 2022 (Emo Engine 0.1.3)*/
 class Snowdrift extends FlxSprite {
-    static inline final texPath = 'shared:images/dialogue/snowdrift';
+    static inline final texPath = 'assests/shared/images/dialogue/snowdrift';
     static inline final dialogueJsonPath = 'assets/images/dialogue/snowdrift.json';
     var animOffsets:Map<String, Array<Dynamic>> = [];
     var animList:Array<String> = [];
