@@ -1,8 +1,5 @@
 export/
 .vscode/
-example_mods/Holiday Mod Part I
-example_mods/Holiday Mod Part II
-example_mods/VSHuggyWuggy
 example_mods/characters/sonic.exe alt.json
 example_mods/characters/sonic.exe.json
 example_mods/characters/neneafter.json
@@ -110,3 +107,538 @@ example_mods/music/dooDooFeces.ogg
 example_mods/music/mktFriends.ogg
 emo engine/
 vscode-project.hxml
+example_mods/exclude_these/Holiday Mod Part I/.txt
+example_mods/exclude_these/Holiday Mod Part I/pack.json
+example_mods/exclude_these/Holiday Mod Part I/pack.png
+example_mods/exclude_these/Holiday Mod Part I/pack.xml
+example_mods/exclude_these/Holiday Mod Part I/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/storybook.lua
+example_mods/exclude_these/Holiday Mod Part I/characters/bf-holiday.json
+example_mods/exclude_these/Holiday Mod Part I/characters/bf-plum.json
+example_mods/exclude_these/Holiday Mod Part I/characters/bf-santa.json
+example_mods/exclude_these/Holiday Mod Part I/characters/dad-holiday.json
+example_mods/exclude_these/Holiday Mod Part I/characters/gf-holiday.json
+example_mods/exclude_these/Holiday Mod Part I/characters/gf-plum.json
+example_mods/exclude_these/Holiday Mod Part I/characters/gf-santa.json
+example_mods/exclude_these/Holiday Mod Part I/characters/pico-holiday.json
+example_mods/exclude_these/Holiday Mod Part I/characters/pump.json
+example_mods/exclude_these/Holiday Mod Part I/characters/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/characters/sunday.json
+example_mods/exclude_these/Holiday Mod Part I/characters/sunday.xml
+example_mods/exclude_these/Holiday Mod Part I/custom_events/Camera Zoom Speed.lua
+example_mods/exclude_these/Holiday Mod Part I/custom_events/Camera Zoom Speed.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_events/gobf.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_events/Play Sound.lua
+example_mods/exclude_these/Holiday Mod Part I/custom_events/Play Sound.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_events/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_events/stopbf.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_events/YEA!.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_notetypes/Both Dads Sing.lua
+example_mods/exclude_these/Holiday Mod Part I/custom_notetypes/HAHA.lua
+example_mods/exclude_these/Holiday Mod Part I/custom_notetypes/HAHAGF.lua
+example_mods/exclude_these/Holiday Mod Part I/custom_notetypes/hoes.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_notetypes/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/custom_notetypes/Second Dad Sing.lua
+example_mods/exclude_these/Holiday Mod Part I/custom_notetypes/Spooky Sing.lua
+example_mods/exclude_these/Holiday Mod Part I/data/credits.txt
+example_mods/exclude_these/Holiday Mod Part I/data/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/data/deck/deck-easy.json
+example_mods/exclude_these/Holiday Mod Part I/data/deck/deck-hard.json
+example_mods/exclude_these/Holiday Mod Part I/data/deck/deck.json
+example_mods/exclude_these/Holiday Mod Part I/data/deck/events.json
+example_mods/exclude_these/Holiday Mod Part I/data/deck/script.lua
+example_mods/exclude_these/Holiday Mod Part I/data/holiday/dialogue.json
+example_mods/exclude_these/Holiday Mod Part I/data/holiday/events.json
+example_mods/exclude_these/Holiday Mod Part I/data/holiday/holiday-easy.json
+example_mods/exclude_these/Holiday Mod Part I/data/holiday/holiday-hard.json
+example_mods/exclude_these/Holiday Mod Part I/data/holiday/holiday.json
+example_mods/exclude_these/Holiday Mod Part I/data/holiday/script.lua
+example_mods/exclude_these/Holiday Mod Part I/data/holiday-classic/holiday-classic.json
+example_mods/exclude_these/Holiday Mod Part I/data/plum/events.json
+example_mods/exclude_these/Holiday Mod Part I/data/plum/plum-easy.json
+example_mods/exclude_these/Holiday Mod Part I/data/plum/plum-hard.json
+example_mods/exclude_these/Holiday Mod Part I/data/plum/plum.json
+example_mods/exclude_these/Holiday Mod Part I/data/plum/script.lua
+example_mods/exclude_these/Holiday Mod Part I/data/santa/events.json
+example_mods/exclude_these/Holiday Mod Part I/data/santa/santa-easy.json
+example_mods/exclude_these/Holiday Mod Part I/data/santa/santa-hard.json
+example_mods/exclude_these/Holiday Mod Part I/data/santa/santa.json
+example_mods/exclude_these/Holiday Mod Part I/data/santa/script.lua
+example_mods/exclude_these/Holiday Mod Part I/fonts/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/images/BG.png
+example_mods/exclude_these/Holiday Mod Part I/images/Capture.PNG
+example_mods/exclude_these/Holiday Mod Part I/images/cirno.png
+example_mods/exclude_these/Holiday Mod Part I/images/end.png
+example_mods/exclude_these/Holiday Mod Part I/images/gfDanceTitle.json
+example_mods/exclude_these/Holiday Mod Part I/images/gfDanceTitle.png
+example_mods/exclude_these/Holiday Mod Part I/images/gfDanceTitle.xml
+example_mods/exclude_these/Holiday Mod Part I/images/halloween_bg.png
+example_mods/exclude_these/Holiday Mod Part I/images/halloween_bg.xml
+example_mods/exclude_these/Holiday Mod Part I/images/menuBG.png
+example_mods/exclude_these/Holiday Mod Part I/images/NOTE_empty.png
+example_mods/exclude_these/Holiday Mod Part I/images/NOTE_empty.xml
+example_mods/exclude_these/Holiday Mod Part I/images/oneshit.png
+example_mods/exclude_these/Holiday Mod Part I/images/twoshit.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/BF-plum.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/BF-plum.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/BF-santa.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/BF-santa.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/BF.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/BF.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/dad-holiday.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/dad-holiday.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/GF-plum.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/GF-plum.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/GF-santa.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/GF-santa.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/GF.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/GF.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/PICO-holiday.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/PICO-holiday.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/pump.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/pump.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/images/characters/skid.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/skid.xml
+example_mods/exclude_these/Holiday Mod Part I/images/characters/spookyconcept.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/sunday.png
+example_mods/exclude_these/Holiday Mod Part I/images/characters/sunday.xml
+example_mods/exclude_these/Holiday Mod Part I/images/credits/8bit.png
+example_mods/exclude_these/Holiday Mod Part I/images/credits/fluffyhairs.png
+example_mods/exclude_these/Holiday Mod Part I/images/credits/holistan.png
+example_mods/exclude_these/Holiday Mod Part I/images/credits/rareblin.png
+example_mods/exclude_these/Holiday Mod Part I/images/deck/bg.png
+example_mods/exclude_these/Holiday Mod Part I/images/deck/door.png
+example_mods/exclude_these/Holiday Mod Part I/images/deck/door.xml
+example_mods/exclude_these/Holiday Mod Part I/images/deck/snow.png
+example_mods/exclude_these/Holiday Mod Part I/images/deck/wall.png
+example_mods/exclude_these/Holiday Mod Part I/images/deck/wall.xml
+example_mods/exclude_these/Holiday Mod Part I/images/dialogue/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/images/gallery/die.png
+example_mods/exclude_these/Holiday Mod Part I/images/gallery/mainsplain.png
+example_mods/exclude_these/Holiday Mod Part I/images/gallery/mistletoe.png
+example_mods/exclude_these/Holiday Mod Part I/images/gallery/plan.png
+example_mods/exclude_these/Holiday Mod Part I/images/gallery/snowball.png
+example_mods/exclude_these/Holiday Mod Part I/images/gallery/sundeez.png
+example_mods/exclude_these/Holiday Mod Part I/images/holiday/present.png
+example_mods/exclude_these/Holiday Mod Part I/images/holiday/sky.png
+example_mods/exclude_these/Holiday Mod Part I/images/holiday/snow.png
+example_mods/exclude_these/Holiday Mod Part I/images/holiday/tree.png
+example_mods/exclude_these/Holiday Mod Part I/images/holiday/tree.xml
+example_mods/exclude_these/Holiday Mod Part I/images/holiday/wall.png
+example_mods/exclude_these/Holiday Mod Part I/images/icons/icon-blitz.png
+example_mods/exclude_these/Holiday Mod Part I/images/icons/icon-pico-holiday.png
+example_mods/exclude_these/Holiday Mod Part I/images/icons/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/images/menubackgrounds/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/images/menucharacters/gf.json
+example_mods/exclude_these/Holiday Mod Part I/images/menucharacters/GF.png
+example_mods/exclude_these/Holiday Mod Part I/images/menucharacters/GF.xml
+example_mods/exclude_these/Holiday Mod Part I/images/menucharacters/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/images/plum/bg.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/coins.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/coinsbg.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/coinsfg.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/moneybag.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/moneybag2.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/onepercent.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/onepercent.xml
+example_mods/exclude_these/Holiday Mod Part I/images/plum/safe.png
+example_mods/exclude_these/Holiday Mod Part I/images/plum/shadow.png
+example_mods/exclude_these/Holiday Mod Part I/images/santa/BG.png
+example_mods/exclude_these/Holiday Mod Part I/images/santa/eyes.png
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook01.png
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook01.xml
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook02.png
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook02.xml
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook03.png
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook03.xml
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook04.png
+example_mods/exclude_these/Holiday Mod Part I/images/storybook/storybook04.xml
+example_mods/exclude_these/Holiday Mod Part I/images/storymenu/holiday.png
+example_mods/exclude_these/Holiday Mod Part I/images/storymenu/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/music/cutscene1.ogg
+example_mods/exclude_these/Holiday Mod Part I/music/cutscene2.ogg
+example_mods/exclude_these/Holiday Mod Part I/music/freakyMenu.ogg
+example_mods/exclude_these/Holiday Mod Part I/scripts/script.lua
+example_mods/exclude_these/Holiday Mod Part I/songs/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/songs/deck/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/deck/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/holiday/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/holiday/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/holiday/Voices.sm
+example_mods/exclude_these/Holiday Mod Part I/songs/holiday-classic/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/holiday-classic/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/j-a-w-a/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/j-a-w-a/jawa.png
+example_mods/exclude_these/Holiday Mod Part I/songs/j-a-w-a/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/plum/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/plum/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/plum/Voices.sm
+example_mods/exclude_these/Holiday Mod Part I/songs/santa/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/santa/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part I/songs/santa/Voices.sm
+example_mods/exclude_these/Holiday Mod Part I/songs/santa/Voices.sm.old
+example_mods/exclude_these/Holiday Mod Part I/sounds/flush.ogg
+example_mods/exclude_these/Holiday Mod Part I/stages/deck.json
+example_mods/exclude_these/Holiday Mod Part I/stages/deck.lua
+example_mods/exclude_these/Holiday Mod Part I/stages/holiday.json
+example_mods/exclude_these/Holiday Mod Part I/stages/holiday.lua
+example_mods/exclude_these/Holiday Mod Part I/stages/plum.json
+example_mods/exclude_these/Holiday Mod Part I/stages/plum.lua
+example_mods/exclude_these/Holiday Mod Part I/stages/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/stages/santa.json
+example_mods/exclude_these/Holiday Mod Part I/stages/santa.lua
+example_mods/exclude_these/Holiday Mod Part I/videos/IMG_2736.mov
+example_mods/exclude_these/Holiday Mod Part I/videos/readme.txt
+example_mods/exclude_these/Holiday Mod Part I/weeks/holiday-classic.json
+example_mods/exclude_these/Holiday Mod Part I/weeks/holiday.json
+example_mods/exclude_these/Holiday Mod Part I/weeks/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/dialogue.lua
+example_mods/exclude_these/Holiday Mod Part II/dialogueEnd.lua
+example_mods/exclude_these/Holiday Mod Part II/pack.json
+example_mods/exclude_these/Holiday Mod Part II/pack.png
+example_mods/exclude_these/Holiday Mod Part II/pack.xml
+example_mods/exclude_these/Holiday Mod Part II/taikoInput.lua
+example_mods/exclude_these/Holiday Mod Part II/TankHoliday.mp3
+example_mods/exclude_these/Holiday Mod Part II/tankman lines.txt
+example_mods/exclude_these/Holiday Mod Part II/art/concept.png
+example_mods/exclude_these/Holiday Mod Part II/art/HURTNOTE_assets.fla
+example_mods/exclude_these/Holiday Mod Part II/art/NOTE_taiko.fla
+example_mods/exclude_these/Holiday Mod Part II/art/psychalogue.fla
+example_mods/exclude_these/Holiday Mod Part II/characters/bf-feliz.json
+example_mods/exclude_these/Holiday Mod Part II/characters/bf-holiday-car.json
+example_mods/exclude_these/Holiday Mod Part II/characters/bf-holiday.json
+example_mods/exclude_these/Holiday Mod Part II/characters/edd.json
+example_mods/exclude_these/Holiday Mod Part II/characters/edd.lua
+example_mods/exclude_these/Holiday Mod Part II/characters/gf-holiday-car.json
+example_mods/exclude_these/Holiday Mod Part II/characters/gf-holiday.json
+example_mods/exclude_these/Holiday Mod Part II/characters/mom-holiday-car.json
+example_mods/exclude_these/Holiday Mod Part II/characters/mom-holiday.json
+example_mods/exclude_these/Holiday Mod Part II/characters/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/characters/senpai.json
+example_mods/exclude_these/Holiday Mod Part II/characters/tankman.json
+example_mods/exclude_these/Holiday Mod Part II/characters/tom.json
+example_mods/exclude_these/Holiday Mod Part II/characters/zanta.json
+example_mods/exclude_these/Holiday Mod Part II/characters/zanta.lua
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Cam Boom Speed.lua
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Cam Boom Speed.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Check Won.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/duet.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Flash Camera.lua
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Flash Camera.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/hitByTree.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Missle.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Object Play Animation.lua
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Object Play Animation.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Play Sound.lua
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Play Sound.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Set Cam Zoom.lua
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Set Cam Zoom.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/spawnpole.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/Toggle Battle.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_events/tunnel shit.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_notetypes/Missle.lua
+example_mods/exclude_these/Holiday Mod Part II/custom_notetypes/Missle.txt
+example_mods/exclude_these/Holiday Mod Part II/custom_notetypes/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/data/credits.txt
+example_mods/exclude_these/Holiday Mod Part II/data/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/data/demolition/demolition-easy.json
+example_mods/exclude_these/Holiday Mod Part II/data/demolition/demolition-hard.json
+example_mods/exclude_these/Holiday Mod Part II/data/demolition/demolition.json
+example_mods/exclude_these/Holiday Mod Part II/data/demolition/dialogue.json
+example_mods/exclude_these/Holiday Mod Part II/data/demolition/dialogue2.json
+example_mods/exclude_these/Holiday Mod Part II/data/demolition/events.json
+example_mods/exclude_these/Holiday Mod Part II/data/demolition/script.lua
+example_mods/exclude_these/Holiday Mod Part II/data/feliz/dialogueEnd.json
+example_mods/exclude_these/Holiday Mod Part II/data/feliz/events.json
+example_mods/exclude_these/Holiday Mod Part II/data/feliz/feliz-easy.json
+example_mods/exclude_these/Holiday Mod Part II/data/feliz/feliz-hard.json
+example_mods/exclude_these/Holiday Mod Part II/data/feliz/feliz.json
+example_mods/exclude_these/Holiday Mod Part II/data/feliz/script.lua
+example_mods/exclude_these/Holiday Mod Part II/data/hark/dialogue.json
+example_mods/exclude_these/Holiday Mod Part II/data/hark/hark-easy.json
+example_mods/exclude_these/Holiday Mod Part II/data/hark/hark-hard.json
+example_mods/exclude_these/Holiday Mod Part II/data/hark/hark.json
+example_mods/exclude_these/Holiday Mod Part II/data/hark/script.lua
+example_mods/exclude_these/Holiday Mod Part II/data/you/dialogue.json
+example_mods/exclude_these/Holiday Mod Part II/data/you/dialogueEnd.json
+example_mods/exclude_these/Holiday Mod Part II/data/you/events.json
+example_mods/exclude_these/Holiday Mod Part II/data/you/script.lua
+example_mods/exclude_these/Holiday Mod Part II/data/you/you-easy.json
+example_mods/exclude_these/Holiday Mod Part II/data/you/you-hard.json
+example_mods/exclude_these/Holiday Mod Part II/data/you/you.json
+example_mods/exclude_these/Holiday Mod Part II/data/zanta/events.json
+example_mods/exclude_these/Holiday Mod Part II/data/zanta/zanta-mania.json
+example_mods/exclude_these/Holiday Mod Part II/data/zanta/zanta-taiko.json
+example_mods/exclude_these/Holiday Mod Part II/images/BG.png
+example_mods/exclude_these/Holiday Mod Part II/images/bgniggasconcept.png
+example_mods/exclude_these/Holiday Mod Part II/images/Capture.PNG
+example_mods/exclude_these/Holiday Mod Part II/images/gfDanceTitle.json
+example_mods/exclude_these/Holiday Mod Part II/images/gfDanceTitle.png
+example_mods/exclude_these/Holiday Mod Part II/images/gfDanceTitle.xml
+example_mods/exclude_these/Holiday Mod Part II/images/NOTE_missle.png
+example_mods/exclude_these/Holiday Mod Part II/images/NOTE_missle.xml
+example_mods/exclude_these/Holiday Mod Part II/images/NOTE_taiko.png
+example_mods/exclude_these/Holiday Mod Part II/images/NOTE_taiko.xml
+example_mods/exclude_these/Holiday Mod Part II/images/taikoSpot.png
+example_mods/exclude_these/Holiday Mod Part II/images/taknnanasaksnkankaa.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/BF-car.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/BF-car.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/bf-feliz.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/bf-feliz.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/BF.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/BF.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/GF-car.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/GF-car.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/GF.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/GF.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/MOM-car.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/MOM-car.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/MOM.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/MOM.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/images/characters/senpai.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/senpai.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/tankmanCaptain.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/tankmanCaptain.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/tom.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/tom.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/bg.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Edd Assets.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Edd Assets.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/gate.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/gate.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Matt.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Matt.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Santa.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Santa.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Tom Assets.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Tom Assets.xml
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Zanta Assets.png
+example_mods/exclude_these/Holiday Mod Part II/images/characters/zanta/Zanta Assets.xml
+example_mods/exclude_these/Holiday Mod Part II/images/city/bars.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/bg.gif
+example_mods/exclude_these/Holiday Mod Part II/images/city/bg.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/crtscreen.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/intro.ase
+example_mods/exclude_these/Holiday Mod Part II/images/city/intro.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/intro.xml
+example_mods/exclude_these/Holiday Mod Part II/images/city/layer1.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/layer1.xml
+example_mods/exclude_these/Holiday Mod Part II/images/city/layer2.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/layer3.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/layer3.xml
+example_mods/exclude_these/Holiday Mod Part II/images/city/sky.png
+example_mods/exclude_these/Holiday Mod Part II/images/city/snow.png
+example_mods/exclude_these/Holiday Mod Part II/images/coketruck/branch.png
+example_mods/exclude_these/Holiday Mod Part II/images/coketruck/moon.png
+example_mods/exclude_these/Holiday Mod Part II/images/coketruck/sky.png
+example_mods/exclude_these/Holiday Mod Part II/images/coketruck/tree.png
+example_mods/exclude_these/Holiday Mod Part II/images/coketruck/truck.png
+example_mods/exclude_these/Holiday Mod Part II/images/coketruck/tunnel.png
+example_mods/exclude_these/Holiday Mod Part II/images/coketruck/tunnel.xml
+example_mods/exclude_these/Holiday Mod Part II/images/credits/8bit.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/alejandrougames.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/beegie.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/billie.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/blantados.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/demona.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/edd.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/fluffyhairs.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/holistan.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/isketchiguess.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/juliaa.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/moe.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/recd.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/rozebud.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/sen.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/star.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/thalib.png
+example_mods/exclude_these/Holiday Mod Part II/images/credits/weedman.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/BF_Dialogue.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/BF_Dialogue.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/bfpixel.json
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/BFPIXEL.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/BFPIXEL.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/BoyFriend_Assets.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/BoyFriend_Assets.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/GF_Dialogue.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/GF_Dialogue.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Mom_Assets.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Mom_Assets.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/mom.json
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/phone.json
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/phone.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/phone.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/pico.json
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Pico.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Pico.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Tankman_Assets.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Tankman_Assets.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/tankman.json
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Tom Assets.png
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/Tom Assets.xml
+example_mods/exclude_these/Holiday Mod Part II/images/dialogue/tom.json
+example_mods/exclude_these/Holiday Mod Part II/images/icons/icon-blitz.png
+example_mods/exclude_these/Holiday Mod Part II/images/icons/icon-edd.png
+example_mods/exclude_these/Holiday Mod Part II/images/icons/icon-tom.png
+example_mods/exclude_these/Holiday Mod Part II/images/icons/icon-zanta.png
+example_mods/exclude_these/Holiday Mod Part II/images/icons/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/images/menubackgrounds/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/images/menucharacters/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/images/mountains/floor.png
+example_mods/exclude_these/Holiday Mod Part II/images/mountains/mountainsbg.png
+example_mods/exclude_these/Holiday Mod Part II/images/mountains/mountainsmg.png
+example_mods/exclude_these/Holiday Mod Part II/images/mountains/sky.png
+example_mods/exclude_these/Holiday Mod Part II/images/storymenu/holiday2.png
+example_mods/exclude_these/Holiday Mod Part II/images/storymenu/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/crosshair.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/lamp.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/missle.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/missle.xml
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/pico.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/pico.xml
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/picoarm.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/picoarm.xml
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/sleigh.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/sleigh.xml
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/sleighback.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/smoke.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/smoke.xml
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/thrusters.png
+example_mods/exclude_these/Holiday Mod Part II/images/tomstage/thrusters.xml
+example_mods/exclude_these/Holiday Mod Part II/music/cutscene1.ogg
+example_mods/exclude_these/Holiday Mod Part II/music/cutscene2.ogg
+example_mods/exclude_these/Holiday Mod Part II/music/cutscene3.ogg
+example_mods/exclude_these/Holiday Mod Part II/music/freakyMenu.ogg
+example_mods/exclude_these/Holiday Mod Part II/scripts/versionChecker.lua
+example_mods/exclude_these/Holiday Mod Part II/songs/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/songs/demolition/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/demolition/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/feliz/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/feliz/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/hark/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/hark/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/you/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/you/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/zanta/Inst.ogg
+example_mods/exclude_these/Holiday Mod Part II/songs/zanta/Voices.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/boom.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/cell.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/fall.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/felizintro.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/hangup.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/lazer.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/metalhit.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/missle.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/mommyDies.mp3
+example_mods/exclude_these/Holiday Mod Part II/sounds/mommyDies.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/pickup.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/sel.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/shots.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/TOM.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/tomouch.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/truckboom.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/tankman/1.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/tankman/2.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/tankman/3.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/tankman/4.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/tankphone/tankman1.ogg
+example_mods/exclude_these/Holiday Mod Part II/sounds/tankphone/tankman3.ogg
+example_mods/exclude_these/Holiday Mod Part II/stages/city.json
+example_mods/exclude_these/Holiday Mod Part II/stages/city.lua
+example_mods/exclude_these/Holiday Mod Part II/stages/coketruck.json
+example_mods/exclude_these/Holiday Mod Part II/stages/coketruck.lua
+example_mods/exclude_these/Holiday Mod Part II/stages/mountains.json
+example_mods/exclude_these/Holiday Mod Part II/stages/mountains.lua
+example_mods/exclude_these/Holiday Mod Part II/stages/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/stages/tomstage.json
+example_mods/exclude_these/Holiday Mod Part II/stages/tomstage.lua
+example_mods/exclude_these/Holiday Mod Part II/stages/zantaStage.json
+example_mods/exclude_these/Holiday Mod Part II/stages/zantaStage.lua
+example_mods/exclude_these/Holiday Mod Part II/videos/Hark End Cutscene.mp4
+example_mods/exclude_these/Holiday Mod Part II/videos/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/weeks/holiday2.json
+example_mods/exclude_these/Holiday Mod Part II/weeks/readme.txt
+example_mods/exclude_these/Holiday Mod Part II/weeks/zanta.json
+example_mods/exclude_these/Invisible Health/pack.json
+example_mods/exclude_these/Invisible Health/pack.png
+example_mods/exclude_these/Invisible Health/pack.psd
+example_mods/exclude_these/Invisible Health/characters/bf-car.json
+example_mods/exclude_these/Invisible Health/characters/bf-christmas.json
+example_mods/exclude_these/Invisible Health/characters/bf-pixel-dead.json
+example_mods/exclude_these/Invisible Health/characters/bf-pixel-opponent.json
+example_mods/exclude_these/Invisible Health/characters/bf-pixel.json
+example_mods/exclude_these/Invisible Health/characters/bf.json
+example_mods/exclude_these/Invisible Health/characters/dad.json
+example_mods/exclude_these/Invisible Health/characters/gf-car.json
+example_mods/exclude_these/Invisible Health/characters/gf-christmas.json
+example_mods/exclude_these/Invisible Health/characters/gf-pixel.json
+example_mods/exclude_these/Invisible Health/characters/gf.json
+example_mods/exclude_these/Invisible Health/characters/mom-car.json
+example_mods/exclude_these/Invisible Health/characters/mom.json
+example_mods/exclude_these/Invisible Health/characters/monster-christmas.json
+example_mods/exclude_these/Invisible Health/characters/monster.json
+example_mods/exclude_these/Invisible Health/characters/parents-christmas.json
+example_mods/exclude_these/Invisible Health/characters/pico-player.json
+example_mods/exclude_these/Invisible Health/characters/pico.json
+example_mods/exclude_these/Invisible Health/characters/senpai-angry.json
+example_mods/exclude_these/Invisible Health/characters/senpai.json
+example_mods/exclude_these/Invisible Health/characters/spirit.json
+example_mods/exclude_these/Invisible Health/characters/spooky.json
+example_mods/exclude_these/Invisible Health/data/characterList.txt
+example_mods/exclude_these/Invisible Health/images/icons/icon-blank.png
+example_mods/exclude_these/Invisible Health/images/icons/icon-face.png
+example_mods/exclude_these/Screen Shake/pack.json
+example_mods/exclude_these/Screen Shake/pack.png
+example_mods/exclude_these/Screen Shake/pack.psd
+example_mods/exclude_these/Screen Shake/data/blammed/blammed-hard.json
+example_mods/exclude_these/Screen Shake/data/bopeebo/bopeebo-hard.json
+example_mods/exclude_these/Screen Shake/data/cocoa/cocoa-hard.json
+example_mods/exclude_these/Screen Shake/data/dad-battle/dad-battle-hard.json
+example_mods/exclude_these/Screen Shake/data/eggnog/eggnog-hard.json
+example_mods/exclude_these/Screen Shake/data/fresh/fresh-hard.json
+example_mods/exclude_these/Screen Shake/data/high/high-hard.json
+example_mods/exclude_these/Screen Shake/data/milf/milf-hard.json
+example_mods/exclude_these/Screen Shake/data/monster/monster-hard.json
+example_mods/exclude_these/Screen Shake/data/philly-nice/philly-nice-hard.json
+example_mods/exclude_these/Screen Shake/data/pico/pico-hard.json
+example_mods/exclude_these/Screen Shake/data/roses/roses-hard.json
+example_mods/exclude_these/Screen Shake/data/roses/rosesDialogue.txt
+example_mods/exclude_these/Screen Shake/data/satin-panties/satin-panties-hard.json
+example_mods/exclude_these/Screen Shake/data/senpai/senpai-hard.json
+example_mods/exclude_these/Screen Shake/data/senpai/senpaiDialogue.txt
+example_mods/exclude_these/Screen Shake/data/smash/smash.json
+example_mods/exclude_these/Screen Shake/data/south/south-hard.json
+example_mods/exclude_these/Screen Shake/data/spookeez/spookeez-hard.json
+example_mods/exclude_these/Screen Shake/data/test/test-hard.json
+example_mods/exclude_these/Screen Shake/data/test/test.json
+example_mods/exclude_these/Screen Shake/data/thorns/thorns-hard.json
+example_mods/exclude_these/Screen Shake/data/thorns/thornsDialogue.txt
+example_mods/exclude_these/Screen Shake/data/tutorial/tutorial-hard.json
+example_mods/exclude_these/Screen Shake/data/winter-horrorland/winter-horrorland-hard.json
+example_mods/exclude_these/VSHuggyWuggy/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/characters/huggy.json
+example_mods/exclude_these/VSHuggyWuggy/characters/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/custom_events/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/custom_notetypes/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/data/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/images/characters/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/images/dialogue/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/images/icons/icon-huggy.png
+example_mods/exclude_these/VSHuggyWuggy/images/icons/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/images/menubackgrounds/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/images/menucharacters/huggymenu.json
+example_mods/exclude_these/VSHuggyWuggy/images/menucharacters/huggymenu.png
+example_mods/exclude_these/VSHuggyWuggy/images/menucharacters/huggymenu.xml
+example_mods/exclude_these/VSHuggyWuggy/images/menucharacters/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/images/storymenu/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/songs/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/songs/Playtime/Inst.ogg
+example_mods/exclude_these/VSHuggyWuggy/songs/Playtime/Voices.ogg
+example_mods/exclude_these/VSHuggyWuggy/stages/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/videos/readme.txt
+example_mods/exclude_these/VSHuggyWuggy/weeks/funweek.json
+example_mods/exclude_these/VSHuggyWuggy/weeks/readme.txt
