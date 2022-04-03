@@ -19,6 +19,8 @@ import randomShit.util.DumbUtil;
 import randomShit.util.SoundtrackUtil;
 import Song; // FOR SWAGSONG!!
 import CoolUtil;
+import flixel.FlxG.sound as susMonger;
+import SpinningIcon;
 using StringTools;
 
 /**OST Data.
@@ -49,6 +51,10 @@ typedef OSTData = {
     var hasVoices:Bool;
     /**Change the icons at certain points in the song. Leave this null if you want to keep the icons as is throughout.*/
     @:optional var iconChanges:Array<IconChange>;
+    /**Choose whether to preload your song. Disabling this or leaving it null may improve loading times of the Soundtrack menu, at the cost of some lag when you load your song.
+        
+    I'd suggest setting this to true on longer songs, but leaving it null or false on shorter songs.*/
+    @:optional var preloadTrack:Bool;
 }
 
 typedef IconChange = {
@@ -99,6 +105,10 @@ class SoundtrackMenu extends MusicBeatState {
     var msTimes:Array<Float> = [];
     var chTargets:Array<String> = [];
     var newIcons:Array<String> = [];
+    var songPreloaded:Array<Bool> = [];
+    var amogus:FlxTypedGroup<FlxSound>;
+    var speen:SpinningIcon;
+    public static var hardDong:Array<Bool> = [];
     public function new() {
         /*baseSongInfos = [
             ["Tutorial", "gf", "bf", getIconColorFromFile('gf')],
@@ -161,61 +171,78 @@ class SoundtrackMenu extends MusicBeatState {
         add(bg);
         grpSongs = new FlxTypedGroup<Alphabet>();
         add(grpSongs);
-        for (song in 0...songList_Full.length) {
+        var song:Int = 0;
+        for (songShit in songList_Full) {
             var textToDisplay:String = '';
-            if (songList_Full[song].displayName != null) {
-                textToDisplay = songList_Full[song].displayName;
+            if (songShit.displayName != null) {
+                textToDisplay = songShit.displayName;
             } else {
-                textToDisplay = songList_Full[song].songName;
+                textToDisplay = songShit.songName;
             }
             var jej:Alphabet = new Alphabet(0, (70 * song), textToDisplay, true, false);
             jej.isMenuItem = true;
             jej.targetY = song;
             //add(jej); **DUMBASS**
             grpSongs.add(jej);
-            if (songList_Full[song].displayName != null) {
-                displayNames.set(songList_Full[song].songName, songList_Full[song].displayName);
+            if (songShit.displayName != null) {
+                displayNames.set(songShit.songName, songShit.displayName);
             }
-            trace('Adding song ' + song + ' of ' + songList_Full.length + ': ' + songList_Full[song].songName);
-            FlxG.log.notice('Adding song ' + song + ' of ' + songList_Full.length + ': ' + songList_Full[song].songName);
+            var songCoded:String = (hardDong[song]) ? "hardcoded" : "JSON";
+            trace('Adding $songCoded song ' + song + ' of ' + songList_Full.length + ': ' + songShit.songName);
+            FlxG.log.notice('Adding $songCoded song ' + song + ' of ' + songList_Full.length + ': ' + songShit.songName);
 
-            var icon:HealthIcon = new HealthIcon(songList_Full[song].dadIcon);
+            var icon:HealthIcon = new HealthIcon(songShit.dadIcon);
             icon.sprTracker = jej;
             add(icon);
             iconArray.push(icon);
 
-            if (songList_Full[song].songColor != null) {
-                var meena:FlxColor = DumbUtil.makeColorFromRGB(songList_Full[song].songColor);
+            if (songShit.songColor != null) {
+                var meena:FlxColor = DumbUtil.makeColorFromRGB(songShit.songColor);
                 bgColorList.push(meena);
             } else {
-                var penis:SongColorInfo = songList_Full[song].songColorInfo;
+                var penis:SongColorInfo = songShit.songColorInfo;
                 var meena:FlxColor = FlxColor.fromRGB(penis.red, penis.green, penis.blue, 255);
                 bgColorList.push(meena);
             }
 
-            var player2_Icon:String = songList_Full[song].dadIcon;
+            var player2_Icon:String = songShit.dadIcon;
             opponentColors.set(player2_Icon, DumbUtil.iconColor(player2_Icon));
-            var player1_Icon:String = songList_Full[song].bfIcon;
+            var player1_Icon:String = songShit.bfIcon;
             bfColors.set(player1_Icon, DumbUtil.iconColor(player1_Icon));
 
             playerIcons_Dad.push(player2_Icon);
             playerIcons_Bf.push(player1_Icon);
-            var instrumentalTrack:FlxSound = new FlxSound();
-            instrumentalTrack.loadEmbedded(Paths.inst(Paths.formatToSongPath(songList_Full[song].songName)));
-            instrumentalTrack.play();
-            instrumentalTrack.pause(); // idk if thisll do much lmao
-            instrumentals.push(instrumentalTrack);
-            FlxG.sound.list.add(instrumentalTrack);
-            var vocalTrack:FlxSound = new FlxSound();
-            trace(Paths.inst(songList_Full[song].songName.toLowerCase()));
-            if (songHasVoices[song]) vocalTrack.loadEmbedded(Paths.voices(Paths.formatToSongPath(songList_Full[song].songName))) else vocalTrack.loadEmbedded(Paths.sound("introGo"));
-            vocalTrack.play();
-            vocalTrack.pause();
-            vocalTracks.push(vocalTrack);
-            FlxG.sound.list.add(vocalTrack);
+            //if (songShit.preloadTrack != null && songShit.preloadTrack) {
+                var instrumentalTrack:FlxSound = new FlxSound();
+                instrumentalTrack.loadEmbedded(Paths.inst(Paths.formatToSongPath(songShit.songName)));
+                instrumentalTrack.play();
+                instrumentalTrack.pause(); // idk if thisll do much lmao
+                instrumentals.push(instrumentalTrack);
+                FlxG.sound.list.add(instrumentalTrack);
+                var vocalTrack:FlxSound = new FlxSound();
+                trace(Paths.inst(songShit.songName.toLowerCase()));
+                if (songHasVoices[song]) vocalTrack.loadEmbedded(Paths.voices(Paths.formatToSongPath(songShit.songName))) else vocalTrack.loadEmbedded(Paths.sound("introGo"));
+                vocalTrack.play();
+                vocalTrack.pause();
+                vocalTracks.push(vocalTrack);
+                FlxG.sound.list.add(vocalTrack);
+                songPreloaded.push(true);
+                trace("Preloaded tracks for song " + (song + 1) + " of " + songList_Full.length);
+            /*} else {
+                var instrumentalTrack:FlxSound = new FlxSound();
+                instrumentals.push(instrumentalTrack); // still create the *sound* anyway, just to have it.
+                FlxG.sound.list.add(instrumentalTrack);
+                var vocalTrack:FlxSound = new FlxSound();
+                FlxG.sound.list.add(vocalTrack);
+                songPreloaded.push(false);
+                trace("Did not preload tracks for song " + song + " of " + songList_Full.length);
+            } */
+            song++;
         }
         trace(opponentColors);
         trace(bfColors);
+        curBgColor = bgColorList[0];
+        amogus = FlxG.sound.list;
         eduardoIcon = new HealthIcon("eduardo");
         songBarBg = new FlxSprite(0, 0).loadGraphic(Paths.image("healthBar"));
         songBarBg.screenCenter(X);
@@ -242,10 +269,14 @@ class SoundtrackMenu extends MusicBeatState {
         add(eduardoIcon);
         eduardoIcon.kill();
         dadIcon.kill();
+        speen = new SpinningIcon((ClientPrefs.smallScreenFix) ? TOP_RIGHT : BOTTOM_RIGHT);
 
         timeHint = new HintMessageAsset("No song selected", 24, ClientPrefs.smallScreenFix);
         add(timeHint);
         add(timeHint.ADD_ME);
+        add(speen);
+        speen.stopSpin();
+        speen.kill();
     }
     var displayThis:String = '';
     function playSong(SongData:OSTData) {
@@ -280,20 +311,41 @@ class SoundtrackMenu extends MusicBeatState {
             var fatBitchAss = SongData.songColorInfo;
             bg.setColor(FlxColor.fromRGB(fatBitchAss.red, fatBitchAss.green, fatBitchAss.blue, 255), true, 0.7);
         }
+        var pickMe = instrumentals[curSelected];
+        var elephant = amogus.members.indexOf(pickMe);
+        var fart = vocalTracks[curSelected];
+        var shart = amogus.members.indexOf(fart);
+        speen.revive();
+        speen.spin();
         FlxG.sound.music.fadeOut(0.7, 0, { function(h:FlxTween) {
             if (displayNames.exists(SongData.songName)) displayThis = displayNames[SongData.songName] else displayThis = SongData.songName;
-            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].time = 0;
-            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].resume();
-            curLength = FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].length;
-            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].onComplete = doStopThings;
-            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].time = 0;
-            FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].resume();
-            FlxG.sound.music.pause();
+            //if (songPreloaded[curSelected]) {
+                amogus.members[elephant].onComplete = doStopThings;
+                amogus.members[elephant].time = 0;
+                amogus.members[elephant].resume();
+                if (songHasVoices[curSelected]) {
+                    amogus.members[shart].time = 0;
+                    amogus.members[shart].resume();
+                }
+            /*} else {
+                amogus.members[elephant].loadEmbedded(Paths.inst(Paths.formatToSongPath(SongData.songName)));
+                amogus.members[elephant].onComplete = doStopThings;
+                amogus.members[elephant].time = 0;
+                amogus.members[elephant].resume();
+                if (songHasVoices[curSelected]) {
+                    amogus.members[shart].loadEmbedded(Paths.voices(Paths.formatToSongPath(SongData.songName)));
+                    amogus.members[shart].time = 0;
+                    amogus.members[shart].resume();
+                }
+            }*/
+            speen.stopSpin();
+            speen.kill();
             playingSong = true;
         }});
     }
     var curDadColor:FlxColor;
     var curBfColor:FlxColor;
+    var curBgColor:FlxColor;
 
     function reloadIcons() {
         dadIcon.changeIcon(playerIcons_Dad[curSelected]);
@@ -339,6 +391,7 @@ class SoundtrackMenu extends MusicBeatState {
             newIcons = [];
         }
         nextChangeID = 0;
+        timeHint.setText("Select a song. If you have added a new one, re-enter this menu.");
     }
     var curTime:Float = 0;
     var curLength:Float = 0;
@@ -492,11 +545,15 @@ class SoundtrackMenu extends MusicBeatState {
                 seekInSong(5000);
             }
             if (controls.ACCEPT) {
-                if (!FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].playing) FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].resume();
-                else FlxG.sound.list.members[FlxG.sound.list.members.indexOf(instrumentals[curSelected])].pause();
+                var fat = instrumentals[curSelected];
+                var bitch = amogus.members.indexOf(fat);
+                var ass = vocalTracks[curSelected];
+                var pick = amogus.members.indexOf(ass);
+                if (!amogus.members[bitch].playing) amogus.members[bitch].resume();
+                else amogus.members[bitch].pause();
                 if (songHasVoices[curSelected]) {
-                    if (!FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].playing) FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].resume();
-                    else FlxG.sound.list.members[FlxG.sound.list.members.indexOf(vocalTracks[curSelected])].pause();
+                    if (!amogus.members[pick].playing) amogus.members[pick].resume();
+                    else amogus.members[pick].pause();
                 }
             }
             if (controls.BACK) {
