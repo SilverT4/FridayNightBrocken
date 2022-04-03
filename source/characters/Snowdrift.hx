@@ -1,4 +1,4 @@
-package randomShit.dumb;
+package characters;
 
 import DialogueBoxPsych; // so i can copy his anims
 import flixel.FlxSprite;
@@ -12,12 +12,14 @@ using StringTools;
     @since March 2022 (Emo Engine 0.1.3)*/
 class Snowdrift extends FlxSprite {
     static inline final texPath = 'shared:images/dialogue/snowdrift';
-    static inline final dialogueJsonPath = 'default:images/dialogue/snowdrift.json';
+    static inline final dialogueJsonPath = 'assets/images/dialogue/snowdrift.json';
     var animOffsets:Map<String, Array<Dynamic>> = [];
-    public function new(x:Float, y:Float) {
+    var animList:Array<String> = [];
+    public function new(x:Float = 0, y:Float = 0) {
         super(x, y);
         frames = getBird(texPath);
         addAnimsFromJson();
+        antialiasing = (ClientPrefs.globalAntialiasing) ? true : false;
     }
 
     @:noCompletion private function addAnimsFromJson() {
@@ -25,8 +27,10 @@ class Snowdrift extends FlxSprite {
         for (anim in diaChar.animations) {
             animation.addByPrefix(anim.anim + '-idle', anim.idle_name, 24, true);
             animation.addByPrefix(anim.anim, anim.loop_name, 24, true);
-            animOffsets[anim.anim + 'idle'] = anim.idle_offsets;
+            animOffsets[anim.anim + '-idle'] = anim.idle_offsets;
             animOffsets[anim.anim] = anim.loop_offsets;
+            animList.push(anim.anim);
+            animList.push(anim.anim + '-idle');
         }
     }
 
@@ -40,6 +44,21 @@ class Snowdrift extends FlxSprite {
 		else
 			offset.set(0, 0);
     }
+
+    #if debug
+    public function DEBUG_CH_ANIM_KEY(CH:Int = 0) {
+        var cup = animList.indexOf(animation.curAnim.name);
+        var dum = cup;
+        dum += CH;
+        if (dum < 0) {
+            dum = animList.length - 1;
+        }
+        if (dum >= animList.length) {
+            dum = 0;
+        }
+        animation.play(animList[dum]);
+    }
+    #end
 
     override function update(elapsed:Float) {
         if (animation.curAnim.finished && !animation.curAnim.name.contains('-idle')) {
