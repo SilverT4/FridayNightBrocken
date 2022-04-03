@@ -42,7 +42,7 @@ typedef DialogueAnimArray = {
 // love u Shubs no homo :flushedh4:
 typedef DialogueFile = {
 	var dialogue:Array<DialogueLine>;
-	var dialogueMusic:String; // for custom music in dialogues lmao - devin503
+	var ?dialogueMusic:String; // for custom music in dialogues lmao - devin503
 	var musicFadeOut:Bool; // control whether the music fades after dialogue ends
 }
 
