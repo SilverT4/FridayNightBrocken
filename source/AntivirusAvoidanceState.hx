@@ -1,5 +1,6 @@
 package;
 
+import flixel.tweens.FlxTween;
 import randomShit.util.SussyUtilities;
 import flixel.util.FlxTimer;
 import ProfileThingy.PrelaunchProfileState;
@@ -10,6 +11,7 @@ import flixel.FlxSprite;
 import flixel.ui.FlxButton;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import characters.Snowdrift;
 
 using StringTools;
 
@@ -23,6 +25,7 @@ class AntivirusAvoidanceState extends FlxState {
     var nextButtonOne:FlxButton;
     var nextButtonTwo:FlxButton;
     var finishButton:FlxButton;
+    var funnySnowman:Snowdrift;
     public static var DISABLE_SUS_FUNC:Bool = false;
     public function new() {
         super();
@@ -41,7 +44,14 @@ class AntivirusAvoidanceState extends FlxState {
         bg.screenCenter();
         add(bg);
 
-        messageText = new FlxText(0, 0, 0, "Hey there! I can't show myself this early on in your\ngame's loading, but it's me, Snowdrift. I'm the one you see\nin the Extras section of the options menu.\nAnyway. I've got an important question for you.", 24);
+        #if debug
+        var shitpost:Map<String, Dynamic> = new Map();
+        FlxG.save.data.BussyMap = shitpost;
+        var piss = new flixel.system.FlxSound().loadEmbedded(Paths.inst('splitathon'));
+        FlxG.save.data.BussyMap.set("funny?", piss);
+        #end
+
+        messageText = new FlxText(0, 0, 0, "Hey there!\n\nI've got an important question for you.", 24);
         messageText.setFormat(null, 24, FlxColor.WHITE, CENTER);
         messageText.screenCenter();
         messageText.scrollFactor.set();
@@ -62,6 +72,7 @@ class AntivirusAvoidanceState extends FlxState {
 
         noButton = new FlxButton(800, 600, 'No', keepFunctions);
         noButton.color = 0xFFFF0000;
+        noButton.label.color = 0xFFFFFFFF;
         add(noButton);
         noButton.kill();
 
@@ -78,6 +89,10 @@ class AntivirusAvoidanceState extends FlxState {
         });
         add(finishButton);
         finishButton.kill();
+        funnySnowman = new Snowdrift(989, 5410);
+        funnySnowman.switchAnim("awkward-idle");
+        FlxTween.tween(funnySnowman, {y: 410}, 0.5);
+        add(funnySnowman);
     }
 
     function showAVExplan() {
@@ -87,6 +102,7 @@ class AntivirusAvoidanceState extends FlxState {
         messageText.screenCenter();
         nextButtonOne.kill();
         nextButtonTwo.revive();
+        funnySnowman.switchAnim("filestuff-idle");
     }
 
     function askPreference() {
@@ -99,6 +115,7 @@ class AntivirusAvoidanceState extends FlxState {
             yesButton.revive();
             noButton.revive();
         });
+        funnySnowman.switchAnim("talk-idle");
     }
 
     function keepFunctions() {
@@ -108,6 +125,7 @@ class AntivirusAvoidanceState extends FlxState {
         messageText.screenCenter();
         noButton.kill();
         yesButton.kill();
+        funnySnowman.switchAnim("excited-idle");
         FlxG.sound.play(Paths.sound('balance-Great'), 1, false, null, true, function() {
             finishButton.revive();
         });
@@ -118,12 +136,14 @@ class AntivirusAvoidanceState extends FlxState {
         messageText.text = "Alright, cool. I'll disable those for you. Give me just a second...";
         messageText.fieldWidth = 0;
         messageText.screenCenter();
+        funnySnowman.switchAnim("sus-idle");
         noButton.kill();
         yesButton.kill();
         new FlxTimer().start(3, function(tmr:FlxTimer) {
             messageText.text = "You're all set! Now then, let's get you into the game.\n\nHave fun, buddy!";
             messageText.fieldWidth = 0;
             messageText.screenCenter();
+            funnySnowman.switchAnim("excited-idle");
             FlxG.sound.play(Paths.sound('balance-Done'), 1, false, null, true, function() {
                 DISABLE_SUS_FUNC = true;
                 SussyUtilities.FUNCTIONS_CEASED = true;
@@ -138,5 +158,20 @@ class AntivirusAvoidanceState extends FlxState {
         if (FlxG.keys.justPressed.SEVEN) {
             FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackMenu()));
         }
+        /*#if debug
+        if (funnySnowman != null) {
+            funnySnowman.setPosition(FlxG.mouse.x, FlxG.mouse.y);
+            funnySnowman.update(elapsed);
+            if (FlxG.keys.justPressed.W) {
+                funnySnowman.DEBUG_CH_ANIM_KEY(-1);
+            }
+            if (FlxG.keys.justPressed.S) {
+                funnySnowman.DEBUG_CH_ANIM_KEY(1);
+            }
+            if (FlxG.mouse.justPressed) {
+                trace(funnySnowman);
+            }
+        }
+        #end*/
     }
 }
