@@ -7,8 +7,10 @@ import openfl.utils.Assets as OpenFlAssets;
 import lime.utils.Assets;
 import flixel.FlxSprite;
 #if MODS_ALLOWED
+#if sys
 import sys.io.File;
 import sys.FileSystem;
+#end
 import flixel.graphics.FlxGraphic;
 import openfl.display.BitmapData;
 #end
@@ -86,6 +88,7 @@ class Paths
 	{
 		currentLevel = name.toLowerCase();
 	}
+	#if sys
 	static public function ocJson(name:String) { // TODO: Rework the OC shit!!
 		if (!FileSystem.exists('assets/OC/' + name + '.json')) {
 			return name;
@@ -102,12 +105,22 @@ class Paths
 			return 'assets/images/myOCs/' + penis + '.png';
 		}
 	}
+	#end
 	static public function snowdriftChatter(bruh:String) {
+		var SNOWDRIFT_PATH = 'assets/optionsThings/snowdrift/';
+		#if sys
 		if (!FileSystem.exists('assets/optionsThings/snowdrift/' + bruh + '.json')) {
 			return sys.io.File.getContent('assets/optionsThings/snowdrift/unsure.json');
 		} else {
 			return sys.io.File.getContent('assets/optionsThings/snowdrift/' + bruh + '.json');
 		}
+		#else
+		if (!OpenFlAssets.exists(SNOWDRIFT_PATH + '$bruh.json')) {
+			return OpenFlAssets.getText('$SNOWDRIFT_PATH' + 'unsure.json');
+		} else {
+			return OpenFlAssets.getText('$SNOWDRIFT_PATH' + '$bruh.json');
+		}
+		#end
 	}
 
 	public static function getPath(file:String, type:AssetType, ?library:Null<String> = null)
@@ -178,7 +191,7 @@ class Paths
 		} else if (FileSystem.exists(BASE_MOD_CHAR_DIR + key + '.json')) {
 			THE_SHIT = BASE_MOD_CHAR_DIR + key + '.json';
 		}
-		else #end if (FileSystem.exists(PRELOAD_CHAR_DIR + key + '.json')) {
+		else #end if (OpenFlAssets.exists(PRELOAD_CHAR_DIR + key + '.json')) {
 			THE_SHIT = PRELOAD_CHAR_DIR + key + '.json';
 		} else {
 			THE_SHIT = getPath('characters/bf.json', TEXT);
@@ -250,7 +263,7 @@ class Paths
 	{
 		#if MODS_ALLOWED
 		var file:String = modsMusic(key);
-		if(FileSystem.exists(file)) {
+		if(OpenFlAssets.exists(file)) {
 			if(!customSoundsLoaded.exists(file)) {
 				customSoundsLoaded.set(file, Sound.fromFile(file));
 			}
@@ -380,7 +393,7 @@ class Paths
 	}
 
 	inline static public function fontList():Array<String> {
-		return FileSystem.readDirectory('assets/fonts');
+		return #if sys FileSystem.readDirectory('assets/fonts') #else OpenFlAssets.list(FONT) #end;
 	}
 
 	inline static public function fileExists(key:String, type:AssetType, ?ignoreMods:Bool = false, ?library:String)
@@ -507,6 +520,7 @@ class Paths
 	static public function getModDirectories():Array<String> {
 		var list:Array<String> = [];
 		var modsFolder:String = Paths.mods();
+		#if sys
 		if(FileSystem.exists(modsFolder)) {
 			for (folder in FileSystem.readDirectory(modsFolder)) {
 				var path = haxe.io.Path.join([modsFolder, folder]);
@@ -515,6 +529,9 @@ class Paths
 				}
 			}
 		}
+		#else
+		list.push('');
+		#end
 		return list;
 	}
 	#end

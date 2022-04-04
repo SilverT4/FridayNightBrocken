@@ -147,6 +147,17 @@ class SoundtrackMenu extends MusicBeatState {
         }
         super();
     }
+
+    function getSongColor(Shit:OSTData) {
+        if (Shit.songColor != null) {
+            return FlxColor.fromRGB(Shit.songColor[0], Shit.songColor[1], Shit.songColor[2], 255);
+        }
+        if (Shit.songColorInfo != null) {
+            var pee = Shit.songColorInfo;
+            return FlxColor.fromRGB(pee.red, pee.green, pee.blue, 255);
+        }
+        return 0xFFA6D388;
+    }
     /*function getIconColorFromFile(charName:String) {
         var emoIcon:HealthIcon = new HealthIcon(charName);
         var colToReturn:Int = CoolUtil.dominantColor(emoIcon);
@@ -167,7 +178,7 @@ class SoundtrackMenu extends MusicBeatState {
 
     override function create() {
         bg = new FunkyBackground();
-        bg.setColor(DumbUtil.getBgRgbColor(songList_Full[0].songColor), false);
+        bg.setColor(getSongColor(songList_Full[0]), false);
         add(bg);
         grpSongs = new FlxTypedGroup<Alphabet>();
         add(grpSongs);
@@ -305,12 +316,7 @@ class SoundtrackMenu extends MusicBeatState {
                 }
             }
         }
-        if (SongData.songColor != null) {
-            bg.setColor(DumbUtil.getBgRgbColor(SongData.songColor), true, 0.7);
-        } else {
-            var fatBitchAss = SongData.songColorInfo;
-            bg.setColor(FlxColor.fromRGB(fatBitchAss.red, fatBitchAss.green, fatBitchAss.blue, 255), true, 0.7);
-        }
+            bg.setColor(getSongColor(SongData), true, 0.7);
         var pickMe = instrumentals[curSelected];
         var elephant = amogus.members.indexOf(pickMe);
         var fart = vocalTracks[curSelected];

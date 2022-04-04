@@ -1,5 +1,6 @@
 package randomShit.util;
 
+import randomShit.dumb.SoundtrackMenu;
 import sys.io.FileOutput;
 import lime.ui.FileDialog;
 import haxe.exceptions.ArgumentException;
@@ -71,10 +72,19 @@ class SoundtrackUtil {
     }
     public static function getSoundtrackList():Array<OSTData> {
         var fileList:Array<String> = [];
-        var ReturnThese:Array<OSTData> = [];
+        var ReturnThese:Array<OSTData> = HarderThanMyDick.theseSongs();
+        if (ReturnThese.length >= 1) {
+            for (fuckYou in ReturnThese) {
+                    trace("Song " + (ReturnThese.indexOf(fuckYou) + 1) + " of " + ReturnThese.length + ": " + fuckYou.songName + " is hardcoded!!");
+                    SoundtrackMenu.hardDong.push(true);
+            }
+        }
         var KEKE = readPath(SoundtrackPath);
         for (file in KEKE) {
-            if (file != "TEMPLATE.TXT") fileList.push(SoundtrackPath + file);
+            if (file != "TEMPLATE.TXT") {
+                fileList.push(SoundtrackPath + file);
+                trace("Added base song file " + (KEKE.indexOf(file) + 1) + " of " + KEKE.length + ".");
+            }
         }
         #if MODS_ALLOWED
         if (Paths.currentModDirectory.length >= 1) {
@@ -82,7 +92,12 @@ class SoundtrackUtil {
             if (metalBeetle[0] != "NO_FILES") {
                 for (file in metalBeetle) {
                     trace(file);
-                    fileList.push('mods/' + Paths.currentModDirectory + '/ost/' + file);
+                    if (!file.contains('TXT')) {
+                        fileList.push('mods/' + Paths.currentModDirectory + '/ost/' + file);
+                        trace("File " + (metalBeetle.indexOf(file) + 1) + " of " + metalBeetle.length + " in " + Paths.currentModDirectory + ": Found OST data for " + Json.parse(convertToRaw('mods/' + Paths.currentModDirectory + '/ost/' + file)).songName + "\n(Total files: " + fileList.length + ")");
+                    } else {
+                        trace("File " + (metalBeetle.indexOf(file) + 1) + " of " + metalBeetle.length + " in " + Paths.currentModDirectory + ": $file is not a JSON and will be skipped." + "\n(Total files: " + fileList.length + ")");
+                    }
                 }
             }
         }
@@ -90,13 +105,19 @@ class SoundtrackUtil {
         if (KEKEKEKE[0] != "NO_FILES") {
             for (file in KEKEKEKE) {
                 trace(file);
-                if (!file.contains('TXT')) fileList.push(ModSoundtrackPath + file);
+                if (!file.contains('TXT')) {
+                    fileList.push(ModSoundtrackPath + file);
+                    trace("File " + (KEKEKEKE.indexOf(file) + 1) + " of " + KEKEKEKE.length + ": Found OST data for " + Json.parse(convertToRaw('mods/ost/$file')).songName + "\n(Total files: " + fileList.length + ")");
+                } else {
+                    trace("File " + (KEKEKEKE.indexOf(file) + 1) + " of " + KEKEKEKE.length + " in " + Paths.currentModDirectory + ": $file is not a JSON and will be skipped." + "\n(Total files: " + fileList.length + ")");
+                }
             }
         }
         #end
         for (file in fileList) {
             trace(file);
             ReturnThese.push(doFileParse(file));
+            SoundtrackMenu.hardDong.push(false);
         }
         return ReturnThese;
     }
@@ -145,5 +166,93 @@ class SoundtrackUtil {
             trace("FILE DOES NOT EXIST!!" + FilePath);
             return File.getContent(SoundtrackPath + "TEMPLATE.TXT");
         }
+    }
+}
+
+/**A class for hardcoding a song into the Soundtrack menu. These songs will appear **above** every other song, including base game songs.
+    @since March 2022 (Emo Engine 0.2.0)*/
+class HarderThanMyDick {
+    var COPY_ME:OSTData = {
+        songName: "Penis Music",
+        displayName: "Bangin' Penis Music",
+        defaultOpponent: "gf",
+        defaultBf: "bf",
+        dadIcon: "fuckyou",
+        bfIcon: "cyan",
+        songColorInfo: {
+            red: 0,
+            green: 69,
+            blue: 69
+        },
+        hasVoices: false,
+        iconChanges: [
+            {
+                time_ms: 6969,
+                changeTarget: "bf",
+                newIcon: "clownge"
+            }
+        ],
+        preloadTrack: false
+    };
+    /**Add your hardcoded songs to this array. It'll be used when the game loads the song list.
+        
+    Separate individual songs with a comma.*/
+    static var ADD_TO_ME_PLEASE:Array<OSTData> = [
+        {
+        "songName": "Splitathon",
+        "defaultOpponent": "dave",
+        "defaultBf": "bf",
+        "songColorInfo": {
+            "red": 24,
+            "green": 175,
+            "blue": 11
+        },
+        "hasVoices": true,
+        "dadIcon": "dave",
+        "bfIcon": "cyan",
+        "displayName": "Dave's 10-Minute Splitathon!",
+        "iconChanges": [
+            {
+                "time_ms": 313018,
+                "changeTarget": "dad",
+                "newIcon": "bambi"
+            },
+            {
+                "time_ms": 379830,
+                "changeTarget": "dad",
+                "newIcon": "dave"
+            },
+            {
+                "time_ms": 412912,
+                "changeTarget": "dad",
+                "newIcon": "bambi"
+            },
+            {
+                "time_ms": 546708,
+                "changeTarget": "dad",
+                "newIcon": "dave"
+            }
+        ],
+        "preloadTrack": true
+    },
+    {
+        "songName": "Disability",
+        "defaultOpponent": "disability",
+        "defaultBf": "cyan",
+        "songColorInfo": {
+            "red": 24,
+            "green": 175,
+            "blue": 11
+        },
+        "hasVoices": true,
+        "dadIcon": "disability",
+        "bfIcon": "cyan"
+    }
+    ];
+
+    public static function theseSongs() {
+        if (ADD_TO_ME_PLEASE.length >= 1) {
+            return ADD_TO_ME_PLEASE;
+        } else return [];
     }
 }
