@@ -55,19 +55,45 @@ class MusicBeatState extends FlxUIState
 	}
 	#end
 	#if debug
+	static var pussyShit:FlxSprite;
 	override public function onFocus():Void
 		{
 			#if (VIDEOS_ALLOWED && windows) FlxVideo.onFocus(); #end
 			FocusLostScreen.weGotFocus();
+			yeet(pussyShit);
 			super.onFocus();
 		}
 	override public function onFocusLost():Void {
+		var fuckMyAss:Bool = true;
+		pussyShit = new FlxSprite();
+		pussyShit.makeGraphic(FlxG.width, FlxG.height, 0xFFFFFFFF);
+		pussyShit.alpha = 0;
+		add(pussyShit);
 		#if (VIDEOS_ALLOWED && windows) FlxVideo.onFocusLost(); #end
-		openSubState(new FocusLostScreen());
+		FlxTween.tween(pussyShit, { alpha: 0.7 }, 0.7, { onComplete: function(Pussy:FlxTween) {
+			openSubState(new FocusLostScreen());
+		}});
+		new FlxTimer().start(0.7, function(PissInMy:FlxTimer) {
+			fuckMyAss = false;
+			pissOnMyBussy();
+		});
+	}
+	function pissOnMyBussy() {
 		super.onFocusLost();
+	}
+	public static function removeTheBullshit() {
+		FlxTween.tween(pussyShit, { alpha: 0 }, 0.7, { onComplete: function(Pussy:FlxTween) {
+			pussyShit.destroy();
+			pussyShit = null;
+		}});
 	}
 	#end
 
+	public function yeet(Object:flixel.FlxBasic) {
+		if (Object.exists) {
+			remove(Object);
+		}
+	}
 	override function update(elapsed:Float)
 	{
 		//everyStep();
