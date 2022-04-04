@@ -159,7 +159,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			for (sex in FileSystem.readDirectory('mods/sounds/focus_lost')) {
 				if (sex != "how-to.txt") {
 					RETURN_THESE.push(randomShit.util.DumbUtil.snipName(sex));
-					ClientPrefs.focusLostSounds.set(randomShit.util.DumbUtil.snipName(sex), sys.io.File.getContent('mods/sounds/focus_lost/$sex'));
 				}
 			}
 		}

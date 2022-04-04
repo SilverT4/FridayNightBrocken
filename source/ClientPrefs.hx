@@ -301,6 +301,16 @@ class ClientPrefs {
 			}
 			reloadControls();
 		}
+
+		#if desktop
+		if (sys.FileSystem.exists('mods/sounds/focus_lost') && sys.FileSystem.isDirectory('mods/sounds/focus_lost')) {
+			for (sex in sys.FileSystem.readDirectory('mods/sounds/focus_lost')) {
+				if (sex != "how-to.txt") {
+					focusLostSounds.set(randomShit.util.DumbUtil.snipName(sex), sys.io.File.getContent('mods/sounds/focus_lost/$sex'));
+				}
+			}
+		}
+		#end
 	}
 
 	inline public static function getGameplaySetting(name:String, defaultValue:Dynamic):Dynamic {
