@@ -11,7 +11,7 @@ using StringTools;
 /**A custom FlxSprite class so I can attempt to use Snowdrift's dialogue portraits outside of dialogue boxes.
     @since March 2022 (Emo Engine 0.1.3)*/
 class Snowdrift extends FlxSprite {
-    static inline final texPath = 'assets/shared/images/dialogue/snowdrift';
+    static inline final texPath = 'assets/images/snowdrift_hx_thing';
     static inline final dialogueJsonPath = 'assets/images/dialogue/snowdrift.json';
     var animOffsets:Map<String, Array<Dynamic>> = [];
     var animList:Array<String> = [];
@@ -25,13 +25,16 @@ class Snowdrift extends FlxSprite {
     @:noCompletion private function addAnimsFromJson() {
         var diaChar:DialogueCharacterFile = cast SusJson.parse(rawJsonSus(dialogueJsonPath));
         for (anim in diaChar.animations) {
-            animation.addByPrefix(anim.anim + '-idle', anim.idle_name, 24, true);
-            animation.addByPrefix(anim.anim, anim.loop_name, 24, true);
-            animOffsets[anim.anim + '-idle'] = anim.idle_offsets;
-            animOffsets[anim.anim] = anim.loop_offsets;
-            animList.push(anim.anim);
-            animList.push(anim.anim + '-idle');
+            if (!anim.anim.contains('-idle')) {
+                animation.addByPrefix(anim.anim + '-idle', anim.idle_name, 24, true);
+                animation.addByPrefix(anim.anim, anim.loop_name, 24, true);
+                animOffsets[anim.anim + '-idle'] = anim.idle_offsets;
+                animOffsets[anim.anim] = anim.loop_offsets;
+                animList.push(anim.anim);
+                animList.push(anim.anim + '-idle');
+            }
         }
+        animation.play(animList[1]);
     }
 
     public function switchAnim(animName:String) {
@@ -61,8 +64,10 @@ class Snowdrift extends FlxSprite {
     #end
 
     override function update(elapsed:Float) {
-        if (animation.curAnim.finished && !animation.curAnim.name.contains('-idle')) {
-            animation.play(animation.curAnim.name + '-idle');
+        if (animation.curAnim != null) {
+            if (animation.curAnim.finished && !animation.curAnim.name.contains('-idle')) {
+                animation.play(animation.curAnim.name + '-idle');
+            }
         }
         super.update(elapsed);
     }
