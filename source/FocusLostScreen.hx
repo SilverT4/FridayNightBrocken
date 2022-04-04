@@ -22,9 +22,6 @@ class FocusLostScreen extends MusicBeatSubstate {
             backColor = FlxG.random.color(0xFF000000, 0xFFFFFFFF);
         }
         super();
-    }
-
-    override function create() {
         isOpen = true;
         bg = new FunkyBackground();
         bg.setColor(backColor, false);
@@ -32,12 +29,7 @@ class FocusLostScreen extends MusicBeatSubstate {
         hint = new HintMessageAsset("Your game window is currently unfocused. Switch to the game to dismiss this message.", 24, openfl.system.Capabilities.screenResolutionY <= 768);
         add(hint);
         add(hint.ADD_ME);
-        switch (ClientPrefs.focusLoseSound) {
-            case 'FNF Original':
-                FlxG.sound.play(Paths.soundRandom("missnoteOG", 1, 3));
-            case 'Jiafei Scream':
-                FlxG.sound.play(Paths.soundRandom("missnote", 1, 3));
-        }
+        FlxG.sound.play(Paths.soundRandom(ClientPrefs.focusLostSounds[ClientPrefs.focusLoseSound], 1, 3));
     }
 
     public static function weGotFocus() {

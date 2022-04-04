@@ -1,0 +1,2 @@
+create a .txt file and name it what you want to name your sound.
+the *only* content in your sound should be the file name of your sound WITHOUT a number *or* .ogg, such as: "bruh"

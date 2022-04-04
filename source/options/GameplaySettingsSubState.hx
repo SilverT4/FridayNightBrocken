@@ -1,6 +1,7 @@
 package options;
 
 #if desktop
+import sys.FileSystem;
 import Discord.DiscordClient;
 #end
 import flash.text.TextField;
@@ -76,7 +77,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		'focusLoseSound',
 		'string',
 		'FNF Original',
-		['FNF Original', 'Jiafei Scream']);
+		getFocusLostSounds());
 		addOption(option);
 		#end
 
@@ -150,4 +151,19 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		super();
 	}
+
+	#if desktop
+	function getFocusLostSounds() {
+		var RETURN_THESE:Array<String> = ['FNF Original', 'Jiafei Scream'];
+		if (FileSystem.exists('mods/sounds/focus_lost') && FileSystem.isDirectory('mods/sounds/focus_lost')) {
+			for (sex in FileSystem.readDirectory('mods/sounds/focus_lost')) {
+				if (sex != "how-to.txt") {
+					RETURN_THESE.push(randomShit.util.DumbUtil.snipName(sex));
+					ClientPrefs.focusLostSounds.set(randomShit.util.DumbUtil.snipName(sex), sys.io.File.getContent('mods/sounds/focus_lost/$sex'));
+				}
+			}
+		}
+		return RETURN_THESE;
+	}
+	#end
 }
