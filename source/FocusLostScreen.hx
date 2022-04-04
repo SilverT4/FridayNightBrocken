@@ -40,8 +40,15 @@ class FocusLostScreen extends MusicBeatSubstate {
         if (justFocused) {
             justFocused = false;
             isOpen = false;
-            FlxG.sound.play(Paths.sound("confirmMenu"), 1, false, null, true, function() {
-                close();
+            new flixel.util.FlxTimer().start(3, function(fuckMyAssHARD:flixel.util.FlxTimer) {
+                FlxG.sound.play(Paths.sound("confirmMenu"), 1, false, null, true, function() {
+                    hint.setText("Welcome back!");
+                    remove(bg);
+                    bg.destroy();
+                    bg = null;
+                    MusicBeatState.removeTheBullshit();
+                    close();                
+                });
             });
             //close();
         }
