@@ -89,15 +89,20 @@ class AntivirusAvoidanceState extends FlxState {
         });
         add(finishButton);
         finishButton.kill();
-        funnySnowman = new Snowdrift(989, 5410);
+        funnySnowman = new Snowdrift(1014, 2431);
+        funnySnowman.setGraphicSize((Std.int(funnySnowman.width * 0.7)));
         funnySnowman.switchAnim("awkward-idle");
-        FlxTween.tween(funnySnowman, {y: 410}, 0.5);
+        var BEST_SPOT:Dynamic = {
+            x: 1014,
+            y: 431
+        };
+        FlxTween.tween(funnySnowman, BEST_SPOT, 0.5);
         add(funnySnowman);
     }
 
     function showAVExplan() {
         trace('explaining!');
-        messageText.text = "So. Emo Engine, as this fork of Psych Engine is called,\nhas a few functions in it that may\ntrigger your computer's antivirus. I imagine you wouldn't\nwant to be playing the game and then it suddenly gets closed\nbecause of your antivirus blocking the program...";
+        messageText.text = "So. Stupidity Engine, as this fork of Psych Engine is called,\nhas a few functions in it that may\ntrigger your computer's antivirus. I imagine you wouldn't\nwant to be playing the game and then it suddenly gets closed\nbecause of your antivirus blocking the program...";
         messageText.fieldWidth = 0;
         messageText.screenCenter();
         nextButtonOne.kill();
@@ -156,7 +161,7 @@ class AntivirusAvoidanceState extends FlxState {
         //not keeping this
         super.update(elapsed);
         if (FlxG.keys.justPressed.SEVEN) {
-            FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackMenu()));
+            FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackPreloader()));
         }
         /*#if debug
         if (funnySnowman != null) {
@@ -168,10 +173,26 @@ class AntivirusAvoidanceState extends FlxState {
             if (FlxG.keys.justPressed.S) {
                 funnySnowman.DEBUG_CH_ANIM_KEY(1);
             }
+            if (FlxG.keys.justPressed.UP) {
+                switchTheSnowmanSize(0.1);
+            }
+            if (FlxG.keys.justPressed.DOWN) {
+                switchTheSnowmanSize(-0.1);
+            }
             if (FlxG.mouse.justPressed) {
                 trace(funnySnowman);
+                FlxG.log.add(funnySnowman);
             }
         }
-        #end*/
+        #end */
     }
+
+    #if debug
+    var curScale:Float = 1;
+    function switchTheSnowmanSize(Change:Float) {
+        curScale += Change;
+        funnySnowman.setGraphicSize(Std.int(funnySnowman.width * curScale));
+        trace(curScale);
+    }
+    #end
 }
