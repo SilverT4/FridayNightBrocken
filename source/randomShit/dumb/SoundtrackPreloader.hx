@@ -45,7 +45,7 @@ class SoundtrackPreloader extends MusicBeatState {
             susMenu.songHasVoices.push(song.hasVoices);
         }
         amongUs = new FlxTimer();
-        sex = 0;
+        sex = 1;
         amongUs.start(2.5, function(amogus:FlxTimer) {
             var songShit = pissList[sex - 1];
             var dick = (songShit.displayName != null) ? songShit.displayName : songShit.songName;
