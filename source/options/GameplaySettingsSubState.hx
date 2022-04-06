@@ -73,8 +73,8 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		var option:Option = new Option('Nextor\'s Power Affects You', "If this option is enabled, playing any song with the character 'nt-stuck' will result in your ability to regain health directly being affected by their internal power level. If their power level reaches 0, you can no longer regain health during the song.", 'ntPowerIsEnabled', 'bool', true);
 		addOption(option);
-
-		var option:Option = new Option('Show Emo Engine Watermark',
+		var PISS:String = (randomShit.util.TitleShit.pubic != null) ? randomShit.util.TitleShit.pubic : "Stupidity";
+		var option:Option = new Option('Show ' + PISS + ' Engine Watermark',
 		"If this option is enabled, a watermark will be displayed in songs.",
 		'showWatermark',
 		'bool',
