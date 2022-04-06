@@ -36,6 +36,7 @@ class ClientPrefs {
 	public static var skipCharaSelect:Bool = false;
 	public static var smallScreenFix:Bool = false;
 	public static var preloadStates:Bool = false;
+	public static var showWatermark:Bool = false;
 	public static var gameplaySettings:Map<String, Dynamic> = [
 		'scrollspeed' => 1.0,
 		'songspeed' => 1.0,
@@ -120,6 +121,7 @@ class ClientPrefs {
 		FlxG.save.data.imagesPersist = imagesPersist;
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.ntPowerIsEnabled = ntPowerIsEnabled;
+		FlxG.save.data.showWatermark = showWatermark;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.scoreZoom = scoreZoom;
 		FlxG.save.data.noReset = noReset;
@@ -169,6 +171,9 @@ class ClientPrefs {
 		}
 		if(FlxG.save.data.middleScroll != null) {
 			middleScroll = FlxG.save.data.middleScroll;
+		}
+		if (FlxG.save.data.showWatermark != null) {
+			showWatermark = FlxG.save.data.showWatermark;
 		}
 		if(FlxG.save.data.showFPS != null) {
 			showFPS = FlxG.save.data.showFPS;

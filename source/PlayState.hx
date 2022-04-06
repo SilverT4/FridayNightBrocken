@@ -241,6 +241,8 @@ class PlayState extends MusicBeatState
 	public var camGame:FlxCamera;
 	public var camOther:FlxCamera;
 	public var cameraSpeed:Float = 1;
+	var stupidEngineWater:FlxText;
+	var cumMonster:String = '';
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -1039,7 +1041,12 @@ class PlayState extends MusicBeatState
 		if (OpenFlAssets.exists(file)) {
 			dialogueJson = DialogueBoxPsych.parseDialogue(file);
 		}
-
+		if (randomShit.util.TitleShit.pubic != null) {
+			cumMonster = randomShit.util.TitleShit.pubic;
+		} else {
+			cumMonster = FlxG.random.getObject(["Piss", "Shitpost", "Beetle", "69"]);
+			if (cumMonster == "69") cumMonster += " (Nice)";
+		}
 		var file:String = Paths.txt(songName + '/' + songName + 'Dialogue'); //Checks for vanilla/Senpai dialogue
 		if (OpenFlAssets.exists(file)) {
 			dialogue = CoolUtil.coolTextFile(file);
@@ -1253,6 +1260,14 @@ class PlayState extends MusicBeatState
 		scoreTxt.visible = !ClientPrefs.hideHud;
 		add(scoreTxt);
 		if (ClientPrefs.smallScreenFix) scoreTxt.y = (0.11 * FlxG.height) + 36;
+
+		stupidEngineWater = new FlxText(0, (0.85 * FlxG.height), 0, SONG.song + " - " + ((storyDifficultyText.length > 0) ? storyDifficultyText : "Suspicious") + " | " + cumMonster + " Engine " + MainMenuState.stupidEngineVersion + " (Hi there!)");
+		stupidEngineWater.setFormat(Paths.font("vcr.ttf"), 20, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		stupidEngineWater.scrollFactor.set();
+		stupidEngineWater.borderSize = 1.25;
+		stupidEngineWater.visible = ClientPrefs.showWatermark;
+		add(stupidEngineWater);
+		if (ClientPrefs.smallScreenFix) stupidEngineWater.y = 24;
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);

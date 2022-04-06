@@ -1,5 +1,6 @@
 package;
 
+import randomShit.util.TitleShit;
 import randomShit.helpMe.WindowsUtils;
 #if desktop
 import Discord.DiscordClient;
@@ -38,9 +39,9 @@ class MainMenuState extends MusicBeatState
 	public static var psychEngineVersion:String = '0.5.1'; //This is also used for Discord RPC
 	/**The version of Emo Engine. I hadn't added this until 0.1.1
 		@since March 2022 (Emo Engine 0.1.1)*/
-	public static var emoEngineVersion:String = '0.2.0'; // This will be displayed above the psych version text in the main menu.
+	public static var stupidEngineVersion:String = '0.2.1'; // This will be displayed above the psych version text in the main menu.
 	public static var curSelected:Int = 0;
-
+	var sussyString:String = '';
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
@@ -95,6 +96,9 @@ class MainMenuState extends MusicBeatState
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("In the Menus", null);
 		#end
+		if (TitleShit.pubic != null) {
+			sussyString = TitleShit.pubic;
+		}
 		var susDate = DevinsDateStuff.getTodaysDate();
 		debugKeys = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		if(FlxG.sound.music == null) {
@@ -193,7 +197,7 @@ class MainMenuState extends MusicBeatState
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "Emo Engine v" + emoEngineVersion, 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, sussyString + " Engine v" + stupidEngineVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);
