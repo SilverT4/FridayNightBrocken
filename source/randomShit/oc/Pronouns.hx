@@ -29,3 +29,9 @@ typedef PronounCase = {
     var singular:Bool;
     var plural:Bool;
 }
+
+/**This enum replaces PronounCase, although I dunno *why* exactly I'm updating this shit considering I'm working on a separate project that'll be more focused on showing information about my OCs.
+    @since April 2022 (Emo Engine 0.2.0)*/
+enum CasePronoun {
+    /**Singular pronouns (such as he, she, it).*/SINGULAR; /**Plural pronouns (such as they, we).*/PLURAL;
+}
