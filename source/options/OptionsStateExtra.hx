@@ -75,7 +75,7 @@ class OptionsStateExtra extends MusicBeatState
 				openSubState(new options.CvmFormatManager());
 			#end
 			case 'Listen to OST':
-				LoadingState.loadAndSwitchState(new randomShit.dumb.SoundtrackMenu());
+				LoadingState.loadAndSwitchState(new randomShit.dumb.SoundtrackPreloader());
 			case 'Soundtrack Editor':
 				LoadingState.loadAndSwitchState(new editors.soundtrack.BaseSoundtrackMenu());
 			case 'Profile Management':

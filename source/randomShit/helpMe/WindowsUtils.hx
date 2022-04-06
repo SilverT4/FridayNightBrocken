@@ -14,6 +14,7 @@ using StringTools;
 
 /**a few utilities for Windows*/
 class WindowsUtils {
+    #if windows
     static inline final POWERSHELL = "powershell";
 
     static inline final SETX_CMD = "setx";
@@ -112,4 +113,40 @@ class WindowsUtils {
         new Process(POWERSHELL, RunArgs);
         trace('I AM NOT RESPONSIBLE IF YOUR COMPUTER HAS AN ANTIVIRUS THAT QUARANTINES THE GAME AFTER THIS FUNCTION IS RUN!!');
     }
+    #else
+    public static function elevateProgram(Bull:String, Shit:Array<String>) {
+        trace("This function does not work on " + #if linux "Linux" #elseif macos "macOS" #elseif android "Android" #elseif ios "iOS" #elseif web "web" #elseif tvos "tvOS" #end + " builds of the game.");
+    }
+
+    public static function getBasics():String {
+        return "This function does not work on " + #if linux "Linux" #elseif macos "macOS" #elseif android "Android" #elseif ios "iOS" #elseif web "web" #elseif tvos "tvOS" #end + " builds of the game.";
+    }
+
+    public static function copyExternalFileToGameFolder(Pe:String, Nis:String) {
+        trace("This function does not work on " + #if linux "Linux" #elseif macos "macOS" #elseif android "Android" #elseif ios "iOS" #elseif web "web" #elseif tvos "tvOS" #end + " builds of the game.");
+    }
+
+    public static function getPCMemoryAsString():String {
+        return "This function does not work on " + #if linux "Linux" #elseif macos "macOS" #elseif android "Android" #elseif ios "iOS" #elseif web "web" #elseif tvos "tvOS" #end + " builds of the game.";
+    }
+
+    public static function getCurrentWinNTVersion() {
+        trace("This function does not work on " + #if linux "Linux" #elseif macos "macOS" #elseif android "Android" #elseif ios "iOS" #elseif web "web" #elseif tvos "tvOS" #end + " builds of the game.");
+    }
+
+    public static function getCurrentUser():String{
+        #if (linux || macos)
+        return Sys.getEnv("USER");
+        #elseif (android || ios || tvos)
+        return #if ios "mobile" #else "Not a PC." #end
+        #else
+        return "webBrowser"
+        #end
+    }
+
+    public static function getRemainingBattery() {
+        trace("This function does not work on " + #if linux "Linux" #elseif macos "macOS" #elseif android "Android" #elseif ios "iOS" #elseif web "web" #elseif tvos "tvOS" #end + " builds of the game.");
+        return 69;
+    }
+    #end
 }

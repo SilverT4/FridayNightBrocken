@@ -71,6 +71,16 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
+		var option:Option = new Option('Nextor\'s Power Affects You', "If this option is enabled, playing any song with the character 'nt-stuck' will result in your ability to regain health directly being affected by their internal power level. If their power level reaches 0, you can no longer regain health during the song.", 'ntPowerIsEnabled', 'bool', true);
+		addOption(option);
+
+		var option:Option = new Option('Show Emo Engine Watermark',
+		"If this option is enabled, a watermark will be displayed in songs.",
+		'showWatermark',
+		'bool',
+		true);
+		addOption(option);
+
 		#if desktop
 		var option:Option = new Option('Focus Lost Sound:',
 		"Change the sound played when your game window loses focus for any reason, such as pressing " + #if !macos "ALT+TAB" #else "Command+Tab" #end + " or another window grabbing focus.",
@@ -145,8 +155,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		option.minValue = 2;
 		option.maxValue = 10;
 		option.changeValue = 0.1;
-		addOption(option);
-		var option:Option = new Option('Nextor\'s Power Affects You', "If this option is enabled, playing any song with the character 'nt-stuck' will result in your ability to regain health directly being affected by their internal power level. If their power level reaches 0, you can no longer regain health during the song.", 'ntPowerIsEnabled', 'bool', true);
 		addOption(option);
 
 		super();
