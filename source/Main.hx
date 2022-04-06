@@ -1,5 +1,6 @@
 package;
 
+import randomShit.util.TitleShit;
 import ProfileThingy.PrelaunchProfileState;
 import flixel.FlxG;
 import flixel.FlxGame;
@@ -74,7 +75,9 @@ class Main extends Sprite
 		#end
 
 		ClientPrefs.loadDefaultKeys();
-		addChild(new FlxGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen));
+		var pissKink:FlxGame = new SusGame(gameWidth, gameHeight, initialState, zoom, framerate, framerate, skipSplash, startFullscreen);
+		addChild(pissKink);
+		TitleShit.randomTitle();
 
 		#if !mobile
 		fpsVar = new FPS(10, 3, 0xFFFFFF);

@@ -2,7 +2,7 @@
 <project>
 	<!-- _________________________ Application Settings _________________________ -->
 
-	<app title="Friday Night Brocken: Emo Engine" file="EmoEngine" packageName="ass.devin503.superemo" package="ass.devin503.superemo" main="Main" version="0.2.7" company="devin503" />
+	<app title="Friday Night Funkin': REPLACEME Engine" file="StupidityEngine" packageName="ass.devin503.dumbfuckery" package="ass.devin503.dumbfuckery" main="Main" version="0.2.7" company="devin503" />
 
 	<!--Switch Export with Unique ApplicationID and Icon-->
 	<set name="APP_ID" value="0x0100f6c013bbc000" />
@@ -18,7 +18,7 @@
 	<!-- ____________________________ iOS Bullshit _______________________________ -->
 	<section if="ios">
 		<architecture name="armv7" /> <!-- I mostly included this for my own iPad. I'd strongly recommend changing this to the architecture of your own iOS device. -->
-		<meta title="Emo Engine" /> <!-- I doubt "Friday Night Brocken: Emo Engine" would appear as it should on an iOS device. -->
+		<meta title="Stupid Engine" /> <!-- I doubt "Stupidity Engine" would appear as it should on an iOS device. -->
 		<dependency name="Metal.framework" /> <!-- Xcode needs this for... SOME fucking reason. In order to compile properly. -->
 	</section>
 
@@ -183,7 +183,7 @@
 	<!--<haxedef name="FLX_NO_SOUND_SYSTEM" />-->
 
 	<!--Disable the Flixel core focus lost screen-->
-	<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />
+	<!--<haxedef name="FLX_NO_FOCUS_LOST_SCREEN" />-->
 
 	<!--Disable the Flixel core debugger. Automatically gets set whenever you compile in release mode!-->
 	<haxedef name="FLX_NO_DEBUG" unless="debug" />

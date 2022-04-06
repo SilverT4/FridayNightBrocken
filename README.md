@@ -1,5 +1,10 @@
-# Friday Night Brocken: "Emo Engine"
+# Friday Night Funkin': Stupidity Engine
+
+*Formerly known as Friday Night Brocken: "Emo Engine"*
+
 **Not an actual engine! That's just what I call this mess of a repo.**
+
+Based off Psych Engine v0.5.1
 
 Please do note that I am *not* the most experienced coder and as such, some of the code I add to this repository will be spaghetti code that I keep making more of a mess with.
 
