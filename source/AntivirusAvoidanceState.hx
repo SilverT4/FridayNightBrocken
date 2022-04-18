@@ -161,7 +161,7 @@ class AntivirusAvoidanceState extends FlxState {
         //not keeping this
         super.update(elapsed);
         if (FlxG.keys.justPressed.SEVEN) {
-            FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackPreloader()));
+            FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackMenu()));
         }
         /*#if debug
         if (funnySnowman != null) {

@@ -37,7 +37,7 @@ class FuckYouToo extends MusicBeatSubstate {
         PlayState.SONG.player3 = 'nogflol';
         PlayState.isStoryMode = true;
         new FlxTimer().start(3, function pussy(tmr:FlxTimer) {
-            if (!ClientPrefs.skipCharaSelect) MusicBeatState.switchState(new SelectChara());
+            if (!ClientPrefs.skipCharaSelect) MusicBeatState.switchState(new NewCharacterSelect());
             else {
                 if (FlxG.save.data.favouriteCharacters != null && FlxG.save.data.favouriteCharacters.length >= 1) PlayState.SONG.player1 = CustomRandom.fromArray(FlxG.save.data.favouriteCharacters);
                 LoadingState.loadAndSwitchState(new PlayState());
