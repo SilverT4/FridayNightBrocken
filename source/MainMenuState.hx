@@ -1,7 +1,9 @@
 package;
 
+import randomShit.SnowdriftThing;
 import randomShit.util.TitleShit;
 import randomShit.helpMe.WindowsUtils;
+import randomShit.dumb.FNBUINotificationBar;
 #if desktop
 import Discord.DiscordClient;
 #end
@@ -45,6 +47,7 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
+	var newMsgNotif:FNBUINotificationBar;
 	
 	var optionShit:Array<String> = [
 		'story_mode',
@@ -122,6 +125,10 @@ class MainMenuState extends MusicBeatState
 		transIn = FlxTransitionableState.defaultTransIn;
 		transOut = FlxTransitionableState.defaultTransOut;
 
+		newMsgNotif = new FNBUINotificationBar("You have a new message!", 32);
+		newMsgNotif.cameras = [camAchievement];
+		add(newMsgNotif);
+		add(newMsgNotif.msgDisplay);
 		persistentUpdate = persistentDraw = true;
 		trace(Date.now());
 		var yScroll:Float = Math.max(0.25 - (0.05 * (optionShit.length - 4)), 0.1);
@@ -248,7 +255,14 @@ class MainMenuState extends MusicBeatState
 			}
 		}
 		#end
-
+		if (!FlxG.save.data.seenNewCharSelectMsg) {
+			newMsgNotif.setFinishFunction(function(piss:String):Dynamic {
+				LoadingState.loadAndSwitchState(new SnowdriftThing("newsel"));
+				return "shit";
+			});
+			FlxG.sound.play(Paths.sound("daFunniWell"), 1);
+			newMsgNotif.show(10);
+		}
 		super.create();
 	}
 
