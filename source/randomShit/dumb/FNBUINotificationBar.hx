@@ -48,9 +48,14 @@ class FNBUINotificationBar extends FlxSprite {
                 msgDisplay.stopTweening();
                 shittyTweenThing = FlxTween.tween(this, {alpha: 0}, 0.35, {onComplete: function (twn:FlxTween) {
                     trace('penis');
+                    if (doOnFinish != null) doOnFinish();
                 }});
             });
         }});
+    }
+    var doOnFinish:Dynamic;
+    public function setFinishFunction(Function:Dynamic -> Dynamic) {
+        doOnFinish = Function;
     }
 
     override function update(elapsed:Float) {

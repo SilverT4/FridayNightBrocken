@@ -1,5 +1,6 @@
 package randomShit.dumb;
 
+import haxe.extern.EitherType;
 import flixel.tweens.FlxTween;
 import flixel.math.FlxMath;
 import flixel.util.FlxStringUtil;
@@ -55,6 +56,14 @@ typedef OSTData = {
         
     I'd suggest setting this to true on longer songs, but leaving it null or false on shorter songs.*/
     @:optional var preloadTrack:Bool;
+    /**Change the background colour at certain points in the song. Leave this out if you want to leave it as is throughout the song.*/
+    @:optional var colourChanges:Array<BgColorChange>;
+}
+
+typedef BgColorChange = {
+    var time_ms:Int;
+    @:optional var color_hex:String; // you can use hex or RGB!
+    @:optional var color_rgb:SongColorInfo;
 }
 
 typedef IconChange = {
@@ -76,36 +85,38 @@ typedef SongColorInfo = {
 @see SoundtrackUtil, located in `randomShit.util` (Provides utilities for this class)
 @since March 2022 (Emo Engine 0.1.2)*/
 class SoundtrackMenu extends MusicBeatState {
-    public var songList_Full:Array<OSTData> = [];
+    var songList_Full:Array<OSTData> = [];
     var iconArray:Array<HealthIcon> = [];
     var grpSongs:FlxTypedGroup<Alphabet>;
     var curSelected:Int = 0;
-    public var bgColorList:Array<FlxColor> = [];
-    public var playerIcons_Dad:Array<String> = [];
-    public var playerIcons_Bf:Array<String> = [];
+    var bgColorList:Array<FlxColor> = [];
+    var playerIcons_Dad:Array<String> = [];
+    var playerIcons_Bf:Array<String> = [];
     var songBarBg:FlxSprite;
     var songBar:FlxBar;
     var bg:FunkyBackground;
     var dadIcon:HealthIcon;
     var bfIcon:HealthIcon;
     var eduardoIcon:HealthIcon;
-    public var instrumentals:Array<FlxSound> = []; // for the purpose of functions
-    public var vocalTracks:Array<FlxSound> = [];
+    var instrumentals:Array<FlxSound> = []; // for the purpose of functions
+    var vocalTracks:Array<FlxSound> = [];
     var playingSong:Bool = false;
     var instOnly:Bool = false;
     var hasVoices:Bool = false;
-    public var songHasVoices:Array<Bool> = [false];
+    var songHasVoices:Array<Bool> = [false];
     var songPos:Float = 0;
     var timeHint:HintMessageAsset;
     var curSong:String = '';
     var enteringMusic:FlxSound;
-    public var opponentColors:Map<String, FlxColor> = new Map();
-    public var bfColors:Map<String, FlxColor> = new Map();
-    public var displayNames:Map<String, String> = new Map();
+    var opponentColors:Map<String, FlxColor> = new Map();
+    var bfColors:Map<String, FlxColor> = new Map();
+    var displayNames:Map<String, String> = new Map();
     var msTimes:Array<Float> = [];
     var chTargets:Array<String> = [];
     var newIcons:Array<String> = [];
-    public var songPreloaded:Array<Bool> = [];
+    var msTimes_Bg:Array<Int> = [];
+    var changes:Array<EitherType<String, SongColorInfo>> = [];
+    var songPreloaded:Array<Bool> = [];
     var amogus:FlxTypedGroup<FlxSound>;
     var speen:SpinningIcon;
     public static var hardDong:Array<Bool> = [];
@@ -134,6 +145,14 @@ class SoundtrackMenu extends MusicBeatState {
         modSongInfos = getModOsts();
         doFunnyConverts(baseSongInfos);
         doFunnyConverts(modSongInfos); */
+        songList_Full = SoundtrackUtil.getSoundtrackList();
+        for (song in songList_Full) {
+            #if debug
+            FlxG.log.notice((songList_Full.indexOf(song) + 1) + ' of ' + songList_Full.length + ': Setting hasVoices of ' + song.songName + ' to ' + song.hasVoices);
+            #end
+            trace((songList_Full.indexOf(song) + 1) + ' of ' + songList_Full.length + ': ' + song.songName + ' can ' + ((song.hasVoices) ? "" : "NOT") + " has shitburger");
+            songHasVoices.push(song.hasVoices);
+        }
         /*for (i in 0...18) {
             songHasVoices.push(true);
         } */
@@ -204,6 +223,30 @@ class SoundtrackMenu extends MusicBeatState {
             add(icon);
             iconArray.push(icon);
 
+            playerIcons_Bf.push(songShit.bfIcon);
+            playerIcons_Dad.push(songShit.dadIcon);
+            bfColors.set(songShit.bfIcon, DumbUtil.iconColor(songShit.bfIcon));
+            opponentColors.set(songShit.dadIcon, DumbUtil.iconColor(songShit.dadIcon));
+            if (songShit.displayName != null) {
+                displayNames.set(songShit.songName, songShit.displayName);
+            }
+
+            var meena = getSongColor(songShit);
+            bgColorList.push(meena);
+            var instrumentalTrack:FlxSound = new FlxSound();
+            instrumentalTrack.loadEmbedded(Paths.inst(Paths.formatToSongPath(songShit.songName)));
+            instrumentalTrack.play();
+            instrumentalTrack.pause(); // idk if thisll do much lmao
+            instrumentals.push(instrumentalTrack);
+            FlxG.sound.list.add(instrumentalTrack);
+            var vocalTrack:FlxSound = new FlxSound();
+            //trace(Paths.inst(songShit.songName.toLowerCase()));
+            if (songShit.hasVoices) vocalTrack.loadEmbedded(Paths.voices(Paths.formatToSongPath(songShit.songName))) else vocalTrack.loadEmbedded(Paths.sound("introGo"));
+            vocalTrack.play();
+            vocalTrack.pause();
+            vocalTracks.push(vocalTrack);
+            FlxG.sound.list.add(vocalTrack);
+            songPreloaded.push(true);
             
 
             /*var player2_Icon:String = songShit.dadIcon;
@@ -323,6 +366,7 @@ class SoundtrackMenu extends MusicBeatState {
             speen.stopSpin();
             speen.kill();
             playingSong = true;
+            curLength = instrumentals[curSelected].length;
         }});
     }
     var curDadColor:FlxColor;
