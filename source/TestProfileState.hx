@@ -135,8 +135,9 @@ class TestProfileState extends FlxState {
         #if debug
         if (FlxG.keys.justPressed.SEVEN) {
             TitleState.currentProfile = PARSED_LIST[1];
-            Paths.currentModDirectory = 'Challenge Edd';
-            FlxG.switchState(new MusicBeatLauncher(new randomShit.dumb.SoundtrackMenu()));
+            //Paths.currentModDirectory = 'Challenge Edd';
+            PlayState.SONG = Song.loadFromJson('house-hard', 'house');
+            FlxG.switchState(new MusicBeatLauncher(new NewCharacterSelect()));
         }
         #end
         super.update(elapsed);

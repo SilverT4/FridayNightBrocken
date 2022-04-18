@@ -55,7 +55,7 @@ import Achievements;
 import StageData;
 import FunkinLua;
 import DialogueBoxPsych;
-import SelectChara.CharSelShit as BussyWater;
+import NewCharacterSelect.SelectableFile as BussyWater;
 import randomShit.util.CustomRandom;
 import randomShit.dumb.Bonk;
 
@@ -156,6 +156,7 @@ class PlayState extends MusicBeatState
 	public static var curStage:String = '';
 	public static var isPixelStage:Bool = false;
 	public static var SONG:SwagSong = null;
+	public static var instrumentalShit:String = null;
 	public static var isStoryMode:Bool = false;
 	public static var isDebugLaunch:Bool = false;
 	public static var storyWeek:Int = 0;
@@ -225,6 +226,7 @@ class PlayState extends MusicBeatState
 	public var healthGain:Float = 1;
 	public var healthLoss:Float = 1;
 	public var healthLossMisses:Bool = false;
+	public var healthDrain:Float = 0; // IT'LL BE A DECIMAL OF WHATEVER VALUE YOU SET!
 	public var instakillOnMiss:Bool = false;
 	public var cpuControlled:Bool = false;
 	public var weDoALittleTrollin:Bool = false;
@@ -243,6 +245,7 @@ class PlayState extends MusicBeatState
 	public var cameraSpeed:Float = 1;
 	var stupidEngineWater:FlxText;
 	var cumMonster:String = '';
+	var curCum:String = '';
 
 	var dialogue:Array<String> = ['blah blah blah', 'coolswag'];
 	var dialogueJson:DialogueFile = null;
@@ -451,6 +454,7 @@ class PlayState extends MusicBeatState
 		// Gameplay settings
 		healthGain = ClientPrefs.getGameplaySetting('healthgain', 1);
 		healthLoss = ClientPrefs.getGameplaySetting('healthloss', 1);
+		healthDrain = Std.parseFloat("0." + ((ClientPrefs.getGameplaySetting('healthDrain', 0) < 10) ? "0" : "") + ClientPrefs.getGameplaySetting('healthDrain', 0)); // this SHOULD make it 0.15 if you've set it to 15, 0.04 if you have it set to 4!
 		healthLossMisses = ClientPrefs.getGameplaySetting('healthlossmulti', false);
 		instakillOnMiss = ClientPrefs.getGameplaySetting('instakill', false);
 		practiceMode = ClientPrefs.getGameplaySetting('practice', false);
@@ -1043,9 +1047,11 @@ class PlayState extends MusicBeatState
 		}
 		if (randomShit.util.TitleShit.pubic != null) {
 			cumMonster = randomShit.util.TitleShit.pubic;
+			curCum = cumMonster;
 		} else {
 			cumMonster = FlxG.random.getObject(["Piss", "Shitpost", "Beetle", "69"]);
 			if (cumMonster == "69") cumMonster += " (Nice)";
+			curCum = cumMonster;
 		}
 		var file:String = Paths.txt(songName + '/' + songName + 'Dialogue'); //Checks for vanilla/Senpai dialogue
 		if (OpenFlAssets.exists(file)) {
@@ -1267,7 +1273,7 @@ class PlayState extends MusicBeatState
 		stupidEngineWater.borderSize = 1.25;
 		stupidEngineWater.visible = ClientPrefs.showWatermark;
 		add(stupidEngineWater);
-		if (ClientPrefs.smallScreenFix) stupidEngineWater.y = 24;
+		if (ClientPrefs.smallScreenFix) stupidEngineWater.y = 0;
 
 		botplayTxt = new FlxText(400, timeBarBG.y + 55, FlxG.width - 800, "BOTPLAY", 32);
 		botplayTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
@@ -1289,6 +1295,7 @@ class PlayState extends MusicBeatState
 		iconP2.cameras = [camHUD];
 		scoreTxt.cameras = [camHUD];
 		botplayTxt.cameras = [camHUD];
+		stupidEngineWater.cameras = [camHUD];
 		timeBar.cameras = [camHUD];
 		timeBarBG.cameras = [camHUD];
 		timeTxt.cameras = [camHUD];
@@ -1631,7 +1638,7 @@ class PlayState extends MusicBeatState
 			GameOverSubstate.characterName = boyfriend.curCharacter;
 		}
 	} else {
-		GameOverSubstate.characterName = boyPussy.deathCharacter;
+		GameOverSubstate.characterName = (boyPussy.DeathName != null) ? boyPussy.DeathName : boyPussy.CharName;
 	}
 	}
 	public var psychDialogue:DialogueBoxPsych;
@@ -1980,7 +1987,10 @@ class PlayState extends MusicBeatState
 		previousFrameTime = FlxG.game.ticks;
 		lastReportedPlayheadPosition = 0;
 
-		FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
+		if (instrumentalShit != null) {
+			trace("LOADING CUSTOM INSTRUMENTAL!!");
+			FlxG.sound.playMusic(Paths.inst(instrumentalShit), 1, false);
+		} else FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song), 1, false);
 		FlxG.sound.music.onComplete = finishSong;
 		vocals.play();
 
@@ -2025,7 +2035,7 @@ class PlayState extends MusicBeatState
 			vocals = new FlxSound();
 		// trace(Paths.voicesEX(PlayState.SONG.song));
 		FlxG.sound.list.add(vocals);
-		/* if (storyDifficultyText == 'EX') FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.instEX(PlayState.SONG.song))) else */ FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+		/* if (storyDifficultyText == 'EX') FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.instEX(PlayState.SONG.song))) else */ FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst((instrumentalShit != null ? instrumentalShit : PlayState.SONG.song))));
 
 		notes = new FlxTypedGroup<Note>();
 		add(notes);
@@ -2560,6 +2570,10 @@ class PlayState extends MusicBeatState
 			ntPowerBG.update(elapsed);
 		}
 
+		if (cumMonster != curCum) {
+			curCum = cumMonster;
+			stupidEngineWater.text = SONG.song + " - " + ((storyDifficultyText.length > 0) ? storyDifficultyText : "Suspicious") + " | " + cumMonster + " Engine " + MainMenuState.stupidEngineVersion + " (Hi there!)";
+		}
 		if(ratingName == '?') {
 			if (ntCharsWithPL.contains(SONG.player1) || ntCharsWithPL.contains(bfOverride) || (boyfriend != null && ntCharsWithPL.contains(boyfriend.curCharacter))) {
 				scoreTxt.text = 'Score: ' + songScore + ' | Misses: ' + songMisses + ' | Rating: ' + ratingName + ' (HIT A NOTE!) | Nextor Power Lv.: ' + ntPowerLevel;
@@ -4373,6 +4387,9 @@ class PlayState extends MusicBeatState
 		if (SONG.needsVoices)
 			vocals.volume = 1;
 
+		if (healthDrain >= 0.1) {
+			health -= healthDrain;
+		}
 		var time:Float = 0.15;
 		if(note.isSustainNote && !note.animation.curAnim.name.endsWith('end')) {
 			time += 0.15;

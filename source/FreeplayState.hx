@@ -34,6 +34,7 @@ class FreeplayState extends MusicBeatState
 	private static var curSelected:Int = 0;
 	var curDifficulty:Int = -1;
 	private static var lastDifficultyName:String = '';
+	public static var instrumentalName:String = null;
 	public static var usingFavsOnly:Bool = false;
 	var scoreBG:FlxSprite;
 	var scoreText:FlxText;
@@ -262,6 +263,7 @@ class FreeplayState extends MusicBeatState
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
 		var favToggler = FlxG.keys.justPressed.F;
+		var stupidityToggler = FlxG.keys.justPressed.E;
 		var space = FlxG.keys.justPressed.SPACE;
 		var ctrl = FlxG.keys.justPressed.CONTROL;
 
@@ -280,6 +282,11 @@ class FreeplayState extends MusicBeatState
 		if (favToggler) {
 			FreeplayState.usingFavsOnly = !FreeplayState.usingFavsOnly;
 			MusicBeatState.resetState();
+		}
+
+		if (stupidityToggler) {
+			trace("SWITCHIN TO STUPIDITY");
+			openSubState(new StupiditySubState());
 		}
 
 		if (controls.UI_LEFT_P)
@@ -347,7 +354,9 @@ class FreeplayState extends MusicBeatState
 				trace('Couldnt find file');
 			}*/
 			trace(poop);
-
+			if (instrumentalName != null) {
+				//wip
+			}
 			PlayState.SONG = Song.loadFromJson(poop, songLowercase);
 			PlayState.isStoryMode = false;
 			PlayState.storyDifficulty = curDifficulty;
@@ -367,7 +376,7 @@ class FreeplayState extends MusicBeatState
 				PlayState.SONG.player1 = 'snowdrift';
 				LoadingState.loadAndSwitchState(new PlayState());
 			}else{
-				if (!ClientPrefs.skipCharaSelect) LoadingState.loadAndSwitchState(new SelectChara());
+				if (!ClientPrefs.skipCharaSelect) LoadingState.loadAndSwitchState(new NewCharacterSelect());
 				else LoadingState.loadAndSwitchState(new PlayState()); // FINALLY IMPLEMENTING THIS. LMAO
 				// LoadingState.loadAndSwitchState(new PreloadLargerCharacters(songLowercase, true));
 			}
