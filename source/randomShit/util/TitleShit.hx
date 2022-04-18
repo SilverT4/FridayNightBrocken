@@ -20,10 +20,10 @@ class TitleShit {
     public static var pubic:String = '';
     public static function randomTitle() {
         var peen = new FlxRandom();
-        var piss = peen.int(0, characterNameList.length);
+        var piss = peen.int(0, characterNameList.length - 1);
         pubic = characterNameList[piss];
         if (Application.current != null) {
-            Application.current.window.title = "Friday Night Funkin': " + pubic + " Engine";
+            Application.current.window.title = "Friday Night Funkin': " + pubic + " Engine (Old Branch)";
         }
     }
 }

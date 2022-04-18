@@ -31,6 +31,11 @@ class HintMessageAsset extends FlxSprite {
         txt.text = newText;
         txt.fieldWidth = 0;
     }
+
+    public function moveForSpinner() {
+        txt.x += 54;
+        txt.fieldWidth = 0;
+    }
 }
 
 class HintMessageText extends FlxText {
