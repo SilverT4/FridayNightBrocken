@@ -23,6 +23,7 @@ import flixel.tweens.FlxTween;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import flixel.graphics.FlxGraphic;
+import randomShit.util.HintMessageAsset;
 import Controls;
 
 using StringTools;
@@ -37,8 +38,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 	private var checkboxGroup:FlxTypedGroup<CheckboxThingie>;
 	private var grpTexts:FlxTypedGroup<AttachedText>;
 
-	var textBox:FlxSprite;
-	var fuckYou:FlxText;
+	//var textBox:FlxSprite;
+	var fuckYou:HintMessageAsset;
 
 	function getOptions()
 	{
@@ -80,6 +81,15 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		/* var option:GameplayOption = new GameplayOption('Miss Count is Health Loss Multiplier', 'misshealthmulti', 'bool', false);
 		optionsArray.push(option); */
 
+		var option:GameplayOption = new GameplayOption('Health Drain', 'healthDrain', 'int', 0);
+		option.scrollSpeed = 2.5;
+		option.minValue = 0;
+		option.maxValue = 25;
+		option.changeValue = 1;
+		option.displayFormat = '0.%v per note';
+		option.description = 'Change how much health is drained each time your opponent hits a note. Set to 0 to disable.';
+		optionsArray.push(option);
+
 		var option:GameplayOption = new GameplayOption('Instakill on Miss', 'instakill', 'bool', false);
 		option.description = 'Are we dying on a note miss, chief?';
 		optionsArray.push(option);
@@ -113,12 +123,15 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		bg.alpha = 0.6;
 		add(bg);
 
-		textBox = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, FlxColor.BLACK);
+		/*textBox = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, FlxColor.BLACK);
 		textBox.alpha = 0.8;
 		add(textBox);
 
 		fuckYou = new FlxText(textBox.x, textBox.y - 4, FlxG.width, '', 16);
 		fuckYou.setFormat(Paths.font('funny.ttf'), 16, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
+		*/
+
+		fuckYou = new HintMessageAsset("I pissed on your mom", 16, ClientPrefs.smallScreenFix);
 
 		// avoids lagspikes while scrolling through menus!
 		grpOptions = new FlxTypedGroup<Alphabet>();
@@ -161,6 +174,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			updateTextFrom(optionsArray[i]);
 		}
 		add(fuckYou);
+		add(fuckYou.ADD_ME);
 
 		changeSelection();
 		reloadCheckboxes();
@@ -174,12 +188,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if (controls.UI_UP_P)
 		{
 			changeSelection(-1);
-			if (curOption.description != null) fuckYou.text = curOption.description;
+			if (curOption.description != null) fuckYou.setText(curOption.description);
 		}
 		if (controls.UI_DOWN_P)
 		{
 			changeSelection(1);
-			if (curOption.description != null) fuckYou.text = curOption.description;
+			if (curOption.description != null) fuckYou.setText(curOption.description);
 		}
 
 		if (controls.BACK) {
