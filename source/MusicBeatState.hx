@@ -59,24 +59,21 @@ class MusicBeatState extends FlxUIState
 	override public function onFocus():Void
 		{
 			#if (VIDEOS_ALLOWED && windows) FlxVideo.onFocus(); #end
-			FocusLostScreen.weGotFocus();
-			yeet(pussyShit);
+			/*FocusLostScreen.weGotFocus();
+			(pussyShit != null) ? yeet(pussyShit) : trace("VAGINA"); */
 			super.onFocus();
 		}
 	override public function onFocusLost():Void {
 		var fuckMyAss:Bool = true;
-		pussyShit = new FlxSprite();
+		/*pussyShit = new FlxSprite();
 		pussyShit.makeGraphic(FlxG.width, FlxG.height, 0xFFFFFFFF);
 		pussyShit.alpha = 0;
-		add(pussyShit);
+		add(pussyShit); */
 		#if (VIDEOS_ALLOWED && windows) FlxVideo.onFocusLost(); #end
-		FlxTween.tween(pussyShit, { alpha: 0.7 }, 0.7, { onComplete: function(Pussy:FlxTween) {
-			openSubState(new FocusLostScreen());
-		}});
-		new FlxTimer().start(0.7, function(PissInMy:FlxTimer) {
-			fuckMyAss = false;
-			pissOnMyBussy();
-		});
+		if (ClientPrefs.focusLoseSound != null) {
+			FlxG.sound.play(Paths.soundRandom(ClientPrefs.focusLostSounds[ClientPrefs.focusLoseSound], 1, 3));
+		}
+		super.onFocusLost();
 	}
 	function pissOnMyBussy() {
 		super.onFocusLost();
