@@ -336,7 +336,7 @@ class StoryMenuState extends MusicBeatState
 			PlayState.campaignMisses = 0;
 			new FlxTimer().start(1, function(tmr:FlxTimer)
 			{
-				LoadingState.loadAndSwitchState(new PlayState(), true);
+				LoadingState.loadAndSwitchState(((!ClientPrefs.skipCharaSelect) ? new PlayState() : new NewCharacterSelect()), true);
 				FreeplayState.destroyFreeplayVocals();
 			});
 		} else if (!weekIsLocked(curWeek) && curWeek == 8 && curDifficulty < 2) {
