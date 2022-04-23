@@ -1,6 +1,6 @@
 # Friday Night Funkin' - Stupidity Engine (GameBanana Branch)
 
-This is NOT an actual engine! This is based off Psych Engine. I just add stupid shit and such to it. Also, this branch removes any shit I don't feel like putting up on GameBanana.
+This is NOT an actual engine! This is based off Psych Engine. I just add stupid shit and such to it. Also, this branch removes any shit I don't feel like putting up on GameBanana. If you want to view the shit I don't feel like putting on GameBanana, go on into the "rework-branch-maybe" branch. It's just this branch with the extras.
 
 # Friday Night Funkin' - Psych Engine
 Engine originally used on [Mind Games Mod](https://gamebanana.com/mods/301107), intended to be a fix for the vanilla version's many issues while keeping the casual play aspect of it. Also aiming to be an easier alternative to newbie coders.
