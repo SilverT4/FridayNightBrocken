@@ -71,12 +71,18 @@ class BasicCharSel extends MusicBeatState {
         var okay = controls.ACCEPT;
         var down = controls.UI_DOWN_P;
         var up = controls.UI_UP_P;
+        var bacc = controls.BACK;
 
         if (okay) {
             trace('setting character to ' + characterList[curSelected][0] + '!');
             PlayState.SONG.player1 = characterList[curSelected][0];
 
             LoadingState.loadAndSwitchState(new PlayState());
+        }
+
+        if (bacc) {
+            FlxG.sound.play(Paths.sound("cancelMenu"), 0.4);
+            MusicBeatState.switchState(new FreeplayState());
         }
 
         if (down) {
